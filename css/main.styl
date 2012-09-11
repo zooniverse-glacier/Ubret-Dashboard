@@ -1,3 +1,16 @@
+*.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
 #ubret
   width 100%
 
@@ -27,6 +40,9 @@
           visibility: hidden
           top: 0
           left: 0
+          width: 100%
+          background: #f6f6f6
+          border-bottom: 1px solid #ccc
 
           ul
             display: inline

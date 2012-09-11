@@ -40,15 +40,20 @@ class ToolWindow extends Spine.Controller
     @release()
 
   startDrag: (e) =>
-    @$el.attr 'unselectable', 'on'
+    @$el.addClass 'unselectable', 'on'
     elWidth = @$el.outerWidth()
     elHeight = @$el.outerHeight()
     @dragging = true
-    @$el.on 'mousemove', (e) =>
+
+    mouseOffset = @$el.offset()
+    relX = e.pageX - mouseOffset.left
+    relY = e.pageY - mouseOffset.top
+
+    @$(document).on 'mousemove', (e) =>
       if @dragging
         @$el.offset
-          top: e.pageY - elHeight / 2
-          left: e.pageX - elWidth / 2
+          top: e.pageY - relY
+          left: e.pageX - relX
 
   endDrag: (e) =>
     @$el.removeAttr 'unselectable'
