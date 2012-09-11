@@ -1,0 +1,23 @@
+{
+  "dependencies": [
+    "node-pubsub",
+    "ubret",
+    "rosie",
+    "underscore",
+    "zooniverse",
+    "es5-shimify", 
+    "json2ify", 
+    "jqueryify",
+    "spine",
+    "spine/lib/local",
+    "spine/lib/ajax",
+    "spine/lib/route",
+    "spine/lib/manager"
+  ],
+  "libs": [
+    "./node_modules/Zooniverse/vendor/base64.js",
+    "./vendor/leaflet-src.js",
+    "./vendor/d3.v2.js",
+    "./vendor/nv.d3.js"
+  ]
+}
