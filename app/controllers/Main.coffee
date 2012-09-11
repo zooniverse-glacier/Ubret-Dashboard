@@ -21,6 +21,7 @@ class Main extends Spine.Controller
       {name: "Table", desc: "Tables Things"} ]} )
     @toolbox.render()
     @toolbox.bind 'add-new-tool', @addTool
+    @toolbox.bind 'remove-all-tools', @removeTools
 
   addTool: (toolName) =>
     switch toolName
@@ -29,5 +30,7 @@ class Main extends Spine.Controller
       when "Scatterplot" then @dashboard.createTool Scatterplot
       when "Subject Viewer" then @dashboard.createTool SubjectViewer
 
+  removeTools: =>
+    @dashboard.removeTools()
 
 module.exports = Main

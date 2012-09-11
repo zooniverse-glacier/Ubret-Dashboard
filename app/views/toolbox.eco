@@ -3,3 +3,7 @@
     <button type="button" name="<%- tool.name %>"><%- tool.name %></button>
   </div>
 <% end %>
+
+<div class="remove-tools action">
+	<button type="button" name="remove-tools">Clear Tools</button>
+</div>

@@ -49,4 +49,9 @@ class Dashboard extends Spine.Controller
     @tools = _.without @tools, tool
     @channels = _.without @channels, tool.channel
 
+  removeTools: =>
+    _.each @tools, @removeTool
+    @workspace.html ''
+
+
 module.exports = Dashboard
