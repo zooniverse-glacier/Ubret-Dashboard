@@ -40,7 +40,7 @@ class ToolWindow extends Spine.Controller
     @release()
 
   startDrag: (e) =>
-    @$el.addClass 'unselectable', 'on'
+    $('body').addClass 'unselectable'
     elWidth = @$el.outerWidth()
     elHeight = @$el.outerHeight()
     @dragging = true
@@ -56,7 +56,7 @@ class ToolWindow extends Spine.Controller
           left: e.pageX - relX
 
   endDrag: (e) =>
-    @$el.removeAttr 'unselectable'
+    $('body').removeClass 'unselectable'
     @dragging = false
 
 module.exports = ToolWindow
