@@ -50,7 +50,7 @@ describe 'Dashboard', ->
       for i in [1..5]
         @dashboard.createTool Table
 
-      @tool = @dashboard.tools[2].channel
+      @tool = @dashboard.tools[2]
       @dashboard.removeTool @tool
 
     it 'should remove the specified tool from the list of published channels', ->
