@@ -3,6 +3,7 @@ Spine = require('spine')
 class Settings extends Spine.Controller
   constructor: ->
     super
+    @source
 
   events:
     'click .data-sources li': 'onDataSourceSelection'
@@ -25,11 +26,10 @@ class Settings extends Spine.Controller
     @html @template(@)
     
   onDataSourceSelection: (e) =>
-    console.log e
-    source = $(e.currentTarget).data('source')
+    @source = $(e.currentTarget).data('source')
 
     @sourceDataBox.empty()
-    switch source
+    switch @source
       when "api" then @sourceDataBox.append(require('views/settings-options-sources')(@))
       when "channel" then @sourceDataBox.append(require('views/settings-options-channels')(@))
     @sourceDataBox.parent().show()
@@ -40,10 +40,9 @@ class Settings extends Spine.Controller
 
   onSubmit: (e) =>
     e.preventDefault()
-    params = @params.val()
-    # source = @channel.find('option:selected').val() or @source.find('option:selected').val()
+    unless @source == 'channel'
+      params = @params.val()
     source = @sourceDataBox.val()
-    console.log source
     @$el.parent().toggleClass 'settings-active'
     @tool.bindTool source, params
 
