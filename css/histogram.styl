@@ -1,13 +1,16 @@
 .histogram div svg
-  height: 450px
-  width: 570px
+  height: 500px
+  width: 700px
 
-  .bar
-    fill: $blue
-    text
-      fill: #000
+  .bar rect
+    fill: steelblue
+    shape-rendering: crispEdges
+    stroke: #000
 
-  .axis path
+  .bar text
+    fill: #fff
+
+  .axis path, .axis line
     shape-rendering: crispEdges;
     stroke: #000
     fill: none 
