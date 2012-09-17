@@ -7,15 +7,12 @@ class Settings extends Spine.Controller
 
   events:
     'click .data-sources li': 'onDataSourceSelection'
-    'change select.source-choices': 'onSourceChoiceSelection'
     submit: 'onSubmit'
 
   elements: 
     '.source-choices'      : 'sourceDataBox'
     '.data-points'         : 'dataPoints'
     '.submit'              : 'submit'
-    'select.channel'       : 'channel'
-    'select.source'        : 'source'
     'input[name="params"]' : 'params'
 
   className: "settings"
@@ -35,8 +32,6 @@ class Settings extends Spine.Controller
     @sourceDataBox.parent().show()
     @dataPoints.show()
     @submit.show()
-
-  onSourceChoiceSelection: (e) =>
 
   onSubmit: (e) =>
     e.preventDefault()
