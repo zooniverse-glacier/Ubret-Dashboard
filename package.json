@@ -9,7 +9,7 @@
     "jqueryify": "~0.0.1",
     "underscore": "*",
     "spine": "~1.0.8",
-    "ubret" : "git+ssh://git@github.com:zooniverse/Ubret.git#44f505f154",
+    "ubret" : "git+ssh://git@github.com:zooniverse/Ubret#HEAD",
     "zooniverse" : "git+ssh://git@github.com:zooniverse/Zooniverse#HEAD",
     "node-pubsub" : "*"
   },
