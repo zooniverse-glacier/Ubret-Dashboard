@@ -1,0 +1,5 @@
+<% if @tool.channels: %>
+  <% for channel in @tool.channels: %>
+    <option value="<%- channel %>"><%- channel %></option>
+  <% end %>
+<% end %>

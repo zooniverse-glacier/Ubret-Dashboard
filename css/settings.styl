@@ -2,3 +2,27 @@
 
   label
     display: block
+
+  .source-data-box, .data-points, .submit
+    display: none
+
+  .data-sources
+    margin: 0
+    padding: 0
+    &:before, &:after
+      content: ' '
+      display: table
+    &:after
+      clear: both
+    li
+      float: left
+      width: 100px
+      height: 50px
+      margin: 0 8px 0 0
+      border: 1px solid #ccc
+      list-style: none
+      line-height: 50px
+      text-align: center
+
+  .tools-options
+    display: none
