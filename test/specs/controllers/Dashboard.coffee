@@ -1,12 +1,17 @@
 require = window.require
 
 describe 'Dashboard', ->
+  $ = require('jqueryify')
+  Spine = require('spine')
+  ToolWindow = require('controllers/ToolWindow')
   Dashboard = require('controllers/Dashboard')
-  BaseController = require('Ubret/lib/controllers/BaseController')
-  GalaxyZooSubject = require('Ubret/lib/models/GalaxyZooSubject')
+  BaseController = require('ubret/lib/controllers/BaseController')
+  Table         = require('ubret/lib/controllers/Table')
+  GalaxyZooSubject = require('ubret/lib/models/GalaxyZooSubject')
 
   beforeEach ->
-    @dashboard = new Dashboard
+
+    @dashboard = new Dashboard({el: ".dashboard"})
     @tool = sinon.stub(new BaseController)
 
   describe "#addTool", ->
@@ -36,3 +41,38 @@ describe 'Dashboard', ->
 
     it 'should create a new div for the added Tool', ->
       #expect(@dashboard.append).toHaveBeenCalled()
+
+  describe "#removeTool", ->
+    beforeEach ->
+      numTools = 5
+      @dashboard.tools = new Array
+      @dashboard.channels = new Array
+      for i in [1..5]
+        @dashboard.createTool Table
+
+      @tool = @dashboard.tools[2]
+      @dashboard.removeTool @tool
+
+    it 'should remove the specified tool from the list of published channels', ->
+      expect(@dashboard.channels).not.toContain @tool.channel
+
+    it 'should remove the specified tool from the dashboard', ->
+      expect(@dashboard.tools).not.toContain @tool
+
+    afterEach ->
+      @dashboard.removeTools()
+
+  describe "#removeTools", ->
+    beforeEach ->
+      spyOn(@dashboard, 'removeTool')
+      numTools = 5
+      for i in [1..5]
+        @dashboard.createTool Table
+      @dashboard.removeTools()
+
+    it 'should call removeTool for each tool on the dashboard', ->
+      expect(@dashboard.removeTool.calls.length).toEqual(5)
+
+    it 'should empty the workspace', ->
+      expect($('#{@dashboard.workspace}').html()).toBeNull()
+

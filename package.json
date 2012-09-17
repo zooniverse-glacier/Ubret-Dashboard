@@ -10,7 +10,7 @@
     "underscore": "*",
     "spine": "~1.0.8",
     "ubret" : "git+ssh://git@github.com:zooniverse/Ubret.git#HEAD",
-    "zooniverse" : "git+ssh://git@github.com:zooniverse/Zooniverse#HEAD",
+    "zooniverse" : "git+ssh://git@github.com:zooniverse/Zooniverse.git#HEAD",
     "node-pubsub" : "*"
   },
   "devDependencies" : {
