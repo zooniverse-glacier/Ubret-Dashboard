@@ -27,10 +27,11 @@ class Settings extends Spine.Controller
 
     @sourceDataBox.empty()
     switch @source
-      when "api" then @sourceDataBox.append(require('views/settings-options-sources')(@))
+      when "api" 
+        @sourceDataBox.append(require('views/settings-options-sources')(@))
+        @dataPoints.show()
       when "channel" then @sourceDataBox.append(require('views/settings-options-channels')(@))
     @sourceDataBox.parent().show()
-    @dataPoints.show()
     @submit.show()
 
   onSubmit: (e) =>
