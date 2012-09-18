@@ -1,6 +1,11 @@
 {
   "name": "Ubret-Dashboard",
   "version": "0.0.1",
+  "scripts" : {
+    "pretest" : "hem server --port 9123 & echo $! > hem.pid", 
+    "test" : "sleep 2; jasmine-phantom-node --port 9123 --url /test/test.html",
+    "posttest" : "kill `cat hem.pid`; rm hem.pid"
+  },
   "dependencies": { 
     "serveup": "~0.0.4",
     "hem": "git://github.com/kapadia/hem.git",
