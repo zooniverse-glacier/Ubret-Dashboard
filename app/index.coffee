@@ -1,6 +1,5 @@
 require('lib/setup')
 
-Spine   = require('spine')
 Api     = require 'zooniverse/lib/api'
 Config  = require 'lib/config'
 
