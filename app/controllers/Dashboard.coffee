@@ -1,3 +1,4 @@
+Spine = require('spine')
 _      = require('underscore/underscore')
 ToolWindow = require('controllers/ToolWindow')
 

@@ -1,18 +1,11 @@
 require = window.require
 
 describe 'Dashboard', ->
-  $ = require('jqueryify')
-  Spine = require('spine')
-  ToolWindow = require('controllers/ToolWindow')
   Dashboard = require('controllers/Dashboard')
-  BaseController = require('ubret/lib/controllers/BaseController')
-  Table         = require('ubret/lib/controllers/Table')
-  GalaxyZooSubject = require('ubret/lib/models/GalaxyZooSubject')
 
   beforeEach ->
-
-    @dashboard = new Dashboard({el: ".dashboard"})
-    @tool = sinon.stub(new BaseController)
+    @dashboard = new Dashboard 
+    @tool = jasmine.createSpy()
 
   describe "#addTool", ->
     beforeEach ->
@@ -44,11 +37,10 @@ describe 'Dashboard', ->
 
   describe "#removeTool", ->
     beforeEach ->
-      numTools = 5
-      @dashboard.tools = new Array
-      @dashboard.channels = new Array
+      Table = jasmine.createSpy('Table')
       for i in [1..5]
-        @dashboard.createTool Table
+        @dashboard.tools[i] = new Table {channel: "table-#{i}"}
+        @dashboard.channels[i] = "table-#{i}"
 
       @tool = @dashboard.tools[2]
       @dashboard.removeTool @tool
@@ -57,22 +49,20 @@ describe 'Dashboard', ->
       expect(@dashboard.channels).not.toContain @tool.channel
 
     it 'should remove the specified tool from the dashboard', ->
-      expect(@dashboard.tools).not.toContain @tool
-
-    afterEach ->
-      @dashboard.removeTools()
+      expect(@dashboard.tools[2]).not.toBe @tool
 
   describe "#removeTools", ->
     beforeEach ->
+      @dashboard.render()
       spyOn(@dashboard, 'removeTool')
-      numTools = 5
+      Table = jasmine.createSpy('Table')
       for i in [1..5]
-        @dashboard.createTool Table
+        @dashboard.tools[i] = new Table
       @dashboard.removeTools()
 
     it 'should call removeTool for each tool on the dashboard', ->
       expect(@dashboard.removeTool.calls.length).toEqual(5)
 
     it 'should empty the workspace', ->
-      expect($('#{@dashboard.workspace}').html()).toBeNull()
+      expect(@dashboard.workspace.html()).toBe ''
 
