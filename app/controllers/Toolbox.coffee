@@ -1,3 +1,4 @@
+Spine = require 'spine'
 
 class Toolbox extends Spine.Controller
   
