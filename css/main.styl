@@ -6,11 +6,22 @@
    user-select: none;
 }
 
+
+body
+  margin: 0
+  padding: 0
+  overflow: scroll
+
 #ubret
   width 100%
 
   .dashboard
-    margin-bottom 140px
+    margin-bottom 80px
+    &:before,&:after
+      content: ''
+      display: table
+    &:after
+      clear: both
 
     .tools
       padding 10px
@@ -21,9 +32,9 @@
         min-width: 233px
         padding: 20px 10px 10px
         margin: 10px
-        background: rgba(255, 255, 255, 0.8)
+        background: rgba(255, 255, 255, 0.93)
         border: 1px $gray1 solid
-        box-shadow(2px 2px 2px $gray3)
+        box-shadow(0 0 10px #666)
 
         .settings
           display: none
