@@ -2,11 +2,6 @@
    -moz-user-select: -moz-none;
    -khtml-user-select: none;
    -webkit-user-select: none;
-
-   /*
-     Introduced in IE 10.
-     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-   */
    -ms-user-select: none;
    user-select: none;
 }
@@ -38,7 +33,6 @@
 
         .window-controls
           position: absolute
-          visibility: hidden
           top: 0
           left: 0
           width: 100%
@@ -52,10 +46,6 @@
             li
               display: inline
               padding-right: 20px
-
-
-      .window:hover .window-controls
-        visibility: visible
 
       .window.settings-active
 
