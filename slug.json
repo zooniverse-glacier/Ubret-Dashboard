@@ -17,7 +17,6 @@
   "libs": [
     "./node_modules/Zooniverse/vendor/base64.js",
     "./vendor/leaflet-src.js",
-    "./vendor/d3.v2.js",
-    "./vendor/nv.d3.js"
+    "./vendor/d3.v2.js"
   ]
 }
