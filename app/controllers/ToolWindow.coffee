@@ -40,9 +40,6 @@ class ToolWindow extends Spine.Controller
     @release()
 
   startDrag: (e) =>
-    @$el.css {
-        'position': 'absolute'
-      }
     $('body').addClass 'unselectable'
     elWidth = @$el.outerWidth()
     elHeight = @$el.outerHeight()
