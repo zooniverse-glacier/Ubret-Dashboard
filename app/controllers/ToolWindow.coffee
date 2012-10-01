@@ -40,6 +40,9 @@ class ToolWindow extends Spine.Controller
     @release()
 
   startDrag: (e) =>
+    @$el.css {
+        'position': 'absolute'
+      }
     $('body').addClass 'unselectable'
     elWidth = @$el.outerWidth()
     elHeight = @$el.outerHeight()
@@ -49,7 +52,7 @@ class ToolWindow extends Spine.Controller
     relX = e.pageX - mouseOffset.left
     relY = e.pageY - mouseOffset.top
 
-    @$(document).on 'mousemove', (e) =>
+    $(document).on 'mousemove', (e) =>
       if @dragging
         @$el.offset
           top: e.pageY - relY
