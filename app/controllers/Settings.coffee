@@ -1,45 +1,21 @@
 Spine = require('spine')
+DataSettings = require('controllers/DataSettings')
 
 class Settings extends Spine.Controller
   constructor: ->
     super
-    @source
-
-  events:
-    'click .data-sources li': 'onDataSourceSelection'
-    submit: 'onSubmit'
-
-  elements: 
-    '.source-choices'      : 'sourceDataBox'
-    '.data-points'         : 'dataPoints'
-    '.submit'              : 'submit'
-    'input[name="params"]' : 'params'
+    @settings = new Array
+    if @toolSettings.length isnt 0
+      for setting in @toolSettings
+        @settings.push(new setting {tool: @tool})
+    else
+      @settings.push(new DataSettings {tool: @tool})
 
   className: "settings"
 
-  template: require('views/settings')
-
   render: =>
-    @html @template(@)
-    
-  onDataSourceSelection: (e) =>
-    @source = $(e.currentTarget).data('source')
-
-    @sourceDataBox.empty()
-    switch @source
-      when "api" 
-        @sourceDataBox.append(require('views/settings-options-sources')(@))
-        @dataPoints.show()
-      when "channel" then @sourceDataBox.append(require('views/settings-options-channels')(@))
-    @sourceDataBox.parent().show()
-    @submit.show()
-
-  onSubmit: (e) =>
-    e.preventDefault()
-    unless @source == 'channel'
-      params = @params.val()
-    source = @sourceDataBox.val()
-    @$el.parent().toggleClass 'settings-active'
-    @tool.bindTool source, params
+    for setting in @settings
+      setting.render()
+      @append setting.el 
 
 module.exports = Settings

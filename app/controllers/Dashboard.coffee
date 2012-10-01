@@ -1,4 +1,4 @@
-_      = require('underscore/underscore')
+_ = require('underscore/underscore')
 ToolWindow = require('controllers/ToolWindow')
 
 class Dashboard extends Spine.Controller
@@ -42,7 +42,7 @@ class Dashboard extends Spine.Controller
       tool.receiveData sourceTool.filteredData
 
   createWindow: (tool) ->
-    window = new ToolWindow {tool: tool}
+    window = new ToolWindow {tool: tool, count: @count}
     window.render()
     window.el.toggleClass 'settings-active'
     @workspace.append window.el

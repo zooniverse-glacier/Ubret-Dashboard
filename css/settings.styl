@@ -3,15 +3,21 @@
   border: 1px $gray1 solid
   box-shadow(6px 6px 10px #ababab)
   height: inherit
-  width: 300px
+  width: 270px
   padding: 10px
+  background: #fff
   -webskit-transition: right 0.5s ease-in-out
   -moz-transition: right 0.5s ease-in-out
   -o-transition: right 0.5s ease-in-out
   transition: right 0.5s ease-in-out
 
   label
-    display: block
+    display: inline
+    font-size: 12px
+
+  input, select
+    margin-bottom: 5px
+    font-size: 12px
 
   .source-data-box, .data-points, .submit
     display: none
@@ -22,27 +28,38 @@
     font-size: 13px
     padding: 3px 5px
 
+  h2
+    font-size: 14px
+    font-weight: 700
+
   .data-sources
-    margin: 0
-    padding: 0
+    padding: 3px
+    border-bottom: 1px solid #ccc
+    list-style: none
+
     &:before, &:after
       content: ' '
       display: table
     &:after
       clear: both
+
     li
-      float: left
       width: 100px
-      height: 50px
       margin: 0 10px 0 0
       border: 1px solid #ccc
-      list-style: none
-      line-height: 50px
       text-align: center
+      padding: 5px
+      border-radius: 3px 3px 0 0
+      display: inline
+      font-size: 12px
+
       &:hover
         background: #fafafa
         border: 1px solid #900
         cursor: pointer
+
+      &.selected
+        border-bottom: 1px solid #fff
 
   .tools-options
     display: none

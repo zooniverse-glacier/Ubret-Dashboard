@@ -12,9 +12,10 @@ class ToolWindow extends Spine.Controller
 
   constructor: ->
     super
-    @settings = @tool.settings or new Settings {tool: @tool}
+    @settings = new Settings { tool: @tool, toolSettings: @tool.settings or [] }
 
   render: =>
+    @el.css 'z-index', @count
     @tool.render()
     @settings.render()
     @append @windowControls()

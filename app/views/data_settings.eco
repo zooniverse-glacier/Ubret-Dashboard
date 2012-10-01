@@ -1,0 +1,16 @@
+<h2>Data</h2>
+
+<ul class="data-sources">
+  <li class="api" data-source="api">External API</li>
+  <li class="channel" data-source="channel">Other Tool</li>
+</ul>
+
+<div class="source-data-box">
+  <label>Data Source: <select class="source-choices" name="source-choices"></select></label>
+</div>
+
+<div class="data-points">
+  <label>Number: <input type="text" name="params" value="10"></label>
+</div>
+
+<button name="fetch" type="button">Fetch Data</button>

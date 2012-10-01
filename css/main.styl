@@ -29,25 +29,25 @@ body
       .window
         position: relative
         float: left
-        min-width: 233px
+        min-width: 360px
         background: rgba(255, 255, 255, 1)
         border: 1px $gray1 solid
         border-radius: 3px
         box-shadow(6px 6px 10px #ababab)
-        padding: 20px 10px 10px
-        padding-right: 0px
+        padding-top: 20px
 
         .settings
           position: absolute 
           z-index: 1
-          right: 0
-          top: 30%
+          right: 10px
+          top: 20%
 
         .tool
           position: relative
           z-index: 2
-          background: rgba(255, 255, 255, 0.93)
-          padding-right: 10px
+          background: rgba(255, 255, 255, 1)
+          padding: 10px
+          min-height: 200px
 
         .window-controls
           position: absolute
@@ -69,7 +69,7 @@ body
       .window.settings-active
 
         .settings
-          right: -320px
+          right: -290px
           display: block
 
   .toolbox
