@@ -1,0 +1,4 @@
+<h2>Scatterplot Options</h2>
+
+<label>x variable: <select class="x-var"><option val="">Select X-Axis</option><%- @options %></select></label>
+<label>y variable: <select class="y-var"><option val="">Select Y-Axis</option><%- @options %></select></label>
