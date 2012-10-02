@@ -1,4 +1,10 @@
 <h2>Scatterplot Options</h2>
 
-<label>x variable: <select class="x-var"><option val="">Select X-Axis</option><%- @options %></select></label>
-<label>y variable: <select class="y-var"><option val="">Select Y-Axis</option><%- @options %></select></label>
+<div class="x-axis">
+  <label>x variable: <select class="x-var"><option value="">Select X-Axis</option><%- @options %></select></label>
+  <label>x decimal places: <input type="text" name="x-format" value="0"></label>
+</div>
+<div class="y-axis">
+  <label>y variable: <select class="y-var"><option value="">Select Y-Axis</option><%- @options %></select></label>
+  <label>y decimal places: <input type="text" name="y-format" value="0"></label>
+</div>

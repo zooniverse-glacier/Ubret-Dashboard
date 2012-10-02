@@ -1,6 +1,6 @@
 <h2>Data</h2>
 
-<ul class="data-sources">
+<ul class="data-sources settings-nav">
   <li class="api" data-source="api">External API</li>
   <li class="channel" data-source="channel">Other Tool</li>
 </ul>

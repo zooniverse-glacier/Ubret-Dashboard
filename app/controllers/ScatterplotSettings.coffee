@@ -12,14 +12,24 @@ class ScatterplotSettings extends Spine.Controller
   template: require 'views/scatterplot_settings'
 
   render: =>
-    @append @template(@)
+    @html @template(@)
 
   buildOptions: =>
     options = new Array
     optionsTmpl = require 'views/scatterplot_options_settings'
 
-    keys = @tool.extractKeys @tool.data[0]
-    
+    @tool.extractKeys @tool.data[0]
+    for key in @tool.keys
+      prettyKey = @tool.prettyKey key
+      options.push optionsTmpl({ key, prettyKey })
 
+    @options = options.join '\n' 
+    @render()
 
-  
+  setXVar: (e) =>
+    @tool.setXVar $(e.currentTarget).val()
+
+  setYVar: (e) =>
+    @tool.setYVar $(e.currentTarget).val()
+
+module.exports = ScatterplotSettings

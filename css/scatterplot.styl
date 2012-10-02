@@ -1,1 +1,31 @@
-../node_modules/Ubret/css/scatterplot.styl
+.scatterplot div svg
+  height: 400px
+  width: 480px
+
+  .tooltip
+    font-size: 10px
+    position: absolute
+    background: $gray1
+    border-radius: 5px
+    box-shadow(3px 3px 3px #000)
+    opacity:  .6
+
+    ul
+      list-style-type: none
+      margin: 0
+      padding: 5px
+
+  svg
+    display: inline
+
+    .point circle
+      shape-rendering: crispEdges
+
+    .axis path, .axis line
+      shapde-rendering: crispEdges
+      stroke: #000
+      fill: none
+      stroke-width: 1px
+
+    text
+      font-size: 12px

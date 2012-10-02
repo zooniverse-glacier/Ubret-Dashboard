@@ -1,1 +1,1 @@
-<option val="<%- @key %>"><%- @prettyKey %></option>
+<option value="<%- @key %>"><%- @prettyKey %></option>
