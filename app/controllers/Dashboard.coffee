@@ -44,7 +44,7 @@ class Dashboard extends Spine.Controller
   createWindow: (tool) ->
     window = new ToolWindow {tool: tool, count: @count}
     window.render()
-    window.el.toggleClass 'settings-active'
+    window.window.toggleClass 'settings-active'
     @workspace.append window.el
     window.bind 'remove-tool', @removeTool
 

@@ -2,7 +2,7 @@ Spine = require('spine')
 Settings = require('controllers/Settings')
 
 class ToolWindow extends Spine.Controller
-  className: "window"
+  className: "window-container"
 
   events: 
     'click .close-window'    : 'closeWindow'
@@ -10,31 +10,30 @@ class ToolWindow extends Spine.Controller
     'mouseup'   : 'endDrag'
     'click .toggle-settings' : 'toggleSettings'
 
+  elements:
+    '.window' : 'window'
+
   constructor: ->
     super
     @settings = new Settings { tool: @tool, toolSettings: @tool.settings or [] }
 
+  template: require 'views/window'
+
   render: =>
+    title = @tool.channel
+    @html @template({title})
+
     @el.css 'z-index', @count
+
     @tool.render()
     @settings.render()
-    @append @windowControls()
-    @append @tool.el
-    @append @settings.el
 
-  windowControls: ->
-    """
-    <div class="window-controls">
-      <ul>
-        <li><a class="close-window">X</a></li>
-        <li><a class="move-window">#{@tool.channel}</a></li>
-        <li><a class="toggle-settings">settings</a></li>
-      </ul>
-    </div>
-    """
+    @window.append @settings.el
+    @window.append @tool.el
 
   toggleSettings: (e) =>
-    @$el.toggleClass 'settings-active'
+    toolWidth = @tool.el.width()
+    @window.toggleClass 'settings-active'
 
   closeWindow: (e) =>
     @trigger 'remove-tool', @tool

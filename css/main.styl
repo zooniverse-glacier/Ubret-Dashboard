@@ -28,28 +28,26 @@ body
 
       .window
         position: relative
-        float: left
-        min-width: 360px
-        background: rgba(255, 255, 255, 1)
+        width: 640px
+        height: 480px
+        background: rgba(255, 255, 255, 0.93)
         border: 1px $gray1 solid
         border-radius: 3px
-        box-shadow(6px 6px 10px #ababab)
+        box-shadow(0 0 10px #ababab)
+        padding: 10px
         padding-top: 20px
+        overflow: hidden
+        resize: both
 
         .settings
-          position: absolute 
-          z-index: 1
-          right: 10px
-          top: 20%
+          width: 0
+          float: left
+          display: inline
 
         .tool
-          position: relative
-          z-index: 2
-          background: rgba(255, 255, 255, 1)
-          padding: 10px
-          min-height: 200px
+          display: inline
+          width: inherit
           overflow: scroll
-          width: 640px
 
         .window-controls
           position: absolute
@@ -71,8 +69,10 @@ body
       .window.settings-active
 
         .settings
-          right: -290px
-          display: block
+          width: 20%
+
+        .tool
+          width: 300px
 
   .toolbox
     border-top 1px $black solid
