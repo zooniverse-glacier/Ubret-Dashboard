@@ -40,14 +40,25 @@ body
         resize: both
 
         .settings
-          width: 0
-          float: left
-          display: inline
+          width: 240px
+          position: absolute
+          height: inherit
+          transform: translateX(-250px)
+          top: 20px
 
         .tool
           display: inline
+          float: left
+          overflow: auto
+          position: absolute
+          top: 20px
+          -webkit-transition: all 0.5s ease-in-out
+          -moz-transition: all 0.5s ease-in-out
+          -o-transition: all 0.5s ease-in-out
+          transition: all 0.5s ease-in-out
+          padding-top: 10px
+          translateX(0px)
           width: inherit
-          overflow: scroll
 
         .window-controls
           position: absolute
@@ -69,21 +80,25 @@ body
       .window.settings-active
 
         .settings
-          width: 240px
+          transform: translateX(0px)
+
+        .tool
+          transform: translateX(250px)
 
   .toolbox
-    border-top 1px $black solid
-    background-color $white
-    width 100%
-    margin 0
-    position fixed
-    bottom 0
-    left 0
+    border-top: 1px $black solid
+    background-color: $white
+    width: 100%
+    margin: 0
+    position: fixed
+    bottom: 0
+    left: 0
+    z-index: 9999
 
     .tool
-      float left
-      margin 6px
-      padding 6px
+      float: left
+      margin: 6px
+      padding: 6px
 
     .action
       float: right

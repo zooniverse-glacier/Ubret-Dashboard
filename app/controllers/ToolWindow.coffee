@@ -5,10 +5,12 @@ class ToolWindow extends Spine.Controller
   className: "window-container"
 
   events: 
-    'click .close-window'    : 'closeWindow'
+    'click .close-window'        : 'closeWindow'
     'mousedown .window-controls' : 'startDrag'
-    'mouseup'   : 'endDrag'
-    'click .toggle-settings' : 'toggleSettings'
+    'mouseup'                    : 'endDrag'
+    'click .toggle-settings'     : 'toggleSettings'
+    'mousedown .window'          : 'updateSize'
+    'mouseup .window'            : 'resizeCheck'
 
   elements:
     '.window' : 'window'
@@ -24,12 +26,14 @@ class ToolWindow extends Spine.Controller
     @html @template({title})
 
     @el.css 'z-index', @count
-
     @tool.render()
     @settings.render()
-
     @window.append @settings.el
     @window.append @tool.el
+
+  updateSize: (e) =>
+    @width = @window.width()
+    @height = @window.height()
 
   toggleSettings: (e) =>
     toolWidth = @tool.el.width()
@@ -38,6 +42,12 @@ class ToolWindow extends Spine.Controller
   closeWindow: (e) =>
     @trigger 'remove-tool', @tool
     @release()
+
+  resizeCheck: (e) =>
+    if @window.width() isnt @width or @window.height() isnt @height
+      @tool.width = @window.width()
+      @tool.height = @window.height()
+      @tool.start()
 
   startDrag: (e) =>
     $('body').addClass 'unselectable'
@@ -58,5 +68,8 @@ class ToolWindow extends Spine.Controller
   endDrag: (e) =>
     $('body').removeClass 'unselectable'
     @dragging = false
+
+  onResize: (e) =>
+    console.log e
 
 module.exports = ToolWindow
