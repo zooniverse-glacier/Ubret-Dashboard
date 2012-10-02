@@ -1,0 +1,9 @@
+<div class="window">
+  <div class="window-controls">
+    <ul>
+      <li><a class="close-window">X</a></li>
+      <li><a class="move-window"><%- @title %></a></li>
+      <li><a class="toggle-settings">settings</a></li>
+    </ul>
+  </div>
+</div>
