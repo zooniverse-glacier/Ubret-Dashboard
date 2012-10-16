@@ -95,3 +95,11 @@ transition(args = all 0.5s cubic-bezier(0.0, 0.0, 0.35, 1.0))
   -o-transition: args
   transition: args
 
+clearfix()
+  &:before,
+  &:after
+      content: " "
+      display: table
+  &:after 
+      clear: both
+  

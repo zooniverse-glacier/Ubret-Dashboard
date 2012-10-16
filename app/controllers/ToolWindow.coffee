@@ -39,10 +39,12 @@ class ToolWindow extends Spine.Controller
     @height = @window.height()
 
   toggleSettings: (e) =>
+    e.stopPropagation()
     toolWidth = @tool.el.width()
     @window.toggleClass 'settings-active'
 
   closeWindow: (e) =>
+    e.stopPropagation()
     @trigger 'remove-tool', @tool
     @release()
 
