@@ -27,10 +27,25 @@ body
       padding 10px
       .window-container
         position: absolute
-        overflow: hidden
-        padding: 0 0 7px 0
         box-shadow(0 0 10px #ababab)
-        resize: both
+
+        .settings
+          position: absolute
+          top: 0
+          left: 0
+          width: 200px
+          height: inherit
+          overflow: hidden
+          resize: none // Hack
+          z-index: 0
+          transform translateX(0)
+          &.active
+            transform translateX(-200px) 
+
+
+      .tool
+        width: inherit
+        padding-top: 10px
 
       .window-controls
         position: relative
@@ -54,39 +69,17 @@ body
             float: left
             padding: 0 10px
             list-style: none
+
       .window
+        position: relative
         overflow: hidden
-        width: 640px
+        width: 400px
         min-height: 200px
-        background: rgba(255, 255, 255, 0.93)
+        padding: 0 10px 10px
+        z-index: 1
+        background: rgba(255, 255, 255, 1)
         border-radius: 3px
-        resize: none
-
-        .settings
-          width: 240px
-          position: absolute
-          height: inherit
-          transform: translateX(-250px)
-          top: 20px
-
-        .tool
-          display: inline
-          float: left
-          overflow: auto
-          position: absolute
-          top: 20px
-          transition()
-          padding-top: 10px
-          translateX(0px)
-          width: inherit
-
-
-      .window.settings-active
-        .settings
-          transform: translateX(0px)
-
-        .tool
-          transform: translateX(250px)
+        resize: both
 
   .toolbox
     border-top: 1px $black solid

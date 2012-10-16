@@ -15,6 +15,7 @@ class ToolWindow extends Spine.Controller
 
   elements:
     '.window' : 'window'
+    '.settings': 'settingsEl'
 
   constructor: ->
     super
@@ -32,8 +33,10 @@ class ToolWindow extends Spine.Controller
 
     @tool.render()
     @settings.render()
-    @window.append @settings.el
+    @prepend @settings.el
     @window.append @tool.el
+
+    @settingsEl.toggleClass 'active'
 
   updateSize: (e) =>
     @width = @window.width()
@@ -41,8 +44,7 @@ class ToolWindow extends Spine.Controller
 
   toggleSettings: (e) =>
     e.stopPropagation()
-    toolWidth = @tool.el.width()
-    @window.toggleClass 'settings-active'
+    @settingsEl.toggleClass 'active'
 
   focusWindow: (e) =>
     @el.css 'z-index', @getToolCount() + 1
@@ -91,7 +93,7 @@ class ToolWindow extends Spine.Controller
     doc_height = $(document).height()
 
     x_max = doc_width * 0.5
-    x_min = doc_width * 0.05
+    x_min = doc_width * 0.08
 
     y_max = doc_height * 0.5
     y_min = doc_height * 0.05

@@ -2,6 +2,8 @@ Spine = require('spine')
 DataSettings = require('controllers/DataSettings')
 
 class Settings extends Spine.Controller
+  className: 'settings'
+  
   constructor: ->
     super
     @settings = new Array
@@ -10,8 +12,6 @@ class Settings extends Spine.Controller
         @settings.push(new setting {tool: @tool})
     else
       @settings.push(new DataSettings {tool: @tool})
-
-  className: "settings"
 
   render: =>
     for setting in @settings

@@ -1,9 +1,6 @@
 Spine = require 'spine'
 
 class DataSettings extends Spine.Controller
-  constructor: ->
-    super
-
   events:
     'click .data-sources li'    : 'onDataSourceSelection'
     'click button[name="fetch"]': 'fetchData'
@@ -15,8 +12,10 @@ class DataSettings extends Spine.Controller
     'input[name="params"]' : 'params'
     '.source-data-box'     : 'sourceDataBox'
 
-
   template: require('views/data_settings')
+
+  constructor: ->
+    super
 
   render: =>
     @html @template(@)
