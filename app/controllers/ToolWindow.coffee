@@ -1,8 +1,10 @@
 Spine = require('spine')
+_ = require 'underscore/underscore'
 Settings = require('controllers/Settings')
 
 class ToolWindow extends Spine.Controller
   className: "window-container"
+  template: require 'views/window'
 
   events: 
     'click .window'            : 'focusWindow'
@@ -21,8 +23,6 @@ class ToolWindow extends Spine.Controller
     super
     @settings = new Settings { tool: @tool, toolSettings: @tool.settings or [] }
 
-  template: require 'views/window'
-
   render: =>
     title = @tool.channel
     @html @template({title})
@@ -38,7 +38,7 @@ class ToolWindow extends Spine.Controller
 
     @settingsEl.toggleClass 'active'
 
-  updateSize: (e) =>
+  updateSize: =>
     @width = @window.width()
     @height = @window.height()
 
@@ -47,14 +47,14 @@ class ToolWindow extends Spine.Controller
     @settingsEl.toggleClass 'active'
 
   focusWindow: (e) =>
-    @el.css 'z-index', @getToolCount() + 1
+    @el.css 'z-index', parseInt(@getMaxZIndex()) + 1
 
   closeWindow: (e) =>
     e.stopPropagation()
     @trigger 'remove-tool', @tool
     @release()
 
-  resizeCheck: (e) =>
+  resizeCheck: =>
     if @window.width() isnt @width or @window.height() isnt @height
       @tool.width = @window.width()
       @tool.height = @window.height()
@@ -85,8 +85,12 @@ class ToolWindow extends Spine.Controller
     console.log e
 
   # Helper functions
-  getToolCount: =>
-    $(".#{@className}").length
+  getMaxZIndex: =>
+    z_indexes = []
+    _.each $(".#{@className}"), (toolWindow) ->
+      z_indexes.push $(toolWindow).css 'z-index'
+
+    _.max z_indexes
 
   generatePosition: ->
     doc_width = $(document).width()
