@@ -25,19 +25,21 @@ body
 
     .tools
       padding 10px
+      .window-container
+        position: absolute
+        overflow: hidden
+        box-shadow(0 0 10px #ababab)
+        resize: both
 
       .window
-        position: relative
         width: 640px
-        height: 480px
+        min-height: 200px
         background: rgba(255, 255, 255, 0.93)
         border: 1px $gray1 solid
         border-radius: 3px
-        box-shadow(0 0 10px #ababab)
         padding: 10px
         padding-top: 20px
         overflow: hidden
-        resize: both
 
         .settings
           width: 240px
@@ -52,10 +54,7 @@ body
           overflow: auto
           position: absolute
           top: 20px
-          -webkit-transition: all 0.5s ease-in-out
-          -moz-transition: all 0.5s ease-in-out
-          -o-transition: all 0.5s ease-in-out
-          transition: all 0.5s ease-in-out
+          transition()
           padding-top: 10px
           translateX(0px)
           width: inherit

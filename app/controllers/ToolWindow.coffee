@@ -26,6 +26,9 @@ class ToolWindow extends Spine.Controller
     @html @template({title})
 
     @el.css 'z-index', @count
+
+    @el.offset @generatePosition()
+
     @tool.render()
     @settings.render()
     @window.append @settings.el
@@ -51,11 +54,11 @@ class ToolWindow extends Spine.Controller
 
   startDrag: (e) =>
     $('body').addClass 'unselectable'
-    elWidth = @$el.outerWidth()
-    elHeight = @$el.outerHeight()
+    elWidth = @el.outerWidth()
+    elHeight = @el.outerHeight()
     @dragging = true
 
-    mouseOffset = @$el.offset()
+    mouseOffset = @el.offset()
     relX = e.pageX - mouseOffset.left
     relY = e.pageY - mouseOffset.top
 
@@ -71,5 +74,25 @@ class ToolWindow extends Spine.Controller
 
   onResize: (e) =>
     console.log e
+
+  # Helper functions
+  generatePosition: ->
+    doc_width = $(document).width()
+    doc_height = $(document).height()
+
+    x_max = doc_width * 0.5
+    x_min = doc_width * 0.05
+
+    y_max = doc_height * 0.5
+    y_min = doc_height * 0.05
+
+    x = Math.random() * (x_max - x_min) + x_min
+    y = Math.random() * (y_max - y_min) + y_min
+
+    return {
+        top: y
+        left: x
+      }
+    
 
 module.exports = ToolWindow
