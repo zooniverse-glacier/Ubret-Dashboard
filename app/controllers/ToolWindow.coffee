@@ -5,10 +5,11 @@ class ToolWindow extends Spine.Controller
   className: "window-container"
 
   events: 
+    'click .window'            : 'focusWindow'
     'click .close-window'      : 'closeWindow'
+    'click .toggle-settings'   : 'toggleSettings'
     'mousedown .window-title'  : 'startDrag'
     'mouseup'                  : 'endDrag'
-    'click .toggle-settings'   : 'toggleSettings'
     'mousedown .window'        : 'updateSize'
     'mouseup .window'          : 'resizeCheck'
 
@@ -43,6 +44,9 @@ class ToolWindow extends Spine.Controller
     toolWidth = @tool.el.width()
     @window.toggleClass 'settings-active'
 
+  focusWindow: (e) =>
+    @el.css 'z-index', @getToolCount() + 1
+
   closeWindow: (e) =>
     e.stopPropagation()
     @trigger 'remove-tool', @tool
@@ -55,7 +59,7 @@ class ToolWindow extends Spine.Controller
       @tool.start()
 
   startDrag: (e) =>
-    @el.css 'z-index', @getToolCount() + 1
+    @focusWindow e
     $('body').addClass 'unselectable'
     elWidth = @el.outerWidth()
     elHeight = @el.outerHeight()

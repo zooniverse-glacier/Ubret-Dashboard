@@ -28,16 +28,39 @@ body
       .window-container
         position: absolute
         overflow: hidden
+        padding: 0 0 7px 0
         box-shadow(0 0 10px #ababab)
         resize: both
 
+      .window-controls
+        position: relative
+        width: 100%
+        background: #f6f6f6
+        border-bottom: 1px solid #ccc
+        z-index: 2
+
+        .window-title
+          z-index: 1
+          text-align: center
+
+        ul
+          position: absolute
+          top: 0
+          left: 0
+          margin: 0
+          padding: 0
+          z-index: 2
+          li
+            float: left
+            padding: 0 10px
+            list-style: none
       .window
+        overflow: hidden
         width: 640px
         min-height: 200px
         background: rgba(255, 255, 255, 0.93)
-        border: 1px $gray1 solid
         border-radius: 3px
-        overflow: hidden
+        resize: none
 
         .settings
           width: 240px
@@ -57,31 +80,8 @@ body
           translateX(0px)
           width: inherit
 
-        .window-controls
-          position: relative
-          width: 100%
-          background: #f6f6f6
-          border-bottom: 1px solid #ccc
-          z-index: 2
-
-          .window-title
-            z-index: 1
-            text-align: center
-
-          ul
-            position: absolute
-            top: 0
-            left: 0
-            margin: 0
-            padding: 0
-            z-index: 2
-            li
-              float: left
-              padding: 0 10px
-              list-style: none
 
       .window.settings-active
-
         .settings
           transform: translateX(0px)
 
