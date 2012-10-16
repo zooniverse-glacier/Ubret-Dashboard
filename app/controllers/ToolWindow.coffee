@@ -5,12 +5,12 @@ class ToolWindow extends Spine.Controller
   className: "window-container"
 
   events: 
-    'click .close-window'        : 'closeWindow'
-    'mousedown .window-controls' : 'startDrag'
-    'mouseup'                    : 'endDrag'
-    'click .toggle-settings'     : 'toggleSettings'
-    'mousedown .window'          : 'updateSize'
-    'mouseup .window'            : 'resizeCheck'
+    'click .close-window'      : 'closeWindow'
+    'mousedown .window-title'  : 'startDrag'
+    'mouseup'                  : 'endDrag'
+    'click .toggle-settings'   : 'toggleSettings'
+    'mousedown .window'        : 'updateSize'
+    'mouseup .window'          : 'resizeCheck'
 
   elements:
     '.window' : 'window'
@@ -55,6 +55,7 @@ class ToolWindow extends Spine.Controller
       @tool.start()
 
   startDrag: (e) =>
+    @el.css 'z-index', @getToolCount() + 1
     $('body').addClass 'unselectable'
     elWidth = @el.outerWidth()
     elHeight = @el.outerHeight()
@@ -66,7 +67,7 @@ class ToolWindow extends Spine.Controller
 
     $(document).on 'mousemove', (e) =>
       if @dragging
-        @$el.offset
+        @el.offset
           top: e.pageY - relY
           left: e.pageX - relX
 
@@ -78,6 +79,9 @@ class ToolWindow extends Spine.Controller
     console.log e
 
   # Helper functions
+  getToolCount: =>
+    $(".#{@className}").length
+
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
