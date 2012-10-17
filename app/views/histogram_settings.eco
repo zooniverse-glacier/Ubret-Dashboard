@@ -1,0 +1,6 @@
+<h2>Histogram Options</h2>
+
+<div class="variable">
+  <label>variable: <select class="var"><option value="">Select Variable</option><%- @options %></select></label>
+  <label>decimal places: <input type="text" name="format" value="0"></label>
+</div>

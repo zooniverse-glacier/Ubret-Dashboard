@@ -4,13 +4,27 @@ Table         = require('ubret/lib/controllers/Table')
 Map           = require('ubret/lib/controllers/Map')
 Scatterplot   = require('controllers/Scatterplot')
 SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
-Histogram     = require('ubret/lib/controllers/Histogram')
+Histogram     = require('controllers/Histogram')
 Statistics    = require('ubret/lib/controllers/Statistics')
 WWT           = require('ubret/lib/controllers/WWT')
 
+State = require 'controllers/state'
+
 class Main extends Spine.Controller
+  className: 'ubret'
+
   constructor: ->
     super
+    Spine.bind 'save-state', @saveState
+
+  active: (params) ->
+    if typeof params.state is 'string'
+      console.log 'noop'
+      # Load passed state
+
+    @setup()
+
+  setup: =>
     @append require('views/main')()
     
     # Create dashboard
@@ -40,6 +54,10 @@ class Main extends Spine.Controller
       when "Histogram" then @dashboard.createTool Histogram
       when "Statistics" then @dashboard.createTool Statistics
       when "WWT" then @dashboard.createTool WWT
+
+  saveState: =>
+    console.log 'state bound'
+    state = new State({dashboard: @dashboard})
 
   removeTools: =>
     @dashboard.removeTools()
