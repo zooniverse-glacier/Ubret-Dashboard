@@ -4,6 +4,9 @@
   </div>
 <% end %>
 
+<div class="save-state action">
+  <button type="button" name="save-state">Save State</button>
+</div>
 <div class="remove-tools action">
 	<button type="button" name="remove-tools">Clear Tools</button>
 </div>

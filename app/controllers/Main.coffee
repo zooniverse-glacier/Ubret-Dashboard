@@ -7,13 +7,20 @@ SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
 Histogram     = require('controllers/Histogram')
 Statistics    = require('ubret/lib/controllers/Statistics')
 
+State = require 'controllers/state'
+
 class Main extends Spine.Controller
   className: 'ubret'
 
   constructor: ->
     super
+    Spine.bind 'save-state', @saveState
 
   active: (params) ->
+    if typeof params.state is 'string'
+      console.log 'noop'
+      # Load passed state
+
     @setup()
 
   setup: =>
@@ -44,6 +51,10 @@ class Main extends Spine.Controller
       when "Subject Viewer" then @dashboard.createTool SubjectViewer
       when "Histogram" then @dashboard.createTool Histogram
       when "Statistics" then @dashboard.createTool Statistics
+
+  saveState: =>
+    console.log 'state bound'
+    state = new State({dashboard: @dashboard})
 
   removeTools: =>
     @dashboard.removeTools()

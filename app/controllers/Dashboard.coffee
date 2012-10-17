@@ -22,7 +22,6 @@ class Dashboard extends Spine.Controller
     @createWindow(tool)
 
   createTool: (className) ->
-    console.log className
     @count += 1
     name = className.name.toLowerCase()
 
@@ -32,8 +31,6 @@ class Dashboard extends Spine.Controller
       channel: "#{name}-#{@count}"
       sources: @sources
       channels: @channels
-
-    console.log tool
 
     @addTool tool
     tool.bind "subscribed", (source) =>
