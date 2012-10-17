@@ -15,17 +15,18 @@ class Main extends Spine.Controller
 
   constructor: ->
     super
+    @state = new State()
     Spine.bind 'save-state', @saveState
 
   active: (params) ->
-    if typeof params.state is 'string'
-      console.log 'noop'
-      # Load passed state
-
     @setup()
+    if typeof params.state is 'string'
+      # Load passed state
+      @loadState params.state
+
 
   setup: =>
-    @append require('views/main')()
+    @html require('views/main')()
     
     # Create dashboard
     @dashboard = new Dashboard({el: ".dashboard"})
@@ -56,8 +57,10 @@ class Main extends Spine.Controller
       when "WWT" then @dashboard.createTool WWT
 
   saveState: =>
-    console.log 'state bound'
-    state = new State({dashboard: @dashboard})
+    @state.save({dashboard: @dashboard})
+
+  loadState: (params) =>
+    @state.load({dashboard: @dashboard, state_id: params})
 
   removeTools: =>
     @dashboard.removeTools()
