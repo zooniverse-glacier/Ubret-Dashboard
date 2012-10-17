@@ -6,6 +6,7 @@ Scatterplot   = require('controllers/Scatterplot')
 SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
 Histogram     = require('ubret/lib/controllers/Histogram')
 Statistics    = require('ubret/lib/controllers/Statistics')
+WWT           = require('ubret/lib/controllers/WWT')
 
 class Main extends Spine.Controller
   constructor: ->
@@ -22,7 +23,8 @@ class Main extends Spine.Controller
       {name: "Map", desc: "Maps Things"},
       {name: "Table", desc: "Tables Things"}
       {name: "Histogram", desc: "Plots things historigrammically"},
-      {name: "Statistics", desc: "Make statistics appear"}
+      {name: "Statistics", desc: "Make statistics appear"},
+      {name: "WWT", desc: "Map with Worldwide Telescope"}
     ]} )
 
     @toolbox.render()
@@ -37,6 +39,7 @@ class Main extends Spine.Controller
       when "Subject Viewer" then @dashboard.createTool SubjectViewer
       when "Histogram" then @dashboard.createTool Histogram
       when "Statistics" then @dashboard.createTool Statistics
+      when "WWT" then @dashboard.createTool WWT
 
   removeTools: =>
     @dashboard.removeTools()

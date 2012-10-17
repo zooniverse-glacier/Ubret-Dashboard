@@ -32,7 +32,7 @@ class Dashboard extends Spine.Controller
       channel: "#{name}-#{@count}"
       sources: @sources
       channels: @channels
-
+      
     console.log tool
 
     @addTool tool
