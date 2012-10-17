@@ -10,7 +10,7 @@ class Dashboard extends Spine.Controller
 
   tools: []
   channels: []
-  sources: ["GalaxyZooSubject", "SkyServerSubject"]
+  sources: ["GalaxyZooSubject", "SkyServerSubject", "SDSS3SpectralData"]
   count: 0
 
   render: =>

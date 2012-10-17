@@ -7,6 +7,7 @@ SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
 Histogram     = require('controllers/Histogram')
 Statistics    = require('ubret/lib/controllers/Statistics')
 WWT           = require('ubret/lib/controllers/WWT')
+Spectra       = require('ubret/lib/controllers/Spectra')
 
 State = require 'controllers/state'
 
@@ -38,7 +39,8 @@ class Main extends Spine.Controller
       {name: "Table", desc: "Tables Things"}
       {name: "Histogram", desc: "Plots things historigrammically"},
       {name: "Statistics", desc: "Make statistics appear"},
-      {name: "WWT", desc: "Map with Worldwide Telescope"}
+      {name: "WWT", desc: "Map with Worldwide Telescope"},
+      {name: "Spectra", desc: "Visualize spectra from api.sdss3.org"}
     ]} )
 
     @toolbox.render()
@@ -54,6 +56,7 @@ class Main extends Spine.Controller
       when "Histogram" then @dashboard.createTool Histogram
       when "Statistics" then @dashboard.createTool Statistics
       when "WWT" then @dashboard.createTool WWT
+      when "Spectra" then @dashboard.createTool Spectra
 
   saveState: =>
     console.log 'state bound'

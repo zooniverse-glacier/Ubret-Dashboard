@@ -10,7 +10,8 @@
 </div>
 
 <div class="data-points">
-  <label>Number: <input type="text" name="params" value="10"></label>
+  <label>Count: <input type="text" name="params" value="10"></label>
+  <label>Identifier: <input type="text" name="identifier" ></label>
 </div>
 
 <button name="fetch" type="button">Fetch Data</button>

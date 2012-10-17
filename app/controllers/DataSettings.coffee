@@ -6,11 +6,12 @@ class DataSettings extends Spine.Controller
     'click button[name="fetch"]': 'fetchData'
 
   elements: 
-    '.source-choices'      : 'sourceData'
-    '.data-points'         : 'dataPoints'
-    '.submit'              : 'submit'
-    'input[name="params"]' : 'params'
-    '.source-data-box'     : 'sourceDataBox'
+    '.source-choices'           : 'sourceData'
+    '.data-points'              : 'dataPoints'
+    '.submit'                   : 'submit'
+    'input[name="params"]'      : 'params'
+    'input[name="identifier"]'  : 'identifier'
+    '.source-data-box'          : 'sourceDataBox'
 
   template: require('views/data_settings')
 
@@ -41,9 +42,13 @@ class DataSettings extends Spine.Controller
 
   fetchData: (e) =>
     e.preventDefault()
-    unless @source == 'channel'
-      params = @params.val()
     source = @sourceData.val()
+    
+    if source is 'SDSS3SpectralData'
+      params = @identifier.val()
+    else
+      unless @source == 'channel'
+        params = @params.val()
     @tool.bindTool source, params
 
 module.exports = DataSettings
