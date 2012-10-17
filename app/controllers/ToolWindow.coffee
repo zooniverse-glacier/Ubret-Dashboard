@@ -90,14 +90,14 @@ class ToolWindow extends Spine.Controller
     _.each $(".#{@className}"), (toolWindow) ->
       z_indexes.push $(toolWindow).css 'z-index'
 
-    _.max z_indexes
+    _.max z_indexes, (num) -> parseInt(num)
 
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
 
-    x_max = doc_width * 0.5
-    x_min = doc_width * 0.08
+    x_max = doc_width * 0.6
+    x_min = doc_width * 0.16
 
     y_max = doc_height * 0.5
     y_min = doc_height * 0.05
