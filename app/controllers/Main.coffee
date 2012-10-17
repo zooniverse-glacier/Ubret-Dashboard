@@ -4,7 +4,7 @@ Table         = require('ubret/lib/controllers/Table')
 Map           = require('ubret/lib/controllers/Map')
 Scatterplot   = require('controllers/Scatterplot')
 SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
-Histogram     = require('ubret/lib/controllers/Histogram')
+Histogram     = require('controllers/Histogram')
 Statistics    = require('ubret/lib/controllers/Statistics')
 
 class Main extends Spine.Controller
