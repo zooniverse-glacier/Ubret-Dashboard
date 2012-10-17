@@ -1,4 +1,2 @@
-<div id="ubret">
-  <div class="dashboard"></div>
-  <div class="toolbox"></div>
-</div>
+<div class="dashboard"></div>
+<div class="toolbox"></div>

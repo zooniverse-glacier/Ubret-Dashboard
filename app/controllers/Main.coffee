@@ -8,8 +8,15 @@ Histogram     = require('controllers/Histogram')
 Statistics    = require('ubret/lib/controllers/Statistics')
 
 class Main extends Spine.Controller
+  className: 'ubret'
+
   constructor: ->
     super
+
+  active: (params) ->
+    @setup()
+
+  setup: =>
     @append require('views/main')()
     
     # Create dashboard
