@@ -76,9 +76,9 @@ class State extends Spine.Controller
         console.log 'NT: ', new_tool
 
         if _.isUndefined tool.bind_options.params
-          new_tool.setBindOptions tool.bind_options.source, tool.bind_options.type, tool.bind_options.process
+          new_tool.setBindOptions tool.bind_options.source, tool.bind_options.process
         else
-          new_tool.setBindOptions tool.bind_options.source, tool.bind_options.type, tool.bind_options.params
+          new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params
 
         new_tool.receiveData tool.data
 
