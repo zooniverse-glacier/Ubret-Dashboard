@@ -55,6 +55,7 @@ class State extends Spine.Controller
       data = JSON.parse data.state
       console.log 'state: ', data
 
+      new_tools = []
       # Build initial state
       for tool in data.tools
         options =
@@ -74,6 +75,7 @@ class State extends Spine.Controller
           when "WWT" then new_tool = params.dashboard.createTool WWT, options
 
         console.log 'NT: ', new_tool
+        new_tools.push new_tool
 
         if _.isUndefined tool.bind_options.params
           new_tool.setBindOptions tool.bind_options.source, tool.bind_options.process
@@ -86,7 +88,11 @@ class State extends Spine.Controller
         toolWindow.offset tool.pos
         toolWindow.css 'z-index', tool.z_index
 
+      # Because some things may depend on all tools being available, run through the tools again to set setttings and the like.
+      # Likely better ways to do this.
+      for new_tool in new_tools
         # Set settings
+        toolWindow = new_tool.el.closest('.window-container')
         toolWindow.find(".data-sources [data-source=#{new_tool.bindOptions.type}]").click()
         toolWindow.find(".source-choices").val(new_tool.bindOptions.source)
         toolWindow.find(".data-points input[name=params]").val(new_tool.bindOptions.params)
