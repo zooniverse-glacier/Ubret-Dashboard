@@ -80,28 +80,28 @@ class State extends Spine.Controller
           when "Statistics" then new_tool = params.dashboard.createTool Statistics, options
           when "WWT" then new_tool = params.dashboard.createTool WWT, options
 
+        new_tool.data = tool.data
+        new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params
+
         new_tools.push new_tool
-
-        if _.isUndefined tool.bind_options.params
-          new_tool.setBindOptions tool.bind_options.source, tool.bind_options.process
-        else
-          new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params
-
-        new_tool.receiveData tool.data
 
         toolWindow = new_tool.el.closest('.window-container')
         toolWindow.offset tool.pos
         toolWindow.css 'z-index', tool.z_index
-
-
+        unless new_tool.settings_toggle
+          toolWindow.find(".settings").removeClass('active')
 
       # Because some things may depend on all tools being available, run through the tools again to set setttings and the like.
       # Likely better ways to do this.
       for new_tool in new_tools
+        if _.isUndefined new_tool.bindOptions.params
+          new_tool.subscribe new_tool.bindOptions.source, new_tool.bindOptions.process
+        else
+          new_tool.setBindOptions new_tool.bindOptions.source, new_tool.bindOptions.params
+          new_tool.receiveData new_tool.data
+
         # Set settings
         toolWindow = new_tool.el.closest('.window-container')
-        unless new_tool.settings_toggle
-          toolWindow.find(".settings").removeClass('active')
         toolWindow.find(".data-sources [data-source=#{new_tool.bindOptions.type}]").click()
         toolWindow.find(".source-choices").val(new_tool.bindOptions.source)
         toolWindow.find(".data-points input[name=params]").val(new_tool.bindOptions.params)
