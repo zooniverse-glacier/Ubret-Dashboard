@@ -22,8 +22,9 @@ class State extends Spine.Controller
 
     tools = []
     for tool in dashboard.tools
-      pos = tool.el.offset()
+      pos = @getOffset tool
       z_index = @getZIndex tool
+      settings_toggle = @getSettingsToggle tool
       obj = {
           name: tool.name
           className: tool.className
@@ -35,17 +36,17 @@ class State extends Spine.Controller
           binding: tool.bindOptions
           index: tool.count
           pos: pos
-          z_index: parseInt(z_index)
+          z_index: z_index
+          settings_toggle: settings_toggle
         }
-
       tools.push obj
 
     state = {
-        'tools': tools
+        tools: tools
       }
 
     $.post 'http://localhost:3001/state', {state: JSON.stringify(state)}, (data) ->
-      console.log 'state saved', data
+      console.log 'id: ', data.id, 'state:', JSON.parse(data.state)
 
   load: (params) =>
     @trigger 'remove-all-tools'
@@ -58,9 +59,8 @@ class State extends Spine.Controller
       new_tools = []
 
       # Normalize z-index
-      min_z_index = _.min data.tools, (tool) -> tool.z_index
-      _.each data.tools, (tool) ->
-        tool.z_index -= min_z_index
+      lowest_z_index = (_.min data.tools, (tool) -> tool.z_index).z_index
+      _.each data.tools, (tool) -> tool.z_index -= lowest_z_index
 
       # Build initial state
       for tool in data.tools
@@ -80,7 +80,6 @@ class State extends Spine.Controller
           when "Statistics" then new_tool = params.dashboard.createTool Statistics, options
           when "WWT" then new_tool = params.dashboard.createTool WWT, options
 
-        console.log 'NT: ', new_tool
         new_tools.push new_tool
 
         if _.isUndefined tool.bind_options.params
@@ -101,13 +100,24 @@ class State extends Spine.Controller
       for new_tool in new_tools
         # Set settings
         toolWindow = new_tool.el.closest('.window-container')
+        unless new_tool.settings_toggle
+          toolWindow.find(".settings").removeClass('active')
         toolWindow.find(".data-sources [data-source=#{new_tool.bindOptions.type}]").click()
         toolWindow.find(".source-choices").val(new_tool.bindOptions.source)
         toolWindow.find(".data-points input[name=params]").val(new_tool.bindOptions.params)
 
   # Helpers
+  getOffset: (tool) ->
+    toolWindow = tool.el.closest('.window-container')
+    toolWindow.offset()
+
   getZIndex: (tool) ->
-    z_index = if _.isNaN(parseInt(tool.el.css('z-index'))) then 0 else tool.el.css('z-index')
+    toolWindow = tool.el.closest('.window-container')
+    z_index = if toolWindow.css('z-index') is 'auto' then 0 else parseInt(toolWindow.css('z-index'))
+
+  getSettingsToggle: (tool) ->
+    toolWindow = tool.el.closest('.window-container')
+    if toolWindow.find('.settings').hasClass('active') then true else false
     
 
 module.exports = State
