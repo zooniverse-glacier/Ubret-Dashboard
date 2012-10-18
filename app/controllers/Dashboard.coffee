@@ -21,27 +21,27 @@ class Dashboard extends Spine.Controller
     @channels.push tool.channel
     @createWindow(tool)
 
-  createTool: (className, options = {}) ->
+  createTool: (toolInstance, options = {}) ->
     @count += 1
-    name = className.name.toLowerCase()
+    name = toolInstance.name.toLowerCase()
 
-    tool_params =
-      className: "#{name} tool" 
-      index: @count
-      channel: "#{name}-#{@count}"
-      sources: @sources
-      channels: @channels
+    unless options.length
+      options = 
+        className: "#{name} tool" 
+        index: @count
+        channel: "#{name}-#{@count}"
+        sources: @sources
+        channels: @channels
 
-    tool_options = _.defaults options, tool_params
-    console.log tool_options
-
-    tool = new className tool_options
+    tool = new toolInstance options
 
     @addTool tool
     tool.bind "subscribed", (source) =>
       sourceTool = _.find @tools, (sTool) ->
         sTool.channel == source
       tool.receiveData sourceTool.filteredData
+
+    tool
 
   createWindow: (tool) ->
     window = new ToolWindow {tool: tool, count: @count}

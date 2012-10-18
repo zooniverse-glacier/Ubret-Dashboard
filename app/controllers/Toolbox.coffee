@@ -14,8 +14,6 @@ class Toolbox extends Spine.Controller
     @html require('views/toolbox')(@) if @el.html
 
   saveDashboard: ->
-    # Load data from hooks?
-    console.log 'trigger save state'
     Spine.trigger 'save-state'
 
   clearDashboard: (e) =>

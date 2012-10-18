@@ -19,7 +19,7 @@ class DataSettings extends Spine.Controller
 
   render: =>
     @html @template(@)
-    
+
   onDataSourceSelection: (e) =>
     @sourceItem = $(e.currentTarget)
     @sourceItem.addClass 'selected'

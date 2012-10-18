@@ -1,12 +1,13 @@
 Dashboard     = require('controllers/Dashboard')
 Toolbox       = require('controllers/Toolbox')
-Table         = require('ubret/lib/controllers/Table')
-Map           = require('ubret/lib/controllers/Map')
-Scatterplot   = require('controllers/Scatterplot')
+
+Table = require('ubret/lib/controllers/Table')
+Map = require('ubret/lib/controllers/Map')
+Scatterplot = require('controllers/Scatterplot')
 SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
-Histogram     = require('controllers/Histogram')
-Statistics    = require('ubret/lib/controllers/Statistics')
-WWT           = require('ubret/lib/controllers/WWT')
+Histogram = require('controllers/Histogram')
+Statistics = require('ubret/lib/controllers/Statistics')
+WWT = require('ubret/lib/controllers/WWT')
 
 State = require 'controllers/state'
 
