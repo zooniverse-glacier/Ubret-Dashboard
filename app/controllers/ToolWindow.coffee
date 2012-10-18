@@ -35,6 +35,7 @@ class ToolWindow extends Spine.Controller
     @settings.render()
     @prepend @settings.el
     @window.append @tool.el
+    @focusWindow()
 
     @settingsEl.toggleClass 'active'
 
@@ -46,8 +47,9 @@ class ToolWindow extends Spine.Controller
     e.stopPropagation()
     @settingsEl.toggleClass 'active'
 
-  focusWindow: (e) =>
-    @el.css 'z-index', parseInt(@getMaxZIndex()) + 1
+  focusWindow: =>
+    unless @el.css('z-index') is @getMaxZIndex()
+      @el.css 'z-index', parseInt(@getMaxZIndex()) + 1
 
   closeWindow: (e) =>
     e.stopPropagation()

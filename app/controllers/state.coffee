@@ -56,6 +56,12 @@ class State extends Spine.Controller
       console.log 'state: ', data
 
       new_tools = []
+
+      # Normalize z-index
+      min_z_index = _.min data.tools, (tool) -> tool.z_index
+      _.each data.tools, (tool) ->
+        tool.z_index -= min_z_index
+
       # Build initial state
       for tool in data.tools
         options =
@@ -87,6 +93,8 @@ class State extends Spine.Controller
         toolWindow = new_tool.el.closest('.window-container')
         toolWindow.offset tool.pos
         toolWindow.css 'z-index', tool.z_index
+
+
 
       # Because some things may depend on all tools being available, run through the tools again to set setttings and the like.
       # Likely better ways to do this.
