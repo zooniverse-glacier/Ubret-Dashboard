@@ -9,6 +9,7 @@ SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
 Histogram = require('controllers/Histogram')
 Statistics = require('ubret/lib/controllers/Statistics')
 WWT = require('ubret/lib/controllers/WWT')
+Spectra = require('ubret/lib/controllers/Spectra')
 
 class State extends Spine.Controller
 
@@ -45,20 +46,20 @@ class State extends Spine.Controller
         tools: tools
       }
 
-    $.post 'http://localhost:3001/state', {state: JSON.stringify(state)}, (data) ->
+    $.post 'http://localhost:9295/state', {state: JSON.stringify(state)}, (data) ->
       console.log 'id: ', data.id, 'state:', JSON.parse(data.state)
 
   load: (params) =>
     @trigger 'remove-all-tools'
 
     console.log 'loading state...'
-    $.get "http://localhost:3001/state/#{params.state_id}", (data) ->
+    $.get "http://localhost:9295/state/#{params.state_id}", (data) ->
       data = JSON.parse data.state
       console.log 'state: ', data
 
       new_tools = []
 
-      # Normalize z-index
+      # Reset z-index to 0
       lowest_z_index = (_.min data.tools, (tool) -> tool.z_index).z_index
       _.each data.tools, (tool) -> tool.z_index -= lowest_z_index
 
@@ -69,7 +70,7 @@ class State extends Spine.Controller
           index: tool.index
           channel: tool.channel
           filters: tool.filters
-
+          
         # I don't like this
         switch tool.name
           when "Map" then new_tool = params.dashboard.createTool Map, options
@@ -79,17 +80,18 @@ class State extends Spine.Controller
           when "Histogram" then new_tool = params.dashboard.createTool Histogram, options
           when "Statistics" then new_tool = params.dashboard.createTool Statistics, options
           when "WWT" then new_tool = params.dashboard.createTool WWT, options
+          when "Spectra" then new_tool = params.dashboard.createTool Spectra, options
 
         new_tool.data = tool.data
         new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params
-
-        new_tools.push new_tool
 
         toolWindow = new_tool.el.closest('.window-container')
         toolWindow.offset tool.pos
         toolWindow.css 'z-index', tool.z_index
         unless new_tool.settings_toggle
           toolWindow.find(".settings").removeClass('active')
+
+        new_tools.push new_tool
 
       # Because some things may depend on all tools being available, run through the tools again to set setttings and the like.
       # Likely better ways to do this.
