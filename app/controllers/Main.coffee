@@ -8,8 +8,7 @@ Ubret = require 'ubret/lib'
 extended_tools = {}
 for tool in _.functions Ubret
   try
-    extended_tool = require 'controllers/tools/' + tool
-    Ubret[tool] = extended_tool
+    Ubret[tool] = require 'controllers/tools/' + tool
   catch err
 
 State = require 'controllers/state'
@@ -27,7 +26,6 @@ class Main extends Spine.Controller
     if typeof params.state is 'string' and params.state.length > 0
       # Load passed state
       @loadState params.state
-
 
   setup: =>
     @html require('views/main')()
