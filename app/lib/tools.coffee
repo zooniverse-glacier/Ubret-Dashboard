@@ -1,2 +1,0 @@
-Tools =
-  name: 'Table'

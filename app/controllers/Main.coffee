@@ -1,9 +1,16 @@
+_ = require('underscore/underscore')
+
 Dashboard     = require('controllers/Dashboard')
 Toolbox       = require('controllers/Toolbox')
 
-Ubret = require 'ubret/lib/index'
-Histogram = require 'controllers/Histogram'
-Scatterplot = require 'controllers/Scatterplot'
+Ubret = require 'ubret/lib'
+
+extended_tools = {}
+for tool in _.functions Ubret
+  try
+    extended_tool = require 'controllers/tools/' + tool
+    Ubret[tool] = extended_tool
+  catch err
 
 State = require 'controllers/state'
 
@@ -48,9 +55,9 @@ class Main extends Spine.Controller
     switch toolName
       when "Table" then @dashboard.createTool Ubret.Table
       when "Map" then @dashboard.createTool Ubret.Map
-      when "Scatterplot" then @dashboard.createTool Scatterplot
+      when "Scatterplot" then @dashboard.createTool Ubret.Scatterplot
       when "Subject Viewer" then @dashboard.createTool Ubret.SubjectViewer
-      when "Histogram" then @dashboard.createTool Histogram
+      when "Histogram" then @dashboard.createTool Ubret.Histogram
       when "Statistics" then @dashboard.createTool Ubret.Statistics
       when "WWT" then @dashboard.createTool Ubret.WWT
       when "Spectra" then @dashboard.createTool Ubret.Spectra
