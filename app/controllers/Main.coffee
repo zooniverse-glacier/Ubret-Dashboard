@@ -4,7 +4,7 @@ Dashboard     = require('controllers/Dashboard')
 Toolbox       = require('controllers/Toolbox')
 
 Ubret = require 'ubret/lib'
-
+# Might be a cleaner way to do this. Or possibly in build?
 extended_tools = {}
 for tool in _.functions Ubret
   try

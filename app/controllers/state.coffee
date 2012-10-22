@@ -2,6 +2,12 @@ Spine = require 'spine'
 _ = require 'underscore/underscore'
 
 Ubret = require 'ubret/lib'
+# Might be a cleaner way to do this. Or possibly in build?
+extended_tools = {}
+for tool in _.functions Ubret
+  try
+    Ubret[tool] = require 'controllers/tools/' + tool
+  catch err
 
 class State extends Spine.Controller
 
