@@ -1,14 +1,9 @@
 Dashboard     = require('controllers/Dashboard')
 Toolbox       = require('controllers/Toolbox')
 
-Table = require('ubret/lib/controllers/Table')
-Map = require('ubret/lib/controllers/Map')
-Scatterplot = require('controllers/Scatterplot')
-SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
-Histogram     = require('controllers/Histogram')
-Statistics    = require('ubret/lib/controllers/Statistics')
-WWT           = require('ubret/lib/controllers/WWT')
-Spectra       = require('ubret/lib/controllers/Spectra')
+Ubret = require 'ubret/lib/index'
+Histogram = require 'controllers/Histogram'
+Scatterplot = require 'controllers/Scatterplot'
 
 State = require 'controllers/state'
 
@@ -51,14 +46,14 @@ class Main extends Spine.Controller
 
   addTool: (toolName) =>
     switch toolName
-      when "Map" then @dashboard.createTool Map
-      when "Table" then @dashboard.createTool Table
+      when "Table" then @dashboard.createTool Ubret.Table
+      when "Map" then @dashboard.createTool Ubret.Map
       when "Scatterplot" then @dashboard.createTool Scatterplot
-      when "Subject Viewer" then @dashboard.createTool SubjectViewer
+      when "Subject Viewer" then @dashboard.createTool Ubret.SubjectViewer
       when "Histogram" then @dashboard.createTool Histogram
-      when "Statistics" then @dashboard.createTool Statistics
-      when "WWT" then @dashboard.createTool WWT
-      when "Spectra" then @dashboard.createTool Spectra
+      when "Statistics" then @dashboard.createTool Ubret.Statistics
+      when "WWT" then @dashboard.createTool Ubret.WWT
+      when "Spectra" then @dashboard.createTool Ubret.Spectra
 
   saveState: =>
     @state.save({dashboard: @dashboard})

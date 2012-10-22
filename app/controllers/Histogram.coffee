@@ -1,8 +1,8 @@
-UbretHistogram = require 'ubret/lib/controllers/Histogram'
+Ubret = require 'ubret/lib'
 DataSettings = require 'controllers/DataSettings'
 HistogramSettings = require 'controllers/HistogramSettings'
 
-class Histogram extends UbretHistogram
+class Histogram extends Ubret.Histogram
   
   settings: [DataSettings, HistogramSettings]
   

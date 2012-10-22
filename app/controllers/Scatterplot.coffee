@@ -1,8 +1,8 @@
-UbretScatterplot = require 'ubret/lib/controllers/Scatterplot'
+Ubret = require 'ubret/lib'
 DataSettings = require 'controllers/DataSettings'
 ScatterplotSettings = require 'controllers/ScatterplotSettings'
 
-class Scatterplot extends UbretScatterplot
+class Scatterplot extends Ubret.Scatterplot
   constructor: ->
     super
 

@@ -4,7 +4,6 @@ class HistogramSettings extends Spine.Controller
 
   constructor: ->
     super
-    console.log 'ect'
     @tool.bind 'data-received', @buildOptions
 
   events:

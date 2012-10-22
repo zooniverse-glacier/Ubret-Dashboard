@@ -1,15 +1,7 @@
 Spine = require 'spine'
 _ = require 'underscore/underscore'
 
-# Also wrong
-Table = require('ubret/lib/controllers/Table')
-Map = require('ubret/lib/controllers/Map')
-Scatterplot = require('controllers/Scatterplot')
-SubjectViewer = require('ubret/lib/controllers/SubjectViewer')
-Histogram = require('controllers/Histogram')
-Statistics = require('ubret/lib/controllers/Statistics')
-WWT = require('ubret/lib/controllers/WWT')
-Spectra = require('ubret/lib/controllers/Spectra')
+Ubret = require 'ubret/lib'
 
 class State extends Spine.Controller
 
@@ -73,14 +65,14 @@ class State extends Spine.Controller
           
         # I don't like this
         switch tool.name
-          when "Map" then new_tool = params.dashboard.createTool Map, options
-          when "Table" then new_tool = params.dashboard.createTool Table, options
-          when "Scatterplot" then new_tool = params.dashboard.createTool Scatterplot, options
-          when "Subject Viewer" then new_tool = params.dashboard.createTool SubjectViewer, options
-          when "Histogram" then new_tool = params.dashboard.createTool Histogram, options
-          when "Statistics" then new_tool = params.dashboard.createTool Statistics, options
-          when "WWT" then new_tool = params.dashboard.createTool WWT, options
-          when "Spectra" then new_tool = params.dashboard.createTool Spectra, options
+          when "Map" then new_tool = params.dashboard.createTool Ubret.Map, options
+          when "Table" then new_tool = params.dashboard.createTool Ubret.Table, options
+          when "Scatterplot" then new_tool = params.dashboard.createTool Ubret.Scatterplot, options
+          when "Subject Viewer" then new_tool = params.dashboard.createTool Ubret.SubjectViewer, options
+          when "Histogram" then new_tool = params.dashboard.createTool Ubret.Histogram, options
+          when "Statistics" then new_tool = params.dashboard.createTool Ubret.Statistics, options
+          when "WWT" then new_tool = params.dashboard.createTool Ubret.WWT, options
+          when "Spectra" then new_tool = params.dashboard.createTool Ubret.Spectra, options
 
         new_tool.data = tool.data
         new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params
