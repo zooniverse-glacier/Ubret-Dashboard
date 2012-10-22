@@ -22,7 +22,7 @@ class Main extends Spine.Controller
 
   active: (params) ->
     @setup()
-    if typeof params.state is 'string'
+    if typeof params.state is 'string' and params.state.length > 0
       # Load passed state
       @loadState params.state
 
