@@ -69,7 +69,7 @@ class State extends Spine.Controller
           channel: tool.channel
           filters: tool.filters
 
-        params.dashboard.createTool Ubret[tool.name], options
+        new_tool = params.dashboard.createTool Ubret[tool.name], options
 
         new_tool.data = tool.data
         new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params
