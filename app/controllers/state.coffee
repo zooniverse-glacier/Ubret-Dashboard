@@ -68,17 +68,8 @@ class State extends Spine.Controller
           index: tool.index
           channel: tool.channel
           filters: tool.filters
-          
-        # I don't like this
-        switch tool.name
-          when "Map" then new_tool = params.dashboard.createTool Ubret.Map, options
-          when "Table" then new_tool = params.dashboard.createTool Ubret.Table, options
-          when "Scatterplot" then new_tool = params.dashboard.createTool Ubret.Scatterplot, options
-          when "Subject Viewer" then new_tool = params.dashboard.createTool Ubret.SubjectViewer, options
-          when "Histogram" then new_tool = params.dashboard.createTool Ubret.Histogram, options
-          when "Statistics" then new_tool = params.dashboard.createTool Ubret.Statistics, options
-          when "WWT" then new_tool = params.dashboard.createTool Ubret.WWT, options
-          when "Spectra" then new_tool = params.dashboard.createTool Ubret.Spectra, options
+
+        params.dashboard.createTool Ubret[tool.name], options
 
         new_tool.data = tool.data
         new_tool.setBindOptions tool.bind_options.source, tool.bind_options.params

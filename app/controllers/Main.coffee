@@ -1,7 +1,8 @@
-_ = require('underscore/underscore')
+_ = require 'underscore/underscore'
 
-Dashboard     = require('controllers/Dashboard')
-Toolbox       = require('controllers/Toolbox')
+Dashboard = require 'controllers/Dashboard'
+State = require 'controllers/State'
+Toolbox = require 'controllers/Toolbox'
 
 Ubret = require 'ubret/lib'
 # Might be a cleaner way to do this. Or possibly in build?
@@ -11,10 +12,9 @@ for tool in _.functions Ubret
     Ubret[tool] = require 'controllers/tools/' + tool
   catch err
 
-State = require 'controllers/state'
-
 class Main extends Spine.Controller
   className: 'ubret'
+  template: require 'views/main'
 
   constructor: ->
     super
@@ -28,7 +28,7 @@ class Main extends Spine.Controller
       @loadState params.state
 
   setup: =>
-    @html require('views/main')()
+    @html @template()
     
     # Create dashboard
     @dashboard = new Dashboard({el: ".dashboard"})
@@ -36,9 +36,7 @@ class Main extends Spine.Controller
     
     tools = _.keys Ubret
     tools = _.map tools, (tool) ->
-      tool = {
-          name: tool
-        }
+      tool = {name: tool}
     @toolbox = new Toolbox({el: ".toolbox", tools: tools})
 
     @toolbox.render()

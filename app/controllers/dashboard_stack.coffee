@@ -1,7 +1,5 @@
 Spine = require 'spine'
 Main = require 'controllers/Main'
-State = require 'controllers/state'
-
 
 class DashboardStack extends Spine.Stack
   el: "body"

@@ -1,5 +1,6 @@
-_ = require('underscore/underscore')
-ToolWindow = require('controllers/ToolWindow')
+_ = require 'underscore/underscore'
+
+ToolWindow = require 'controllers/ToolWindow'
 
 class Dashboard extends Spine.Controller
   constructor: ->
@@ -13,13 +14,15 @@ class Dashboard extends Spine.Controller
   sources: ["GalaxyZooSubject", "SkyServerSubject", "SDSS3SpectralData"]
   count: 0
 
+  tool_list: []
+
   render: =>
     @html require('views/dashboard')()
 
   addTool: (tool) ->
     @tools.push tool
     @channels.push tool.channel
-    @createWindow(tool)
+    @createWindow tool
 
   createTool: (toolInstance, options = {}) ->
     @count += 1
@@ -34,6 +37,7 @@ class Dashboard extends Spine.Controller
         channels: @channels
 
     tool = new toolInstance options
+    @tool_list.push {ubret: tool}
 
     @addTool tool
     tool.bind "subscribed", (source) =>
@@ -50,6 +54,11 @@ class Dashboard extends Spine.Controller
     @workspace.append window.el
     window.bind 'remove-tool', @removeTool
 
+    # Fill tool_list array
+    selected = _.find @tool_list, (tool) ->
+      tool.ubret.channel == window.tool.channel
+    selected.window = window
+
   removeTool: (tool) =>
     @tools = _.without @tools, tool
     @channels = _.without @channels, tool.channel
@@ -57,6 +66,5 @@ class Dashboard extends Spine.Controller
   removeTools: =>
     _.each @tools, @removeTool
     @workspace.html ''
-
 
 module.exports = Dashboard
