@@ -4,7 +4,7 @@ Api = require 'zooniverse/lib/api'
 User = require 'zooniverse/lib/models/user'
 
 class GalaxyZoo extends Spine.Model
-  @configure 'GalaxyZooSubject', "image", "magnitude", "ra", "dec",  "zooniverse_id", "petrosian_radius", "survey", "survey_id"
+  @configure 'GalaxyZoo', "image", "magnitude", "ra", "dec",  "zooniverse_id", "petrosian_radius", "survey", "survey_id"
 
   constructor: ->
     super
@@ -39,7 +39,7 @@ class GalaxyZoo extends Spine.Model
 
 
 class Interactive extends Spine.Model
-  @configure 'InteractiveSubject', 'redshift', 'color', 'subject', 'classification', 'counters', 'image', 'zooniverse_id', 'absolute_brightness', 'apparent_brightness', 'absolute_radius'
+  @configure 'Interactive', 'redshift', 'color', 'subject', 'classification', 'counters', 'image', 'zooniverse_id', 'absolute_brightness', 'apparent_brightness', 'absolute_radius'
 
   @fetch: ({random, limit, user}) =>
     url = @url(random, limit, user)
@@ -78,7 +78,7 @@ class Interactive extends Spine.Model
 
 
 class SDSS3Spectral extends Spine.Model
-  @configure 'SDSS3SpectralData', 'ra', 'dec', 'z', 'wavelengths', 'best_fit', 'flux', 'spectralLines'
+  @configure 'SDSS3Spectral', 'ra', 'dec', 'z', 'wavelengths', 'best_fit', 'flux', 'spectralLines'
   
   @spectrumID = /(?:all|sdss|boss)\.\d{3,4}\.5\d{4}\.\d{1,3}\.(?:103|26|104|v5_4_45)?/
   
@@ -106,7 +106,7 @@ class SDSS3Spectral extends Spine.Model
 
 
 class SkyServer extends Spine.Model
-  @configure 'SkyServerSubject', 'objID', 'specObjID', 'ra', 'dec', 'raErr', 'decErr', 'b', 'l', 'mjd', 'type', 'u_band_magnitude', 'g_band_magnitude', 'r_band_magnitude', 'i_band_magnitude', 'z_band_magnitude', 'err_in_u_band_magnitude', 'err_in_g_band_magnitude', 'err_in_r_band_magnitude', 'err_in_i_band_magnitude', 'err_in_z_band_magnitude', 'petrosian_radius_u', 'petrosian_radius_g', 'petrosian_radius_r', 'petrosian_radius_i', 'petrosian_radius_z', 'extinction_u', 'extinction_g', 'extinction_r', 'extinction_i', 'extinction_z', 'fracDeV_u', 'fracDeV_g', 'fracDeV_r', 'fracDeV_i', 'fracDeV_z', 'zooniverse_id'
+  @configure 'SkyServer', 'objID', 'specObjID', 'ra', 'dec', 'raErr', 'decErr', 'b', 'l', 'mjd', 'type', 'u_band_magnitude', 'g_band_magnitude', 'r_band_magnitude', 'i_band_magnitude', 'z_band_magnitude', 'err_in_u_band_magnitude', 'err_in_g_band_magnitude', 'err_in_r_band_magnitude', 'err_in_i_band_magnitude', 'err_in_z_band_magnitude', 'petrosian_radius_u', 'petrosian_radius_g', 'petrosian_radius_r', 'petrosian_radius_i', 'petrosian_radius_z', 'extinction_u', 'extinction_g', 'extinction_r', 'extinction_i', 'extinction_z', 'fracDeV_u', 'fracDeV_g', 'fracDeV_r', 'fracDeV_i', 'fracDeV_z', 'zooniverse_id'
   
   @fetch: (count = 1) ->
     count = parseInt count
