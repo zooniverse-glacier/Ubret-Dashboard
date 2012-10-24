@@ -74,6 +74,27 @@
   globals.require.brunch = true;
 })();
 
+window.require.define({"test/models/data_source_test": function(exports, require, module) {
+  (function() {
+    var DataSource;
+
+    DataSource = require('models/data_source');
+
+    describe('DataSource', function() {
+      it('should be defined', function() {
+        return expect(DataSource).to.be.ok;
+      });
+      return it('should be instantiable', function() {
+        var dataSource;
+        dataSource = new DataSource;
+        return expect(dataSource).to.be.ok;
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require.define({"test/test-helpers": function(exports, require, module) {
   (function() {
     var chai, sinonChai;
@@ -92,4 +113,4 @@ window.require.define({"test/test-helpers": function(exports, require, module) {
   
 }});
 
-
+window.require('test/models/data_source_test');
