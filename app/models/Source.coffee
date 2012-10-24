@@ -83,7 +83,7 @@ class SDSS3Spectral extends Spine.Model
   @spectrumID = /(?:all|sdss|boss)\.\d{3,4}\.5\d{4}\.\d{1,3}\.(?:103|26|104|v5_4_45)?/
   
   @fetch: (sdssid) =>
-    match = sdssid.match(SDSS3SpectralData.spectrumID)
+    match = sdssid.match(@spectrumID)
     unless match?
       alert 'SDSS Spectral ID is malformed.'
       return null
@@ -92,7 +92,7 @@ class SDSS3Spectral extends Spine.Model
     specLineUrl = "http://api.sdss3.org/spectrumLines?id=#{sdssid}"
     
     return $.when($.ajax(spectrumUrl), $.ajax(specLineUrl)).done (spectrum, lines) =>
-      SDSS3SpectralData.fromJSON(spectrum[0], lines)
+      @fromJSON(spectrum[0], lines)
 
   @fromJSON: (spectrum, lines) =>
     @lastFetch = new Array
