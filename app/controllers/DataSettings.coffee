@@ -55,7 +55,8 @@ class DataSettings extends Spine.Controller
         params = @params.val()
 
     dataSource = Source[source]
-    @bindTool dataSource, params
+    source = dataSource if @source is 'api'
+    @bindTool @source, source, params
 
   setBindOptions: (source, params='') =>
     @bindOptions = {
@@ -67,7 +68,7 @@ class DataSettings extends Spine.Controller
     else
       @bindOptions = _.extend @bindOptions, {type: 'channel', process: @process}
 
-  bindTool: (source, params='') =>
+  bindTool: (source_type, source, params='') =>
     @setBindOptions source, params
     if @bindOptions.type is 'api'
       @getDataSource source, params
