@@ -1,4 +1,7 @@
+_ = require 'underscore/underscore'
 Spine = require 'spine'
+
+Source = require 'models/Source'
 
 class DataSettings extends Spine.Controller
   events:
@@ -17,6 +20,7 @@ class DataSettings extends Spine.Controller
 
   constructor: ->
     super
+    @bindOptions = new Object()
 
   render: =>
     @html @template(@)
@@ -44,11 +48,36 @@ class DataSettings extends Spine.Controller
     e.preventDefault()
     source = @sourceData.val()
     
-    if source is 'SDSS3SpectralData'
+    if source is 'SDSS3Spectral'
       params = @identifier.val()
     else
       unless @source == 'channel'
         params = @params.val()
-    @tool.bindTool source, params
+
+    dataSource = Source[source]
+    @bindTool dataSource, params
+
+  setBindOptions: (source, params='') =>
+    @bindOptions = {
+        source: source
+      }
+
+    if params
+      @bindOptions = _.extend @bindOptions, {type: 'api', params: params}
+    else
+      @bindOptions = _.extend @bindOptions, {type: 'channel', process: @process}
+
+  bindTool: (source, params='') =>
+    @setBindOptions source, params
+    if @bindOptions.type is 'api'
+      @getDataSource source, params
+    else if @bindOptions.type is 'channel'
+      @tool.subscribe source, @process
+    else
+      console.log 'err'
+
+  getDataSource: (source, params) =>
+    source.fetch(params).always =>
+      @tool.receiveData source.lastFetch
 
 module.exports = DataSettings
