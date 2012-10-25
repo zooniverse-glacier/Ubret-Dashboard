@@ -73,7 +73,7 @@ class DataSettings extends Spine.Controller
     if @bindOptions.type is 'api'
       @getDataSource source, params
     else if @bindOptions.type is 'channel'
-      @tool.subscribe source, @process
+      @tool.subscribe source, @tool.process
     else
       console.log 'err'
 

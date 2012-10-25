@@ -39,22 +39,29 @@
       clear: both
 
     li
-      width: 100px
+      float: left
+      width: 75px
+      height: 28px
       margin: 0 10px 0 0
       border: 1px solid #ccc
-      text-align: center
-      padding: 6px
       border-radius: 3px 3px 0 0
-      display: inline
       font-size: 12px
+      line-height: 28px
+      text-align: center
+      vertical-align: middle
+
+      &:last-child
+        margin: 0
+
+      &.selected
+        background: #fafafa
+        border: 1px solid #900 !important
 
       &:hover
         background: #fafafa
-        border: 1px solid #900
+        border: 1px solid #555
         cursor: pointer
 
-      &.selected
-        border-bottom: 1px solid #fff
 
   .tools-options
     display: none

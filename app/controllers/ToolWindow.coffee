@@ -80,6 +80,7 @@ class ToolWindow extends Spine.Controller
           left: e.pageX - relX
 
   endDrag: (e) =>
+    $(document).unbind 'mousemove'
     $('body').removeClass 'unselectable'
     @dragging = false
 
