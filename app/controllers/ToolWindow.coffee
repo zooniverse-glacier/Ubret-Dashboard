@@ -47,7 +47,8 @@ class ToolWindow extends Spine.Controller
     @height = @window.height()
 
   focusWindow: =>
-    unless @el.css('z-index') is @getMaxZIndex()
+    unless @el.css('z-index') is @getMaxZIndex() or @el.find('.tool').hasClass 'fullscreen'
+      # or tool is set to fullscreen. intermediate hack above
       @el.css 'z-index', parseInt(@getMaxZIndex()) + 1
 
   # Title bar actions

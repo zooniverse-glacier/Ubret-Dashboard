@@ -1,0 +1,5 @@
+<h2>Map Options</h2>
+
+<div class="fullscreen">
+  <button type="button" name="fullscreen">Fullscreen</button>
+</div>
