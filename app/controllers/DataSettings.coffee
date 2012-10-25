@@ -79,6 +79,7 @@ class DataSettings extends Spine.Controller
 
   getDataSource: (source, params) =>
     source.fetch(params).always =>
+      @tool.publish [{message: 'receive_data', data: source.lastFetch}]
       @tool.receiveData source.lastFetch
 
 module.exports = DataSettings
