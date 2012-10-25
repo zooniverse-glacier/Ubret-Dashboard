@@ -71,20 +71,25 @@ body
 
         .window-title
           min-width: 250px
-          height: 18px
+          height: 20px
           z-index: 1
+          line-height: 20px
           text-align: center
 
         ul
           position: absolute
           top: 0
-          left: 0
           margin: 0
           padding: 0
           z-index: 2
+          &.left
+            left: 0
+          &.right
+            right: 0
           li
             float: left
             padding: 0 10px
+            line-height: 20px
             list-style: none
             &.active
               background: rgba(0, 0, 0, 0.25)

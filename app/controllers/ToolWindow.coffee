@@ -28,7 +28,7 @@ class ToolWindow extends Spine.Controller
 
   render: =>
     title = @tool.channel
-    @html @template({title})
+    @html @template({tool: @tool})
 
     @el.css 'z-index', @count
 

@@ -1,11 +1,15 @@
 <div class="shadow">
   <div class="window-controls">
-    <ul>
-      <li class="close-window">X</li>
+    <ul class="left">
       <li class="toggle-settings">S</li>
       <li class="minimize">M</li>
     </ul>
-    <div class="window-title"><%- @title %></div>
+
+    <div class="window-title"><%- @tool.capitalizeWords(@tool.channel) %></div>
+
+    <ul class="right">
+      <li class="close-window">X</li>
+    </ul>
   </div>
 
   <div class="window"></div>
