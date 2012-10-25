@@ -95,6 +95,14 @@ transition(args = all 0.5s cubic-bezier(0.0, 0.0, 0.35, 1.0))
   -o-transition: args
   transition: args
 
+unselectable()
+  -moz-user-select: -moz-none
+  -khtml-user-select: none
+  -webkit-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+
 clearfix()
   &:before,
   &:after
