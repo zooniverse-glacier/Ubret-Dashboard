@@ -751,7 +751,6 @@
     // collection when they arrive. If `add: true` is passed, appends the
     // models to the collection instead of resetting.
     fetch: function(options) {
-      console.log('here in the backbone fetch');
       options = options ? _.clone(options) : {};
       if (options.parse === undefined) options.parse = true;
       var collection = this;
@@ -1357,7 +1356,6 @@
     }
 
     // Make the request, allowing the user to override any Ajax options.
-    console.log('here in backbone')
     return $.ajax(_.extend(params, options));
   };
 
