@@ -8,8 +8,9 @@ class ToolWindow extends Spine.Controller
 
   events: 
     'click .window'            : 'focusWindow'
-    'click .close-window'      : 'closeWindow'
-    'click .toggle-settings'   : 'toggleSettings'
+    'click .close-window'      : 'onCloseWindow'
+    'click .toggle-settings'   : 'onToggleSettings'
+    'click .minimize'          : 'onMinimizeWindow'
     'mousedown .window-title'  : 'startDrag'
     'mouseup'                  : 'endDrag'
     'mousedown .window'        : 'updateSize'
@@ -18,6 +19,8 @@ class ToolWindow extends Spine.Controller
   elements:
     '.window' : 'window'
     '.settings': 'settingsEl'
+
+  isMinimized: false
 
   constructor: ->
     super
@@ -43,18 +46,31 @@ class ToolWindow extends Spine.Controller
     @width = @window.width()
     @height = @window.height()
 
-  toggleSettings: (e) =>
-    e.stopPropagation()
-    @settingsEl.toggleClass 'active'
-
   focusWindow: =>
     unless @el.css('z-index') is @getMaxZIndex()
       @el.css 'z-index', parseInt(@getMaxZIndex()) + 1
 
-  closeWindow: (e) =>
+  # Title bar actions
+  onCloseWindow: (e) =>
     e.stopPropagation()
     @trigger 'remove-tool', @tool
     @release()
+
+  onToggleSettings: (e) =>
+    e.stopPropagation()
+    @settingsEl.toggleClass 'active'
+
+  onMinimizeWindow: (e) =>
+    e.stopPropagation()
+
+    if @isMinimized
+      @settingsEl.addClass 'active'
+      @window.slideDown()
+    else
+      @settingsEl.removeClass 'active'
+      @window.slideUp()
+
+    @isMinimized = !@isMinimized
 
   resizeCheck: =>
     if @window.width() isnt @width or @window.height() isnt @height

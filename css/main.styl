@@ -30,6 +30,7 @@ body
         .tool
           width: inherit
         .settings
+          display: none
           position: absolute
           overflow: hidden
           top: 0
@@ -44,6 +45,7 @@ body
           resize: none // Hack
           transform translateX(0)
           &.active
+            display: block
             transform translateX(-200px) 
           h2
             margin: 0
@@ -68,6 +70,8 @@ body
         z-index: 2
 
         .window-title
+          min-width: 250px
+          height: 18px
           z-index: 1
           text-align: center
 

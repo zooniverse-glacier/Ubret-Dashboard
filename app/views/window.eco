@@ -3,6 +3,7 @@
     <ul>
       <li class="close-window">X</li>
       <li class="toggle-settings">S</li>
+      <li class="minimize">M</li>
     </ul>
     <div class="window-title"><%- @title %></div>
   </div>
