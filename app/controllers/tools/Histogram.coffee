@@ -8,6 +8,9 @@ class Histogram extends Ubret.Histogram
   
   constructor: ->
     super
+    @width = 400
+    @height = 300
+    @binNumber = 10
 
 
 module.exports = Histogram
