@@ -1,3 +1,4 @@
+_ = require 'underscore/underscore'
 Spine = require 'spine'
 
 Api = require 'zooniverse/lib/api'
@@ -124,7 +125,7 @@ class SkyServer extends Spine.Model
   @fromJSON: (json) =>
     @lastFetch = new Array
     for result in json
-      unless result == json[1]
+      unless result == json[1] or _.any _.values(result), ((value) -> value is '-9999')
         item = @create
           zooniverse_id: result.objID
           objID: result.objID
