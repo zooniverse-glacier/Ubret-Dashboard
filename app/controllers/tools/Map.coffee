@@ -13,6 +13,7 @@ class Map extends Ubret.Map
     @el.closest('.window-container').animate
       top: '25'
       left: ($(document).width() / 2) - (@el.width() / 2)
+      'z-index': -1
     @el.addClass 'fullscreen'
     @el.children('div').css
       position: 'fixed'
@@ -20,7 +21,7 @@ class Map extends Ubret.Map
       left: 0
       width: '100%'
       height: '100%'
-      z_index: '0'
+      'z-index': '0'
     @map.invalidateSize true
 
 module.exports = Map

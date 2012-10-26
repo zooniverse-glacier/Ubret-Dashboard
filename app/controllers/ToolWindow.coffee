@@ -81,7 +81,7 @@ class ToolWindow extends Spine.Controller
 
   startDrag: (e) =>
     @focusWindow e
-    $('body').addClass 'unselectable'
+    @el.addClass 'unselectable'
     elWidth = @el.outerWidth()
     elHeight = @el.outerHeight()
     @dragging = true
@@ -98,7 +98,7 @@ class ToolWindow extends Spine.Controller
 
   endDrag: (e) =>
     $(document).unbind 'mousemove'
-    $('body').removeClass 'unselectable'
+    @el.removeClass 'unselectable'
     @dragging = false
 
   onResize: (e) =>
@@ -119,7 +119,7 @@ class ToolWindow extends Spine.Controller
     x_max = doc_width * 0.6
     x_min = doc_width * 0.16
 
-    y_max = doc_height * 0.5
+    y_max = doc_height * 0.7
     y_min = doc_height * 0.05
 
     x = Math.random() * (x_max - x_min) + x_min
