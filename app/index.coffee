@@ -15,4 +15,12 @@ class App extends Spine.Controller
     setup = new Stack()
     Spine.Route.setup()
 
+preload = (image) ->
+  img = new Image
+  img.src = image
+
+$ ->
+  preload '/css/images/marker-icon.png'
+  preload '/css/images/marker-icon-orange.png'
+
 module.exports = App

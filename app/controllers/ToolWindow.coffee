@@ -92,7 +92,7 @@ class ToolWindow extends Spine.Controller
 
     $(document).on 'mousemove', (e) =>
       if @dragging
-        @el.offset
+        @el.css
           top: e.pageY - relY
           left: e.pageX - relX
 
