@@ -32,7 +32,7 @@ class ToolWindow extends Spine.Controller
 
     @el.css 'z-index', @count
 
-    @el.offset @generatePosition()
+    @el.css @generatePosition()
 
     @tool.render()
     @settings.render()
