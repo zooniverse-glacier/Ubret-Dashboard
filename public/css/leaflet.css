@@ -33,6 +33,9 @@
 .leaflet-clickable {
 	cursor: pointer;
 	}
+.selected-icon {
+	margin: -61px 0 0 -13px;
+}
 .leaflet-dragging, .leaflet-dragging .leaflet-clickable {
 	cursor: move;
 	}
