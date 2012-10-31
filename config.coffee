@@ -15,12 +15,6 @@ exports.config =
           'vendor/scripts/backbone-mediator.js',
           'vendor/scripts/jquery.simpleWeather.js'
         ]
-        before: [
-          'test/vendor/scripts/mocha-1.4.2.js',
-          'test/vendor/scripts/chair.js',
-          'test/vendor/scripts/sinon-1.4.2.js',
-          'test/vendor/scripts/sinon-chair-2.1.2.js'
-        ]
 
     stylesheets:
       joinTo:

@@ -74,6 +74,37 @@
   globals.require.brunch = true;
 })();
 
+window.require.define({"test/collections/filters_test": function(exports, require, module) {
+  (function() {
+    var Filter, Filters;
+
+    Filters = require('collections/filters');
+
+    Filter = require('models/filter');
+
+    describe('Filters', function() {
+      it('should be defined', function() {
+        return expect(Filters).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var filters;
+        filters = new Filters;
+        return expect(filters).to.be.ok;
+      });
+      return describe('properties', function() {
+        beforeEach(function() {
+          return this.filters = new Filters;
+        });
+        return it('should have Filter as it\'s model', function() {
+          return expect(this.filters).to.have.property('model').and.equal(Filter);
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require.define({"test/collections/galaxy_zoo_subjects_test": function(exports, require, module) {
   (function() {
     var GalaxyZooSubject, GalaxyZooSubjects;
@@ -114,6 +145,121 @@ window.require.define({"test/collections/galaxy_zoo_subjects_test": function(exp
           var gzSubject;
           gzSubject = new GalaxyZooSubjects;
           return expect(gzSubject.processParams()).to.equal('limit=10');
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/collections/tools_test": function(exports, require, module) {
+  (function() {
+    var Tool, Tools;
+
+    Tools = require('collections/tools');
+
+    Tool = require('models/tool');
+
+    describe('Tools', function() {
+      it('should be defined', function() {
+        return expect(Tools).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var tools;
+        tools = new Tools;
+        return expect(tools).to.be.ok;
+      });
+      return describe('properties', function() {
+        beforeEach(function() {
+          return this.tools = new Tools;
+        });
+        return it('should use Tool as it\'s model', function() {
+          return expect(this.tools).to.have.property('model').and.equal(Tool);
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/models/dashboard_test": function(exports, require, module) {
+  (function() {
+    var Dashboard, Tools;
+
+    Dashboard = require('models/dashboard');
+
+    Tools = require('collections/tools');
+
+    describe('Dashboard', function() {
+      var responseJson;
+      responseJson = {
+        id: 1,
+        name: 'My Cool Dashboard',
+        tools: new Tools
+      };
+      it('should be defined', function() {
+        return expect(Dashboard).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var dashboard;
+        dashboard = new Dashboard;
+        return expect(dashboard).to.be.ok;
+      });
+      describe('Defaults', function() {
+        beforeEach(function() {
+          return this.dashboard = new Dashboard;
+        });
+        return it('should have a collection of tools', function() {
+          return expect(this.dashboard.attributes).to.have.property('tools').and.be.an["instanceof"](Tools);
+        });
+      });
+      describe('Properties', function() {
+        beforeEach(function() {
+          return this.dashboard = new Dashboard;
+        });
+        return it('should have a urlRoot property', function() {
+          return expect(this.dashboard).to.have.property('urlRoot').and.equal('/dashboard');
+        });
+      });
+      describe('#fetch', function() {
+        beforeEach(function() {
+          this.dashboard = new Dashboard({
+            id: 1
+          });
+          return this.server = sinon.fakeServer.create();
+        });
+        afterEach(function() {
+          return this.server.restore();
+        });
+        describe('request', function() {
+          return it('should request from a user of the form (urlRoot)/(id)', function() {
+            this.dashboard.fetch();
+            return expect(this.server.requests[0].url).to.match(/\/dashboard\/[0-9]+/);
+          });
+        });
+        return describe('onSuccess', function() {
+          beforeEach(function() {
+            this.server.respondWith('Get', '/dashboard/1', [
+              200, {
+                "Content-Type": "application/json"
+              }, JSON.stringify(responseJson)
+            ]);
+            this.dashboard.fetch();
+            return this.server.respond();
+          });
+          return it('should have name attribute', function() {
+            return expect(this.dashboard.attributes).to.have.property('name').and.equal("My Cool Dashboard");
+          });
+        });
+      });
+      return describe('#parse', function() {
+        return it('should return a new Tools object as for the tools attribute', function() {
+          var dashboard;
+          dashboard = new Dashboard;
+          dashboard.parse(JSON.stringify(responseJson));
+          return expect(dashboard.attributes).to.have.property('tools').and.be.an["instanceof"](Tools);
         });
       });
     });
@@ -176,6 +322,27 @@ window.require.define({"test/models/data_source_test": function(exports, require
   
 }});
 
+window.require.define({"test/models/filter_test": function(exports, require, module) {
+  (function() {
+    var Filter;
+
+    Filter = require('models/filter');
+
+    describe('filter', function() {
+      it('should be defined', function() {
+        return expect(Filter).to.be.ok;
+      });
+      return it('should be instantiable', function() {
+        var filter;
+        filter = new Filter;
+        return expect(filter).to.be.ok;
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require.define({"test/models/galaxy_zoo_subject_test": function(exports, require, module) {
   (function() {
     var GalaxyZooSubject;
@@ -190,6 +357,57 @@ window.require.define({"test/models/galaxy_zoo_subject_test": function(exports, 
         var galaxyZooSubject;
         galaxyZooSubject = new GalaxyZooSubject;
         return expect(galaxyZooSubject).to.be.ok;
+      });
+    });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/models/tool_test": function(exports, require, module) {
+  (function() {
+    var DataSource, Filters, Tool;
+
+    Tool = require('models/tool');
+
+    DataSource = require('models/data_source');
+
+    Filters = require('collections/filters');
+
+    describe('Tool', function() {
+      it('should be defined', function() {
+        return expect(Tool).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var tool;
+        tool = new Tool;
+        return expect(tool).to.be.ok;
+      });
+      return describe('defaults', function() {
+        beforeEach(function() {
+          return this.tool = new Tool;
+        });
+        it('should have a height of 640', function() {
+          return expect(this.tool.get('height')).to.equal(480);
+        });
+        it('should have a width of 480', function() {
+          return expect(this.tool.get('width')).to.equal(640);
+        });
+        it('should have a new DataSource', function() {
+          return expect(this.tool.get('dataSource')).to.be.an["instanceof"](DataSource);
+        });
+        it('should have a new Filters collection', function() {
+          return expect(this.tool.get('filters')).to.be.an["instanceof"](Filters);
+        });
+        it('should have a top of 20', function() {
+          return expect(this.tool.get('top')).to.equal(20);
+        });
+        it('should have a left of 20', function() {
+          return expect(this.tool.get('left')).to.equal(20);
+        });
+        return it('should have a z-index of 1', function() {
+          return expect(this.tool.get('z-index')).to.equal(1);
+        });
       });
     });
 
@@ -216,6 +434,11 @@ window.require.define({"test/test-helpers": function(exports, require, module) {
   
 }});
 
+window.require('test/collections/filters_test');
 window.require('test/collections/galaxy_zoo_subjects_test');
+window.require('test/collections/tools_test');
+window.require('test/models/dashboard_test');
 window.require('test/models/data_source_test');
+window.require('test/models/filter_test');
 window.require('test/models/galaxy_zoo_subject_test');
+window.require('test/models/tool_test');

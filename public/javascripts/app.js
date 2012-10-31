@@ -83,6 +83,34 @@ window.require.define({"application": function(exports, require, module) {
   
 }});
 
+window.require.define({"collections/filters": function(exports, require, module) {
+  (function() {
+    var Filter, Filters,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Filter = require('models/filter');
+
+    Filters = (function(_super) {
+
+      __extends(Filters, _super);
+
+      function Filters() {
+        return Filters.__super__.constructor.apply(this, arguments);
+      }
+
+      Filters.prototype.model = Filter;
+
+      return Filters;
+
+    })(Backbone.Collection);
+
+    module.exports = Filters;
+
+  }).call(this);
+  
+}});
+
 window.require.define({"collections/galaxy_zoo_subjects": function(exports, require, module) {
   (function() {
     var GalaxyZooSubject, GalaxyZooSubjects,
@@ -147,6 +175,34 @@ window.require.define({"collections/galaxy_zoo_subjects": function(exports, requ
   
 }});
 
+window.require.define({"collections/tools": function(exports, require, module) {
+  (function() {
+    var Tool, Tools,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Tool = require('models/tool');
+
+    Tools = (function(_super) {
+
+      __extends(Tools, _super);
+
+      function Tools() {
+        return Tools.__super__.constructor.apply(this, arguments);
+      }
+
+      Tools.prototype.model = Tool;
+
+      return Tools;
+
+    })(Backbone.Collection);
+
+    module.exports = Tools;
+
+  }).call(this);
+  
+}});
+
 window.require.define({"initialize": function(exports, require, module) {
   (function() {
     var Table, application;
@@ -160,6 +216,43 @@ window.require.define({"initialize": function(exports, require, module) {
       application.initialize();
       return Backbone.history.start();
     });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"models/dashboard": function(exports, require, module) {
+  (function() {
+    var Dashboard, Tools,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Tools = require('collections/tools');
+
+    Dashboard = (function(_super) {
+
+      __extends(Dashboard, _super);
+
+      function Dashboard() {
+        return Dashboard.__super__.constructor.apply(this, arguments);
+      }
+
+      Dashboard.prototype.defaults = {
+        "tools": new Tools
+      };
+
+      Dashboard.prototype.urlRoot = '/dashboard';
+
+      Dashboard.prototype.parse = function(response) {
+        response.tools = new Tools(response.tools);
+        return response;
+      };
+
+      return Dashboard;
+
+    })(Backbone.Model);
+
+    module.exports = Dashboard;
 
   }).call(this);
   
@@ -218,6 +311,30 @@ window.require.define({"models/data_source": function(exports, require, module) 
   
 }});
 
+window.require.define({"models/filter": function(exports, require, module) {
+  (function() {
+    var Filter,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Filter = (function(_super) {
+
+      __extends(Filter, _super);
+
+      function Filter() {
+        return Filter.__super__.constructor.apply(this, arguments);
+      }
+
+      return Filter;
+
+    })(Backbone.Model);
+
+    module.exports = Filter;
+
+  }).call(this);
+  
+}});
+
 window.require.define({"models/galaxy_zoo_subject": function(exports, require, module) {
   (function() {
     var GalaxyZooSubject,
@@ -237,6 +354,44 @@ window.require.define({"models/galaxy_zoo_subject": function(exports, require, m
     })(Backbone.Model);
 
     module.exports = GalaxyZooSubject;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"models/tool": function(exports, require, module) {
+  (function() {
+    var DataSource, Filters, Tool,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    DataSource = require('models/data_source');
+
+    Filters = require('collections/filters');
+
+    Tool = (function(_super) {
+
+      __extends(Tool, _super);
+
+      function Tool() {
+        return Tool.__super__.constructor.apply(this, arguments);
+      }
+
+      Tool.prototype.defaults = {
+        "dataSource": new DataSource,
+        "filters": new Filters,
+        "height": 480,
+        "width": 640,
+        "left": 20,
+        "top": 20,
+        "z-index": 1
+      };
+
+      return Tool;
+
+    })(Backbone.Model);
+
+    module.exports = Tool;
 
   }).call(this);
   
