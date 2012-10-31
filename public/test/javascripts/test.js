@@ -223,37 +223,6 @@ window.require.define({"test/models/dashboard_test": function(exports, require, 
           return expect(this.dashboard).to.have.property('urlRoot').and.equal('/dashboard');
         });
       });
-      describe('#fetch', function() {
-        beforeEach(function() {
-          this.dashboard = new Dashboard({
-            id: 1
-          });
-          return this.server = sinon.fakeServer.create();
-        });
-        afterEach(function() {
-          return this.server.restore();
-        });
-        describe('request', function() {
-          return it('should request from a user of the form (urlRoot)/(id)', function() {
-            this.dashboard.fetch();
-            return expect(this.server.requests[0].url).to.match(/\/dashboard\/[0-9]+/);
-          });
-        });
-        return describe('onSuccess', function() {
-          beforeEach(function() {
-            this.server.respondWith('Get', '/dashboard/1', [
-              200, {
-                "Content-Type": "application/json"
-              }, JSON.stringify(responseJson)
-            ]);
-            this.dashboard.fetch();
-            return this.server.respond();
-          });
-          return it('should have name attribute', function() {
-            return expect(this.dashboard.attributes).to.have.property('name').and.equal("My Cool Dashboard");
-          });
-        });
-      });
       return describe('#parse', function() {
         return it('should return a new Tools object as for the tools attribute', function() {
           var dashboard;
@@ -434,6 +403,257 @@ window.require.define({"test/test-helpers": function(exports, require, module) {
   
 }});
 
+window.require.define({"test/views/dashboard_test": function(exports, require, module) {
+  (function() {
+    var DashboardView;
+
+    DashboardView = require('views/dashboard');
+
+    describe('Dashboard', function() {
+      it('should be defined', function() {
+        return expect(DashboardView).to.be.ok;
+      });
+      it('should be instanitable', function() {
+        var dashboard;
+        dashboard = new DashboardView;
+        return expect(dashboard).to.be.ok;
+      });
+      describe('instantiation', function() {
+        beforeEach(function() {
+          return this.dashboard = new DashboardView;
+        });
+        it('should create a div', function() {
+          return expect(this.dashboard.el.nodeName).to.equal('DIV');
+        });
+        return it('should have class dashboard', function() {
+          return expect(this.dashboard.$el).to.have["class"]('dashboard');
+        });
+      });
+      return describe('#render', function() {
+        beforeEach(function() {
+          this.dashboard = new DashboardView;
+          this.dashboardAppend = sinon.spy(this.dashboard.$el, 'append');
+          this.toolWindowView = new Backbone.View();
+          this.toolRender = sinon.spy(this.toolWindowView, 'render');
+          this.toolWindowStub = sinon.stub().returns(this.toolWindowView);
+          this.dashboard._setToolWindow(this.toolWindowStub);
+          this.tool1 = new Backbone.Model({
+            id: 1
+          });
+          this.tool2 = new Backbone.Model({
+            id: 2
+          });
+          this.tool3 = new Backbone.Model({
+            id: 3
+          });
+          this.dashboard.model = new Backbone.Model({
+            id: 1,
+            name: "New Dashboard",
+            tools: new Backbone.Collection([this.tool1, this.tool2, this.tool3])
+          });
+          return this.dashboard.render();
+        });
+        it('should create a tool window for each tool in tools collection', function() {
+          expect(this.toolWindowStub).to.have.been.calledThrice;
+          expect(this.toolWindowStub).to.have.been.calledWith({
+            model: this.tool1
+          });
+          expect(this.toolWindowStub).to.have.been.calledWith({
+            model: this.tool2
+          });
+          return expect(this.toolWindowStub).to.have.been.calledWith({
+            model: this.tool3
+          });
+        });
+        return it('should render the new windows', function() {
+          return expect(this.toolRender).to.have.been.calledThrice;
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/views/tool_container_test": function(exports, require, module) {
+  (function() {
+    var ToolContainer;
+
+    ToolContainer = require('views/tool_container');
+
+    describe('ToolContainer', function() {});
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/views/tool_window_test": function(exports, require, module) {
+  (function() {
+    var Settings, ToolContainer, ToolWindow, WindowTitleBar;
+
+    ToolWindow = require('views/tool_window');
+
+    Settings = require('views/settings');
+
+    ToolContainer = require('views/tool_container');
+
+    WindowTitleBar = require('views/window_title_bar');
+
+    describe('ToolWindow', function() {
+      it('should be defined', function() {
+        return expect(ToolWindow).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var toolWindow;
+        toolWindow = new ToolWindow;
+        return expect(toolWindow).to.be.ok;
+      });
+      describe('instantiation', function() {
+        beforeEach(function() {
+          return this.toolWindow = new ToolWindow;
+        });
+        it('should have a div tag', function() {
+          return expect(this.toolWindow.el.nodeName).to.equal('DIV');
+        });
+        it('should have a tool-window class', function() {
+          return expect(this.toolWindow.$el).to.have["class"]('tool-window');
+        });
+        return describe('#initialize', function() {
+          it('should create a window title bar', function() {
+            return expect(this.toolWindow).to.have.property('titleBar').and.to.be.an["instanceof"](WindowTitleBar);
+          });
+          it('should create a tool container', function() {
+            return expect(this.toolWindow).to.have.property('toolContainer').and.to.be.an["instanceof"](ToolContainer);
+          });
+          return it('should create a settings container', function() {
+            return expect(this.toolWindow).to.have.property('settings').and.to.be.an["instanceof"](Settings);
+          });
+        });
+      });
+      describe('#render', function() {
+        beforeEach(function() {
+          this.toolWindow = new ToolWindow;
+          this.toolContainer = sinon.spy(this.toolWindow.toolContainer, 'render');
+          this.titleBar = sinon.spy(this.toolWindow.titleBar, 'render');
+          this.toolSettings = sinon.spy(this.toolWindow.settings, 'render');
+          this.append = sinon.spy(this.toolWindow.$el, 'append');
+          return this.toolWindow.render();
+        });
+        it('should render the title bar', function() {
+          return expect(this.titleBar).to.have.been.called;
+        });
+        it('should render the tool container', function() {
+          return expect(this.toolContainer).to.have.been.called;
+        });
+        it('should render the tool settings', function() {
+          return expect(this.toolSettings).to.have.been.called;
+        });
+        return it('should append everything to to el', function() {
+          return expect(this.append).to.have.been.calledThrice;
+        });
+      });
+      describe('#setWindowPosition', function() {
+        beforeEach(function() {
+          var topLeftModel;
+          topLeftModel = new Backbone.Model({
+            top: 20,
+            left: 20
+          });
+          return this.toolWindow = new ToolWindow({
+            model: topLeftModel
+          });
+        });
+        it('should set the left css property to the model\'s left value', function() {
+          return expect(this.toolWindow.$el).to.have.css('left').be(20);
+        });
+        return it('should set the top css property to the model\'s top value', function() {
+          return expect(this.toolWindow.$el).to.have.css('top').be(20);
+        });
+      });
+      describe('#setWindowSize', function() {
+        beforeEach(function() {
+          var heightWidthModel;
+          heightWidthModel = new Backbone.Model({
+            height: 10,
+            width: 10
+          });
+          return this.toolWindow = new ToolWindow({
+            model: heightWidthModel
+          });
+        });
+        it('should set css height to the model\'s height', function() {
+          return expect(this.toolWindow.$el).to.have.css('height').be(10);
+        });
+        return it('should set css width to the model\'s width', function() {
+          return expect(this.toolWindow.$el).to.have.css('width').be(10);
+        });
+      });
+      describe('#toggleSettings', function() {
+        return it('should toggle the settings-active class', function() {
+          var toggle, toolWindow;
+          toolWindow = new ToolWindow;
+          toggle = sinon.spy(toolWindow.$el, 'toggleClass');
+          toolWindow.toggleSettings();
+          return expect(toggle).to.have.been.calledWith('settings-active');
+        });
+      });
+      return describe('#close', function() {
+        beforeEach(function() {
+          this.toolWindow = new ToolWindow({
+            model: new Backbone.Model({
+              stuff: 1,
+              stuff: 2
+            })
+          });
+          this.modelSpy = sinon.spy(this.toolWindow.model, 'destroy');
+          this.viewSpy = sinon.spy(this.toolWindow, 'remove');
+          return this.toolWindow.close();
+        });
+        it('should destroy the model', function() {
+          return expect(this.modelSpy).to.have.been.called;
+        });
+        return it('should remove the view', function() {
+          return expect(this.viewSpy).to.have.been.called;
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/views/window_title_bar_test": function(exports, require, module) {
+  (function() {
+    var WindowTitleBar;
+
+    WindowTitleBar = require('views/window_title_bar');
+
+    describe('WindowTitleBar', function() {
+      it('should be defined', function() {
+        return expect(WindowTitleBar).to.be.ok;
+      });
+      it('should instantiable', function() {
+        var titleBar;
+        titleBar = new WindowTitleBar;
+        return expect(titleBar).to.be.ok;
+      });
+      return describe('instantiation', function() {
+        beforeEach(function() {
+          return this.titleBar = new WindowTitleBar;
+        });
+        it('should use a div tag', function() {
+          return expect(this.titleBar.el.nodeName).to.equal('DIV');
+        });
+        return it('should have the title-bar css class', function() {
+          return expect(this.titleBar.$el).to.have["class"]('title-bar');
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require('test/collections/filters_test');
 window.require('test/collections/galaxy_zoo_subjects_test');
 window.require('test/collections/tools_test');
@@ -442,3 +662,7 @@ window.require('test/models/data_source_test');
 window.require('test/models/filter_test');
 window.require('test/models/galaxy_zoo_subject_test');
 window.require('test/models/tool_test');
+window.require('test/views/dashboard_test');
+window.require('test/views/tool_container_test');
+window.require('test/views/tool_window_test');
+window.require('test/views/window_title_bar_test');

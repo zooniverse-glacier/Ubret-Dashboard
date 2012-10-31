@@ -397,3 +397,221 @@ window.require.define({"models/tool": function(exports, require, module) {
   
 }});
 
+window.require.define({"views/dashboard": function(exports, require, module) {
+  (function() {
+    var DashboardView, ToolWindow,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    ToolWindow = require('views/tool_window');
+
+    DashboardView = (function(_super) {
+
+      __extends(DashboardView, _super);
+
+      function DashboardView() {
+        this.createToolWindow = __bind(this.createToolWindow, this);
+
+        this.render = __bind(this.render, this);
+        return DashboardView.__super__.constructor.apply(this, arguments);
+      }
+
+      DashboardView.prototype.tagName = 'div';
+
+      DashboardView.prototype.className = 'dashboard';
+
+      DashboardView.prototype.render = function() {
+        this.model.get('tools').each(this.createToolWindow);
+        return this;
+      };
+
+      DashboardView.prototype.createToolWindow = function(tool) {
+        var toolWindow;
+        toolWindow = new ToolWindow({
+          model: tool
+        });
+        return this.$el.append(toolWindow.render().el);
+      };
+
+      DashboardView.prototype._setToolWindow = function(toolWindow) {
+        return ToolWindow = toolWindow;
+      };
+
+      return DashboardView;
+
+    })(Backbone.View);
+
+    module.exports = DashboardView;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/settings": function(exports, require, module) {
+  (function() {
+    var Settings,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Settings = (function(_super) {
+
+      __extends(Settings, _super);
+
+      function Settings() {
+        return Settings.__super__.constructor.apply(this, arguments);
+      }
+
+      return Settings;
+
+    })(Backbone.View);
+
+    module.exports = Settings;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/tool_container": function(exports, require, module) {
+  (function() {
+    var ToolContainer,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    ToolContainer = (function(_super) {
+
+      __extends(ToolContainer, _super);
+
+      function ToolContainer() {
+        return ToolContainer.__super__.constructor.apply(this, arguments);
+      }
+
+      return ToolContainer;
+
+    })(Backbone.View);
+
+    module.exports = ToolContainer;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/tool_window": function(exports, require, module) {
+  (function() {
+    var Settings, ToolContainer, ToolWindow, WindowTitleBar,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Settings = require('views/settings');
+
+    ToolContainer = require('views/tool_container');
+
+    WindowTitleBar = require('views/window_title_bar');
+
+    ToolWindow = (function(_super) {
+
+      __extends(ToolWindow, _super);
+
+      function ToolWindow() {
+        this.close = __bind(this.close, this);
+
+        this.toggleSettings = __bind(this.toggleSettings, this);
+
+        this.render = __bind(this.render, this);
+
+        this.setWindowSize = __bind(this.setWindowSize, this);
+
+        this.setWindowPosition = __bind(this.setWindowPosition, this);
+
+        this.initialize = __bind(this.initialize, this);
+        return ToolWindow.__super__.constructor.apply(this, arguments);
+      }
+
+      _.extend(ToolWindow.prototype, Backbone.Events);
+
+      ToolWindow.prototype.tagName = 'div';
+
+      ToolWindow.prototype.className = 'tool-window';
+
+      ToolWindow.prototype.initialize = function() {
+        if (this.model != null) {
+          this.model.on('change', this.setWindowPosition);
+          this.model.on('change', this.setWindowSize);
+          this.setWindowPosition();
+          this.setWindowSize();
+        }
+        this.settings = new Settings(this.model);
+        this.toolContainer = new ToolContainer(this.model);
+        this.titleBar = new WindowTitleBar(this.model);
+        this.titleBar.on('close', this.close);
+        return this.titleBar.on('settings', this.toggleSettings);
+      };
+
+      ToolWindow.prototype.setWindowPosition = function() {
+        this.$el.css('left', this.model.get('left'));
+        return this.$el.css('top', this.model.get('top'));
+      };
+
+      ToolWindow.prototype.setWindowSize = function() {
+        this.$el.css('height', this.model.get('height'));
+        return this.$el.css('width', this.model.get('width'));
+      };
+
+      ToolWindow.prototype.render = function() {
+        var _this = this;
+        _.each([this.titleBar, this.settings, this.toolContainer], function(section) {
+          return _this.$el.append(section.render().el);
+        });
+        return this;
+      };
+
+      ToolWindow.prototype.toggleSettings = function() {
+        return this.$el.toggleClass('settings-active');
+      };
+
+      ToolWindow.prototype.close = function() {
+        this.model.destroy();
+        return this.remove();
+      };
+
+      return ToolWindow;
+
+    })(Backbone.View);
+
+    module.exports = ToolWindow;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/window_title_bar": function(exports, require, module) {
+  (function() {
+    var WindowTitleBar,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    WindowTitleBar = (function(_super) {
+
+      __extends(WindowTitleBar, _super);
+
+      function WindowTitleBar() {
+        return WindowTitleBar.__super__.constructor.apply(this, arguments);
+      }
+
+      _.extend(WindowTitleBar.prototype, Backbone.Events);
+
+      WindowTitleBar.prototype.tagName = 'div';
+
+      WindowTitleBar.prototype.className = 'title-bar';
+
+      return WindowTitleBar;
+
+    })(Backbone.View);
+
+    module.exports = WindowTitleBar;
+
+  }).call(this);
+  
+}});
+
