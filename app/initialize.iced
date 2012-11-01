@@ -1,8 +1,4 @@
 application = require 'application'
-Table = require 'ubret/lib/controllers/Table'
 
-$ ->
-  console.log Table
+$(document).on 'ready', ->
   application.initialize()
-
-  Backbone.history.start()

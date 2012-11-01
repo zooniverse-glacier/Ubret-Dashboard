@@ -76,8 +76,21 @@
 
 window.require.define({"application": function(exports, require, module) {
   (function() {
+    var AppView, Router, appView, router;
 
+    Router = require('router');
 
+    AppView = require('views/app_view');
+
+    appView = new AppView({
+      el: '#main'
+    });
+
+    router = new Router({
+      appView: appView
+    });
+
+    Backbone.history.start();
 
   }).call(this);
   
@@ -205,16 +218,12 @@ window.require.define({"collections/tools": function(exports, require, module) {
 
 window.require.define({"initialize": function(exports, require, module) {
   (function() {
-    var Table, application;
+    var application;
 
     application = require('application');
 
-    Table = require('ubret/lib/controllers/Table');
-
-    $(function() {
-      console.log(Table);
-      application.initialize();
-      return Backbone.history.start();
+    $(document).on('ready', function() {
+      return application.initialize();
     });
 
   }).call(this);
@@ -392,6 +401,30 @@ window.require.define({"models/tool": function(exports, require, module) {
     })(Backbone.Model);
 
     module.exports = Tool;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"router": function(exports, require, module) {
+  (function() {
+    var Router,
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Router = (function(_super) {
+
+      __extends(Router, _super);
+
+      function Router() {
+        return Router.__super__.constructor.apply(this, arguments);
+      }
+
+      return Router;
+
+    })(Backbone.Router);
+
+    module.exports = Router;
 
   }).call(this);
   
