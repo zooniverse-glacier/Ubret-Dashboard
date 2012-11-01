@@ -22,7 +22,7 @@
 	  "css-brunch": ">= 1.0 < 1.5",
     "sass-brunch": "1.4.1",
 
-    "handlebars-brunch": "> 1.0 < 1.5",
+    "eco-brunch": "> 1.0 < 1.5",
 
     "auto-reload-brunch": "> 1.0 < 1.5",
 

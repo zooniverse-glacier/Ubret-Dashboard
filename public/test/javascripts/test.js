@@ -622,6 +622,68 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
   
 }});
 
+window.require.define({"test/views/toolbox_test": function(exports, require, module) {
+  (function() {
+    var Toolbox;
+
+    Toolbox = require('views/toolbox');
+
+    describe('Toolbox', function() {
+      it('should be defined', function() {
+        return expect(Toolbox).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var toolbox;
+        toolbox = new Toolbox;
+        return expect(toolbox).to.be.ok;
+      });
+      describe('instantiation', function() {
+        beforeEach(function() {
+          return this.toolbox = new Toolbox;
+        });
+        it('should use a div tag', function() {
+          return expect(this.toolbox.el.nodeName).to.be('DIV');
+        });
+        return it('should have class name toolbox', function() {
+          return expect(this.toolbox.$el).to.have["class"]('toolbox');
+        });
+      });
+      describe('#render', function() {
+        beforeEach(function() {
+          this.toolbox = new Toolbox;
+          this.templateSpy = sinon.spy(this.toolbox, 'template');
+          return this.toolbox.render();
+        });
+        return it('should render template', function() {
+          return expect(this.templateSpy).to.have.been.called;
+        });
+      });
+      describe('#createTool', function() {
+        beforeEach(function() {
+          this.toolbox = new Toolbox;
+          this.triggerSpy = sinon.spy(this.toolbox, 'trigger');
+          return this.toolbox.render().$el.find('button[name="table"]').click();
+        });
+        return it('should trigger a create-table event', function() {
+          return expect(this.triggerSpy).to.have.been.calledWith('create-table');
+        });
+      });
+      return describe('#createTool', function() {
+        beforeEach(function() {
+          this.toolbox = new Toolbox;
+          this.triggerSpy = sinon.spy(this.toolbox, 'trigger');
+          return this.toolbox.render().$el.find('button[name="remove-tools"]').click();
+        });
+        return it('should trigger a create-table event', function() {
+          return expect(this.triggerSpy).to.have.been.calledWith('remove-tools');
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require.define({"test/views/window_title_bar_test": function(exports, require, module) {
   (function() {
     var WindowTitleBar;
@@ -665,4 +727,5 @@ window.require('test/models/tool_test');
 window.require('test/views/dashboard_test');
 window.require('test/views/tool_container_test');
 window.require('test/views/tool_window_test');
+window.require('test/views/toolbox_test');
 window.require('test/views/window_title_bar_test');

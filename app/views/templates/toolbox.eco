@@ -1,0 +1,9 @@
+<% for tool in @tools: %>
+  <div class="tool-icon" data-id="<%- tool.name.toLowerCase() %>">
+    <button type="button" name="<%- tool.name.toLowerCase() %>"><%- tool.name %></button>
+  </div>
+<% end %>
+
+<div clas="remove-tools">
+  <button type="button" name="remove-tools">Clear Tools</button>
+</div>

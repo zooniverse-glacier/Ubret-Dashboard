@@ -472,6 +472,70 @@ window.require.define({"views/settings": function(exports, require, module) {
   
 }});
 
+window.require.define({"views/templates/toolbox": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+        var tool, _i, _len, _ref;
+      
+        _ref = this.tools;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          tool = _ref[_i];
+          __out.push('\n  <div class="tool-icon" data-id="');
+          __out.push(tool.name.toLowerCase());
+          __out.push('">\n    <button type="button" name="');
+          __out.push(tool.name.toLowerCase());
+          __out.push('">');
+          __out.push(tool.name);
+          __out.push('</button>\n  </div>\n');
+        }
+      
+        __out.push('\n\n<div clas="remove-tools">\n  <button type="button" name="remove-tools">Clear Tools</button>\n</div>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
+}});
+
 window.require.define({"views/tool_container": function(exports, require, module) {
   (function() {
     var ToolContainer,
@@ -580,6 +644,73 @@ window.require.define({"views/tool_window": function(exports, require, module) {
     })(Backbone.View);
 
     module.exports = ToolWindow;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/toolbox": function(exports, require, module) {
+  (function() {
+    var Toolbox,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    Toolbox = (function(_super) {
+
+      __extends(Toolbox, _super);
+
+      function Toolbox() {
+        this.removeTools = __bind(this.removeTools, this);
+
+        this.createTool = __bind(this.createTool, this);
+
+        this.render = __bind(this.render, this);
+        return Toolbox.__super__.constructor.apply(this, arguments);
+      }
+
+      _.extend(Toolbox.prototype, Backbone.Events);
+
+      Toolbox.prototype.tagName = 'div';
+
+      Toolbox.prototype.className = 'toolbox';
+
+      Toolbox.prototype.template = require('./templates/toolbox');
+
+      Toolbox.prototype.tools = [
+        {
+          name: 'Table',
+          description: 'displays data in a tabular format'
+        }
+      ];
+
+      Toolbox.prototype.events = {
+        'click .tool-icon button': 'createTool',
+        'click button[name="remove-tools"]': 'removeTools'
+      };
+
+      Toolbox.prototype.render = function() {
+        this.$el.html(this.template({
+          tools: this.tools
+        }));
+        return this;
+      };
+
+      Toolbox.prototype.createTool = function(e) {
+        var toolType;
+        toolType = $(e.currentTarget).attr('name');
+        return this.trigger("create-" + toolType);
+      };
+
+      Toolbox.prototype.removeTools = function(e) {
+        return this.trigger("remove-tools");
+      };
+
+      return Toolbox;
+
+    })(Backbone.View);
+
+    module.exports = Toolbox;
 
   }).call(this);
   
