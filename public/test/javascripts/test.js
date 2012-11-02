@@ -870,7 +870,7 @@ window.require.define({"test/views/window_title_bar_test": function(exports, req
         titleBar = new WindowTitleBar;
         return expect(titleBar).to.be.ok;
       });
-      return describe('instantiation', function() {
+      describe('instantiation', function() {
         beforeEach(function() {
           return this.titleBar = new WindowTitleBar;
         });
@@ -879,6 +879,21 @@ window.require.define({"test/views/window_title_bar_test": function(exports, req
         });
         return it('should have the title-bar css class', function() {
           return expect(this.titleBar.$el).to.have["class"]('title-bar');
+        });
+      });
+      describe('#render', function() {
+        return beforeEach(function() {
+          this.model = new Backbone.Model({
+            name: 'new-tool'
+          });
+          return this.title = new WindowTitlebar({
+            model: this.model
+          });
+        });
+      });
+      return describe('close', function() {
+        return beforeEach(function() {
+          return this.title = new WindowTitleBar;
         });
       });
     });

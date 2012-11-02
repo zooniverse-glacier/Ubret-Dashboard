@@ -17,3 +17,14 @@ describe 'WindowTitleBar', ->
 
     it 'should have the title-bar css class', ->
       expect(@titleBar.$el).to.have.class('title-bar')
+
+  describe '#render', ->
+    beforeEach ->
+      @model = new Backbone.Model { name: 'new-tool' }
+      @title = new WindowTitleBar { model: @model }
+      @templateSpy = sinon.spy(@title, 'template')
+      @htmlSpy = sinon.spy(@title.$el. 'template')
+
+  describe 'close', ->
+    beforeEach ->
+      @title = new WindowTitleBar
