@@ -5,7 +5,7 @@ class DashboardView extends Backbone.View
   className: 'dashboard'
 
   initialize: ->
-    @model?.on 'change', @addTool
+    @model?.get('tools').on 'add', @addTool
 
   render: =>
     @model.get('tools').each @createToolWindow
@@ -16,8 +16,7 @@ class DashboardView extends Backbone.View
     @$el.append toolWindow.render().el
 
   addTool: =>
-    if @model.hasChanged('tools')
-      @createToolWindow @model.get('tools').last()
+    @createToolWindow @model.get('tools').last()
 
   _setToolWindow: (toolWindow) ->
     ToolWindow = toolWindow

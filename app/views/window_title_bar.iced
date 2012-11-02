@@ -15,16 +15,12 @@ class WindowTitleBar extends Backbone.View
     'mouseup' : 'endDrag'
 
   initialize: ->
-    @model?.on 'change', @updateTitle
+    @model?.on 'change:name', @render
 
   render: =>
     title = @model?.get('name')
     @$el.html @template({name: title})
     @
-
-  updateTitle: =>
-    if @model.hasChanged('name')
-      @render()
 
   close: =>
     @trigger 'close'

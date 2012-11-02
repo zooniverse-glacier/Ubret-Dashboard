@@ -34,3 +34,26 @@ describe 'Tool', ->
 
     it 'should have a z-index of 1', ->
       expect(@tool.get('z-index')).to.equal(1)
+
+  describe '#getData', ->
+    beforeEach ->
+      @tool = new Tool { dataSource: new DataSource { source: 'Galaxy Zoo' } }
+
+  describe '#filterData', ->
+    beforeEach ->
+      @filter = new Backbone.Model { func: (x) -> console.log x }
+      @filters = new Filters [@filter]
+      @tool = new Tool { filters: @filters, dataSource: new DataSource { source: 'Galaxy Zoo' } }
+      @eachSpy = sinon.spy(@tool.get('filters'), 'each')
+      @filterSpy = sinon.spy(_, 'filter')
+      @tool.filterData()
+
+    afterEach ->
+      @tool.get('filters').each.restore()
+      _.filter.restore()
+
+    it 'should call each on filters', ->
+      expect(@eachSpy).to.have.been.called
+
+    it 'should filter data', ->
+      expect(@filterSpy).to.have.been.called

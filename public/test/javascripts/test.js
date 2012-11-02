@@ -239,6 +239,7 @@ window.require.define({"test/models/dashboard_test": function(exports, require, 
         });
         return it('should add a tool to the tools collection', function() {
           return expect(this.toolsSpy).to.have.been.calledWith({
+            name: 'new-tool-1',
             type: 'table'
           });
         });
@@ -374,7 +375,7 @@ window.require.define({"test/models/tool_test": function(exports, require, modul
         tool = new Tool;
         return expect(tool).to.be.ok;
       });
-      return describe('defaults', function() {
+      describe('defaults', function() {
         beforeEach(function() {
           return this.tool = new Tool;
         });
@@ -398,6 +399,44 @@ window.require.define({"test/models/tool_test": function(exports, require, modul
         });
         return it('should have a z-index of 1', function() {
           return expect(this.tool.get('z-index')).to.equal(1);
+        });
+      });
+      describe('#getData', function() {
+        return beforeEach(function() {
+          return this.tool = new Tool({
+            dataSource: new DataSource({
+              source: 'Galaxy Zoo'
+            })
+          });
+        });
+      });
+      return describe('#filterData', function() {
+        beforeEach(function() {
+          this.filter = new Backbone.Model({
+            func: function(x) {
+              return console.log(x);
+            }
+          });
+          this.filters = new Filters([this.filter]);
+          this.tool = new Tool({
+            filters: this.filters,
+            dataSource: new DataSource({
+              source: 'Galaxy Zoo'
+            })
+          });
+          this.eachSpy = sinon.spy(this.tool.get('filters'), 'each');
+          this.filterSpy = sinon.spy(_, 'filter');
+          return this.tool.filterData();
+        });
+        afterEach(function() {
+          this.tool.get('filters').each.restore();
+          return _.filter.restore();
+        });
+        it('should call each on filters', function() {
+          return expect(this.eachSpy).to.have.been.called;
+        });
+        return it('should filter data', function() {
+          return expect(this.filterSpy).to.have.been.called;
         });
       });
     });
@@ -704,10 +743,16 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
       describe('#render', function() {
         beforeEach(function() {
           this.toolWindow = new ToolWindow;
-          this.toolContainer = sinon.spy(this.toolWindow.toolContainer, 'render');
-          this.titleBar = sinon.spy(this.toolWindow.titleBar, 'render');
-          this.toolSettings = sinon.spy(this.toolWindow.settings, 'render');
-          this.append = sinon.spy(this.toolWindow.$el, 'append');
+          this.toolContainer = sinon.stub(this.toolWindow.toolContainer, 'render').returns({
+            el: "nuffin"
+          });
+          this.titleBar = sinon.stub(this.toolWindow.titleBar, 'render').returns({
+            el: "nuffin"
+          });
+          this.toolSettings = sinon.stub(this.toolWindow.settings, 'render').returns({
+            el: "nuffin"
+          });
+          this.append = sinon.stub(this.toolWindow.$el, 'append');
           return this.toolWindow.render();
         });
         it('should render the title bar', function() {
@@ -728,7 +773,8 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
           var topLeftModel;
           topLeftModel = new Backbone.Model({
             top: 20,
-            left: 20
+            left: 20,
+            name: 'test'
           });
           return this.toolWindow = new ToolWindow({
             model: topLeftModel
@@ -746,7 +792,8 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
           var heightWidthModel;
           heightWidthModel = new Backbone.Model({
             height: 10,
-            width: 10
+            width: 10,
+            name: 'test'
           });
           return this.toolWindow = new ToolWindow({
             model: heightWidthModel

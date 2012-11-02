@@ -15,11 +15,11 @@ class ToolWindow extends Backbone.View
       @setWindowPosition()
       @setWindowSize()
 
-    @settings = new Settings @model
+    @settings = new Settings { model: @model }
     
-    @toolContainer = new ToolContainer @model
+    @toolContainer = new ToolContainer { model: @model }
 
-    @titleBar = new WindowTitleBar @model
+    @titleBar = new WindowTitleBar { model: @model }
     @titleBar.on 'close', @close
     @titleBar.on 'settings', @toggleSettings
 

@@ -35,10 +35,10 @@ describe 'ToolWindow', ->
     beforeEach ->
       @toolWindow = new ToolWindow
 
-      @toolContainer = sinon.spy(@toolWindow.toolContainer, 'render')
-      @titleBar = sinon.spy(@toolWindow.titleBar, 'render')
-      @toolSettings = sinon.spy(@toolWindow.settings, 'render')
-      @append = sinon.spy(@toolWindow.$el, 'append')
+      @toolContainer = sinon.stub(@toolWindow.toolContainer, 'render').returns({ el: "nuffin" })
+      @titleBar = sinon.stub(@toolWindow.titleBar, 'render').returns({ el: "nuffin" })
+      @toolSettings = sinon.stub(@toolWindow.settings, 'render').returns({ el: "nuffin" })
+      @append = sinon.stub(@toolWindow.$el, 'append')
 
       @toolWindow.render()
 
@@ -56,7 +56,7 @@ describe 'ToolWindow', ->
 
   describe '#setWindowPosition', ->
     beforeEach ->
-      topLeftModel = new Backbone.Model { top: 20, left: 20 } 
+      topLeftModel = new Backbone.Model { top: 20, left: 20, name: 'test' } 
       @toolWindow = new ToolWindow { model: topLeftModel }
 
     it 'should set the left css property to the model\'s left value', ->
@@ -67,7 +67,7 @@ describe 'ToolWindow', ->
 
   describe '#setWindowSize', ->
     beforeEach ->
-      heightWidthModel = new Backbone.Model { height: 10, width: 10 } 
+      heightWidthModel = new Backbone.Model { height: 10, width: 10, name: 'test' } 
       @toolWindow = new ToolWindow { model: heightWidthModel }
 
     it 'should set css height to the model\'s height', ->

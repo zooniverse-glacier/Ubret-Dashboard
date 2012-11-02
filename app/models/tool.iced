@@ -11,4 +11,11 @@ class Tool extends Backbone.Model
     "top": 20
     "z-index": 1
 
+  filterData: ->
+    filteredData = @get('dataSource').get('data').models
+    @get('filters').each (filter) =>
+      filteredData = _.filter filteredData, filter.get('func')
+    return filteredData
+
+
 module.exports = Tool

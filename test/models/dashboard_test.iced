@@ -38,7 +38,7 @@ describe 'Dashboard', ->
       @dashboard.createTool 'table'
 
     it 'should add a tool to the tools collection', ->
-      expect(@toolsSpy).to.have.been.calledWith( { type: 'table' } )
+      expect(@toolsSpy).to.have.been.calledWith( { name: 'new-tool-1', type: 'table' } )
 
   describe '#removeTools', ->
     beforeEach ->

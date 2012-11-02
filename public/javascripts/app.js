@@ -254,15 +254,21 @@ window.require.define({"models/dashboard": function(exports, require, module) {
 
       Dashboard.prototype.urlRoot = '/dashboard';
 
+      Dashboard.prototype.initialize = function() {
+        return this.count = this.get('tools').length + 1;
+      };
+
       Dashboard.prototype.parse = function(response) {
         response.tools = new Tools(response.tools);
         return response;
       };
 
       Dashboard.prototype.createTool = function(toolType) {
-        return this.get('tools').add({
-          type: toolType
+        this.get('tools').add({
+          type: toolType,
+          name: "new-tool-" + this.count
         });
+        return this.count += 1;
       };
 
       Dashboard.prototype.removeTools = function() {
@@ -408,6 +414,16 @@ window.require.define({"models/tool": function(exports, require, module) {
         "z-index": 1
       };
 
+      Tool.prototype.filterData = function() {
+        var filteredData,
+          _this = this;
+        filteredData = this.get('dataSource').get('data').models;
+        this.get('filters').each(function(filter) {
+          return filteredData = _.filter(filteredData, filter.get('func'));
+        });
+        return filteredData;
+      };
+
       return Tool;
 
     })(Backbone.Model);
@@ -539,7 +555,7 @@ window.require.define({"views/dashboard": function(exports, require, module) {
 
       DashboardView.prototype.initialize = function() {
         var _ref;
-        return (_ref = this.model) != null ? _ref.on('change', this.addTool) : void 0;
+        return (_ref = this.model) != null ? _ref.get('tools').on('add', this.addTool) : void 0;
       };
 
       DashboardView.prototype.render = function() {
@@ -556,9 +572,7 @@ window.require.define({"views/dashboard": function(exports, require, module) {
       };
 
       DashboardView.prototype.addTool = function() {
-        if (this.model.hasChanged('tools')) {
-          return this.createToolWindow(this.model.get('tools').last());
-        }
+        return this.createToolWindow(this.model.get('tools').last());
       };
 
       DashboardView.prototype._setToolWindow = function(toolWindow) {
@@ -653,6 +667,57 @@ window.require.define({"views/table": function(exports, require, module) {
 
   }).call(this);
   
+}});
+
+window.require.define({"views/templates/no_data": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<h2>No Data, Please Connect a Data Source</h2>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
 }});
 
 window.require.define({"views/templates/table": function(exports, require, module) {
@@ -867,11 +932,14 @@ window.require.define({"views/tool_container": function(exports, require, module
       };
 
       ToolContainer.prototype.createToolView = function() {
-        var tool;
-        tool = require(this.toolTypes[this.model.get('type')]);
-        return this.toolView = new tool({
-          model: this.model
-        });
+        var tool, toolName;
+        toolName = this.model.get('type');
+        if (toolName != null) {
+          tool = require(this.toolTypes[toolName]);
+          return this.toolView = new tool({
+            model: this.model
+          });
+        }
       };
 
       ToolContainer.prototype.updateTool = function() {
@@ -942,9 +1010,15 @@ window.require.define({"views/tool_window": function(exports, require, module) {
           this.setWindowPosition();
           this.setWindowSize();
         }
-        this.settings = new Settings(this.model);
-        this.toolContainer = new ToolContainer(this.model);
-        this.titleBar = new WindowTitleBar(this.model);
+        this.settings = new Settings({
+          model: this.model
+        });
+        this.toolContainer = new ToolContainer({
+          model: this.model
+        });
+        this.titleBar = new WindowTitleBar({
+          model: this.model
+        });
         this.titleBar.on('close', this.close);
         return this.titleBar.on('settings', this.toggleSettings);
       };
@@ -1077,8 +1151,6 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
 
         this.close = __bind(this.close, this);
 
-        this.updateTitle = __bind(this.updateTitle, this);
-
         this.render = __bind(this.render, this);
         return WindowTitleBar.__super__.constructor.apply(this, arguments);
       }
@@ -1103,7 +1175,7 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
 
       WindowTitleBar.prototype.initialize = function() {
         var _ref;
-        return (_ref = this.model) != null ? _ref.on('change', this.updateTitle) : void 0;
+        return (_ref = this.model) != null ? _ref.on('change:name', this.render) : void 0;
       };
 
       WindowTitleBar.prototype.render = function() {
@@ -1113,10 +1185,6 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
           name: title
         }));
         return this;
-      };
-
-      WindowTitleBar.prototype.updateTitle = function() {
-        if (this.model.hasChanged('name')) return this.render();
       };
 
       WindowTitleBar.prototype.close = function() {
