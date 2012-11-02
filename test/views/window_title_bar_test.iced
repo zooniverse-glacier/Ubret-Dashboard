@@ -23,8 +23,86 @@ describe 'WindowTitleBar', ->
       @model = new Backbone.Model { name: 'new-tool' }
       @title = new WindowTitleBar { model: @model }
       @templateSpy = sinon.spy(@title, 'template')
-      @htmlSpy = sinon.spy(@title.$el. 'template')
+      @htmlSpy = sinon.spy(@title.$el, 'html')
+      @title.render()
 
-  describe 'close', ->
+    it 'should render the template', ->
+      expect(@templateSpy).to.have.been.called
+
+    it 'should append the html ', ->
+      expect(@htmlSpy).to.have.been.called
+
+    it 'should have a title', ->
+      expect(@title.$('.window-title')).to.have.text('new-tool')
+
+  describe '#close', ->
     beforeEach ->
       @title = new WindowTitleBar
+      @triggerSpy = sinon.spy(@title, 'trigger')
+      @title.close()
+
+    it 'should trigger close event', ->
+      expect(@triggerSpy).to.have.been.calledWith('close')
+
+  describe '#settings', ->
+    beforeEach ->
+      @title = new WindowTitleBar
+      @triggerSpy = sinon.spy(@title, 'trigger')
+      @title.settings()
+
+    it 'should trigger close event', ->
+      expect(@triggerSpy).to.have.been.calledWith('settings')
+     
+  describe '#startDrag', ->
+    beforeEach ->
+      @title = new WindowTitleBar
+      @triggerSpy = sinon.spy(@title, 'trigger')
+      @title.startDrag()
+
+    it 'should trigger close event', ->
+      expect(@triggerSpy).to.have.been.calledWith('startDrag')
+
+  describe '#endDrag', ->
+    beforeEach ->
+      @title = new WindowTitleBar
+      @triggerSpy = sinon.spy(@title, 'trigger')
+      @title.endDrag()
+
+    it 'should trigger close event', ->
+      expect(@triggerSpy).to.have.been.calledWith('endDrag')
+
+  describe '#editTitle', ->
+    beforeEach ->
+      @title = new WindowTitleBar
+      @title.render().editTitle()
+
+    it 'should hide window title', ->
+      expect(@title.$('.window-title')).to.be.hidden
+
+    it 'should show the window title input field', ->
+      expect(@title.$('input')).to.be.visible
+
+  describe '#updateModel', ->
+    beforeEach ->
+      @title = new WindowTitleBar { model: new Backbone.Model }
+      @title.render().editTitle()
+    
+    describe 'when escape is pressed', ->
+      beforeEach ->
+        event = { which: 27 }
+        @title.updateModel event
+
+      it 'should show window title', ->
+        expect(@title.$('.window-title')).to.be.visible
+
+      it 'should hide the window title input field', ->
+        expect(@title.$('input')).to.be.hidden
+
+    describe 'when a blur event is triggered or the enter key is pressed', ->
+      beforeEach ->
+        event = { type: 'blur', which: 13 }
+        @title.updateModel event
+        @modelSpy = sinon.spy(@title.model, 'set')
+
+      it 'should get the model\'s name property', ->
+        expect(@modelSpy).to.have.been.calledWith('title', '')

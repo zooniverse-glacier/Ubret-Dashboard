@@ -882,18 +882,114 @@ window.require.define({"test/views/window_title_bar_test": function(exports, req
         });
       });
       describe('#render', function() {
-        return beforeEach(function() {
+        beforeEach(function() {
           this.model = new Backbone.Model({
             name: 'new-tool'
           });
-          return this.title = new WindowTitlebar({
+          this.title = new WindowTitleBar({
             model: this.model
           });
+          this.templateSpy = sinon.spy(this.title, 'template');
+          this.htmlSpy = sinon.spy(this.title.$el, 'html');
+          return this.title.render();
+        });
+        it('should render the template', function() {
+          return expect(this.templateSpy).to.have.been.called;
+        });
+        it('should append the html ', function() {
+          return expect(this.htmlSpy).to.have.been.called;
+        });
+        return it('should have a title', function() {
+          return expect(this.title.$('.window-title')).to.have.text('new-tool');
         });
       });
-      return describe('close', function() {
-        return beforeEach(function() {
-          return this.title = new WindowTitleBar;
+      describe('#close', function() {
+        beforeEach(function() {
+          this.title = new WindowTitleBar;
+          this.triggerSpy = sinon.spy(this.title, 'trigger');
+          return this.title.close();
+        });
+        return it('should trigger close event', function() {
+          return expect(this.triggerSpy).to.have.been.calledWith('close');
+        });
+      });
+      describe('#settings', function() {
+        beforeEach(function() {
+          this.title = new WindowTitleBar;
+          this.triggerSpy = sinon.spy(this.title, 'trigger');
+          return this.title.settings();
+        });
+        return it('should trigger close event', function() {
+          return expect(this.triggerSpy).to.have.been.calledWith('settings');
+        });
+      });
+      describe('#startDrag', function() {
+        beforeEach(function() {
+          this.title = new WindowTitleBar;
+          this.triggerSpy = sinon.spy(this.title, 'trigger');
+          return this.title.startDrag();
+        });
+        return it('should trigger close event', function() {
+          return expect(this.triggerSpy).to.have.been.calledWith('startDrag');
+        });
+      });
+      describe('#endDrag', function() {
+        beforeEach(function() {
+          this.title = new WindowTitleBar;
+          this.triggerSpy = sinon.spy(this.title, 'trigger');
+          return this.title.endDrag();
+        });
+        return it('should trigger close event', function() {
+          return expect(this.triggerSpy).to.have.been.calledWith('endDrag');
+        });
+      });
+      describe('#editTitle', function() {
+        beforeEach(function() {
+          this.title = new WindowTitleBar;
+          return this.title.render().editTitle();
+        });
+        it('should hide window title', function() {
+          return expect(this.title.$('.window-title')).to.be.hidden;
+        });
+        return it('should show the window title input field', function() {
+          return expect(this.title.$('input')).to.be.visible;
+        });
+      });
+      return describe('#updateModel', function() {
+        beforeEach(function() {
+          this.title = new WindowTitleBar({
+            model: new Backbone.Model
+          });
+          return this.title.render().editTitle();
+        });
+        describe('when escape is pressed', function() {
+          beforeEach(function() {
+            var event;
+            event = {
+              which: 27
+            };
+            return this.title.updateModel(event);
+          });
+          it('should show window title', function() {
+            return expect(this.title.$('.window-title')).to.be.visible;
+          });
+          return it('should hide the window title input field', function() {
+            return expect(this.title.$('input')).to.be.hidden;
+          });
+        });
+        return describe('when a blur event is triggered or the enter key is pressed', function() {
+          beforeEach(function() {
+            var event;
+            event = {
+              type: 'blur',
+              which: 13
+            };
+            this.title.updateModel(event);
+            return this.modelSpy = sinon.spy(this.title.model, 'set');
+          });
+          return it('should get the model\'s name property', function() {
+            return expect(this.modelSpy).to.have.been.calledWith('title', '');
+          });
         });
       });
     });

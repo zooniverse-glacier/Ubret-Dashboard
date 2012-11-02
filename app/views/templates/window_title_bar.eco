@@ -1,0 +1,4 @@
+<span class='window-close'>X</span>
+<span class='open-settings'>S</span>
+<span class='window-title'><%- @name %></span>
+<input type="text" name="window-title" value="<%- @name %> />

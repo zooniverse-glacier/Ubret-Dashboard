@@ -770,6 +770,65 @@ window.require.define({"views/templates/toolbox": function(exports, require, mod
   }
 }});
 
+window.require.define({"views/templates/window_title_bar": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<span class=\'window-close\'>X</span>\n<span class=\'open-settings\'>S</span>\n<span class=\'window-title\'>');
+      
+        __out.push(this.name);
+      
+        __out.push('</span>\n<input type="text" name="window-title" value="');
+      
+        __out.push(this.name);
+      
+        __out.push(' />\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
+}});
+
 window.require.define({"views/tool_container": function(exports, require, module) {
   (function() {
     var ToolContainer,
@@ -997,6 +1056,7 @@ window.require.define({"views/toolbox": function(exports, require, module) {
 window.require.define({"views/window_title_bar": function(exports, require, module) {
   (function() {
     var WindowTitleBar,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
       __hasProp = {}.hasOwnProperty,
       __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -1005,6 +1065,21 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
       __extends(WindowTitleBar, _super);
 
       function WindowTitleBar() {
+        this.updateModel = __bind(this.updateModel, this);
+
+        this.editTitle = __bind(this.editTitle, this);
+
+        this.endDrag = __bind(this.endDrag, this);
+
+        this.startDrag = __bind(this.startDrag, this);
+
+        this.settings = __bind(this.settings, this);
+
+        this.close = __bind(this.close, this);
+
+        this.updateTitle = __bind(this.updateTitle, this);
+
+        this.render = __bind(this.render, this);
         return WindowTitleBar.__super__.constructor.apply(this, arguments);
       }
 
@@ -1013,6 +1088,69 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
       WindowTitleBar.prototype.tagName = 'div';
 
       WindowTitleBar.prototype.className = 'title-bar';
+
+      WindowTitleBar.prototype.template = require('./templates/window_title_bar');
+
+      WindowTitleBar.prototype.events = {
+        'click .window-close': 'close',
+        'click .open-settings': 'settings',
+        'dblclick .window-title': 'editTitle',
+        'keypress input[name="window-title"]': 'updateModel',
+        'blur input[name="window-title"]': 'updateModel',
+        'mousedown': 'startDrag',
+        'mouseup': 'endDrag'
+      };
+
+      WindowTitleBar.prototype.initialize = function() {
+        var _ref;
+        return (_ref = this.model) != null ? _ref.on('change', this.updateTitle) : void 0;
+      };
+
+      WindowTitleBar.prototype.render = function() {
+        var title, _ref;
+        title = (_ref = this.model) != null ? _ref.get('name') : void 0;
+        this.$el.html(this.template({
+          name: title
+        }));
+        return this;
+      };
+
+      WindowTitleBar.prototype.updateTitle = function() {
+        if (this.model.hasChanged('name')) return this.render();
+      };
+
+      WindowTitleBar.prototype.close = function() {
+        return this.trigger('close');
+      };
+
+      WindowTitleBar.prototype.settings = function() {
+        return this.trigger('settings');
+      };
+
+      WindowTitleBar.prototype.startDrag = function() {
+        return this.trigger('startDrag');
+      };
+
+      WindowTitleBar.prototype.endDrag = function() {
+        return this.trigger('endDrag');
+      };
+
+      WindowTitleBar.prototype.editTitle = function() {
+        this.$('.window-title').hide();
+        return this.$('input[name="window-title"]').show();
+      };
+
+      WindowTitleBar.prototype.updateModel = function(e) {
+        var input, newTitle;
+        if (e.which === 27) {
+          this.$('.window-title').show();
+          this.$('input[name="window-title"]').hide();
+        } else if (e.type === 'blur' || e.which === 13) {
+          input = this.$('input[name="window-title"]');
+          newTitle = input.val();
+          return this.model.set('title', newTitle);
+        }
+      };
 
       return WindowTitleBar;
 
