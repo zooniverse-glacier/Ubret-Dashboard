@@ -76,21 +76,19 @@
 
 window.require.define({"application": function(exports, require, module) {
   (function() {
-    var AppView, Router, appView, router;
+    var Router, application;
 
     Router = require('router');
 
-    AppView = require('views/app_view');
+    application = {
+      initialize: function() {
+        var router;
+        router = new Router;
+        return Backbone.history.start();
+      }
+    };
 
-    appView = new AppView({
-      el: '#main'
-    });
-
-    router = new Router({
-      appView: appView
-    });
-
-    Backbone.history.start();
+    module.exports = application;
 
   }).call(this);
   
@@ -233,6 +231,7 @@ window.require.define({"initialize": function(exports, require, module) {
 window.require.define({"models/dashboard": function(exports, require, module) {
   (function() {
     var Dashboard, Tools,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
       __hasProp = {}.hasOwnProperty,
       __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -243,6 +242,9 @@ window.require.define({"models/dashboard": function(exports, require, module) {
       __extends(Dashboard, _super);
 
       function Dashboard() {
+        this.removeTools = __bind(this.removeTools, this);
+
+        this.createTool = __bind(this.createTool, this);
         return Dashboard.__super__.constructor.apply(this, arguments);
       }
 
@@ -255,6 +257,16 @@ window.require.define({"models/dashboard": function(exports, require, module) {
       Dashboard.prototype.parse = function(response) {
         response.tools = new Tools(response.tools);
         return response;
+      };
+
+      Dashboard.prototype.createTool = function(toolType) {
+        return this.get('tools').add({
+          type: toolType
+        });
+      };
+
+      Dashboard.prototype.removeTools = function() {
+        return this.get('tools').reset();
       };
 
       return Dashboard;
@@ -408,17 +420,86 @@ window.require.define({"models/tool": function(exports, require, module) {
 
 window.require.define({"router": function(exports, require, module) {
   (function() {
-    var Router,
+    var DashboardModel, DashboardView, Router, Toolbox,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
       __hasProp = {}.hasOwnProperty,
       __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    DashboardModel = require('models/dashboard');
+
+    DashboardView = require('views/dashboard');
+
+    Toolbox = require('views/toolbox');
 
     Router = (function(_super) {
 
       __extends(Router, _super);
 
       function Router() {
+        this.dropTools = __bind(this.dropTools, this);
+
+        this.addTable = __bind(this.addTable, this);
+
+        this.toolboxEvents = __bind(this.toolboxEvents, this);
+
+        this.retrieveDashbaord = __bind(this.retrieveDashbaord, this);
+
+        this.index = __bind(this.index, this);
         return Router.__super__.constructor.apply(this, arguments);
       }
+
+      Router.prototype.routes = {
+        '': 'index',
+        'dashboard/:id': 'retrieveDashboard'
+      };
+
+      Router.prototype.index = function() {
+        this.dashboardModel = new DashboardModel;
+        this.dashboard = new DashboardView({
+          model: this.dashboardModel,
+          el: '.dashboard'
+        });
+        if (this.toolbox == null) {
+          this.toolbox = new Toolbox({
+            el: '.toolbox'
+          });
+        }
+        this.dashboard.render();
+        this.toolbox.render();
+        return this.toolboxEvents();
+      };
+
+      Router.prototype.retrieveDashbaord = function(id) {
+        this.dashboardModel = new DashboardModel({
+          id: id
+        });
+        this.dashboardModel.fetch();
+        this.dashboard = new DashboardView({
+          model: this.dashboardModel,
+          el: '.dashboard'
+        });
+        if (this.toolbox == null) {
+          this.toolbox = new Toolbox({
+            el: '.toolbox'
+          });
+        }
+        this.dashboard.render();
+        this.toolbox.render();
+        return this.toolboxEvents();
+      };
+
+      Router.prototype.toolboxEvents = function() {
+        this.toolbox.on('create-table', this.addTable);
+        return this.toolbox.on('remove-tools', this.dropTools);
+      };
+
+      Router.prototype.addTable = function() {
+        return this.dashboardModel.createTool('table');
+      };
+
+      Router.prototype.dropTools = function() {
+        return this.dashboardModel.dropTools();
+      };
 
       return Router;
 
@@ -444,6 +525,8 @@ window.require.define({"views/dashboard": function(exports, require, module) {
       __extends(DashboardView, _super);
 
       function DashboardView() {
+        this.addTool = __bind(this.addTool, this);
+
         this.createToolWindow = __bind(this.createToolWindow, this);
 
         this.render = __bind(this.render, this);
@@ -453,6 +536,11 @@ window.require.define({"views/dashboard": function(exports, require, module) {
       DashboardView.prototype.tagName = 'div';
 
       DashboardView.prototype.className = 'dashboard';
+
+      DashboardView.prototype.initialize = function() {
+        var _ref;
+        return (_ref = this.model) != null ? _ref.on('change', this.addTool) : void 0;
+      };
 
       DashboardView.prototype.render = function() {
         this.model.get('tools').each(this.createToolWindow);
@@ -465,6 +553,12 @@ window.require.define({"views/dashboard": function(exports, require, module) {
           model: tool
         });
         return this.$el.append(toolWindow.render().el);
+      };
+
+      DashboardView.prototype.addTool = function() {
+        if (this.model.hasChanged('tools')) {
+          return this.createToolWindow(this.model.get('tools').last());
+        }
       };
 
       DashboardView.prototype._setToolWindow = function(toolWindow) {
@@ -503,6 +597,113 @@ window.require.define({"views/settings": function(exports, require, module) {
 
   }).call(this);
   
+}});
+
+window.require.define({"views/table": function(exports, require, module) {
+  (function() {
+    var Table,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+      __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+    Table = (function(_super) {
+
+      __extends(Table, _super);
+
+      function Table() {
+        this.dataKeys = __bind(this.dataKeys, this);
+
+        this.render = __bind(this.render, this);
+        return Table.__super__.constructor.apply(this, arguments);
+      }
+
+      Table.prototype.template = require('./templates/table');
+
+      Table.prototype.tagName = 'table';
+
+      Table.prototype.className = 'table-tool';
+
+      Table.prototype.ubretTable = Ubret.Table;
+
+      Table.prototype.nonDisplayKeys = ['id'];
+
+      Table.prototype.render = function() {
+        this.$el.html(this.template());
+        this.table = new this.ubretTable(this.dataKeys(), this.model.get('dataSource').get('data').toJSON(), "table#" + this.id);
+        return this;
+      };
+
+      Table.prototype.dataKeys = function() {
+        var dataModel, key, keys, value;
+        dataModel = this.model.get('dataSource').get('data').at(0).toJSON();
+        keys = new Array;
+        for (key in dataModel) {
+          value = dataModel[key];
+          if (__indexOf.call(this.nonDisplayKeys, key) < 0) keys.push(key);
+        }
+        return keys;
+      };
+
+      return Table;
+
+    })(Backbone.View);
+
+    module.exports = Table;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/templates/table": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+      
+        __out.push('<thead></thead>\n<tbody></tbody>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
 }});
 
 window.require.define({"views/templates/toolbox": function(exports, require, module) {
@@ -572,6 +773,7 @@ window.require.define({"views/templates/toolbox": function(exports, require, mod
 window.require.define({"views/tool_container": function(exports, require, module) {
   (function() {
     var ToolContainer,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
       __hasProp = {}.hasOwnProperty,
       __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -580,8 +782,51 @@ window.require.define({"views/tool_container": function(exports, require, module
       __extends(ToolContainer, _super);
 
       function ToolContainer() {
+        this.render = __bind(this.render, this);
+
+        this.updateTool = __bind(this.updateTool, this);
+
+        this.createToolView = __bind(this.createToolView, this);
+
+        this.initialize = __bind(this.initialize, this);
         return ToolContainer.__super__.constructor.apply(this, arguments);
       }
+
+      ToolContainer.prototype.tagName = 'div';
+
+      ToolContainer.prototype.className = 'tool-container';
+
+      ToolContainer.prototype.toolTypes = {
+        'table': 'views/table'
+      };
+
+      ToolContainer.prototype.initialize = function() {
+        if (this.model != null) {
+          this.createToolView();
+          return this.model.on('change', this.updateTool());
+        }
+      };
+
+      ToolContainer.prototype.createToolView = function() {
+        var tool;
+        tool = require(this.toolTypes[this.model.get('type')]);
+        return this.toolView = new tool({
+          model: this.model
+        });
+      };
+
+      ToolContainer.prototype.updateTool = function() {
+        if (this.model.hasChanged('type')) {
+          this.toolView.remove();
+          return this.createToolView();
+        }
+      };
+
+      ToolContainer.prototype.render = function() {
+        var _ref;
+        this.$el.html((_ref = this.toolView) != null ? _ref.render().el : void 0);
+        return this;
+      };
 
       return ToolContainer;
 

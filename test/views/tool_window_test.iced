@@ -51,7 +51,7 @@ describe 'ToolWindow', ->
     it 'should render the tool settings', ->
       expect(@toolSettings).to.have.been.called
 
-    it 'should append everything to to el', ->
+    it 'should append everything to el', ->
       expect(@append).to.have.been.calledThrice
 
   describe '#setWindowPosition', ->

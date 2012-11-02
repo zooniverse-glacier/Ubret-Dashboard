@@ -30,3 +30,21 @@ describe 'Dashboard', ->
       dashboard = new Dashboard
       dashboard.parse(JSON.stringify(responseJson))
       expect(dashboard.attributes).to.have.property('tools').and.be.an.instanceof(Tools)
+
+  describe '#createTool', ->
+    beforeEach ->
+      @dashboard = new Dashboard
+      @toolsSpy = sinon.spy(@dashboard.get('tools'), 'add')
+      @dashboard.createTool 'table'
+
+    it 'should add a tool to the tools collection', ->
+      expect(@toolsSpy).to.have.been.calledWith( { type: 'table' } )
+
+  describe '#removeTools', ->
+    beforeEach ->
+      @dashboard = new Dashboard
+      @toolsSpy = sinon.spy(@dashboard.get('tools'), 'reset')
+      @dashboard.removeTools()
+
+    it 'should call collections rest method', ->
+      expect(@toolsSpy).to.have.been.called

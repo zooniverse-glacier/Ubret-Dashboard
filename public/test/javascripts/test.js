@@ -223,12 +223,34 @@ window.require.define({"test/models/dashboard_test": function(exports, require, 
           return expect(this.dashboard).to.have.property('urlRoot').and.equal('/dashboard');
         });
       });
-      return describe('#parse', function() {
+      describe('#parse', function() {
         return it('should return a new Tools object as for the tools attribute', function() {
           var dashboard;
           dashboard = new Dashboard;
           dashboard.parse(JSON.stringify(responseJson));
           return expect(dashboard.attributes).to.have.property('tools').and.be.an["instanceof"](Tools);
+        });
+      });
+      describe('#createTool', function() {
+        beforeEach(function() {
+          this.dashboard = new Dashboard;
+          this.toolsSpy = sinon.spy(this.dashboard.get('tools'), 'add');
+          return this.dashboard.createTool('table');
+        });
+        return it('should add a tool to the tools collection', function() {
+          return expect(this.toolsSpy).to.have.been.calledWith({
+            type: 'table'
+          });
+        });
+      });
+      return describe('#removeTools', function() {
+        beforeEach(function() {
+          this.dashboard = new Dashboard;
+          this.toolsSpy = sinon.spy(this.dashboard.get('tools'), 'reset');
+          return this.dashboard.removeTools();
+        });
+        return it('should call collections rest method', function() {
+          return expect(this.toolsSpy).to.have.been.called;
         });
       });
     });
@@ -475,13 +497,162 @@ window.require.define({"test/views/dashboard_test": function(exports, require, m
   
 }});
 
+window.require.define({"test/views/table_test": function(exports, require, module) {
+  (function() {
+    var Table;
+
+    Table = require('views/table');
+
+    describe('Table', function() {
+      it('should be defined', function() {
+        return expect(Table).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var table;
+        table = new Table;
+        return expect(table).to.be.ok;
+      });
+      describe('instatiation', function() {
+        beforeEach(function() {
+          return this.table = new Table;
+        });
+        it('should use the table tag', function() {
+          return expect(this.table.el.nodeName).to.be('TABLE');
+        });
+        return it('should have the table-tool class', function() {
+          return expect(this.table.$el).to.have["class"]('table-tool');
+        });
+      });
+      describe('#render', function() {
+        beforeEach(function() {
+          this.tool = new Backbone.Model({
+            dataSource: new Backbone.Model({
+              data: new Backbone.Collection([
+                {
+                  id: 1,
+                  name: 'test'
+                }, {
+                  id: 2,
+                  name: 'test 2'
+                }
+              ])
+            })
+          });
+          this.table = new Table({
+            model: this.tool,
+            id: 'table-1'
+          });
+          this.templateSpy = sinon.spy(this.table, 'template');
+          this.htmlSpy = sinon.spy(this.table.$el, 'html');
+          this.ubretSpy = sinon.spy(this.table, 'ubretTable');
+          return this.table.render();
+        });
+        it('should render the table template', function() {
+          return expect(this.templateSpy).to.have.been.called;
+        });
+        it('should append to el', function() {
+          return expect(this.htmlSpy).to.have.been.called;
+        });
+        return it('should create a new Ubret Table', function() {
+          return expect(this.ubretSpy).to.have.been.called;
+        });
+      });
+      return describe('#dataKeys', function() {
+        return it('should extract all keys from the tool\'s data', function() {
+          this.tool = new Backbone.Model({
+            dataSource: new Backbone.Model({
+              data: new Backbone.Collection([
+                {
+                  id: 1,
+                  name: 'test'
+                }, {
+                  id: 2,
+                  name: 'test 2'
+                }
+              ])
+            })
+          });
+          this.table = new Table({
+            model: this.tool,
+            id: 'table-1'
+          });
+          return expect(this.table.dataKeys()[0]).to.equal('name');
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require.define({"test/views/tool_container_test": function(exports, require, module) {
   (function() {
     var ToolContainer;
 
     ToolContainer = require('views/tool_container');
 
-    describe('ToolContainer', function() {});
+    describe('ToolContainer', function() {
+      it('should be defined', function() {
+        return expect(ToolContainer).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var toolContainer;
+        toolContainer = new ToolContainer;
+        return expect(toolContainer).to.be.ok;
+      });
+      describe('instantiation', function() {
+        beforeEach(function() {
+          return this.toolContainer = new ToolContainer;
+        });
+        it('should use a div tag', function() {
+          return expect(this.toolContainer.el.nodeName).to.equal('DIV');
+        });
+        return it('should have the tool-container css class', function() {
+          return expect(this.toolContainer.$el).to.have["class"]('tool-container');
+        });
+      });
+      describe('#createToolView', function() {
+        beforeEach(function() {
+          this.tool = new Backbone.Model({
+            type: 'table'
+          });
+          this.requireSpy = sinon.stub(window, 'require').returns(Backbone.View);
+          this.container = new ToolContainer({
+            model: this.tool
+          });
+          return this.container.createToolView();
+        });
+        afterEach(function() {
+          return window.require.restore();
+        });
+        return it('should require the view of the tool based on the model\'s type attribute', function() {
+          return expect(this.requireSpy).to.have.been.calledWith('views/table');
+        });
+      });
+      return describe('#render', function() {
+        beforeEach(function() {
+          this.tool = new Backbone.Model({
+            type: 'table'
+          });
+          this.requireSpy = sinon.stub(window, 'require').returns(Backbone.View);
+          this.container = new ToolContainer({
+            model: this.tool
+          });
+          this.renderSpy = sinon.spy(this.container.toolView, 'render');
+          this.htmlSpy = sinon.spy(this.container.$el, 'html');
+          return this.container.render();
+        });
+        afterEach(function() {
+          return window.require.restore();
+        });
+        it('should render its toolView', function() {
+          return expect(this.renderSpy).to.have.been.called;
+        });
+        return it('should append the rendered toolView', function() {
+          return expect(this.htmlSpy).to.have.been.calledWith(this.container.toolView.el);
+        });
+      });
+    });
 
   }).call(this);
   
@@ -548,7 +719,7 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
         it('should render the tool settings', function() {
           return expect(this.toolSettings).to.have.been.called;
         });
-        return it('should append everything to to el', function() {
+        return it('should append everything to el', function() {
           return expect(this.append).to.have.been.calledThrice;
         });
       });
@@ -725,6 +896,7 @@ window.require('test/models/filter_test');
 window.require('test/models/galaxy_zoo_subject_test');
 window.require('test/models/tool_test');
 window.require('test/views/dashboard_test');
+window.require('test/views/table_test');
 window.require('test/views/tool_container_test');
 window.require('test/views/tool_window_test');
 window.require('test/views/toolbox_test');
