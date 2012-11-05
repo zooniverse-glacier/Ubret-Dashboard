@@ -17,6 +17,12 @@ class DashboardView extends Backbone.View
 
   addTool: =>
     @createToolWindow @model.get('tools').last()
+    toolChannels = new Array
+    @model.get('tools').each (tool) ->
+      toolChannels.push 
+        name: tool.get('name')
+        channel: tool.get('channel')
+    Backbone.Mediator.publish('all-tools', toolChannels)
 
   _setToolWindow: (toolWindow) ->
     ToolWindow = toolWindow

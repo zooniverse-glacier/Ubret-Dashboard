@@ -266,7 +266,8 @@ window.require.define({"models/dashboard": function(exports, require, module) {
       Dashboard.prototype.createTool = function(toolType) {
         this.get('tools').add({
           type: toolType,
-          name: "new-tool-" + this.count
+          name: "new-tool-" + this.count,
+          channel: "" + toolType + "-" + this.count
         });
         return this.count += 1;
       };
@@ -597,7 +598,16 @@ window.require.define({"views/dashboard": function(exports, require, module) {
       };
 
       DashboardView.prototype.addTool = function() {
-        return this.createToolWindow(this.model.get('tools').last());
+        var toolChannels;
+        this.createToolWindow(this.model.get('tools').last());
+        toolChannels = new Array;
+        this.model.get('tools').each(function(tool) {
+          return toolChannels.push({
+            name: tool.get('name'),
+            channel: tool.get('channel')
+          });
+        });
+        return Backbone.Mediator.publish('all-tools', toolChannels);
       };
 
       DashboardView.prototype._setToolWindow = function(toolWindow) {

@@ -46,3 +46,30 @@ describe 'Dashboard', ->
 
     it 'should render the new windows', ->
       expect(@toolRender).to.have.been.calledThrice
+
+  describe '#addTool', ->
+    beforeEach ->
+      @dashboard = new DashboardView 
+        model: new Backbone.Model 
+          tools: new Backbone.Collection [ 
+            name: 'test'
+            channel: 'test1'
+          ,
+            name: 'test2'
+            channel: 'testagain'
+          ]
+      @toolWindowStub = sinon.stub(@dashboard, 'createToolWindow')
+      @pubSpy = sinon.spy(Backbone.Mediator, 'publish')
+      @dashboard.addTool()
+
+    afterEach ->
+      Backbone.Mediator.publish.restore()
+
+    it 'should pass the most recent tool object to the createToolWindow function', ->
+      expect(@toolWindowStub).to.have.been.called
+
+    it 'should send an updated list of tool/channel pairs', ->
+      expect(@pubSpy).to.have.been.calledWith('all-tools', 
+        [{name: 'test', channel: 'test1'}, {name: 'test2', channel: 'testagain'}])
+
+

@@ -14,6 +14,7 @@ class DataSettings extends Backbone.View
   initialize: ->
     @model?.on 'change:source', @setSource
     @model?.on 'change:params', @setParams
+    Backbone.Mediator.subscribe 'all-tools', @updateToolList
 
   render: =>
     extSources = @extSources

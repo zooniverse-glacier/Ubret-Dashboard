@@ -14,7 +14,10 @@ class Dashboard extends Backbone.Model
     response
 
   createTool: (toolType) =>
-    @get('tools').add { type: toolType, name: "new-tool-#{@count}" }
+    @get('tools').add 
+      type: toolType 
+      name: "new-tool-#{@count}" 
+      channel: "#{toolType}-#{@count}"
     @count += 1
 
   removeTools: =>

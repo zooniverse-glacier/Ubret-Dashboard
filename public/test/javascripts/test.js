@@ -240,7 +240,8 @@ window.require.define({"test/models/dashboard_test": function(exports, require, 
         return it('should add a tool to the tools collection', function() {
           return expect(this.toolsSpy).to.have.been.calledWith({
             name: 'new-tool-1',
-            type: 'table'
+            type: 'table',
+            channel: 'table-1'
           });
         });
       });
@@ -512,7 +513,7 @@ window.require.define({"test/views/dashboard_test": function(exports, require, m
           return expect(this.dashboard.$el).to.have["class"]('dashboard');
         });
       });
-      return describe('#render', function() {
+      describe('#render', function() {
         beforeEach(function() {
           this.dashboard = new DashboardView;
           this.dashboardAppend = sinon.spy(this.dashboard.$el, 'append');
@@ -550,6 +551,43 @@ window.require.define({"test/views/dashboard_test": function(exports, require, m
         });
         return it('should render the new windows', function() {
           return expect(this.toolRender).to.have.been.calledThrice;
+        });
+      });
+      return describe('#addTool', function() {
+        beforeEach(function() {
+          this.dashboard = new DashboardView({
+            model: new Backbone.Model({
+              tools: new Backbone.Collection([
+                {
+                  name: 'test',
+                  channel: 'test1'
+                }, {
+                  name: 'test2',
+                  channel: 'testagain'
+                }
+              ])
+            })
+          });
+          this.toolWindowStub = sinon.stub(this.dashboard, 'createToolWindow');
+          this.pubSpy = sinon.spy(Backbone.Mediator, 'publish');
+          return this.dashboard.addTool();
+        });
+        afterEach(function() {
+          return Backbone.Mediator.publish.restore();
+        });
+        it('should pass the most recent tool object to the createToolWindow function', function() {
+          return expect(this.toolWindowStub).to.have.been.called;
+        });
+        return it('should send an updated list of tool/channel pairs', function() {
+          return expect(this.pubSpy).to.have.been.calledWith('all-tools', [
+            {
+              name: 'test',
+              channel: 'test1'
+            }, {
+              name: 'test2',
+              channel: 'testagain'
+            }
+          ]);
         });
       });
     });
