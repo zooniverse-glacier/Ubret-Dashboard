@@ -1,7 +1,6 @@
 .tool-window {
   position: absolute;
   display: inline-block;
-  border: 1px solid #f3f3f3;
   box-shadow: 0 0 13px #444;
 }
 .tool-window .title-bar {
@@ -11,6 +10,7 @@
   background: #b0b0b0;
   width: inherit;
   z-index: 2;
+  height: 20px;
 }
 .tool-window .title-bar input {
   display: none;
@@ -19,9 +19,11 @@
   width: 200px;
   height: 100%;
   position: absolute;
-  border-left: 1px solid #f3f3f3;
+  border-right: 1px solid #f3f3f3;
   display: none;
   z-index: 1;
+  padding: 5px;
+  top: 20px;
 }
 .tool-window .tool-container {
   width: inherit;
@@ -30,12 +32,13 @@
   padding: 5px;
   position: absolute;
   left: 0;
+  top: 20px;
 }
 .tool-window.settings-active .settings {
   display: inline-block;
 }
 .tool-window.settings-active .tool-container {
-  left: 200px;
+  left: 210px;
 }
 .toolbox {
   position: absolute;
@@ -64,4 +67,22 @@
 }
 .settings .data-settings button {
   display: none;
+}
+table.table-tool {
+  border-collapse: collapse;
+  font-size: 12px;
+  border: 1px solid #b0b0b0;
+  padding: 5px;
+}
+table.table-tool td,
+table.table-tool th {
+  padding: 5px;
+  border: 1px solid #b0b0b0;
+}
+table.table-tool .selected {
+  background-color: #9cf;
+}
+table.table-tool td {
+  overflow: hidden;
+  max-width: 200px;
 }

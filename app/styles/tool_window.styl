@@ -1,7 +1,6 @@
 .tool-window
   position: absolute
   display: inline-block
-  border: 1px solid $light-gray
   box-shadow: 0 0 13px #444
 
   .title-bar
@@ -11,6 +10,7 @@
     background: $mid-gray
     width: inherit
     z-index: 2
+    height: 20px
 
     input
       display: none
@@ -22,6 +22,8 @@
     border-right: 1px solid $light-gray
     display: none
     z-index: 1
+    padding: 5px
+    top: 20px
 
   .tool-container
     width: inherit
@@ -30,10 +32,11 @@
     padding: 5px
     position: absolute
     left: 0
+    top: 20px
 
   &.settings-active
     .settings
       display: inline-block 
 
     .tool-container
-      left: 200px
+      left: 210px

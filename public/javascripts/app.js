@@ -818,7 +818,6 @@ window.require.define({"views/table": function(exports, require, module) {
           formattedData = _.map(data, function(datum) {
             return datum.toJSON();
           });
-          console.log(formattedData);
           this.table = new this.ubretTable(this.dataKeys(data), formattedData, "table#" + this.id);
         }
         return this;

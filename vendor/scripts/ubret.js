@@ -20,7 +20,6 @@
   Table = (function() {
 
     function Table(keys, data, selector) {
-      console.log(keys, data, selector)
       this.keys = keys;
       this.data = data;
       this.selector = selector;

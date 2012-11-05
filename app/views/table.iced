@@ -17,7 +17,6 @@ class Table extends Backbone.View
     else
       @$el.html @template()
       formattedData = _.map( data, (datum) -> datum.toJSON() ) 
-      console.log formattedData
       @table = new @ubretTable(@dataKeys(data), formattedData, "table##{@id}")
     @
 
