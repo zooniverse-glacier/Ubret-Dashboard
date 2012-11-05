@@ -1,0 +1,68 @@
+.toolbox {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  height: 80px;
+  border-top: 1px solid $light-gray;
+  width: 100%;
+}
+.toolbox .tool-icon {
+  height: inherit;
+  display: inline-block;
+  float: left;
+}
+.toolbox .remove-tools {
+  height: inherit;
+  display: inline-block;
+  float: right;
+}
+.tool-window {
+  position: absolute;
+  display: inline-block;
+  border: 1px solid #f3f3f3;
+}
+.tool-window .title-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #b0b0b0;
+  width: inherit;
+}
+.tool-window .title-bar input {
+  display: none;
+}
+.toolbox {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  height: 80px;
+  border-top: 1px solid #f3f3f3;
+  width: 100%;
+}
+.toolbox .tool-icon {
+  height: inherit;
+  display: inline-block;
+  float: left;
+}
+.toolbox .remove-tools {
+  height: inherit;
+  display: inline-block;
+  float: right;
+}
+.tool-window {
+  position: absolute;
+  display: inline-block;
+  border: 1px solid $light-gray;
+}
+.tool-window .title-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: $mid-gray;
+  width: inherit;
+}
+.tool-window .title-bar input {
+  display: none;
+}

@@ -101,8 +101,8 @@ describe 'WindowTitleBar', ->
     describe 'when a blur event is triggered or the enter key is pressed', ->
       beforeEach ->
         event = { type: 'blur', which: 13 }
-        @title.updateModel event
         @modelSpy = sinon.spy(@title.model, 'set')
+        @title.updateModel event
 
       it 'should get the model\'s name property', ->
-        expect(@modelSpy).to.have.been.calledWith('title', '')
+        expect(@modelSpy).to.have.been.calledWith('name', '')

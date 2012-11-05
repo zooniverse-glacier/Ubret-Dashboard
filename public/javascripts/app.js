@@ -389,6 +389,7 @@ window.require.define({"models/galaxy_zoo_subject": function(exports, require, m
 window.require.define({"models/tool": function(exports, require, module) {
   (function() {
     var DataSource, Filters, Tool,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
       __hasProp = {}.hasOwnProperty,
       __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -401,6 +402,9 @@ window.require.define({"models/tool": function(exports, require, module) {
       __extends(Tool, _super);
 
       function Tool() {
+        this.getData = __bind(this.getData, this);
+
+        this.filterData = __bind(this.filterData, this);
         return Tool.__super__.constructor.apply(this, arguments);
       }
 
@@ -422,6 +426,11 @@ window.require.define({"models/tool": function(exports, require, module) {
           return filteredData = _.filter(filteredData, filter.get('func'));
         });
         return filteredData;
+      };
+
+      Tool.prototype.getData = function() {
+        if (!this.get('dataSource').has('source')) return [];
+        return this.filterData();
       };
 
       return Tool;
@@ -634,6 +643,8 @@ window.require.define({"views/table": function(exports, require, module) {
 
       Table.prototype.template = require('./templates/table');
 
+      Table.prototype.noDataTemplate = require('./templates/no_data');
+
       Table.prototype.tagName = 'table';
 
       Table.prototype.className = 'table-tool';
@@ -643,14 +654,22 @@ window.require.define({"views/table": function(exports, require, module) {
       Table.prototype.nonDisplayKeys = ['id'];
 
       Table.prototype.render = function() {
-        this.$el.html(this.template());
-        this.table = new this.ubretTable(this.dataKeys(), this.model.get('dataSource').get('data').toJSON(), "table#" + this.id);
+        var data;
+        data = this.model.getData();
+        if (data.length === 0) {
+          this.$el.html(this.noDataTemplate());
+        } else {
+          this.$el.html(this.template());
+          this.table = new this.ubretTable(this.dataKeys(), _.each(data, function(datum) {
+            return datum.toJSON;
+          }), "table#" + this.id);
+        }
         return this;
       };
 
-      Table.prototype.dataKeys = function() {
+      Table.prototype.dataKeys = function(data) {
         var dataModel, key, keys, value;
-        dataModel = this.model.get('dataSource').get('data').at(0).toJSON();
+        dataModel = data[0].toJSON();
         keys = new Array;
         for (key in dataModel) {
           value = dataModel[key];
@@ -884,7 +903,7 @@ window.require.define({"views/templates/window_title_bar": function(exports, req
       
         __out.push(this.name);
       
-        __out.push(' />\n');
+        __out.push('" />\n');
       
       }).call(this);
       
@@ -1205,18 +1224,18 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
 
       WindowTitleBar.prototype.editTitle = function() {
         this.$('.window-title').hide();
-        return this.$('input[name="window-title"]').show();
+        return this.$('input').show();
       };
 
       WindowTitleBar.prototype.updateModel = function(e) {
         var input, newTitle;
         if (e.which === 27) {
           this.$('.window-title').show();
-          this.$('input[name="window-title"]').hide();
+          return this.$('input').hide();
         } else if (e.type === 'blur' || e.which === 13) {
-          input = this.$('input[name="window-title"]');
-          newTitle = input.val();
-          return this.model.set('title', newTitle);
+          input = this.$('input');
+          newTitle = input.val() || '';
+          return this.model.set('name', newTitle);
         }
       };
 

@@ -41,7 +41,7 @@ describe 'Tool', ->
 
   describe '#filterData', ->
     beforeEach ->
-      @filter = new Backbone.Model { func: (x) -> console.log x }
+      @filter = new Backbone.Model { func: (x) -> x }
       @filters = new Filters [@filter]
       @tool = new Tool { filters: @filters, dataSource: new DataSource { source: 'Galaxy Zoo' } }
       @eachSpy = sinon.spy(@tool.get('filters'), 'each')

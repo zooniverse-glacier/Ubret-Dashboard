@@ -1,4 +1,5 @@
 Table = require 'views/table'
+Tool = require 'models/tool'
 
 describe 'Table', ->
   it 'should be defined', ->
@@ -20,9 +21,8 @@ describe 'Table', ->
 
   describe '#render', ->
     beforeEach ->
-      @tool = new Backbone.Model
-        dataSource: new Backbone.Model
-          data: new Backbone.Collection [ { id: 1, name: 'test' }, { id: 2, name: 'test 2'} ]
+      @tool = new Tool
+      @toolStub = sinon.stub(@tool, 'getData').returns( [ new Backbone.Model { id: 1, name: 'woohooo' } ] )
       @table = new Table { model: @tool, id: 'table-1' }
       @templateSpy = sinon.spy(@table, 'template')
       @htmlSpy = sinon.spy(@table.$el, 'html')
@@ -40,10 +40,7 @@ describe 'Table', ->
 
   describe '#dataKeys', ->
     it 'should extract all keys from the tool\'s data', ->
-      @tool = new Backbone.Model
-        dataSource: new Backbone.Model
-          data: new Backbone.Collection [ { id: 1, name: 'test' }, { id: 2, name: 'test 2'} ]
+      @tool = new Tool
+      @toolStub = sinon.stub(@tool, 'getData').returns( [ new Backbone.Model { id: 1, name: 'woohooo' } ] )
       @table = new Table { model: @tool, id: 'table-1' }
       expect(@table.dataKeys()[0]).to.equal('name')
-      
-

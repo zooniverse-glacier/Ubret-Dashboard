@@ -414,7 +414,7 @@ window.require.define({"test/models/tool_test": function(exports, require, modul
         beforeEach(function() {
           this.filter = new Backbone.Model({
             func: function(x) {
-              return console.log(x);
+              return x;
             }
           });
           this.filters = new Filters([this.filter]);
@@ -538,9 +538,11 @@ window.require.define({"test/views/dashboard_test": function(exports, require, m
 
 window.require.define({"test/views/table_test": function(exports, require, module) {
   (function() {
-    var Table;
+    var Table, Tool;
 
     Table = require('views/table');
+
+    Tool = require('models/tool');
 
     describe('Table', function() {
       it('should be defined', function() {
@@ -564,19 +566,13 @@ window.require.define({"test/views/table_test": function(exports, require, modul
       });
       describe('#render', function() {
         beforeEach(function() {
-          this.tool = new Backbone.Model({
-            dataSource: new Backbone.Model({
-              data: new Backbone.Collection([
-                {
-                  id: 1,
-                  name: 'test'
-                }, {
-                  id: 2,
-                  name: 'test 2'
-                }
-              ])
+          this.tool = new Tool;
+          this.toolStub = sinon.stub(this.tool, 'getData').returns([
+            new Backbone.Model({
+              id: 1,
+              name: 'woohooo'
             })
-          });
+          ]);
           this.table = new Table({
             model: this.tool,
             id: 'table-1'
@@ -598,19 +594,13 @@ window.require.define({"test/views/table_test": function(exports, require, modul
       });
       return describe('#dataKeys', function() {
         return it('should extract all keys from the tool\'s data', function() {
-          this.tool = new Backbone.Model({
-            dataSource: new Backbone.Model({
-              data: new Backbone.Collection([
-                {
-                  id: 1,
-                  name: 'test'
-                }, {
-                  id: 2,
-                  name: 'test 2'
-                }
-              ])
+          this.tool = new Tool;
+          this.toolStub = sinon.stub(this.tool, 'getData').returns([
+            new Backbone.Model({
+              id: 1,
+              name: 'woohooo'
             })
-          });
+          ]);
           this.table = new Table({
             model: this.tool,
             id: 'table-1'
@@ -1031,11 +1021,11 @@ window.require.define({"test/views/window_title_bar_test": function(exports, req
               type: 'blur',
               which: 13
             };
-            this.title.updateModel(event);
-            return this.modelSpy = sinon.spy(this.title.model, 'set');
+            this.modelSpy = sinon.spy(this.title.model, 'set');
+            return this.title.updateModel(event);
           });
           return it('should get the model\'s name property', function() {
-            return expect(this.modelSpy).to.have.been.calledWith('title', '');
+            return expect(this.modelSpy).to.have.been.calledWith('name', '');
           });
         });
       });

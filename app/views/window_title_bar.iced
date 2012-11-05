@@ -36,17 +36,16 @@ class WindowTitleBar extends Backbone.View
 
   editTitle: =>
     @$('.window-title').hide()
-    @$('input[name="window-title"]').show()
+    @$('input').show()
 
   updateModel: (e) =>
     if e.which is 27
       @$('.window-title').show()
-      @$('input[name="window-title"]').hide()
-      return
+      @$('input').hide()
     else if e.type is 'blur' or e.which is 13
-      input = @$('input[name="window-title"]')
-      newTitle = input.val()
-      @model.set 'title', newTitle
+      input = @$('input')
+      newTitle = input.val() || ''
+      @model.set 'name', newTitle
 
 
 module.exports = WindowTitleBar 
