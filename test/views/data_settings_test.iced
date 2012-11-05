@@ -58,3 +58,15 @@ describe 'DataSettings', ->
 
     it 'should show the fetch button', ->
       expect(@dataSettings.$('button[name="fetch"]')).to.be.visible
+
+  describe '#updateToolList', ->
+    beforeEach ->
+      @dataSettings = new DataSettings
+      @renderSpy = sinon.stub(@dataSettings, 'render')
+      @dataSettings.updateToolList [{ name: 'test', channel: 'test-1' }]
+
+    it 'should set intSources property', ->
+      expect(@dataSettings).to.have.property('intSources').and.equal([{name: 'test', channel: 'test-1'}])
+
+    it 'should call render function', ->
+      expect(@renderSpy).to.have.been.called

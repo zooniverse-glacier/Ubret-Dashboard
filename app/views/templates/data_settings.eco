@@ -20,7 +20,7 @@
   <select class="internal-sources">
       <option value="">Select Tool</option>
     <% for source in @intSources: %>
-      <option value="<%- source %>"><%- source %></option>
+      <option value="<%- source.name %>"><%- source.channel %></option>
     <% end %>
   </select>
 </div>

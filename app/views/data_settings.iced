@@ -54,6 +54,8 @@ class DataSettings extends Backbone.View
     if @model.isExternal
       console.log 'here'
 
-      
+  updateToolList: (list) =>
+    @intSources = list
+    @render()
 
 module.exports = DataSettings
