@@ -4,6 +4,6 @@
   </div>
 <% end %>
 
-<div clas="remove-tools">
+<div class="remove-tools">
   <button type="button" name="remove-tools">Clear Tools</button>
 </div>

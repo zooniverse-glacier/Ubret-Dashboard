@@ -95,3 +95,30 @@ describe 'ToolWindow', ->
 
     it 'should remove the view', ->
       expect(@viewSpy).to.have.been.called
+
+  describe '#startDrag', ->
+    beforeEach ->
+      @toolWindow = new ToolWindow
+      @toolContainer = sinon.stub(@toolWindow.toolContainer, 'render').returns({ el: "nuffin" })
+      @titleBar = sinon.stub(@toolWindow.titleBar, 'render').returns({ el: "nuffin" })
+      @toolSettings = sinon.stub(@toolWindow.settings, 'render').returns({ el: "nuffin" })
+      @documentSpy = sinon.stub($(document), 'on')
+
+      @toolWindow.render().startDrag
+
+    it 'should become unselectable', ->
+      expect(@toolWindow.$el).to.have.class('unselectable')
+
+    it 'should listen for mouse moves on the document', ->
+      expect(@documentSpy).to.have.been.called
+
+    describe '#endDrag', ->
+      beforeEach ->
+        @documentSpy = sinon.stub($(document), 'off')
+        @toolWindow.endDrag()
+
+        it 'should remove the unselectable class', ->
+          expect(@toolWindow.$el).to.not.have.class('unselectable')
+
+        it 'should remove the event listener from document', ->
+          expect(@documentSpy).to.have.been.called

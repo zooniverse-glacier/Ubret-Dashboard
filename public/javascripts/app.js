@@ -1076,7 +1076,7 @@ window.require.define({"views/templates/toolbox": function(exports, require, mod
           __out.push('</button>\n  </div>\n');
         }
       
-        __out.push('\n\n<div clas="remove-tools">\n  <button type="button" name="remove-tools">Clear Tools</button>\n</div>\n');
+        __out.push('\n\n<div class="remove-tools">\n  <button type="button" name="remove-tools">Clear Tools</button>\n</div>\n');
       
       }).call(this);
       
@@ -1235,6 +1235,10 @@ window.require.define({"views/tool_window": function(exports, require, module) {
       __extends(ToolWindow, _super);
 
       function ToolWindow() {
+        this.endDrag = __bind(this.endDrag, this);
+
+        this.startDrag = __bind(this.startDrag, this);
+
         this.close = __bind(this.close, this);
 
         this.toggleSettings = __bind(this.toggleSettings, this);
@@ -1257,8 +1261,8 @@ window.require.define({"views/tool_window": function(exports, require, module) {
 
       ToolWindow.prototype.initialize = function() {
         if (this.model != null) {
-          this.model.on('change', this.setWindowPosition);
-          this.model.on('change', this.setWindowSize);
+          this.model.on('change:top change:left', this.setWindowPosition);
+          this.model.on('change:width change:height', this.setWindowSize);
           this.setWindowPosition();
           this.setWindowSize();
         }
@@ -1272,7 +1276,9 @@ window.require.define({"views/tool_window": function(exports, require, module) {
           model: this.model
         });
         this.titleBar.on('close', this.close);
-        return this.titleBar.on('settings', this.toggleSettings);
+        this.titleBar.on('settings', this.toggleSettings);
+        this.titleBar.on('startDrag', this.startDrag);
+        return this.titleBar.on('endDrag', this.endDrag);
       };
 
       ToolWindow.prototype.setWindowPosition = function() {
@@ -1297,9 +1303,33 @@ window.require.define({"views/tool_window": function(exports, require, module) {
         return this.$el.toggleClass('settings-active');
       };
 
-      ToolWindow.prototype.close = function() {
+      ToolWindow.prototype.close = function(e) {
         this.model.destroy();
         return this.remove();
+      };
+
+      ToolWindow.prototype.startDrag = function(e) {
+        var mouseOffset, relX, relY,
+          _this = this;
+        this.$el.addClass('unselectable');
+        this.dragging = true;
+        mouseOffset = this.$el.offset();
+        relX = e.pageX - mouseOffset.left;
+        relY = e.pageY - mouseOffset.top;
+        return $(document).on('mousemove', function(e) {
+          if (_this.dragging) {
+            return _this.model.set({
+              left: e.pageX - relX,
+              top: e.pageY - relY
+            });
+          }
+        });
+      };
+
+      ToolWindow.prototype.endDrag = function(e) {
+        this.$el.removeClass('unselectable');
+        this.dragging = false;
+        return $(document).off('mousemove');
       };
 
       return ToolWindow;
@@ -1447,12 +1477,12 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
         return this.trigger('settings');
       };
 
-      WindowTitleBar.prototype.startDrag = function() {
-        return this.trigger('startDrag');
+      WindowTitleBar.prototype.startDrag = function(e) {
+        return this.trigger('startDrag', e);
       };
 
-      WindowTitleBar.prototype.endDrag = function() {
-        return this.trigger('endDrag');
+      WindowTitleBar.prototype.endDrag = function(e) {
+        return this.trigger('endDrag', e);
       };
 
       WindowTitleBar.prototype.editTitle = function() {

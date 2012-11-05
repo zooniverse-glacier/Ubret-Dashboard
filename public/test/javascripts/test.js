@@ -965,7 +965,7 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
           return expect(toggle).to.have.been.calledWith('settings-active');
         });
       });
-      return describe('#close', function() {
+      describe('#close', function() {
         beforeEach(function() {
           this.toolWindow = new ToolWindow({
             model: new Backbone.Model({
@@ -982,6 +982,40 @@ window.require.define({"test/views/tool_window_test": function(exports, require,
         });
         return it('should remove the view', function() {
           return expect(this.viewSpy).to.have.been.called;
+        });
+      });
+      return describe('#startDrag', function() {
+        beforeEach(function() {
+          this.toolWindow = new ToolWindow;
+          this.toolContainer = sinon.stub(this.toolWindow.toolContainer, 'render').returns({
+            el: "nuffin"
+          });
+          this.titleBar = sinon.stub(this.toolWindow.titleBar, 'render').returns({
+            el: "nuffin"
+          });
+          this.toolSettings = sinon.stub(this.toolWindow.settings, 'render').returns({
+            el: "nuffin"
+          });
+          this.documentSpy = sinon.stub($(document), 'on');
+          return this.toolWindow.render().startDrag;
+        });
+        it('should become unselectable', function() {
+          return expect(this.toolWindow.$el).to.have["class"]('unselectable');
+        });
+        it('should listen for mouse moves on the document', function() {
+          return expect(this.documentSpy).to.have.been.called;
+        });
+        return describe('#endDrag', function() {
+          return beforeEach(function() {
+            this.documentSpy = sinon.stub($(document), 'off');
+            this.toolWindow.endDrag();
+            it('should remove the unselectable class', function() {
+              return expect(this.toolWindow.$el).to.not.have["class"]('unselectable');
+            });
+            return it('should remove the event listener from document', function() {
+              return expect(this.documentSpy).to.have.been.called;
+            });
+          });
         });
       });
     });

@@ -28,11 +28,11 @@ class WindowTitleBar extends Backbone.View
   settings: =>
     @trigger 'settings'
 
-  startDrag: =>
-    @trigger 'startDrag'
+  startDrag: (e) =>
+    @trigger 'startDrag', e
 
-  endDrag: =>
-    @trigger 'endDrag'
+  endDrag: (e) =>
+    @trigger 'endDrag', e
 
   editTitle: =>
     @$('.window-title').hide()

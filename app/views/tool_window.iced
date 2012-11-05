@@ -10,8 +10,8 @@ class ToolWindow extends Backbone.View
 
   initialize: =>
     if @model?
-      @model.on 'change', @setWindowPosition
-      @model.on 'change', @setWindowSize
+      @model.on 'change:top change:left', @setWindowPosition
+      @model.on 'change:width change:height', @setWindowSize
       @setWindowPosition()
       @setWindowSize()
 
@@ -22,6 +22,8 @@ class ToolWindow extends Backbone.View
     @titleBar = new WindowTitleBar { model: @model }
     @titleBar.on 'close', @close
     @titleBar.on 'settings', @toggleSettings
+    @titleBar.on 'startDrag', @startDrag
+    @titleBar.on 'endDrag', @endDrag
 
   setWindowPosition: =>
     @$el.css 'left', @model.get('left')
@@ -39,8 +41,27 @@ class ToolWindow extends Backbone.View
   toggleSettings: =>
     @$el.toggleClass 'settings-active'
 
-  close: =>
+  close: (e) =>
     @model.destroy()
     @remove()
+
+  startDrag: (e) =>
+    @$el.addClass 'unselectable'
+    @dragging = true
+
+    mouseOffset = @$el.offset()
+    relX = e.pageX - mouseOffset.left
+    relY = e.pageY - mouseOffset.top
+
+    $(document).on 'mousemove', (e) =>
+      if @dragging
+        @model.set 
+          left: e.pageX - relX
+          top: e.pageY - relY
+
+  endDrag: (e) =>
+    @$el.removeClass 'unselectable'
+    @dragging = false
+    $(document).off 'mousemove'
 
 module.exports = ToolWindow
