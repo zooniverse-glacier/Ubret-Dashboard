@@ -288,24 +288,46 @@ window.require.define({"test/models/data_source_test": function(exports, require
         });
       });
       describe('#sourceToCollection', function() {
-        return it('should convert the string name of the source into the class name of the collection', function() {
+        it('should convert the string name of the source into the class name of the collection', function() {
           var dataSource;
           dataSource = new DataSource({
             source: 'Galaxy Zoo'
           });
-          sinon.spy(dataSource.get('data'), 'fetch');
           return expect(dataSource.sourceToCollection()).to.equal(GalaxyZooSubjects);
         });
+        return it('should return "internal" if the source is another tool', function() {
+          var dataSource;
+          dataSource = new DataSource({
+            source: 'tool-1'
+          });
+          return expect(dataSource.sourceToCollection()).to.equal('internal');
+        });
       });
-      return describe('#fetchData', function() {
+      describe('#fetchData', function() {
         return it('should call the data collection\'s fetch method', function() {
           var dataSource, fetchSpy;
           dataSource = new DataSource({
             source: 'Galaxy Zoo'
           });
-          fetchSpy = sinon.spy(dataSource.get('data'), 'fetch');
+          fetchSpy = sinon.stub(dataSource.get('data'), 'fetch');
           dataSource.fetchData();
           return expect(fetchSpy).to.have.been.called;
+        });
+      });
+      return describe('#isExternal', function() {
+        it('should return true if it has an external source', function() {
+          var dataSource;
+          dataSource = new DataSource({
+            source: 'Galaxy Zoo'
+          });
+          return expect(dataSource.isExternal()).to.be["true"];
+        });
+        return it('should return false if it has an internal dataSource', function() {
+          var dataSource;
+          dataSource = new DataSource({
+            source: 'tool-1'
+          });
+          return expect(dataSource.isExternal()).to.be["false"];
         });
       });
     });
@@ -536,6 +558,147 @@ window.require.define({"test/views/dashboard_test": function(exports, require, m
   
 }});
 
+window.require.define({"test/views/data_settings_test": function(exports, require, module) {
+  (function() {
+    var DataSettings;
+
+    DataSettings = require('views/data_settings');
+
+    describe('DataSettings', function() {
+      it('should be defined', function() {
+        return expect(DataSettings).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var dataSettings;
+        dataSettings = new DataSettings;
+        return expect(dataSettings).to.be.ok;
+      });
+      describe('instantiation', function() {
+        beforeEach(function() {
+          return this.dataSettings = new DataSettings;
+        });
+        it('should have a div tag', function() {
+          return expect(this.dataSettings.el.nodeName).to.be("DIV");
+        });
+        return it('should have a data-settings class', function() {
+          return expect(this.dataSettings.$el).to.have["class"]('data-settings');
+        });
+      });
+      describe('#render', function() {
+        beforeEach(function() {
+          this.dataSettings = new DataSettings;
+          this.templateSpy = sinon.spy(this.dataSettings, 'template');
+          this.htmlSpy = sinon.spy(this.dataSettings.$el, 'html');
+          return this.dataSettings.render();
+        });
+        it('should render the template', function() {
+          return expect(this.templateSpy).to.have.been.called;
+        });
+        return it('should append the template to el', function() {
+          return expect(this.htmlSpy).to.have.been.called;
+        });
+      });
+      describe('#showExternal', function() {
+        beforeEach(function() {
+          this.dataSettings = new DataSettings;
+          return this.dataSettings.render().showExternal();
+        });
+        it('should hide the interal settings', function() {
+          return expect(this.dataSettings.$('.internal-settings')).to.be.hidden;
+        });
+        it('should show the external settings', function() {
+          return expect(this.dataSettings.$('.external-settings')).to.be.visible;
+        });
+        return it('should show the fetch button', function() {
+          return expect(this.dataSettings.$('button[name="fetch"]')).to.be.visible;
+        });
+      });
+      return describe('#showInternal', function() {
+        beforeEach(function() {
+          this.dataSettings = new DataSettings;
+          return this.dataSettings.render().showInternal();
+        });
+        it('should show the internal settings', function() {
+          return expect(this.dataSettings.$('.internal-settings')).to.be.visible;
+        });
+        it('should hide the external settings', function() {
+          return expect(this.dataSettings.$('.external-settings')).to.be.hidden;
+        });
+        return it('should show the fetch button', function() {
+          return expect(this.dataSettings.$('button[name="fetch"]')).to.be.visible;
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
+window.require.define({"test/views/settings_test": function(exports, require, module) {
+  (function() {
+    var DataSettings, Settings;
+
+    Settings = require('views/settings');
+
+    DataSettings = require('views/data_settings');
+
+    describe('Settings', function() {
+      it('should be defined', function() {
+        return expect(Settings).to.be.ok;
+      });
+      it('should be instantiable', function() {
+        var settings;
+        settings = new Settings;
+        return expect(settings).to.be.ok;
+      });
+      describe('instantiation', function() {
+        beforeEach(function() {
+          this.model = new Backbone.Model({
+            dataSource: new Backbone.Model
+          });
+          return this.settings = new Settings({
+            model: this.model
+          });
+        });
+        it('should have a div tag', function() {
+          return expect(this.settings.el.nodeName).to.be('DIV');
+        });
+        it('should have the settings class', function() {
+          return expect(this.settings.$el).to.have["class"]('settings');
+        });
+        return describe('#initialize', function() {
+          return it('should have a data settings view', function() {
+            return expect(this.settings).to.have.property('dataSettings').and.be.an["instanceof"](DataSettings);
+          });
+        });
+      });
+      return describe('#render', function() {
+        beforeEach(function() {
+          this.model = new Backbone.Model({
+            dataSource: new Backbone.Model
+          });
+          this.settings = new Settings({
+            model: this.model
+          });
+          this.dataSettingsStub = sinon.stub(this.settings.dataSettings, 'render').returns({
+            el: '<p>woohoo</p>'
+          });
+          this.appendSpy = sinon.spy(this.settings.$el, 'append');
+          return this.settings.render();
+        });
+        it('should render the data settings', function() {
+          return expect(this.dataSettingsStub).to.have.been.called;
+        });
+        return it('should append the rendered sub-settings to the main el', function() {
+          return expect(this.appendSpy).to.have.been.called;
+        });
+      });
+    });
+
+  }).call(this);
+  
+}});
+
 window.require.define({"test/views/table_test": function(exports, require, module) {
   (function() {
     var Table, Tool;
@@ -594,18 +757,15 @@ window.require.define({"test/views/table_test": function(exports, require, modul
       });
       return describe('#dataKeys', function() {
         return it('should extract all keys from the tool\'s data', function() {
-          this.tool = new Tool;
-          this.toolStub = sinon.stub(this.tool, 'getData').returns([
+          this.table = new Table({
+            id: 'table-1'
+          });
+          return expect(this.table.dataKeys([
             new Backbone.Model({
               id: 1,
               name: 'woohooo'
             })
-          ]);
-          this.table = new Table({
-            model: this.tool,
-            id: 'table-1'
-          });
-          return expect(this.table.dataKeys()[0]).to.equal('name');
+          ])[0]).to.equal('name');
         });
       });
     });
@@ -989,7 +1149,7 @@ window.require.define({"test/views/window_title_bar_test": function(exports, req
           return expect(this.title.$('.window-title')).to.be.hidden;
         });
         return it('should show the window title input field', function() {
-          return expect(this.title.$('input')).to.be.visible;
+          return expect(this.title.$('input')).to.not.be.hidden;
         });
       });
       return describe('#updateModel', function() {
@@ -1008,7 +1168,7 @@ window.require.define({"test/views/window_title_bar_test": function(exports, req
             return this.title.updateModel(event);
           });
           it('should show window title', function() {
-            return expect(this.title.$('.window-title')).to.be.visible;
+            return expect(this.title.$('.window-title')).to.not.be.hidden;
           });
           return it('should hide the window title input field', function() {
             return expect(this.title.$('input')).to.be.hidden;
@@ -1044,6 +1204,8 @@ window.require('test/models/filter_test');
 window.require('test/models/galaxy_zoo_subject_test');
 window.require('test/models/tool_test');
 window.require('test/views/dashboard_test');
+window.require('test/views/data_settings_test');
+window.require('test/views/settings_test');
 window.require('test/views/table_test');
 window.require('test/views/tool_container_test');
 window.require('test/views/tool_window_test');

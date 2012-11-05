@@ -6,13 +6,19 @@ class Table extends Backbone.View
   ubretTable: Ubret.Table
   nonDisplayKeys: ['id']
 
+  initialize: ->
+    @model?.get('dataSource').on 'change:source', =>
+      @model.get('dataSource').get('data').on 'reset', @render
+
   render: =>
     data = @model.getData() 
     if data.length is 0
       @$el.html @noDataTemplate()
     else
       @$el.html @template()
-      @table = new @ubretTable(@dataKeys(), _.each( data, (datum) -> datum.toJSON ), "table##{@id}")
+      formattedData = _.map( data, (datum) -> datum.toJSON() ) 
+      console.log formattedData
+      @table = new @ubretTable(@dataKeys(data), formattedData, "table##{@id}")
     @
 
   dataKeys: (data) =>

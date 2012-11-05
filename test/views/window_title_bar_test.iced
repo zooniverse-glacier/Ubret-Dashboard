@@ -80,7 +80,7 @@ describe 'WindowTitleBar', ->
       expect(@title.$('.window-title')).to.be.hidden
 
     it 'should show the window title input field', ->
-      expect(@title.$('input')).to.be.visible
+      expect(@title.$('input')).to.not.be.hidden
 
   describe '#updateModel', ->
     beforeEach ->
@@ -93,7 +93,7 @@ describe 'WindowTitleBar', ->
         @title.updateModel event
 
       it 'should show window title', ->
-        expect(@title.$('.window-title')).to.be.visible
+        expect(@title.$('.window-title')).to.not.be.hidden
 
       it 'should hide the window title input field', ->
         expect(@title.$('input')).to.be.hidden

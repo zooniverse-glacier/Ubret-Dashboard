@@ -14,7 +14,7 @@ class ToolContainer extends Backbone.View
     toolName = @model.get('type')
     if toolName?
       tool = (require @toolTypes[toolName])
-      @toolView = new tool { model: @model }
+      @toolView = new tool { model: @model, id: @model.get('name') }
 
   updateTool: =>
     if @model.hasChanged('type')

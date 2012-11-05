@@ -299,6 +299,10 @@ window.require.define({"models/data_source": function(exports, require, module) 
       __extends(DataSource, _super);
 
       function DataSource() {
+        this.isExternal = __bind(this.isExternal, this);
+
+        this.createNewData = __bind(this.createNewData, this);
+
         this.fetchData = __bind(this.fetchData, this);
 
         this.sourceToCollection = __bind(this.sourceToCollection, this);
@@ -306,26 +310,38 @@ window.require.define({"models/data_source": function(exports, require, module) 
       }
 
       DataSource.prototype.initialize = function() {
-        var dataCollection, params, sourceType;
-        if ((!this.has('data')) && (this.has('source'))) {
-          sourceType = this.sourceToCollection();
-          params = this.attributes['params'] || {};
-          dataCollection = new sourceType({
-            params: params
-          });
-          return this.set('data', dataCollection);
-        }
+        this.on('change:source', this.createNewData);
+        if ((!this.has('data')) && (this.has('source'))) return this.createNewData();
       };
 
       DataSource.prototype.sourceToCollection = function() {
         switch (this.attributes['source']) {
           case 'Galaxy Zoo':
             return GalaxyZooSubjects;
+          default:
+            return 'internal';
         }
       };
 
       DataSource.prototype.fetchData = function() {
         return this.attributes['data'].fetch();
+      };
+
+      DataSource.prototype.createNewData = function() {
+        var dataCollection, params, sourceType;
+        sourceType = this.sourceToCollection();
+        if (sourceType !== 'internal') {
+          params = this.attributes['params'] || {};
+          dataCollection = new sourceType([], {
+            params: params
+          });
+          console.log(dataCollection);
+          return this.set('data', dataCollection);
+        }
+      };
+
+      DataSource.prototype.isExternal = function() {
+        return this.sourceToCollection() !== 'internal';
       };
 
       return DataSource;
@@ -598,19 +614,150 @@ window.require.define({"views/dashboard": function(exports, require, module) {
   
 }});
 
-window.require.define({"views/settings": function(exports, require, module) {
+window.require.define({"views/data_settings": function(exports, require, module) {
   (function() {
-    var Settings,
+    var DataSettings,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
       __hasProp = {}.hasOwnProperty,
       __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    DataSettings = (function(_super) {
+
+      __extends(DataSettings, _super);
+
+      function DataSettings() {
+        this.setSource = __bind(this.setSource, this);
+
+        this.updateModel = __bind(this.updateModel, this);
+
+        this.showInternal = __bind(this.showInternal, this);
+
+        this.showExternal = __bind(this.showExternal, this);
+
+        this.render = __bind(this.render, this);
+        return DataSettings.__super__.constructor.apply(this, arguments);
+      }
+
+      DataSettings.prototype.tagName = 'div';
+
+      DataSettings.prototype.className = 'data-settings';
+
+      DataSettings.prototype.template = require('./templates/data_settings');
+
+      DataSettings.prototype.extSources = {
+        'Galaxy Zoo': 'Galaxy Zoo Subjects'
+      };
+
+      DataSettings.prototype.events = {
+        'click .type-select a.external': 'showExternal',
+        'click .type-select a.internal': 'showInternal',
+        'click button[name="fetch"]': 'updateModel'
+      };
+
+      DataSettings.prototype.initialize = function() {
+        var _ref, _ref1;
+        if ((_ref = this.model) != null) _ref.on('change:source', this.setSource);
+        return (_ref1 = this.model) != null ? _ref1.on('change:params', this.setParams) : void 0;
+      };
+
+      DataSettings.prototype.render = function() {
+        var extSources, intSources;
+        extSources = this.extSources;
+        intSources = this.intSources || [];
+        this.$el.html(this.template({
+          extSources: extSources,
+          intSources: intSources
+        }));
+        return this;
+      };
+
+      DataSettings.prototype.showExternal = function() {
+        this.$('.internal-settings').hide();
+        this.$('.external-settings').show();
+        this.$('button[name="fetch"]').show();
+        return this.external = true;
+      };
+
+      DataSettings.prototype.showInternal = function() {
+        this.$('.internal-settings').show();
+        this.$('.external-settings').hide();
+        this.$('button[name="fetch"]').show();
+        return this.external = false;
+      };
+
+      DataSettings.prototype.updateModel = function() {
+        var params, source;
+        if (this.external) {
+          source = this.$('select.external-sources').val();
+          params = new Object;
+          this.$('.external-settings input').each(function(index) {
+            var name, value;
+            name = $(this).attr('name');
+            value = $(this).val();
+            return params[name] = value;
+          });
+          this.model.set('params', params);
+          this.model.set('source', source);
+        } else {
+          source = this.$('select.internal-sources').val();
+          this.model.set('source', source);
+        }
+        return this.model.fetchData();
+      };
+
+      DataSettings.prototype.setSource = function() {
+        var source;
+        source = this.model.get('source');
+        if (this.model.isExternal) return console.log('here');
+      };
+
+      return DataSettings;
+
+    })(Backbone.View);
+
+    module.exports = DataSettings;
+
+  }).call(this);
+  
+}});
+
+window.require.define({"views/settings": function(exports, require, module) {
+  (function() {
+    var DataSettings, Settings,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+    DataSettings = require('views/data_settings');
 
     Settings = (function(_super) {
 
       __extends(Settings, _super);
 
       function Settings() {
+        this.render = __bind(this.render, this);
         return Settings.__super__.constructor.apply(this, arguments);
       }
+
+      Settings.prototype.tagName = 'div';
+
+      Settings.prototype.className = 'settings';
+
+      Settings.prototype.initialize = function() {
+        if (this.model != null) {
+          return this.dataSettings = new DataSettings({
+            model: this.model.get('dataSource')
+          });
+        }
+      };
+
+      Settings.prototype.render = function() {
+        var _this = this;
+        _.each([this.dataSettings], function(subSetting) {
+          return _this.$el.append(subSetting.render().el);
+        });
+        return this;
+      };
 
       return Settings;
 
@@ -653,16 +800,26 @@ window.require.define({"views/table": function(exports, require, module) {
 
       Table.prototype.nonDisplayKeys = ['id'];
 
+      Table.prototype.initialize = function() {
+        var _ref,
+          _this = this;
+        return (_ref = this.model) != null ? _ref.get('dataSource').on('change:source', function() {
+          return _this.model.get('dataSource').get('data').on('reset', _this.render);
+        }) : void 0;
+      };
+
       Table.prototype.render = function() {
-        var data;
+        var data, formattedData;
         data = this.model.getData();
         if (data.length === 0) {
           this.$el.html(this.noDataTemplate());
         } else {
           this.$el.html(this.template());
-          this.table = new this.ubretTable(this.dataKeys(), _.each(data, function(datum) {
-            return datum.toJSON;
-          }), "table#" + this.id);
+          formattedData = _.map(data, function(datum) {
+            return datum.toJSON();
+          });
+          console.log(formattedData);
+          this.table = new this.ubretTable(this.dataKeys(data), formattedData, "table#" + this.id);
         }
         return this;
       };
@@ -686,6 +843,82 @@ window.require.define({"views/table": function(exports, require, module) {
 
   }).call(this);
   
+}});
+
+window.require.define({"views/templates/data_settings": function(exports, require, module) {
+  module.exports = function (__obj) {
+    if (!__obj) __obj = {};
+    var __out = [], __capture = function(callback) {
+      var out = __out, result;
+      __out = [];
+      callback.call(this);
+      result = __out.join('');
+      __out = out;
+      return __safe(result);
+    }, __sanitize = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else if (typeof value !== 'undefined' && value != null) {
+        return __escape(value);
+      } else {
+        return '';
+      }
+    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+    __safe = __obj.safe = function(value) {
+      if (value && value.ecoSafe) {
+        return value;
+      } else {
+        if (!(typeof value !== 'undefined' && value != null)) value = '';
+        var result = new String(value);
+        result.ecoSafe = true;
+        return result;
+      }
+    };
+    if (!__escape) {
+      __escape = __obj.escape = function(value) {
+        return ('' + value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      };
+    }
+    (function() {
+      (function() {
+        var key, source, value, _i, _len, _ref, _ref1;
+      
+        __out.push('<h3>Data Source</h3>\n\n<ul class="type-select">\n  <li><a class="external">External API</a></li>\n  <li><a class="internal">Other Tool</a></li>\n</ul>\n\n<div class="external-settings">\n  <select class="external-sources">\n      <option value="">Select External API</option>\n    ');
+      
+        _ref = this.extSources;
+        for (key in _ref) {
+          value = _ref[key];
+          __out.push('\n      <option value="');
+          __out.push(key);
+          __out.push('">');
+          __out.push(value);
+          __out.push('</option>\n    ');
+        }
+      
+        __out.push('\n  </select>\n\n  <label>Number: <input type="text" name="limit" placeholder="No. of Objects to fetch" /></label>\n</div>\n\n<div class="internal-settings">\n  <select class="internal-sources">\n      <option value="">Select Tool</option>\n    ');
+      
+        _ref1 = this.intSources;
+        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+          source = _ref1[_i];
+          __out.push('\n      <option value="');
+          __out.push(source);
+          __out.push('">');
+          __out.push(source);
+          __out.push('</option>\n    ');
+        }
+      
+        __out.push('\n  </select>\n</div>\n\n<button type="button" name="fetch">Fetch Data</button>\n');
+      
+      }).call(this);
+      
+    }).call(__obj);
+    __obj.safe = __objSafe, __obj.escape = __escape;
+    return __out.join('');
+  }
 }});
 
 window.require.define({"views/templates/no_data": function(exports, require, module) {
@@ -956,7 +1189,8 @@ window.require.define({"views/tool_container": function(exports, require, module
         if (toolName != null) {
           tool = require(this.toolTypes[toolName]);
           return this.toolView = new tool({
-            model: this.model
+            model: this.model,
+            id: this.model.get('name')
           });
         }
       };
@@ -1229,13 +1463,15 @@ window.require.define({"views/window_title_bar": function(exports, require, modu
 
       WindowTitleBar.prototype.updateModel = function(e) {
         var input, newTitle;
-        if (e.which === 27) {
-          this.$('.window-title').show();
-          return this.$('input').hide();
-        } else if (e.type === 'blur' || e.which === 13) {
+        if (e.type === 'focusout' || e.which === 13) {
           input = this.$('input');
-          newTitle = input.val() || '';
-          return this.model.set('name', newTitle);
+          newTitle = input.val();
+          if (newTitle === this.model.get('name')) {
+            this.$('.window-title').show();
+            return this.$('input').hide();
+          } else {
+            return this.model.set('name', newTitle);
+          }
         }
       };
 

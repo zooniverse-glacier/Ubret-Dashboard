@@ -40,7 +40,5 @@ describe 'Table', ->
 
   describe '#dataKeys', ->
     it 'should extract all keys from the tool\'s data', ->
-      @tool = new Tool
-      @toolStub = sinon.stub(@tool, 'getData').returns( [ new Backbone.Model { id: 1, name: 'woohooo' } ] )
-      @table = new Table { model: @tool, id: 'table-1' }
-      expect(@table.dataKeys()[0]).to.equal('name')
+      @table = new Table { id: 'table-1' }
+      expect(@table.dataKeys([ new Backbone.Model { id: 1, name: 'woohooo' } ] )[0]).to.equal('name')

@@ -1,0 +1,28 @@
+<h3>Data Source</h3>
+
+<ul class="type-select">
+  <li><a class="external">External API</a></li>
+  <li><a class="internal">Other Tool</a></li>
+</ul>
+
+<div class="external-settings">
+  <select class="external-sources">
+      <option value="">Select External API</option>
+    <% for key, value of @extSources: %>
+      <option value="<%- key %>"><%- value %></option>
+    <% end %>
+  </select>
+
+  <label>Number: <input type="text" name="limit" placeholder="No. of Objects to fetch" /></label>
+</div>
+
+<div class="internal-settings">
+  <select class="internal-sources">
+      <option value="">Select Tool</option>
+    <% for source in @intSources: %>
+      <option value="<%- source %>"><%- source %></option>
+    <% end %>
+  </select>
+</div>
+
+<button type="button" name="fetch">Fetch Data</button>
