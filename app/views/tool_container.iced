@@ -4,8 +4,8 @@ class ToolContainer extends Backbone.View
   tagName: 'div'
   className: 'tool-container'
 
-  toolTypes: 
-    'table' : 'views/table'
+  # toolTypes: 
+  #   'table' : 'views/table'
 
   initialize: =>
     if @model?

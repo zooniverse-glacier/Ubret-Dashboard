@@ -27,11 +27,11 @@ class Router extends Backbone.Router
     @toolboxEvents()
 
   toolboxEvents: =>
-    @toolbox.on 'create-table', @addTable
+    @toolbox.on 'create', @addTool
     @toolbox.on 'remove-tools', @dropTools
 
-  addTable: =>
-    @dashboardModel.createTool 'table'
+  addTool: (tool_type) =>
+    @dashboardModel.createTool tool_type
 
   dropTools: =>
     @dashboardModel.dropTools()

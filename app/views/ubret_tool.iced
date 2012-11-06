@@ -8,25 +8,27 @@ class UbretTool extends Backbone.View
     @tool_events = []
     @model?.get('dataSource').on 'change:source', =>
       @model.get('dataSource').get('data').on 'reset', @render
-    try
-      @template = require "./templates/#{@model?.get('type')}"
-    catch error
-      @template = ''
+    # try
+    #   @template = require "./templates/#{@model?.get('type')}"
+    # catch error
+    #   @template = ''
 
   render: =>
     data = @model.getData()
     if data.length is 0
       @$el.html @noDataTemplate()
     else
-      @$el.html @template(@) if typeof @template is 'function'
+      # @$el.html @template(@) if typeof @template is 'function'
       opts =
         data: _.map( data, (datum) -> datum.toJSON() )
         selector: '#' + @id
         keys: @dataKeys(data)
         selectElementCb: @selectElement
         selectKeyCb: @selectKey
-       
+      
       @tool = new Ubret[@formatToolType(@model.get('type'))](opts)
+      @$el.html @tool.getTemplate()
+      @tool.start()
     @
 
   selectById: (id) ->
