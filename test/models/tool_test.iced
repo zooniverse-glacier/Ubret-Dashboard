@@ -44,6 +44,7 @@ describe 'Tool', ->
       @filter = new Backbone.Model { func: (x) -> x }
       @filters = new Filters [@filter]
       @tool = new Tool { filters: @filters, dataSource: new DataSource { source: 'Galaxy Zoo' } }
+      @toolStub = sinon.stub(@tool.get('dataSource'), 'get').returns(new Backbone.Collection [{id: 1, test: 2}, {id: 2, test: 3}])
       @eachSpy = sinon.spy(@tool.get('filters'), 'each')
       @filterSpy = sinon.spy(_, 'filter')
       @tool.filterData()

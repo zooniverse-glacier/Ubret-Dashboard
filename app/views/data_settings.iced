@@ -12,7 +12,7 @@ class DataSettings extends Backbone.View
     'click button[name="fetch"]'    : 'updateModel'
 
   initialize: (options) ->
-    @model?.on 'change:source', @setSource
+    @model?.on 'change:source', @render
     @model?.on 'change:params', @setParams
     @channel = options?.channel
     Backbone.Mediator.subscribe 'all-tools', @updateToolList
@@ -49,11 +49,6 @@ class DataSettings extends Backbone.View
       source = @$('select.internal-sources').val()
       @model.set 'source', source
     @model.fetchData()
-
-  setSource: =>
-    source = @model.get('source')
-    if @model.isExternal
-      console.log 'here'
 
   updateToolList: (list) =>
     @intSources = new Array

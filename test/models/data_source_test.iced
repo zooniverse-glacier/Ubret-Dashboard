@@ -39,4 +39,3 @@ describe 'DataSource', ->
     it 'should return false if it has an internal dataSource', ->
       dataSource = new DataSource { source: 'tool-1' }
       expect(dataSource.isExternal()).to.be.false
-

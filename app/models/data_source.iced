@@ -11,15 +11,19 @@ class DataSource extends Backbone.Model
       else return 'internal'
 
   fetchData: =>
-    @attributes['data'].fetch()
+    if @isExternal()
+      @attributes['data'].fetch()
+    else
+      @trigger 'new-data'
 
   createNewData: =>
     sourceType = @sourceToCollection()
     if sourceType isnt 'internal'
       params = @attributes['params'] or {}
       dataCollection = new sourceType([], { params: params })
-      console.log dataCollection
       @set 'data', dataCollection
+      @get('data')?.on 'reset', =>
+        @trigger 'new-data'
 
   isExternal: =>
     @sourceToCollection() isnt 'internal'
