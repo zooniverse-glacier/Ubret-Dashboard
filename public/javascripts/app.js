@@ -667,7 +667,8 @@ window.require.define({"views/data_settings": function(exports, require, module)
       DataSettings.prototype.initialize = function() {
         var _ref, _ref1;
         if ((_ref = this.model) != null) _ref.on('change:source', this.setSource);
-        return (_ref1 = this.model) != null ? _ref1.on('change:params', this.setParams) : void 0;
+        if ((_ref1 = this.model) != null) _ref1.on('change:params', this.setParams);
+        return Backbone.Mediator.subscribe('all-tools', this.updateToolList);
       };
 
       DataSettings.prototype.render = function() {
@@ -852,82 +853,6 @@ window.require.define({"views/table": function(exports, require, module) {
 
   }).call(this);
   
-}});
-
-window.require.define({"views/templates/data_settings": function(exports, require, module) {
-  module.exports = function (__obj) {
-    if (!__obj) __obj = {};
-    var __out = [], __capture = function(callback) {
-      var out = __out, result;
-      __out = [];
-      callback.call(this);
-      result = __out.join('');
-      __out = out;
-      return __safe(result);
-    }, __sanitize = function(value) {
-      if (value && value.ecoSafe) {
-        return value;
-      } else if (typeof value !== 'undefined' && value != null) {
-        return __escape(value);
-      } else {
-        return '';
-      }
-    }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
-    __safe = __obj.safe = function(value) {
-      if (value && value.ecoSafe) {
-        return value;
-      } else {
-        if (!(typeof value !== 'undefined' && value != null)) value = '';
-        var result = new String(value);
-        result.ecoSafe = true;
-        return result;
-      }
-    };
-    if (!__escape) {
-      __escape = __obj.escape = function(value) {
-        return ('' + value)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      };
-    }
-    (function() {
-      (function() {
-        var key, source, value, _i, _len, _ref, _ref1;
-      
-        __out.push('<h3>Data Source</h3>\n\n<ul class="type-select">\n  <li><a class="external">External API</a></li>\n  <li><a class="internal">Other Tool</a></li>\n</ul>\n\n<div class="external-settings">\n  <select class="external-sources">\n      <option value="">Select External API</option>\n    ');
-      
-        _ref = this.extSources;
-        for (key in _ref) {
-          value = _ref[key];
-          __out.push('\n      <option value="');
-          __out.push(key);
-          __out.push('">');
-          __out.push(value);
-          __out.push('</option>\n    ');
-        }
-      
-        __out.push('\n  </select>\n\n  <label>Number: <input type="text" name="limit" placeholder="No. of Objects to fetch" /></label>\n</div>\n\n<div class="internal-settings">\n  <select class="internal-sources">\n      <option value="">Select Tool</option>\n    ');
-      
-        _ref1 = this.intSources;
-        for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-          source = _ref1[_i];
-          __out.push('\n      <option value="');
-          __out.push(source);
-          __out.push('">');
-          __out.push(source);
-          __out.push('</option>\n    ');
-        }
-      
-        __out.push('\n  </select>\n</div>\n\n<button type="button" name="fetch">Fetch Data</button>\n');
-      
-      }).call(this);
-      
-    }).call(__obj);
-    __obj.safe = __objSafe, __obj.escape = __escape;
-    return __out.join('');
-  }
 }});
 
 window.require.define({"views/templates/no_data": function(exports, require, module) {
@@ -1153,6 +1078,82 @@ window.require.define({"views/templates/window_title_bar": function(exports, req
     __obj.safe = __objSafe, __obj.escape = __escape;
     return __out.join('');
   }
+}});
+
+window.require.define({"views/tool": function(exports, require, module) {
+  (function() {
+    var UbretTool,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+      __hasProp = {}.hasOwnProperty,
+      __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+      __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+    UbretTool = (function(_super) {
+
+      __extends(UbretTool, _super);
+
+      function UbretTool() {
+        this.dataKeys = __bind(this.dataKeys, this);
+
+        this.render = __bind(this.render, this);
+        return UbretTool.__super__.constructor.apply(this, arguments);
+      }
+
+      UbretTool.prototype.tagName = 'tool';
+
+      UbretTool.prototype.className = 'ubret-tool';
+
+      UbretTool.prototype.initialize = function() {
+        return this.tool_events = [];
+      };
+
+      UbretTool.prototype.render = function() {
+        var data, opts,
+          _this = this;
+        data = this.model.getData();
+        opts = {
+          data: _.each(data, function(datum) {
+            return datum.toJSON;
+          }),
+          selector: "" + this.toolType + "#" + this.id
+        };
+        this.tool = new Ubret[this.toolType](opts);
+        _.each(this.tool.attributes, function(attr) {
+          _this.model.set(attr, attr["default"]);
+          if (typeof attr.events === 'object') {
+            return _.each(attr.events, function(event) {
+              return _this.model.on("" + event.selector, "" + event.action + ":" + attr, function(e) {
+                return _this.model.set(attr, event.callback(_this.model.get(attr)));
+              });
+            });
+          }
+        });
+        return this;
+      };
+
+      UbretTool.prototype.selectById = function(id) {
+        return this.model.set('currentSubject', this.id);
+      };
+
+      UbretTool.prototype.dataKeys = function(data) {
+        var dataModel, key, keys, value;
+        dataModel = data[0].toJSON();
+        keys = new Array;
+        for (key in dataModel) {
+          value = dataModel[key];
+          if (__indexOf.call(this.nonDisplayKeys, key) < 0) keys.push(key);
+        }
+        return keys;
+      };
+
+      return UbretTool;
+
+    })(Backbone.View);
+
+    module.exports = UbretTool;
+
+  }).call(this);
+  
 }});
 
 window.require.define({"views/tool_container": function(exports, require, module) {
