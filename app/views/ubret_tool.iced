@@ -20,15 +20,14 @@ class UbretTool extends Backbone.View
     else
       # @$el.html @template(@) if typeof @template is 'function'
       opts =
+        el: @$el
         data: _.map( data, (datum) -> datum.toJSON() )
         selector: '#' + @id
         keys: @dataKeys(data)
         selectElementCb: @selectElement
         selectKeyCb: @selectKey
-      
+
       @tool = new Ubret[@formatToolType(@model.get('type'))](opts)
-      @$el.html @tool.getTemplate()
-      @tool.start()
     @
 
   selectById: (id) ->
