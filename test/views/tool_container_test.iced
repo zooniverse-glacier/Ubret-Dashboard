@@ -1,4 +1,5 @@
 ToolContainer = require 'views/tool_container'
+Tool = require 'models/tool'
 
 describe 'ToolContainer', ->
   it 'should be defined', ->
@@ -18,34 +19,16 @@ describe 'ToolContainer', ->
     it 'should have the tool-container css class', ->
       expect(@toolContainer.$el).to.have.class('tool-container')
 
-  describe '#createToolView', ->
-    beforeEach ->
-      @tool = new Backbone.Model { type: 'table' }
-      @requireSpy = sinon.stub(window, 'require').returns(Backbone.View)
-      @container = new ToolContainer { model: @tool }
-      @container.createToolView()
-
-    afterEach ->
-      window.require.restore()
-
-    it 'should require the view of the tool based on the model\'s type attribute', ->
-      expect(@requireSpy).to.have.been.calledWith('views/table')
-
   describe '#render', ->
     beforeEach ->
-      @tool = new Backbone.Model { type: 'table' }
-      @requireSpy = sinon.stub(window, 'require').returns(Backbone.View)
+      @tool = new Tool { type: 'table', channel: 'table-1' }
       @container = new ToolContainer { model: @tool }
       @renderSpy = sinon.spy(@container.toolView, 'render')
       @htmlSpy = sinon.spy(@container.$el, 'html')
       @container.render()
-
-    afterEach ->
-      window.require.restore()
 
     it 'should render its toolView', ->
       expect(@renderSpy).to.have.been.called
 
     it 'should append the rendered toolView', ->
       expect(@htmlSpy).to.have.been.calledWith(@container.toolView.el)
-

@@ -1,3 +1,5 @@
+UbretTool = require 'views/ubret_tool'
+
 class ToolContainer extends Backbone.View
   tagName: 'div'
   className: 'tool-container'
@@ -11,10 +13,8 @@ class ToolContainer extends Backbone.View
       @model.on 'change', @updateTool()
 
   createToolView: =>
-    toolName = @model.get('type')
-    if toolName?
-      tool = (require @toolTypes[toolName])
-      @toolView = new tool { model: @model, id: @model.get('name') }
+    if @model.has('type')
+      @toolView = new UbretTool { model: @model, id: @model.get('channel') }
 
   updateTool: =>
     if @model.hasChanged('type')
