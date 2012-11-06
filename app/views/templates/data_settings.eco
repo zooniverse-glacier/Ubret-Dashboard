@@ -9,7 +9,11 @@
   <select class="external-sources">
       <option value="">Select External API</option>
     <% for key, value of @extSources: %>
-      <option value="<%- key %>"><%- value %></option>
+      <% if key is @source: %>
+        <option value="<% key %>" selected><%- value %></option>
+      <% else: %>
+        <option value="<%- key %>"><%- value %></option>
+      <% end %>
     <% end %>
   </select>
 
@@ -20,7 +24,11 @@
   <select class="internal-sources">
       <option value="">Select Tool</option>
     <% for source in @intSources: %>
-      <option value="<%- source.name %>"><%- source.channel %></option>
+      <% if source.channel is @source: %>
+        <option value="<%- source.chanel %>" selected><%- source.name %></option>
+      <% else: %>
+        <option value="<%- source.chanel %>"><%- source.name %></option>
+      <% end %>
     <% end %>
   </select>
 </div>

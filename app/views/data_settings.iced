@@ -11,15 +11,16 @@ class DataSettings extends Backbone.View
     'click .type-select a.internal' : 'showInternal'
     'click button[name="fetch"]'    : 'updateModel'
 
-  initialize: ->
+  initialize: (options) ->
     @model?.on 'change:source', @setSource
     @model?.on 'change:params', @setParams
+    @channel = options?.channel
     Backbone.Mediator.subscribe 'all-tools', @updateToolList
 
   render: =>
     extSources = @extSources
     intSources = @intSources or []
-    @$el.html @template({extSources: extSources, intSources: intSources})
+    @$el.html @template({extSources: extSources, intSources: intSources, source: @model?.get('source')})
     @
 
   showExternal: =>
@@ -55,7 +56,8 @@ class DataSettings extends Backbone.View
       console.log 'here'
 
   updateToolList: (list) =>
-    @intSources = list
+    @intSources = new Array
+    @intSources.push item for item in list when item.channel isnt @channel
     @render()
 
 module.exports = DataSettings

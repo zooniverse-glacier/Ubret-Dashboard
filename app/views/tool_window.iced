@@ -50,18 +50,27 @@ class ToolWindow extends Backbone.View
     @dragging = true
 
     mouseOffset = @$el.offset()
-    relX = e.pageX - mouseOffset.left
-    relY = e.pageY - mouseOffset.top
+    @relX = e.pageX - mouseOffset.left
+    @relY = e.pageY - mouseOffset.top
 
     $(document).on 'mousemove', (e) =>
       if @dragging
-        @model.set 
-          left: e.pageX - relX
-          top: e.pageY - relY
+        topMove = -(@model.get('top') - (e.pageY - @relY))
+        leftMove = -(@model.get('left') - (e.pageX - @relX))
+        @$el.css
+          transform: "translate(#{leftMove}px, #{topMove}px)"
 
   endDrag: (e) =>
-    @$el.removeClass 'unselectable'
     @dragging = false
     $(document).off 'mousemove'
+    mouseOffset = @$el.offset()
+
+    @model.set 
+      left: e.pageX - @relX
+      top: e.pageY - @relY
+
+    @$el.removeClass 'unselectable'
+    @$el.css
+      transform: ''
 
 module.exports = ToolWindow

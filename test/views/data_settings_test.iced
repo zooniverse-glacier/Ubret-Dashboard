@@ -61,12 +61,17 @@ describe 'DataSettings', ->
 
   describe '#updateToolList', ->
     beforeEach ->
-      @dataSettings = new DataSettings
+      @dataSettings = new DataSettings { channel: 'test-1' }
       @renderSpy = sinon.stub(@dataSettings, 'render')
-      @dataSettings.updateToolList [{ name: 'test', channel: 'test-1' }]
+      @dataSettings.updateToolList [{ name: 'test', channel: 'test-1' }, { name: 'test-again', channel: 'test-2' }]
 
     it 'should set intSources property', ->
-      expect(@dataSettings).to.have.property('intSources').and.equal([{name: 'test', channel: 'test-1'}])
+      expect(@dataSettings).to.have.property('intSources')
 
     it 'should call render function', ->
       expect(@renderSpy).to.have.been.called
+
+    it 'should remove itself from the list', ->
+      expect(@dataSettings.intSources).to.have.length(1)
+
+

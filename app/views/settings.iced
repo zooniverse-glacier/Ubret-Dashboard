@@ -5,7 +5,7 @@ class Settings extends Backbone.View
   className: 'settings'
 
   initialize: ->
-    @dataSettings = new DataSettings { model: @model.get('dataSource') } if @model?
+    @dataSettings = new DataSettings { model: @model.get('dataSource'), channel: @model.get('channel') } if @model?
 
   render: =>
     _.each [@dataSettings], (subSetting) =>
