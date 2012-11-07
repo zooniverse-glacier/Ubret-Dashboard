@@ -15,9 +15,9 @@ class ToolWindow extends Backbone.View
     if @model?
       @model.on 'change:top change:left', @setWindowPosition
       @model.on 'change:width change:height', @setWindowSize
-      @setWindowPosition()
       @setWindowSize()
 
+      @generatePosition()
       @focusWindow()
       @model.set 'zindex', @$el.css 'z-index'
 
@@ -92,6 +92,24 @@ class ToolWindow extends Backbone.View
   # Helper functions
   getMaxZIndex: =>
     (@collection.max((tool) -> parseInt(tool.attributes.zindex))).attributes.zindex
+
+  generatePosition: ->
+    doc_width = $(document).width()
+    doc_height = $(document).height()
+
+    x_max = doc_width * 0.6
+    x_min = doc_width * 0.02
+
+    y_max = doc_height * 0.35
+    y_min = doc_height * 0.05
+
+    x = Math.random() * (x_max - x_min) + x_min
+    y = Math.random() * (y_max - y_min) + y_min
+
+    console.log x, y
+    @model.set
+      top: y
+      left: x
 
 
 module.exports = ToolWindow
