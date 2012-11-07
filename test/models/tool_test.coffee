@@ -33,7 +33,7 @@ describe 'Tool', ->
       expect(@tool.get('left')).to.equal(20)
 
     it 'should have a z-index of 1', ->
-      expect(@tool.get('z-index')).to.equal(1)
+      expect(@tool.get('zindex')).to.equal(1)
 
   describe '#getData', ->
     beforeEach ->

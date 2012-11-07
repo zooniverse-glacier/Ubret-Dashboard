@@ -1,3 +1,5 @@
+Tools = require 'collections/tools'
+
 ToolWindow = require 'views/tool_window'
 Settings = require 'views/settings'
 ToolContainer = require 'views/tool_container'
@@ -33,7 +35,8 @@ describe 'ToolWindow', ->
 
   describe '#render', ->
     beforeEach ->
-      @toolWindow = new ToolWindow
+      tools = new Tools
+      @toolWindow = new ToolWindow { collection: tools }
 
       @toolContainer = sinon.stub(@toolWindow.toolContainer, 'render').returns({ el: "nuffin" })
       @titleBar = sinon.stub(@toolWindow.titleBar, 'render').returns({ el: "nuffin" })
@@ -56,19 +59,24 @@ describe 'ToolWindow', ->
 
   describe '#setWindowPosition', ->
     beforeEach ->
-      topLeftModel = new Backbone.Model { top: 20, left: 20, name: 'test' } 
-      @toolWindow = new ToolWindow { model: topLeftModel }
+      tools = new Tools
+      topLeftModel = new Backbone.Model { top: 20, left: 20, zindex: 0, name: 'test' } 
+      tools.add topLeftModel
+      @toolWindow = new ToolWindow { collection: tools, model: topLeftModel }
+      @toolWindow.generatePosition()
 
     it 'should set the left css property to the model\'s left value', ->
-      expect(@toolWindow.$el).to.have.css('left').be(20)
+      expect(@toolWindow.$el).to.have.css('left').be(@toolWindow.model.get('top'))
 
     it 'should set the top css property to the model\'s top value', ->
-      expect(@toolWindow.$el).to.have.css('top').be(20)
+      expect(@toolWindow.$el).to.have.css('top').be(@toolWindow.model.get('left'))
 
   describe '#setWindowSize', ->
     beforeEach ->
-      heightWidthModel = new Backbone.Model { height: 10, width: 10, name: 'test' } 
-      @toolWindow = new ToolWindow { model: heightWidthModel }
+      tools = new Tools
+      heightWidthModel = new Backbone.Model { height: 10, width: 10, zindex: 0, name: 'test' } 
+      tools.add heightWidthModel
+      @toolWindow = new ToolWindow { collection: tools, model: heightWidthModel }
 
     it 'should set css height to the model\'s height', ->
       expect(@toolWindow.$el).to.have.css('height').be(10)
