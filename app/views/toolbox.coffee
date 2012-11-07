@@ -11,9 +11,9 @@ class Toolbox extends Backbone.View
 
   render: =>
     tools = _.keys Ubret
-    tools = _.map tools, (tool) ->
-      tool = {name: tool}
-    @$el.html @template {tools: tools}
+    toolNames = new Array
+    toolNames.push { name: tool } for tool in tools when tool isnt 'BaseTool'
+    @$el.html @template {tools: toolNames}
     @
 
   createTool: (e) =>
