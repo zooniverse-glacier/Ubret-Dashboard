@@ -7,6 +7,7 @@ class DashboardView extends Backbone.View
 
   initialize: ->
     @model?.get('tools').on 'add', @addTool
+    @model?.get('tools').on 'reset', @removeTools
 
   render: =>
     @model.get('tools').each @createToolWindow
@@ -26,6 +27,9 @@ class DashboardView extends Backbone.View
         name: tool.get('name')
         channel: tool.get('channel')
     Backbone.Mediator.publish('all-tools', toolChannels)
+
+  removeTools: =>
+    @$el.empty()
 
   _setToolWindow: (toolWindow) ->
     ToolWindow = toolWindow

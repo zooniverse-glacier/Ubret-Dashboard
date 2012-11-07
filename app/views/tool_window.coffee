@@ -106,7 +106,6 @@ class ToolWindow extends Backbone.View
     x = Math.random() * (x_max - x_min) + x_min
     y = Math.random() * (y_max - y_min) + y_min
 
-    console.log x, y
     @model.set
       top: y
       left: x
