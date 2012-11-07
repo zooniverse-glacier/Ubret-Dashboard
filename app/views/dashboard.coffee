@@ -15,7 +15,7 @@ class DashboardView extends Backbone.View
   createToolWindow: (tool) =>
     toolWindow = new ToolWindow
       model: tool
-      count: Tools.length
+      collection: @model.get('tools')
     @$el.append toolWindow.render().el
 
   addTool: =>

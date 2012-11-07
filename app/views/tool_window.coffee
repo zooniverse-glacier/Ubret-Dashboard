@@ -9,7 +9,7 @@ class ToolWindow extends Backbone.View
   className: 'tool-window'
 
   events:
-    'click': 'setWindowFocus'
+    'click': 'focusWindow'
 
   initialize: =>
     if @model?
@@ -17,7 +17,9 @@ class ToolWindow extends Backbone.View
       @model.on 'change:width change:height', @setWindowSize
       @setWindowPosition()
       @setWindowSize()
-      @setWindowFocus(@options.count)
+
+      @focusWindow()
+      @model.set 'zindex', @$el.css 'z-index'
 
     @settings = new Settings { model: @model }
     
@@ -29,13 +31,11 @@ class ToolWindow extends Backbone.View
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
 
-  setWindowFocus: (index = null) =>
-    if index?
-      @$el.css 'z-index', index
-      return
-
+  focusWindow: (e) =>
+    console.log 'test'
     unless @$el.css('z-index') is @getMaxZIndex()
       @$el.css 'z-index', parseInt(@getMaxZIndex()) + 1
+      @model.set 'zindex', @$el.css 'z-index'
 
   setWindowPosition: =>
     @$el.css 'left', @model.get('left')
@@ -60,9 +60,6 @@ class ToolWindow extends Backbone.View
   close: (e) =>
     @model.destroy()
     @remove()
-
-  focusWindow: (e) =>
-
 
   startDrag: (e) =>
     @$el.addClass 'unselectable'
@@ -94,11 +91,7 @@ class ToolWindow extends Backbone.View
 
   # Helper functions
   getMaxZIndex: =>
-    z_indexes = []
-    _.each $(".#{@className}"), (toolWindow) ->
-      z_indexes.push $(toolWindow).css 'z-index'
-
-    _.max z_indexes, (num) -> parseInt(num)
+    (@collection.max((tool) -> parseInt(tool.attributes.zindex))).attributes.zindex
 
 
 module.exports = ToolWindow

@@ -7,7 +7,7 @@ class Tool extends Backbone.Model
     "width": 640
     "left": 20
     "top": 20
-    "z-index": 1
+    "zindex": 1
 
   initialize: ->
     @set 'dataSource', new DataSource
