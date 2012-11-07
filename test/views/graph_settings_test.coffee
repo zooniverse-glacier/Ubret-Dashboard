@@ -21,6 +21,7 @@ describe 'GraphSettings', ->
   describe '#render', ->
     beforeEach ->
       @graphSettings = new GraphSettings { model: new Backbone.Model { type: 'histogram' } }
+      @graphSettings.setKeys ['name', 'test']
       @templateSpy = sinon.spy(@graphSettings, 'template')
       @htmlSpy = sinon.spy(@graphSettings.$el, 'html')
       @graphSettings.render()
