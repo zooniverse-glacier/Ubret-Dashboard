@@ -34,7 +34,7 @@ describe 'Toolbox', ->
       @toolbox.render().$el.find('button[name="table"]').click()
 
     it 'should trigger a create-table event', ->
-      expect(@triggerSpy).to.have.been.calledWith('create-table')
+      expect(@triggerSpy).to.have.been.calledWith('create', 'table')
 
   describe '#createTool', ->
     beforeEach ->

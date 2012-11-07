@@ -37,18 +37,6 @@ describe 'UbretTool', ->
       it 'should append template to el', ->
         expect(@htmlSpy).to.have.been.called
 
-    describe 'template for the tool', ->
-      beforeEach ->
-        @modelStub = sinon.stub(@model, 'getData').returns([new Backbone.Model { test: 'test', id: 1, name: 'whoops' }])
-        @templateSpy = sinon.spy(@ubretTool, 'template')
-        @ubretTool.render()
-
-      it 'should render the tool\'s template', ->
-        expect(@templateSpy).to.have.been.called
-
-      it 'should append the template to el', ->
-        expect(@htmlSpy).to.have.been.called
-
   describe '#dataKeys', ->
     it 'should extract all keys from the tool\'s data', ->
       @ubretTool = new UbretTool { id: 'table-1' }

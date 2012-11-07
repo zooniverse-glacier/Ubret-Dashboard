@@ -85,7 +85,7 @@ describe 'ToolWindow', ->
   
   describe '#close', ->
     beforeEach ->
-      @toolWindow = new ToolWindow { model: new Backbone.Model {id: 1, stuff: 2} }
+      @toolWindow = new ToolWindow { model: new Backbone.Model {stuff: 2} }
       @modelSpy = sinon.spy(@toolWindow.model, 'destroy')
       @viewSpy = sinon.spy(@toolWindow, 'remove')
       @toolWindow.close()

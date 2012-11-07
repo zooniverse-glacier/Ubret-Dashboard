@@ -6,21 +6,15 @@ class UbretTool extends Backbone.View
 
   initialize: ->
     @tool_events = []
-    @model.get('dataSource').on 'new-data', @render
-    @model.on 'change:selectedElement', @toolSelectElement
-    @model.on 'change:selectedKey', @toolSelectKey
-    console.log @model
-    try
-      @template = require "./templates/#{@model?.get('type')}"
-    catch error
-      @template = ''
+    @model?.get('dataSource').on 'new-data', @render
+    @model?.on 'change:selectedElement', @toolSelectElement
+    @model?.on 'change:selectedKey', @toolSelectKey
 
   render: =>
     data = @model.getData()
     if data.length is 0
       @$el.html @noDataTemplate()
     else
-      @$el.html @template(@) if typeof @template is 'function'
       opts =
         data: _.map( data, (datum) -> datum.toJSON() )
         selector: '#' + @id
@@ -54,7 +48,6 @@ class UbretTool extends Backbone.View
     @tool.selectKey @model.get('selectedKey')
 
   toolSelectElement: =>
-    console.log 'here'
     @tool.selectElement @model.get('selectedElement')
 
 
