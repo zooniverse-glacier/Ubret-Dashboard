@@ -61,7 +61,7 @@ class ToolWindow extends Backbone.View
     @remove()
 
   startDrag: (e) =>
-    @$el.addClass 'unselectable'
+    $('body').addClass 'unselectable'
     @dragging = true
 
     mouseOffset = @$el.offset()
@@ -84,7 +84,7 @@ class ToolWindow extends Backbone.View
       left: e.pageX - @relX
       top: e.pageY - @relY
 
-    @$el.removeClass 'unselectable'
+    $('body').removeClass 'unselectable'
     @$el.css
       transform: ''
 
