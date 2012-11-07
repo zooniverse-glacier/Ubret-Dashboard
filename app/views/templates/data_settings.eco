@@ -10,7 +10,7 @@
       <option value="">Select External API</option>
     <% for key, value of @extSources: %>
       <% if key is @source: %>
-        <option value="<% key %>" selected><%- value %></option>
+        <option value="<%- key %>" selected><%- value %></option>
       <% else: %>
         <option value="<%- key %>"><%- value %></option>
       <% end %>
