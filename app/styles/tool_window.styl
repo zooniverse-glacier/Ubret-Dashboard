@@ -3,9 +3,11 @@
   display: inline-block
   box-shadow: 0 0 13px #444
   background: #fff
+  overflow: hidden
+  border-radius: 3px
 
   .title-bar
-    position: absolute
+    position: relative 
     top: 0
     left: 0
     background: $mid-gray
@@ -18,29 +20,33 @@
       
   .settings
     width: 200px
-    position: absolute
+    position: absolute 
     border-right: 1px solid $light-gray
-    display: none
     z-index: 1
     padding: 5px
-    top: 20px
     background: #fff
+    float: left
+    height: 100%
+    display: inline-block
+    transform: translateX(-210px)
+    transition: transform 0.5s ease-in-out
 
   .tool-container
     z-index: 1
     padding: 5px
-    position: absolute
-    left: 0
-    top: 20px
+    position: absolute 
     background: #fff
-    overflow: none
+    display: inline-block
+    float: left
+    transform: translateX(0)
+    transition: transform 0.5s ease-in-out
 
   &.settings-active
     .settings
-      display: inline-block 
+      transform: translateX(0)
 
     .tool-container
-      left: 210px
+      transform: translateX(215px)
 
   &.unselectable
     -moz-user-select: -moz-none
