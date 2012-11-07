@@ -24,7 +24,7 @@ exports.config =
 
     stylesheets:
       joinTo:
-        'stylesheets/app.css': /^app\/styles\/index.styl/
+        'stylesheets/app.css': /^app/
         'test/stylesheets/test.css': /^test/
       order:
         before: []

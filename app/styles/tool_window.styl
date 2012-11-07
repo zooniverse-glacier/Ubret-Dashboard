@@ -28,8 +28,8 @@
     float: left
     height: 100%
     display: inline-block
-    transform: translateX(-210px)
-    transition: transform 0.5s ease-in-out
+    transform(translateX(-210px))
+    transition-transform(0.5s, ease-in-out)
 
   .tool-container
     z-index: 1
@@ -38,15 +38,15 @@
     background: #fff
     display: inline-block
     float: left
-    transform: translateX(0)
-    transition: transform 0.5s ease-in-out
+    transform(translateX(0))
+    transition-transform(0.5s, ease-in-out)
 
   &.settings-active
     .settings
-      transform: translateX(0)
+      transform(translateX(0))
 
     .tool-container
-      transform: translateX(215px)
+      transform(translateX(215px))
 
   &.unselectable
     -moz-user-select: -moz-none

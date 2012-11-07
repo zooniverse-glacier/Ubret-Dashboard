@@ -1,3 +1,13 @@
 $light-gray = #f3f3f3
 $mid-gray = #b0b0b0
 $blue = #99ccff
+
+transform(t)
+  -webkit-transform: t
+  -moz-transform: t
+  transform: t
+
+transition-transform(t, a)
+  -webkit-transition: -webkit-transform t a
+  -moz-transition: -moz-transform t a
+  transition: transform t a
