@@ -30,6 +30,7 @@ class ToolWindow extends Backbone.View
     @titleBar.on 'settings', @toggleSettings
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
+    @titleBar.on 'focusWindow', @focusWindow
 
   focusWindow: (e) =>
     unless @$el.css('z-index') is @getMaxZIndex()

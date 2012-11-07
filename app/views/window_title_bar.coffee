@@ -29,6 +29,7 @@ class WindowTitleBar extends Backbone.View
     @trigger 'settings'
 
   startDrag: (e) =>
+    @trigger 'focusWindow', e
     @trigger 'startDrag', e
 
   endDrag: (e) =>
