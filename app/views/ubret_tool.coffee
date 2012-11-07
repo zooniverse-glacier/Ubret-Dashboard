@@ -36,7 +36,7 @@ class UbretTool extends Backbone.View
       keys.push key unless key in @nonDisplayKeys
     return keys
 
-  formatToolType: (toolType)=>
+  formatToolType: (toolType) =>
     toolType.charAt(0).toUpperCase() + toolType.slice(1)
 
   selectElement: (id) =>

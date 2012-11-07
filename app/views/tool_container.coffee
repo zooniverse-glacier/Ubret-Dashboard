@@ -3,7 +3,11 @@ UbretTool = require 'views/ubret_tool'
 class ToolContainer extends Backbone.View
   tagName: 'div'
   className: 'tool-container'
+<<<<<<< HEAD:app/views/tool_container.coffee
 
+=======
+  
+>>>>>>> start window niceities:app/views/tool_container.iced
   initialize: =>
     if @model?
       @createToolView()

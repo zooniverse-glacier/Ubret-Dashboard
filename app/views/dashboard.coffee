@@ -1,4 +1,5 @@
 ToolWindow = require 'views/tool_window'
+Tools = require 'collections/tools'
 
 class DashboardView extends Backbone.View
   tagName: 'div'
@@ -12,7 +13,9 @@ class DashboardView extends Backbone.View
     @
 
   createToolWindow: (tool) =>
-    toolWindow = new ToolWindow { model: tool }
+    toolWindow = new ToolWindow
+      model: tool
+      count: Tools.length
     @$el.append toolWindow.render().el
 
   addTool: =>
