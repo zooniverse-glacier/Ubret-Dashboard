@@ -77,11 +77,22 @@ describe 'ToolWindow', ->
       expect(@toolWindow.$el).to.have.css('width').be(10)
 
   describe '#toggleSettings', ->
+    beforeEach ->
+      @toolWindow = new ToolWindow { model: new Backbone.Model { width: 640, height: 480 } }
+      @toggle = sinon.spy(@toolWindow.$el, 'toggleClass')
+      @toolWindow.toggleSettings()
+
     it 'should toggle the settings-active class', ->
-      toolWindow = new ToolWindow
-      toggle = sinon.spy(toolWindow.$el, 'toggleClass')
-      toolWindow.toggleSettings()
-      expect(toggle).to.have.been.calledWith('settings-active')
+      expect(@toggle).to.have.been.calledWith('settings-active')
+
+    describe 'settings active', ->
+      it 'should set the width to -215 of the model width', ->
+        expect(@toolWindow.toolContainer.$el).to.have.css('width', '425px')
+
+    describe 'settings active', ->
+      it 'should set the width to the model width', ->
+        @toolWindow.toggleSettings()
+        expect(@toolWindow.toolContainer.$el).to.have.css('width', '640px')
   
   describe '#close', ->
     beforeEach ->

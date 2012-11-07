@@ -52,6 +52,10 @@ class ToolWindow extends Backbone.View
 
   toggleSettings: =>
     @$el.toggleClass 'settings-active'
+    if @$el.hasClass 'settings-active'
+      @toolContainer.$el.css 'width', @model.get('width') - 215
+    else
+      @toolContainer.$el.css 'width', @model.get('width')
 
   close: (e) =>
     @model.destroy()
