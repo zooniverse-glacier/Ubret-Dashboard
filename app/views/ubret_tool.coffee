@@ -22,6 +22,8 @@ class UbretTool extends Backbone.View
         selectElementCb: @selectElement
         selectKeyCb: @selectKey
         el: @$el
+        width: @model.get('width')
+        height: @model.get('height') - 30
 
       @tool = new Ubret[@formatToolType(@model.get('type'))](opts)
     @

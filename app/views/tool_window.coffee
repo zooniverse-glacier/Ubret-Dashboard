@@ -43,7 +43,7 @@ class ToolWindow extends Backbone.View
 
   setWindowSize: =>
     @$el.css 'height', @model.get('height')
-    @$el.css 'width', @model.get('width')
+    @$el.css 'width', @model.get('width') 
 
   render: =>
     _.each([ @titleBar, @settings, @toolContainer ], (section) =>

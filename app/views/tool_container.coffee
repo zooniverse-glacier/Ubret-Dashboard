@@ -7,19 +7,24 @@ class ToolContainer extends Backbone.View
   initialize: =>
     if @model?
       @createToolView()
-      @model.on 'change', @updateTool()
+      @model.on 'change:type', @updateTool
+      @model.on 'change:height change:width', @setSize
+      @setSize()
 
   createToolView: =>
     if @model.has('type')
       @toolView = new UbretTool { model: @model, id: @model.get('channel') }
 
   updateTool: =>
-    if @model.hasChanged('type')
-      @toolView.remove()
-      @createToolView()
+    @toolView.remove()
+    @createToolView()
 
-   render: =>
-     @$el.html @toolView?.render().el
-     @
+  setSize: =>
+    @$el.css 'height', @model.get('height') - 20
+    @$el.css 'width', if @$el.parent().hasClass 'settings-active' then @model.get('width') - 215 else @model.get('width')
+
+  render: =>
+    @$el.html @toolView?.render().el
+    @
 
 module.exports = ToolContainer

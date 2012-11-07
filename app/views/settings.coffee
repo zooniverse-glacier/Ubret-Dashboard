@@ -6,6 +6,12 @@ class Settings extends Backbone.View
 
   initialize: ->
     @dataSettings = new DataSettings { model: @model.get('dataSource'), channel: @model.get('channel') } if @model?
+    if @model?
+      @model.on 'change:height', @setHeight
+      @setHeight()
+
+  setHeight: =>
+    @$el.css 'height', @model.get('height') - 20
 
   render: =>
     _.each [@dataSettings], (subSetting) =>

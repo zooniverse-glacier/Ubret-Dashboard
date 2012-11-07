@@ -19,3 +19,18 @@
       overflow: hidden
       max-width: 200px
 
+  .histogram
+    width: inherit
+    height: inherit
+
+    svg
+      .bar rect
+        shape-rendering: crispEdges
+
+      .bar text
+        fill: white
+
+      .axis path, .axis line
+        shape-rendering: crispEdges
+        stroke: black
+        fill: none
