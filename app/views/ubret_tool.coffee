@@ -25,7 +25,8 @@ class UbretTool extends Backbone.View
         width: @model.get('width')
         height: @model.get('height') - 30
 
-      @tool = new Ubret[@formatToolType(@model.get('type'))](opts)
+      console.log @model.get('type')
+      @tool = new Ubret[@model.get('type')](opts)
       @model.set 'tool', @tool
     @
 
@@ -36,9 +37,6 @@ class UbretTool extends Backbone.View
       keys.push key unless key in @nonDisplayKeys
     Backbone.Mediator.publish("#{@model.get('channel')}:keys", keys)
     return keys
-
-  formatToolType: (toolType) =>
-    toolType.charAt(0).toUpperCase() + toolType.slice(1)
 
   selectElement: (id) =>
     @model.set 'selectedElement', id
