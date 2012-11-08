@@ -29,9 +29,6 @@ class UbretTool extends Backbone.View
       @model.set 'tool', @tool
     @
 
-  selectById: (id) ->
-    @model.set 'currentSubject', @id
-
   dataKeys: (data) =>
     dataModel = data[0].toJSON()
     keys = new Array

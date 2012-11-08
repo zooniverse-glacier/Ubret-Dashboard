@@ -1,6 +1,6 @@
 <h3>Graph Settings</h3>
 <ul>
-  <li>
+  <li class="x">
     <label>X-Axis: <select class="x-axis">
       <option value="">X-Axis Variable</option>
       <% for key, i in @keys: %>
@@ -13,7 +13,7 @@
     </select></label>
   </li>
 
-  <li>
+  <li class="y">
     <label>Y-Axis: <select class="y-axis">
       <option value="">Y-Axis Variable</option>
       <% for key, i in @keys: %>
