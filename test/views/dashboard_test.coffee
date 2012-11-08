@@ -32,17 +32,18 @@ describe 'Dashboard', ->
       @tool1 = new Backbone.Model { id: 1 }
       @tool2 = new Backbone.Model { id: 2 }
       @tool3 = new Backbone.Model { id: 3 }
+      @tools = new Backbone.Collection [@tool1, @tool2, @tool3]
       @dashboard.model = new Backbone.Model
         id: 1
         name: "New Dashboard"
-        tools: new Backbone.Collection [@tool1, @tool2, @tool3]
+        tools: @tools
       @dashboard.render()
 
     it 'should create a tool window for each tool in tools collection', ->
       expect(@toolWindowStub).to.have.been.calledThrice
-      expect(@toolWindowStub).to.have.been.calledWith({model: @tool1})
-      expect(@toolWindowStub).to.have.been.calledWith({model: @tool2})
-      expect(@toolWindowStub).to.have.been.calledWith({model: @tool3})
+      expect(@toolWindowStub).to.have.been.calledWith({model: @tool1, collection: @tools})
+      expect(@toolWindowStub).to.have.been.calledWith({model: @tool2, collection: @tools})
+      expect(@toolWindowStub).to.have.been.calledWith({model: @tool3, collection: @tools})
 
     it 'should render the new windows', ->
       expect(@toolRender).to.have.been.calledThrice

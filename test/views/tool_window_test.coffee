@@ -93,15 +93,6 @@ describe 'ToolWindow', ->
     it 'should toggle the settings-active class', ->
       expect(@toggle).to.have.been.calledWith('settings-active')
 
-    describe 'settings active', ->
-      it 'should set the width to -215 of the model width', ->
-        expect(@toolWindow.toolContainer.$el).to.have.css('width', '425px')
-
-    describe 'settings active', ->
-      it 'should set the width to the model width', ->
-        @toolWindow.toggleSettings()
-        expect(@toolWindow.toolContainer.$el).to.have.css('width', '640px')
-  
   describe '#close', ->
     beforeEach ->
       @toolWindow = new ToolWindow { model: new Backbone.Model {stuff: 2} }

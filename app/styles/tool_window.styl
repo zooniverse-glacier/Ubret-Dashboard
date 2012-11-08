@@ -12,7 +12,7 @@
     left: 0
     background: $mid-gray
     width: inherit
-    z-index: 2
+    z-index: 3
     height: 20px
 
     input
@@ -22,9 +22,9 @@
     width: 200px
     position: absolute 
     border-right: 1px solid $light-gray
-    z-index: 1
+    z-index: 2
     padding: 5px
-    background: #fff
+    background: rgba(255,255,255,0.8)
     float: left
     display: inline-block
     transform(translateX(-210px))
@@ -37,15 +37,10 @@
     background: #fff
     display: inline-block
     float: left
-    transform(translateX(0))
-    transition-transform(0.5s, ease-in-out)
 
   &.settings-active
     .settings
       transform(translateX(0))
-
-    .tool-container
-      transform(translateX(215px))
 
   &.unselectable
     -moz-user-select: -moz-none

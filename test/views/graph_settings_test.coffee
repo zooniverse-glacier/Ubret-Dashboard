@@ -43,7 +43,8 @@ describe 'GraphSettings', ->
 
   describe '#disableYAxis', ->
     beforeEach ->
-      @graphSettings = new GraphSettings
+      @graphSettings = new GraphSettings { model: new Backbone.Model { type: 'table' } }
+      @graphSettings.setKeys ['name', 'test']
       @graphSettings.render().disableYAxis()
 
     it 'should disable the y-axis select element', ->

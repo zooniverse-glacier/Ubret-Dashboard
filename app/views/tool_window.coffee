@@ -18,7 +18,7 @@ class ToolWindow extends Backbone.View
       @setWindowSize()
 
       @generatePosition()
-      @focusWindow()
+      @focusWindow() if @collection?
       @model.set 'zindex', @$el.css 'z-index'
 
     @settings = new Settings { model: @model }
@@ -52,10 +52,6 @@ class ToolWindow extends Backbone.View
 
   toggleSettings: =>
     @$el.toggleClass 'settings-active'
-    if @$el.hasClass 'settings-active'
-      @toolContainer.$el.css 'width', @model.get('width') - 215
-    else
-      @toolContainer.$el.css 'width', @model.get('width')
 
   close: (e) =>
     @model.destroy()
@@ -91,7 +87,7 @@ class ToolWindow extends Backbone.View
 
   # Helper functions
   getMaxZIndex: =>
-    (@collection.max((tool) -> parseInt(tool.attributes.zindex))).attributes.zindex
+    (@collection?.max((tool) -> parseInt(tool.attributes.zindex))).attributes.zindex
 
   generatePosition: ->
     doc_width = $(document).width()

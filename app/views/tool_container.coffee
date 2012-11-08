@@ -21,7 +21,7 @@ class ToolContainer extends Backbone.View
 
   setSize: =>
     @$el.css 'height', @model.get('height') - 20
-    @$el.css 'width', if @$el.parent().hasClass 'settings-active' then @model.get('width') - 215 else @model.get('width')
+    @$el.css 'width', @model.get('width') 
 
   render: =>
     @$el.html @toolView?.render().el
