@@ -8,8 +8,10 @@ class Settings extends Backbone.View
     @dataSettings = new DataSettings { model: @model.get('dataSource'), channel: @model.get('channel') } if @model?
     @filterSettings = new FilterSettings { collection: @model.get('filters') }
     switch @model?.get('type')
-      when 'histogram' then ToolSettings = require 'views/graph_settings'
-      when 'scatterplot' then ToolSettings = require 'views/graph_settings'
+      when 'histogram', 'scatterplot'
+        ToolSettings = require 'views/graph_settings'
+      when 'statistics'
+        ToolSettings = require 'views/key_settings'
 
     if ToolSettings?
       @toolSettings = new ToolSettings { model: @model, el: @el }
