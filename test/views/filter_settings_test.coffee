@@ -17,3 +17,16 @@ describe 'FilterSettings', ->
 
     it 'should have the filter-settings class', ->
       expect(@filterSettings.$el).to.have.class('filter-settings')
+
+  describe '#render', ->
+    beforeEach ->
+      @filterSettings = new FilterSettings
+      @templateSpy = sinon.spy(@filterSettings, 'template')
+      @htmlSpy = sinon.spy(@filterSettings.$el, 'html')
+      @filterSettings.render()
+
+    it 'should render the template', ->
+      expect(@templateSpy).to.have.been.called
+
+    it 'should append the template', ->
+      expect(@htmlSpy).to.have.been.called

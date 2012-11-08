@@ -1,0 +1,9 @@
+<h3>Filters</h3>
+<label> New Filter: <input type="text" name="filter" placeholder="Enter a Filter Expression" /></label>
+<button type="button" name="filter">Filter Data</button>
+
+<ul class="filters">
+  <% for filter in @filters: %>
+    <li data-filter-id="<%- filter.id %>"><%- filter.text %></li>
+  <% end %>
+</ul>
