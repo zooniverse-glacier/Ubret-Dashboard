@@ -7,7 +7,7 @@ class GraphSettings extends Backbone.View
     Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.html @template({ keys: @keys, currentKey: @model.get('selectedKey') }):wq
+    @$el.html @template({ keys: @keys, currentKey: @model.get('selectedKey') })
     @disableYAxis() if @model?.get('type') is 'histogram'
     @
 
