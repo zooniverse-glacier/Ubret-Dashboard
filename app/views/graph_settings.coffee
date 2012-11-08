@@ -38,18 +38,14 @@ class GraphSettings extends Backbone.View
   onChangeXAxis: (e) =>
     setting = @settings.find (setting) ->
       setting.get('name') == 'xaxis'
-    console.log setting
     setting.set 'value', $(e.currentTarget).val()
-    @model.get('tool').selectedKey = setting.get 'value'
-    console.log @model.get('tool')
-    @model.get('tool').start()
+    @model.get('tool').setXVar(setting.get('value'))
 
   onChangeYAxis: (e) =>
     setting = @settings.find (setting) ->
-      setting.name is 'yaxis'
+      setting.get('name') is 'yaxis'
     setting.set 'value', $(e.currentTarget).val()
-    # @model.get('tool').selectedKey = setting.get 'value'
-    # @model.get('tool').start()
+    @model.get('tool').setYVar(setting.get('value'))
 
 
 module.exports = GraphSettings
