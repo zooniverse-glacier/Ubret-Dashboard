@@ -10,20 +10,23 @@ class SubjectSettings extends Backbone.View
     'click .nav .next' : 'onSelectNextSubject'
 
   initialize: ->
-    # Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
+    Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
 
   render: =>
     @$el.append @template
     @
 
+  setKeys: (keys) =>
+    @keys = keys
+    @render()
+
 
   #Events
   onSelectPrevSubject: (e) =>
-    console.log @model.get 'selectedElement'
-    # @model.set 'selectedElement', $(e.currentTarget).val()
+    @model.get('tool').prevSubject()
 
   onSelectNextSubject: (e) =>
-    console.log @model.get 'selectedElement'
-    # @model.set 'selectedElement', $(e.currentTarget).val()
+    @model.get('tool').nextSubject()
+
 
 module.exports = SubjectSettings
