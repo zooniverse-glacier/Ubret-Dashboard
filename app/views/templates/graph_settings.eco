@@ -1,23 +1,28 @@
 <h3>Graph Settings</h3>
+<ul>
+  <li>
+    <label>X-Axis: <select class="x-axis">
+      <option value="">X-Axis Variable</option>
+      <% for key, i in @keys: %>
+        <% if key is @currentKey: %>
+          <option value="<%- key %>" selected><%- key %></option>
+        <% else: %>
+          <option value="<%- key %>"><%- key %></option>
+        <% end %>
+      <% end %>
+    </select></label>
+  </li>
 
-<label>X-Axis: <select class="x-axis">
-  <option value="">X-Axis Variable</option>
-  <% for key, value in @keys: %>
-    <% if key is @currentKey: %>
-      <option value="<%- key %>" selected><%- value %></option>
-    <% else: %>
-      <option value="<%- key %>"><%- value %></option>
-    <% end %>
-  <% end %>
-</select></label>
-  
-<label>Y-Axis: <select class="y-axis">
-  <option value="">Y-Axis Variable</option>
-  <% for key, value in @keys: %>
-    <% if key is @currentKey: %>
-      <option value="<%- key %>" selected><%- value %></option>
-    <% else: %>
-      <option value="<%- key %>"><%- value %></option>
-    <% end %>
-  <% end %>
-</select></label>
+  <li>
+    <label>Y-Axis: <select class="y-axis">
+      <option value="">Y-Axis Variable</option>
+      <% for key, i in @keys: %>
+        <% if key is @currentKey: %>
+          <option value="<%- key %>" selected><%- key %></option>
+        <% else: %>
+          <option value="<%- key %>"><%- key %></option>
+        <% end %>
+      <% end %>
+    </select></label>
+  </li>
+</ul>

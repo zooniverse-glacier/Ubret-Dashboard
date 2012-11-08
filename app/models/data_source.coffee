@@ -28,4 +28,5 @@ class DataSource extends Backbone.Model
   isExternal: =>
     @sourceToCollection() isnt 'internal'
 
+
 module.exports = DataSource

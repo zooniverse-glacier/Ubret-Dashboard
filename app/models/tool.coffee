@@ -1,5 +1,6 @@
 DataSource = require 'models/data_source'
 Filters = require 'collections/filters'
+Settings = require 'collections/settings'
 
 class Tool extends Backbone.Model
   defaults:

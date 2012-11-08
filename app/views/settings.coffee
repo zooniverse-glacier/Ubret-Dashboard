@@ -10,6 +10,8 @@ class Settings extends Backbone.View
       when 'histogram' then ToolSettings = require 'views/graph_settings'
       when 'scatterplot' then ToolSettings = require 'views/graph_settings'
 
+    @toolSettings = new ToolSettings { model: @model, el: @el }
+
     if @model?
       @model.on 'change:height', @setHeight
       @setHeight()
@@ -19,7 +21,8 @@ class Settings extends Backbone.View
 
   render: =>
     _.each [@dataSettings], (subSetting) =>
-      @$el.append subSetting.render().el 
+      @$el.append subSetting.render().el
     @
+
 
 module.exports = Settings
