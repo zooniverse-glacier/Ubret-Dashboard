@@ -1,4 +1,4 @@
 <div class="nav">
-  <a class="prev">prev</a>
-  <a class="next">next</a>
+  <button class="prev">prev</button>
+  <button class="next">next</button>
 </div>
