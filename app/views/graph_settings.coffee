@@ -16,9 +16,9 @@ class GraphSettings extends Backbone.View
       ,
         name: 'yaxis'
     ]
-    @model.set 'settings', @settings
+    @model?.set 'settings', @settings
 
-    Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
+    Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
     @$el.append @template({ keys: @keys, currentKey: @model.get('selectedKey') })

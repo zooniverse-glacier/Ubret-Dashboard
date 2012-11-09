@@ -15,3 +15,5 @@ describe 'Filters', ->
 
     it 'should have Filter as it\'s model', ->
       expect(@filters).to.have.property('model').and.equal(Filter)
+
+  describe '#fromString', ->

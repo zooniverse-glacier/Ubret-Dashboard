@@ -1,4 +1,5 @@
 DataSettings = require 'views/data_settings'
+FilterSettings = require 'views/filter_settings'
 
 class Settings extends Backbone.View
   tagName: 'div'
