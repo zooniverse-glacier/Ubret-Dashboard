@@ -1,7 +1,7 @@
 class UbretTool extends Backbone.View
   tagName: 'div'
   className: 'ubret-tool'
-  nonDisplayKeys: ['id']
+  nonDisplayKeys: []
   noDataTemplate: require './templates/no_data'
 
   initialize: ->

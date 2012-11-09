@@ -22,6 +22,6 @@ class KeySettings extends Backbone.View
 
   #Events
   onSelectKey: (e) =>
-    @model.set 'selectedKey', $(e.currentTarget).val()
+    @model.get('tool').selectKey $(e.currentTarget).val()
 
 module.exports = KeySettings

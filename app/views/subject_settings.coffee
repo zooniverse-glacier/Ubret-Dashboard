@@ -22,10 +22,10 @@ class SubjectSettings extends Backbone.View
 
 
   #Events
-  onSelectPrevSubject: (e) =>
+  onSelectPrevSubject: =>
     @model.get('tool').prevSubject()
 
-  onSelectNextSubject: (e) =>
+  onSelectNextSubject: =>
     @model.get('tool').nextSubject()
 
 
