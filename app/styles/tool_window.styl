@@ -15,20 +15,24 @@
     z-index: 3
     height: 20px
 
+    span
+      padding: 0 3px
+      cursor: pointer
+
     input
       display: none
       
   .settings
-    width: 200px
-    position: absolute 
-    border-right: 1px solid $light-gray
-    z-index: 2
-    padding: 5px
-    background: rgba(255,255,255,0.8)
-    float: left
     display: inline-block
-    transform(translateX(-210px))
-    transition-transform(0.5s, ease-in-out)
+    position: absolute
+    right: 0
+    width: 200px
+    padding: 5px
+    z-index: 2
+    border-left: 1px solid $light-gray, 15%
+    background: darken(rgba(255,255,255,0.8), 17%)
+    transform(translateX(210px))
+    transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
 
   .tool-container
     z-index: 1
