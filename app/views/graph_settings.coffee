@@ -21,22 +21,19 @@ class GraphSettings extends Backbone.View
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.append @template({ keys: @keys, currentKey: @model.get('selectedKey') })
-    @disableYAxis() if @model?.get('type') is 'histogram'
+    @$el.append @template({ keys: @keys, currentKey: @model.get('selectedKey'), type: @model?.get('type') })
     @
 
   setKeys: (keys) =>
     @keys = keys
     @render()
 
-  disableYAxis: =>
-    @$('.y').hide()
-
   # Events
   onChangeXAxis: (e) =>
     setting = @settings.find (setting) ->
       setting.get('name') == 'xaxis'
     setting.set 'value', $(e.currentTarget).val()
+    
     @model.get('tool').setXVar(setting.get('value'))
 
   onChangeYAxis: (e) =>

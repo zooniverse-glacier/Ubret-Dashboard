@@ -24,6 +24,7 @@ class UbretTool extends Backbone.View
         el: @$el
         width: @model.get('width')
         height: @model.get('height') - 30
+        filters: @model.get('filters').models
 
       @tool = new Ubret[@model.get('type')](opts)
       @model.set 'tool', @tool

@@ -12,7 +12,8 @@
       <% end %>
     </select></label>
   </li>
-
+  
+  <% if @type is 'Scatterplot': %>
   <li class="y">
     <label>Y-Axis: <select class="y-axis">
       <option value="">Y-Axis Variable</option>
@@ -25,4 +26,5 @@
       <% end %>
     </select></label>
   </li>
+  <% end %>
 </ul>
