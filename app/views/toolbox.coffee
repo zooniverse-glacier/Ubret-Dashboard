@@ -12,7 +12,10 @@ class Toolbox extends Backbone.View
   render: =>
     tools = _.keys Ubret
     toolNames = new Array
-    toolNames.push { name: tool } for tool in tools when tool isnt 'BaseTool'
+    
+    for tool in tools
+      toolNames.push {name: tool} unless tool in ['BaseTool', 'Graph']
+      
     @$el.html @template {tools: toolNames}
     @
 
