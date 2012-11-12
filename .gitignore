@@ -2,3 +2,4 @@ node_modules/
 public/
 .DS_Store
 /vendor/scripts/.DS_Store
+/vender/scripts/ubret.js
