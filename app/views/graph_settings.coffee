@@ -6,8 +6,9 @@ class GraphSettings extends Backbone.View
   template: require './templates/graph_settings'
 
   events:
-    'change .x-axis' : 'onChangeXAxis'
-    'change .y-axis' : 'onChangeYAxis'
+    'change .x-axis'  : 'onChangeXAxis'
+    'change .y-axis'  : 'onChangeYAxis'
+    'change .axis'    : 'onChangeAxis'
 
   initialize: ->
     @settings = new Settings
@@ -29,9 +30,14 @@ class GraphSettings extends Backbone.View
     @render()
 
   # Events
+  onChangeAxis: (e) =>
+    axis = e.target.dataset.axis
+    value = e.target.value
+    @model.get('tool').setAxis(axis, value)
+  
   onChangeXAxis: (e) =>
     setting = @settings.find (setting) ->
-      setting.get('name') == 'xaxis'
+      setting.get('name') is 'xaxis'
     setting.set 'value', $(e.currentTarget).val()
     
     @model.get('tool').setXVar(setting.get('value'))

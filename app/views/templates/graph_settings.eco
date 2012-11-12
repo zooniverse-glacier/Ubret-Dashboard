@@ -1,7 +1,7 @@
 <h3>Graph Settings</h3>
 <ul>
   <li class="x">
-    <label>X-Axis: <select class="x-axis">
+    <label>X-Axis: <select class="axis x-axis" data-axis='1'>
       <option value="">X-Axis Variable</option>
       <% for key, i in @keys: %>
         <% if key is @currentKey: %>
@@ -15,7 +15,7 @@
   
   <% if @type is 'Scatterplot': %>
   <li class="y">
-    <label>Y-Axis: <select class="y-axis">
+    <label>Y-Axis: <select class="axis y-axis" data-axis='2'>
       <option value="">Y-Axis Variable</option>
       <% for key, i in @keys: %>
         <% if key is @currentKey: %>
