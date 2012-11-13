@@ -19,8 +19,7 @@ class GraphSettings extends Backbone.View
 
   # Events
   onChangeAxis: (e) =>
-    axis = if e.target.dataset.axis is '1' then 'xAxis' else 'yAxis'
-    value = e.target.value
-    @model.get('settings').set axis, value
+    axis = "axis#{e.target.dataset.axis}"
+    @model.get('settings').set(axis, e.target.value)
   
 module.exports = GraphSettings
