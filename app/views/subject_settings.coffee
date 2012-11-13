@@ -1,4 +1,3 @@
-
 class SubjectSettings extends Backbone.View
   tagName: 'div'
   className: 'subject-settings'
