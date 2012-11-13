@@ -8,7 +8,7 @@ class UbretTool extends Backbone.View
     @tool_events = []
     if @model?
       @model.get('dataSource').on 'new-data', @render
-      @model.on 'change:selectedElement', @toolSelectElements
+      @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
       @model.get('filters').on 'add reset', @toolAddFilter
       @model.get('settings').on 'change', @passSetting
