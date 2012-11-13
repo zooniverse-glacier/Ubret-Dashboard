@@ -10,6 +10,7 @@ class UbretTool extends Backbone.View
     @model?.on 'change:selectedElement', @toolSelectElements
     @model?.on 'change:selectedKey', @toolSelectKey
     @model?.get('filters').on 'add reset', @toolAddFilter
+    @model?.get('settings').on 'change', @passSetting
 
   render: =>
     data = @model.getData()
@@ -31,7 +32,6 @@ class UbretTool extends Backbone.View
         filters: @model.get('filters').models
 
       @tool = new Ubret[@model.get('type')](opts)
-      @model.set 'tool', @tool
     @
 
   dataKeys: (data) =>
@@ -56,5 +56,8 @@ class UbretTool extends Backbone.View
 
   toolAddFilters: =>
     @tool.addFilter @model.get('filters').models
+
+  passingSetting: =>
+    @tool.receiveSetting {key: value} for key, value of @model.get('settings').changed
 
 module.exports = UbretTool

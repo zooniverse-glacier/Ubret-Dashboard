@@ -1,4 +1,4 @@
-Settings = require 'collections/settings'
+Settings = require 'models/settings'
 
 class GraphSettings extends Backbone.View
   tagName: 'div'
@@ -6,19 +6,11 @@ class GraphSettings extends Backbone.View
   template: require './templates/graph_settings'
 
   events:
-    'change .x-axis'  : 'onChangeXAxis'
-    'change .y-axis'  : 'onChangeYAxis'
     'change .axis'    : 'onChangeAxis'
 
   initialize: ->
     @settings = new Settings
-    @settings.add [
-        name: 'xaxis'
-      ,
-        name: 'yaxis'
-    ]
     @model?.set 'settings', @settings
-
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
@@ -31,22 +23,8 @@ class GraphSettings extends Backbone.View
 
   # Events
   onChangeAxis: (e) =>
-    axis = e.target.dataset.axis
+    axis = if e.target.dataset.axis is 1 then 'x_axis' else 'y_axis'
     value = e.target.value
-    @model.get('tool').setAxis(axis, value)
+    @model.get('settings').set axis, value
   
-  onChangeXAxis: (e) =>
-    setting = @settings.find (setting) ->
-      setting.get('name') is 'xaxis'
-    setting.set 'value', $(e.currentTarget).val()
-    
-    @model.get('tool').setXVar(setting.get('value'))
-
-  onChangeYAxis: (e) =>
-    setting = @settings.find (setting) ->
-      setting.get('name') is 'yaxis'
-    setting.set 'value', $(e.currentTarget).val()
-    @model.get('tool').setYVar(setting.get('value'))
-
-
 module.exports = GraphSettings
