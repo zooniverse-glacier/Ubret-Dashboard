@@ -18,6 +18,7 @@ class UbretTool extends Backbone.View
     if data.length is 0
       @$el.html @noDataTemplate()
     else
+      @$el.empty()
       opts =
         data: _.map( data, (datum) -> datum.toJSON() )
         selector: '#' + @id
