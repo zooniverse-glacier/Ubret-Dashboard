@@ -1,6 +1,6 @@
 DataSource = require 'models/data_source'
 Filters = require 'collections/filters'
-Settings = require 'collections/settings'
+Settings = require 'models/settings'
 
 class Tool extends Backbone.Model
   defaults:
@@ -13,6 +13,7 @@ class Tool extends Backbone.Model
   initialize: ->
     @set 'dataSource', new DataSource
     @set 'filters', new Filters
+    @set 'settings', new Settings
     @get('dataSource').on 'change:source', @bubbleEvent
 
   bubbleEvent: =>

@@ -1,16 +1,17 @@
 class UbretTool extends Backbone.View
   tagName: 'div'
   className: 'ubret-tool'
-  nonDisplayKeys: []
+  nonDisplayKeys: ['id']
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
     @tool_events = []
-    @model?.get('dataSource').on 'new-data', @render
-    @model?.on 'change:selectedElement', @toolSelectElements
-    @model?.on 'change:selectedKey', @toolSelectKey
-    @model?.get('filters').on 'add reset', @toolAddFilter
-    @model?.get('settings').on 'change', @passSetting
+    if @model?
+      @model.get('dataSource').on 'new-data', @render
+      @model.on 'change:selectedElement', @toolSelectElements
+      @model.on 'change:selectedKey', @toolSelectKey
+      @model.get('filters').on 'add reset', @toolAddFilter
+      @model.get('settings').on 'change', @passSetting
 
   render: =>
     data = @model.getData()
@@ -29,7 +30,6 @@ class UbretTool extends Backbone.View
         el: @$el
         width: @model.get('width')
         height: @model.get('height') - 30
-        filters: @model.get('filters').models
 
       @tool = new Ubret[@model.get('type')](opts)
     @
@@ -57,7 +57,7 @@ class UbretTool extends Backbone.View
   toolAddFilters: =>
     @tool.addFilter @model.get('filters').models
 
-  passingSetting: =>
-    @tool.receiveSetting {key: value} for key, value of @model.get('settings').changed
+  passSetting: =>
+    @tool.receiveSetting key, value for key, value of @model.get('settings').changed
 
 module.exports = UbretTool

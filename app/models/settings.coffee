@@ -1,3 +1,3 @@
-class Setting extends Backbone.Model
+class Settings extends Backbone.Model
   
-module.exports = Setting
+module.exports = Settings

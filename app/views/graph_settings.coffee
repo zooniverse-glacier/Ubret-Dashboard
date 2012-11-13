@@ -1,5 +1,3 @@
-Settings = require 'models/settings'
-
 class GraphSettings extends Backbone.View
   tagName: 'div'
   className: 'graph-settings'
@@ -9,8 +7,6 @@ class GraphSettings extends Backbone.View
     'change .axis'    : 'onChangeAxis'
 
   initialize: ->
-    @settings = new Settings
-    @model?.set 'settings', @settings
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
@@ -23,7 +19,7 @@ class GraphSettings extends Backbone.View
 
   # Events
   onChangeAxis: (e) =>
-    axis = if e.target.dataset.axis is 1 then 'x_axis' else 'y_axis'
+    axis = if e.target.dataset.axis is '1' then 'xAxis' else 'yAxis'
     value = e.target.value
     @model.get('settings').set axis, value
   
