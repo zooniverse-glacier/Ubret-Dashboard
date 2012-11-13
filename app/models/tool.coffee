@@ -21,19 +21,12 @@ class Tool extends Backbone.Model
     else
       @boundTool = null if @boundTool
 
-  filterData: =>
-    if @boundTool
-      filteredData = @boundTool.getData()
-    else
-      filteredData = @get('dataSource').get('data').models
-    @get('filters').each (filter) =>
-      filteredData = _.filter filteredData, filter.get('func')
-    return filteredData
-
   getData: =>
-    unless @get('dataSource').has('source')
-      return []
-    return @filterData()
+    if @boundTool
+      return @boundTool.getData()
+    else if @get('dataSource').has('source')
+      return @get('dataSource').get('data').models
+    return []
 
   bindTool: (tool) =>
     @boundTool = tool

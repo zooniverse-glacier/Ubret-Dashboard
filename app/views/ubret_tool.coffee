@@ -7,8 +7,9 @@ class UbretTool extends Backbone.View
   initialize: ->
     @tool_events = []
     @model?.get('dataSource').on 'new-data', @render
-    @model?.on 'change:selectedElement', @toolSelectElement
+    @model?.on 'change:selectedElement', @toolSelectElements
     @model?.on 'change:selectedKey', @toolSelectKey
+    @model?.get('filters').on 'add reset', @toolAddFilter
 
   render: =>
     data = @model.getData()
@@ -19,8 +20,11 @@ class UbretTool extends Backbone.View
         data: _.map( data, (datum) -> datum.toJSON() )
         selector: '#' + @id
         keys: @dataKeys(data)
-        selectElementCb: @selectElement
+        selectElementsCb: @selectElements
+        selectedElements: @model.get('selectedElements')
         selectKeyCb: @selectKey
+        selectedKey: @model.get('selectedKey')
+        filters: @model.get('filters').models
         el: @$el
         width: @model.get('width')
         height: @model.get('height') - 30
@@ -32,14 +36,14 @@ class UbretTool extends Backbone.View
 
   dataKeys: (data) =>
     dataModel = data[0].toJSON()
-    keys = []
+    keys = new Array
     for key, value of dataModel
       keys.push key unless key in @nonDisplayKeys
     Backbone.Mediator.publish("#{@model.get('channel')}:keys", keys)
     return keys
 
-  selectElement: (id) =>
-    @model.set 'selectedElement', id
+  selectElements: (ids) =>
+    @model.set 'selectedElements', ids
 
   selectKey: (key) =>
     @model.set 'selectedKey', key
@@ -47,8 +51,10 @@ class UbretTool extends Backbone.View
   toolSelectKey: =>
     @tool.selectKey @model.get('selectedKey')
 
-  toolSelectElement: =>
-    @tool.selectElement @model.get('selectedElement')
+  toolSelectElements: =>
+    @tool.selectElements @model.get('selectedElements')
 
+  toolAddFilters: =>
+    @tool.addFilter @model.get('filters').models
 
 module.exports = UbretTool

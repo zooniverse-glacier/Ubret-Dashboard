@@ -38,23 +38,3 @@ describe 'Tool', ->
   describe '#getData', ->
     beforeEach ->
       @tool = new Tool { dataSource: new DataSource { source: 'Galaxy Zoo' } }
-
-  describe '#filterData', ->
-    beforeEach ->
-      @filter = new Backbone.Model { func: (x) -> x }
-      @filters = new Filters [@filter]
-      @tool = new Tool { filters: @filters, dataSource: new DataSource { source: 'Galaxy Zoo' } }
-      @toolStub = sinon.stub(@tool.get('dataSource'), 'get').returns(new Backbone.Collection [{id: 1, test: 2}, {id: 2, test: 3}])
-      @eachSpy = sinon.spy(@tool.get('filters'), 'each')
-      @filterSpy = sinon.spy(_, 'filter')
-      @tool.filterData()
-
-    afterEach ->
-      @tool.get('filters').each.restore()
-      _.filter.restore()
-
-    it 'should call each on filters', ->
-      expect(@eachSpy).to.have.been.called
-
-    it 'should filter data', ->
-      expect(@filterSpy).to.have.been.called
