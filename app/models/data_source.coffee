@@ -32,6 +32,8 @@ class DataSource extends Backbone.Model
     selectedModels = _.map((@get('data').filter (item) ->
       item.id in ids), (model) -> model.toJSON())
     selectedValues = _.pluck(selectedModels, key)
-    {min: _.min(selectedValues), max: _.max(selectedValues)}
+    selectedValues.sort()
+    console.log selectedValues
+    {min: _.first(selectedValues), max: _.last(selectedValues)}
 
 module.exports = DataSource

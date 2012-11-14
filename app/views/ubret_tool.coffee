@@ -40,7 +40,6 @@ class UbretTool extends Backbone.View
     keys = new Array
     for key, value of dataModel
       keys.push key unless key in @nonDisplayKeys
-    console.log @model
     Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     return keys
 
@@ -57,6 +56,7 @@ class UbretTool extends Backbone.View
     @tool?.selectElements @model.get('selectedElements').slice()
 
   toolAddFilters: =>
+    console.log 'here'
     @tool.addFilter @model.get('filters').models
 
   passSetting: =>
