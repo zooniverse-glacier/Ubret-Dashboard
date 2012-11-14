@@ -50,6 +50,7 @@ class ToolWindow extends Backbone.View
     @$el.css 'width', @model.get('width') 
 
   render: =>
+    @toggleSettings()
     _.each([ @titleBar, @settings, @toolContainer ], (section) =>
       @$el.append section.render().el)
     @

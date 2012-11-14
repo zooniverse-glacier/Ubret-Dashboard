@@ -1,3 +1,4 @@
+<h3>Tool Settings</h3>
 <% if @keys: %>
   <select name="key" class="select-key" id="select-key">
     <% for key in @keys: %>
@@ -8,4 +9,6 @@
       <% end %>
     <% end %>
   </select>
+<% else: %>
+  No data.
 <% end %>
