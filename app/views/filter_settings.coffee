@@ -11,10 +11,9 @@ class FilterSettings extends Backbone.View
 
   addFilter: (e) =>
     key = @model.get('selectedKey') or 'id'
-    console.log key
     extents = @model.get('dataSource').dataExtents key, @model.get('selectedElements')
     @model.get('filters').add
-      key: @model.get('selectedKey')
+      key: key
       min: extents.min
       max: extents.max
       text: "#{key} from #{extents.min} to #{extents.max}"

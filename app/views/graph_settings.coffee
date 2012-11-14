@@ -7,6 +7,7 @@ class GraphSettings extends Backbone.View
     'change .axis'  : 'onChangeAxis'
 
   initialize: ->
+    @keys = new Array
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
