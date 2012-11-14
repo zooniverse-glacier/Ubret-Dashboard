@@ -24,7 +24,7 @@ class UbretTool extends Backbone.View
         selector: '#' + @id
         keys: @dataKeys(data)
         selectElementsCb: @selectElements
-        selectedElements: @model.get('selectedElements')
+        selectedElements: @model.get('selectedElements')?.slice()
         selectKeyCb: @selectKey
         selectedKey: @model.get('selectedKey')
         filters: @model.get('filters').models
@@ -44,16 +44,16 @@ class UbretTool extends Backbone.View
     return keys
 
   selectElements: (ids) =>
-    @model.set 'selectedElements', ids
+    @model.setElements ids
 
   selectKey: (key) =>
     @model.set 'selectedKey', key
 
   toolSelectKey: =>
-    @tool.selectKey @model.get('selectedKey')
+    @tool?.selectKey @model.get('selectedKey')
 
   toolSelectElements: =>
-    @tool.selectElements @model.get('selectedElements')
+    @tool?.selectElements @model.get('selectedElements').slice()
 
   toolAddFilters: =>
     @tool.addFilter @model.get('filters').models

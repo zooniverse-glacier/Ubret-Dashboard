@@ -29,6 +29,12 @@ class Tool extends Backbone.Model
       return @get('dataSource').get('data').models
     return []
 
+  setElements: (ids) =>
+    if not @equalElements(ids)
+      @set 'selectedElements', ids
+      @trigger 'change'
+      @trigger 'change:selectedElements'
+
   bindTool: (tool) =>
     @boundTool = tool
     @set 'selectedElements', @boundTool.get('selectedElements')
@@ -41,5 +47,15 @@ class Tool extends Backbone.Model
     
   updateSelectedKey: =>
     @set 'selectedKey', @boundTool.get('selectedKey')
+
+  equalElements: (ids) =>
+    oldIds = @get 'selectedElements'
+
+    if typeof oldIds is 'undefined' or oldIds.length is 0
+      test = false
+    else
+      test = (ids.length is _.filter(oldIds, (id) -> id in ids).length)
+      test = test or ids.length < oldIds.length
+    return test
 
 module.exports = Tool
