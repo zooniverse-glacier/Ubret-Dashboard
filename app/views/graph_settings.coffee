@@ -10,7 +10,7 @@ class GraphSettings extends Backbone.View
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.append @template({ keys: @keys, currentKey: @model.get('selectedKey'), type: @model?.get('type') })
+    @$el.html @template({ keys: @keys, currentKey: @model.get('selectedKey'), type: @model?.get('type') })
     @
 
   setKeys: (keys) =>

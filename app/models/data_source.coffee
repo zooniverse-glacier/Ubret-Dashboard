@@ -28,5 +28,10 @@ class DataSource extends Backbone.Model
   isExternal: =>
     @sourceToCollection() isnt 'internal'
 
+  dataExtents: (key, ids) =>
+    selectedModels = _.map((@get('data').filter (item) ->
+      item.id in ids), (model) -> model.toJSON())
+    selectedValues = _.pluck(selectedModels, key)
+    {min: _.min(selectedValues), max: _.max(selectedValues)}
 
 module.exports = DataSource
