@@ -38,12 +38,17 @@ describe 'UbretTool', ->
         expect(@htmlSpy).to.have.been.called
 
   describe '#dataKeys', ->
-    it 'should extract all keys from the tool\'s data', ->
+    beforeEach ->
       @ubretTool = new UbretTool { id: 'table-1' }
-      data = [ new Backbone.Model { id: 1, name: 'woohooo' }, new Backbone.Model { id: 2, name: 'yolo' } ]
-      expect(@ubretTool.dataKeys(data)[0]).to.equal('name')
+      @data = [ new Backbone.Model { id: 1, name: 'woohooo' }, new Backbone.Model { id: 2, name: 'yolo' } ]
+      @mediatorStub = sinon.stub(Backbone.Mediator, 'publish')
+      @keys = @ubretTool.dataKeys(@data)
 
-  describe '#formatToolType', ->
-    it 'should capitalize the first letter of a word', ->
-      @ubretTool = new UbretTool
-      expect(@ubretTool.formatToolType('table')).to.be('Table')
+    afterEach ->
+      Backbone.Mediator.publish.restore()
+
+    it 'should extract all keys from the tool\'s data', ->
+      expect(@keys[0]).to.equal('name')
+
+    it 'should publish data to the global pubsub', ->
+      expect(@mediatorStub).to.have.been.called

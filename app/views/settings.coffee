@@ -6,8 +6,10 @@ class Settings extends Backbone.View
   className: 'settings'
 
   initialize: ->
+    unless @model?
+      return
     @dataSettings = new DataSettings { model: @model.get('dataSource'), channel: @model.get('channel') } if @model?
-    # @filterSettings = new FilterSettings { collection: @model.get('filters') }
+    @filterSettings = new FilterSettings { collection: @model.get('filters') }
     switch @model?.get('type')
       when 'Histogram', 'Scatterplot', 'Histogram2'
         ToolSettings = require 'views/graph_settings'
@@ -17,18 +19,19 @@ class Settings extends Backbone.View
         ToolSettings = require 'views/subject_settings'
 
     if ToolSettings?
-      @toolSettings = new ToolSettings { model: @model, el: @el }
+      @toolSettings = new ToolSettings { model: @model}
+    else
+      @toolSettings = null
 
-    if @model?
-      @model.on 'change:height', @setHeight
-      @setHeight()
+    @model.on 'change:height', @setHeight
+    @setHeight()
 
   setHeight: =>
     @$el.css 'height', @model.get('height') - 20
 
   render: =>
-    _.each [@dataSettings], (subSetting) =>
-      @$el.append subSetting.render().el
+    _.each [@dataSettings, @filterSettings, @toolSettings], (subSetting) =>
+      @$el.append subSetting?.render().el
     @
 
 
