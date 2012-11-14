@@ -27,7 +27,7 @@
             <option value="<%- key %>"><%- key %></option>
           <% end %>
         <% end %>
-      <% end %>I
+      <% end %>
     </select></label>
   </li>
   <% end %>
