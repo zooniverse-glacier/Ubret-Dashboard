@@ -4,7 +4,7 @@ class GraphSettings extends Backbone.View
   template: require './templates/graph_settings'
 
   events:
-    'change .axis'    : 'onChangeAxis'
+    'change .axis'  : 'onChangeAxis'
 
   initialize: ->
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
@@ -20,6 +20,7 @@ class GraphSettings extends Backbone.View
   # Events
   onChangeAxis: (e) =>
     axis = "axis#{e.target.dataset.axis}"
+    console.log "onChangeAxis", axis, e.target.value
     @model.get('settings').set(axis, e.target.value)
   
 module.exports = GraphSettings

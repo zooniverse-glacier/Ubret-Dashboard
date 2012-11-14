@@ -2,7 +2,7 @@
 <ul>
   <li class="x">
     <label>X-Axis: <select class="axis x-axis" data-axis='1'>
-      <option value="">X-Axis Variable</option>
+      <option value=''>X-Axis Variable</option>
       <% for key, i in @keys: %>
         <% if key is @currentKey: %>
           <option value="<%- key %>" selected><%- key %></option>
@@ -13,10 +13,10 @@
     </select></label>
   </li>
   
-  <% if @type is 'Scatterplot': %>
+  <% if @type is 'Scatter2D': %>
   <li class="y">
     <label>Y-Axis: <select class="axis y-axis" data-axis='2'>
-      <option value="">Y-Axis Variable</option>
+      <option value=''>Y-Axis Variable</option>
       <% for key, i in @keys: %>
         <% if key is @currentKey: %>
           <option value="<%- key %>" selected><%- key %></option>
