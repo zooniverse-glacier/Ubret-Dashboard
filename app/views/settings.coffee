@@ -8,7 +8,7 @@ class Settings extends Backbone.View
   initialize: ->
     unless @model?
       return
-    @dataSettings = new DataSettings { model: @model.get('dataSource'), channel: @model.get('channel') } if @model?
+    @dataSettings = new DataSettings { model: @model } if @model?
     @filterSettings = new FilterSettings { model: @model }
     switch @model?.get('type')
       when 'Histogram', 'Scatterplot', 'Histogram2', 'Scatter2D'

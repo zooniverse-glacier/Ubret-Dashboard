@@ -12,16 +12,26 @@ class DataSettings extends Backbone.View
     'click button[name="fetch"]'    : 'updateModel'
 
   initialize: (options) ->
-    @model?.on 'change:source', @render
-    @model?.on 'change:params', @setParams
-    @channel = options?.channel
-    Backbone.Mediator.subscribe 'all-tools', @updateToolList
+    @dataSource = @model.get('dataSource')
+    @channel = @model.get('channel')
+
+    # Data events
+    @dataSource.on 'change:source', @render
+    @dataSource.on 'change:params', @setParams
+
+    # Cleanup
+    @model.on 'remove', @remove
+
+    Backbone.Mediator.subscribe 'all-tools', @updateToolList, @
 
   render: =>
     extSources = @extSources
     intSources = @intSources or []
     @$el.html @template({extSources: extSources, intSources: intSources, source: @model?.get('source')})
     @
+
+  remove: =>
+    Backbone.Mediator.unsubscribe 'all-tools', @updateToolList, @
 
   showExternal: =>
     @$('.internal-settings').hide()
@@ -43,16 +53,17 @@ class DataSettings extends Backbone.View
         name = $(this).attr('name')
         value = $(this).val()
         params[name] = value
-      @model.set 'params', params
-      @model.set 'source', source
+      @dataSource.set 'params', params
+      @dataSource.set 'source', source
     else
       source = @$('select.internal-sources').val()
-      @model.set 'source', source
-    @model.fetchData()
+      @dataSource.set 'source', source
+    @dataSource.fetchData()
 
   updateToolList: (list) =>
     @intSources = new Array
     @intSources.push item for item in list when item.channel isnt @channel
     @render()
+
 
 module.exports = DataSettings

@@ -15,6 +15,7 @@ class ToolWindow extends Backbone.View
     if @model?
       @model.on 'change:top change:left', @setWindowPosition
       @model.on 'change:width change:height', @setWindowSize
+      @model.on 'remove', @removeWindow
       @setWindowSize()
 
       @generatePosition()
@@ -36,6 +37,9 @@ class ToolWindow extends Backbone.View
     unless @$el.css('z-index') is @getMaxZIndex()
       @$el.css 'z-index', parseInt(@getMaxZIndex()) + 1
       @model.set 'zindex', @$el.css 'z-index'
+
+  removeWindow: =>
+    @remove()
 
   setWindowPosition: =>
     @$el.css 'left', @model.get('left')

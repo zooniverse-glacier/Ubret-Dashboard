@@ -21,6 +21,7 @@ class Dashboard extends Backbone.Model
     @count += 1
 
   removeTools: =>
-    @get('tools').reset()
+    @get('tools').remove @get('tools').models
+    @count = 0
 
 module.exports = Dashboard
