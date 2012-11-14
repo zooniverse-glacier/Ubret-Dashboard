@@ -11,7 +11,7 @@ class SubjectSettings extends Backbone.View
     Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.append @template
+    @$el.html @template
     @
 
   setKeys: (keys) =>

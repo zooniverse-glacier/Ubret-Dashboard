@@ -10,7 +10,7 @@ class KeySettings extends Backbone.View
     Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.append @template({ keys: @keys, currentKey: @model.get('selectedKey') })
+    @$el.html @template({ keys: @keys, currentKey: @model.get('selectedKey') })
     @
 
   setKeys: (keys) =>

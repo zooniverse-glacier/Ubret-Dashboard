@@ -1,9 +1,11 @@
-<select name="key" class="select-key" id="select-key">
-  <% for key in @keys: %>
-    <% if key is @currentKey: %>
-      <option name="key" value="<%- key %>" selected><%- key %></option>
-    <% else: %>
-      <option name="key" value="<%- key %>"><%- key %></option>
+<% if @keys: %>
+  <select name="key" class="select-key" id="select-key">
+    <% for key in @keys: %>
+      <% if key is @currentKey: %>
+        <option name="key" value="<%- key %>" selected><%- key %></option>
+      <% else: %>
+        <option name="key" value="<%- key %>"><%- key %></option>
+      <% end %>
     <% end %>
-  <% end %>
-</select>
+  </select>
+<% end %>
