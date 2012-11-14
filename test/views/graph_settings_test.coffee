@@ -31,23 +31,3 @@ describe 'GraphSettings', ->
 
     it 'should append to the el\'s html', ->
       expect(@htmlSpy).to.have.been.called
-
-    describe 'when it is a histogram', ->
-      beforeEach ->
-        @disableYAxis = sinon.stub(@graphSettings, 'disableYAxis')
-        @graphSettings.model = new Backbone.Model { type: 'histogram' }
-        @graphSettings.render()
-
-      it 'should call the disableYAxis function', ->
-        expect(@disableYAxis).to.have.been.called
-
-  describe '#disableYAxis', ->
-    beforeEach ->
-      @graphSettings = new GraphSettings { model: new Backbone.Model { type: 'table' } }
-      @graphSettings.setKeys ['name', 'test']
-      @graphSettings.render().disableYAxis()
-
-    it 'should disable the y-axis select element', ->
-      expect(@graphSettings.$('select.y-axis')).to.have.attr('disabled')
-
-

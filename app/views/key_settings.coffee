@@ -1,5 +1,3 @@
-Settings = require 'collections/settings'
-
 class KeySettings extends Backbone.View
   tagName: 'div'
   className: 'key-settings'
@@ -19,9 +17,8 @@ class KeySettings extends Backbone.View
     @keys = keys
     @render()
 
-
   #Events
   onSelectKey: (e) =>
-    @model.get('tool').selectKey $(e.currentTarget).val()
+    @model.set 'selectedKey', @$(e.currentTarget).val()
 
 module.exports = KeySettings

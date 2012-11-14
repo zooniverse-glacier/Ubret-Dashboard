@@ -8,7 +8,7 @@ class UbretTool extends Backbone.View
     @tool_events = []
     if @model?
       @model.get('dataSource').on 'new-data', @render
-      @model.on 'change:selectedElement', @toolSelectElements
+      @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
       @model.get('filters').on 'add reset', @toolAddFilter
       @model.get('settings').on 'change', @passSetting
@@ -24,7 +24,7 @@ class UbretTool extends Backbone.View
         selector: '#' + @id
         keys: @dataKeys(data)
         selectElementsCb: @selectElements
-        selectedElements: @model.get('selectedElements')
+        selectedElements: @model.get('selectedElements')?.slice()
         selectKeyCb: @selectKey
         selectedKey: @model.get('selectedKey')
         filters: @model.get('filters').models
@@ -40,22 +40,23 @@ class UbretTool extends Backbone.View
     keys = new Array
     for key, value of dataModel
       keys.push key unless key in @nonDisplayKeys
-    Backbone.Mediator.publish("#{@model.get('channel')}:keys", keys)
+    Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     return keys
 
   selectElements: (ids) =>
-    @model.set 'selectedElements', ids
+    @model.setElements ids
 
   selectKey: (key) =>
     @model.set 'selectedKey', key
 
   toolSelectKey: =>
-    @tool.selectKey @model.get('selectedKey')
+    @tool?.selectKey @model.get('selectedKey')
 
   toolSelectElements: =>
-    @tool.selectElements @model.get('selectedElements')
+    @tool?.selectElements @model.get('selectedElements').slice()
 
   toolAddFilters: =>
+    console.log 'here'
     @tool.addFilter @model.get('filters').models
 
   passSetting: =>

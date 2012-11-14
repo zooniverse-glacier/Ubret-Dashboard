@@ -7,13 +7,20 @@ class FilterSettings extends Backbone.View
     'click button[name="filter"]' : 'addFilter'
 
   initialize: ->
-    @collection?.on 'add', @render
+    @model.get('filters')?.on 'add', @render
 
   addFilter: (e) =>
-    @collection.fromString @$(e.currentTarget).val()
+    key = @model.get('selectedKey') or 'id'
+    console.log key
+    extents = @model.get('dataSource').dataExtents key, @model.get('selectedElements')
+    @model.get('filters').add
+      key: @model.get('selectedKey')
+      min: extents.min
+      max: extents.max
+      text: "#{key} from #{extents.min} to #{extents.max}"
 
   render: =>
-    filters = @collection?.toJSON || []
+    filters = @model.get('filters')?.toJSON() || []
     @$el.html @template({filters: filters})
     @
 

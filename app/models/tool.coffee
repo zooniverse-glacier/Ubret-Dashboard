@@ -29,15 +29,33 @@ class Tool extends Backbone.Model
       return @get('dataSource').get('data').models
     return []
 
+  setElements: (ids) =>
+    if not @equalElements(ids)
+      @set 'selectedElements', ids
+      @trigger 'change'
+      @trigger 'change:selectedElements'
+
   bindTool: (tool) =>
     @boundTool = tool
-    @boundTool.on 'change:selectedElement', @updateSelectedElement
+    @set 'selectedElements', @boundTool.get('selectedElements')
+    @set 'selectedKey', @boundTool.get('selectedKey')
+    @boundTool.on 'change:selectedElements', @updateSelectedElements
     @boundTool.on 'change:selectedKey', @updateSelectedKey
 
-  updateSelectedElement: =>
-    @set 'selectedElement', @boundTool.get('selectedElement')
+  updateSelectedElements: =>
+    @set 'selectedElements', @boundTool.get('selectedElements')
     
   updateSelectedKey: =>
     @set 'selectedKey', @boundTool.get('selectedKey')
+
+  equalElements: (ids) =>
+    oldIds = @get 'selectedElements'
+
+    if typeof oldIds is 'undefined' or oldIds.length is 0
+      test = false
+    else
+      test = (ids.length is _.filter(oldIds, (id) -> id in ids).length)
+      test = test or ids.length < oldIds.length
+    return test
 
 module.exports = Tool

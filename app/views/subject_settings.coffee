@@ -1,5 +1,3 @@
-Settings = require 'collections/settings'
-
 class SubjectSettings extends Backbone.View
   tagName: 'div'
   className: 'subject-settings'
@@ -20,13 +18,11 @@ class SubjectSettings extends Backbone.View
     @keys = keys
     @render()
 
-
   #Events
   onSelectPrevSubject: =>
-    @model.get('tool').prevSubject()
+    
 
   onSelectNextSubject: =>
-    @model.get('tool').nextSubject()
 
 
 module.exports = SubjectSettings
