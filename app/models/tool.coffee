@@ -39,14 +39,21 @@ class Tool extends Backbone.Model
     @boundTool = tool
     @set 'selectedElements', @boundTool.get('selectedElements')
     @set 'selectedKey', @boundTool.get('selectedKey')
+    @get('filters').add @boundTool.get('filters').models.slice()
+
     @boundTool.on 'change:selectedElements', @updateSelectedElements
     @boundTool.on 'change:selectedKey', @updateSelectedKey
+    @boundTool.get('filters').on 'add', @updateFilters
 
   updateSelectedElements: =>
-    @set 'selectedElements', @boundTool.get('selectedElements')
+    @set 'selectedElements', @boundTool.get('selectedElements').slice()
     
   updateSelectedKey: =>
     @set 'selectedKey', @boundTool.get('selectedKey')
+
+  updateFilters: (filter) =>
+    @get('filters').add filter
+    console.log @get 'filters'
 
   equalElements: (ids) =>
     oldIds = @get 'selectedElements'
