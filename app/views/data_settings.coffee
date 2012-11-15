@@ -14,39 +14,39 @@ class DataSettings extends Backbone.View
   initialize: (options) ->
     @dataSource = @model.get('dataSource')
     @channel = @model.get('channel')
+    @sourceType = false
 
     # Data events
     @dataSource.on 'change:source', @render
     @dataSource.on 'change:params', @setParams
+    Backbone.Mediator.subscribe 'all-tools', @updateToolList, @
 
     # Cleanup
     @model.on 'remove', @remove
 
-    Backbone.Mediator.subscribe 'all-tools', @updateToolList, @
-
   render: =>
     extSources = @extSources
     intSources = @intSources or []
-    @$el.html @template({extSources: extSources, intSources: intSources, source: @model?.get('source')})
+    @$el.html @template
+      extSources: extSources
+      intSources: intSources
+      source: @model?.get('source')
+      sourceType: @sourceType
     @
 
   remove: =>
     Backbone.Mediator.unsubscribe 'all-tools', @updateToolList, @
 
   showExternal: =>
-    @$('.internal-settings').hide()
-    @$('.external-settings').show()
-    @$('button[name="fetch"]').show()
-    @external = true
+    @sourceType = 'external'
+    @render()
 
   showInternal: =>
-    @$('.internal-settings').show()
-    @$('.external-settings').hide()
-    @$('button[name="fetch"]').show()
-    @external = false 
+    @sourceType = 'internal'
+    @render()
 
   updateModel: =>
-    if @external
+    if @sourceType is 'external'
       source = @$('select.external-sources').val()
       params = new Object
       @$('.external-settings input').each (index) ->

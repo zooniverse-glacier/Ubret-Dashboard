@@ -5,32 +5,37 @@
   <li><a class="internal">Other Tool</a></li>
 </ul>
 
-<div class="external-settings">
-  <select class="external-sources">
-      <option value="">Select External API</option>
-    <% for key, value of @extSources: %>
-      <% if key is @source: %>
-        <option value="<%- key %>" selected><%- value %></option>
-      <% else: %>
-        <option value="<%- key %>"><%- value %></option>
-      <% end %>
-    <% end %>
-  </select>
+<% if @sourceType: %>
+  <% if @sourceType is 'external': %>
+    <div class="external-settings">
+      <select class="external-sources">
+          <option value="">Select External API</option>
+        <% for key, value of @extSources: %>
+          <% if key is @source: %>
+            <option value="<%- key %>" selected><%- value %></option>
+          <% else: %>
+            <option value="<%- key %>"><%- value %></option>
+          <% end %>
+        <% end %>
+      </select>
 
-  <label>Number: <input type="text" name="limit" placeholder="No. of Objects to fetch" /></label>
-</div>
-
-<div class="internal-settings">
-  <select class="internal-sources">
-      <option value="">Select Tool</option>
-    <% for source in @intSources: %>
-      <% if source.channel is @source: %>
-        <option value="<%- source.chanel %>" selected><%- source.name %></option>
-      <% else: %>
-        <option value="<%- source.chanel %>"><%- source.name %></option>
-      <% end %>
-    <% end %>
-  </select>
-</div>
-
-<button type="button" name="fetch">Fetch Data</button>
+      <label>Number: <input type="text" name="limit" placeholder="No. of Objects to fetch" /></label>
+    </div>
+  <% else if @sourceType is 'internal': %>
+    <div class="internal-settings">
+      <select class="internal-sources">
+          <option value="">Select Tool</option>
+        <% for source in @intSources: %>
+          <% if source.channel is @source: %>
+            <option value="<%- source.chanel %>" selected><%- source.name %></option>
+          <% else: %>
+            <option value="<%- source.chanel %>"><%- source.name %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </div>
+  <% else: %>
+    <p>Invalid source type.</p>
+  <% end %>
+  <button type="button" name="fetch">Fetch Data</button>
+<% end %>
