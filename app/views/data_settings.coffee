@@ -30,7 +30,7 @@ class DataSettings extends Backbone.View
     @$el.html @template
       extSources: extSources
       intSources: intSources
-      source: @model?.get('source')
+      source: @dataSource?.get('source')
       sourceType: @sourceType
     @
 

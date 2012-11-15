@@ -27,9 +27,9 @@
           <option value="">Select Tool</option>
         <% for source in @intSources: %>
           <% if source.channel is @source: %>
-            <option value="<%- source.chanel %>" selected><%- source.name %></option>
+            <option value="<%- source.channel %>" selected><%- source.name %></option>
           <% else: %>
-            <option value="<%- source.chanel %>"><%- source.name %></option>
+            <option value="<%- source.channel %>"><%- source.name %></option>
           <% end %>
         <% end %>
       </select>
