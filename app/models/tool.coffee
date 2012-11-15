@@ -17,7 +17,7 @@ class Tool extends Backbone.Model
     @get('dataSource').on 'change:source', @bubbleEvent
 
   bubbleEvent: =>
-    if not @get('dataSource').isExternal()
+    unless @get('dataSource').isExternal()
       @trigger 'bind-tool', @get('dataSource').get('source'), @
     else
       @boundTool = null if @boundTool

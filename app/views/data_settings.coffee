@@ -15,27 +15,26 @@ class DataSettings extends Backbone.View
     @dataSource = @model.get('dataSource')
     @channel = @model.get('channel')
     @sourceType = false
+    @updateValidSourceTools()
 
     # Data events
     @dataSource.on 'change:source', @render
     @dataSource.on 'change:params', @setParams
-    Backbone.Mediator.subscribe 'all-tools', @updateToolList, @
+    Backbone.Mediator.subscribe 'data-received', @updateValidSourceTools, @
 
     # Cleanup
     @model.on 'remove', @remove
 
   render: =>
-    extSources = @extSources
-    intSources = @intSources or []
     @$el.html @template
-      extSources: extSources
-      intSources: intSources
+      extSources: @extSources
+      intSources: @intSources or []
       source: @dataSource?.get('source')
       sourceType: @sourceType
     @
 
   remove: =>
-    Backbone.Mediator.unsubscribe 'all-tools', @updateToolList, @
+    Backbone.Mediator.unsubscribe 'data-received', @updateValidSourceTools, @
 
   showExternal: =>
     @sourceType = 'external'
@@ -60,10 +59,29 @@ class DataSettings extends Backbone.View
       @dataSource.set 'source', source
     @dataSource.fetchData()
 
-  updateToolList: (list) =>
-    @intSources = new Array
-    @intSources.push item for item in list when item.channel isnt @channel
+  updateValidSourceTools: =>
+    @intSources = []
+    @model.collection.each (tool) =>
+      isValid = @checkToolSource @model, tool, []
+      if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
     @render()
+
+  checkToolSource: (source_tool, tool, checkedTools) =>
+    if _.isEqual source_tool, tool
+      return false
+
+    if _.isUndefined tool.get('dataSource').get('source')
+      return false
+
+    if tool.get('dataSource').isExternal()
+      return true
+    else
+      unless _.find checkedTools, ((checkedTool) -> _.isEqual(tool, checkedTool))
+        checkedTools.push tool
+        chainedTool = tool.collection.find((next_tool) -> tool.get('dataSource').get('source') == next_tool.get('channel'))
+        @checkToolSource source_tool, chainedTool, checkedTools
+      else
+        return false
 
 
 module.exports = DataSettings

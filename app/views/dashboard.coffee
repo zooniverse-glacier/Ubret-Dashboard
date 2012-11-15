@@ -26,7 +26,6 @@ class DashboardView extends Backbone.View
       toolChannels.push 
         name: tool.get('name')
         channel: tool.get('channel')
-    Backbone.Mediator.publish('all-tools', toolChannels)
 
   removeTools: =>
     @$el.empty()

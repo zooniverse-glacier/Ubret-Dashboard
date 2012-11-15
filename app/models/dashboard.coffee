@@ -7,7 +7,7 @@ class Dashboard extends Backbone.Model
   urlRoot: '/dashboard'
 
   initialize: ->
-    @count = @get('tools').length + 1
+    @resetCount()
 
   parse: (response) ->
     response.tools = new Tools response.tools
@@ -20,8 +20,11 @@ class Dashboard extends Backbone.Model
       channel: "#{toolType}-#{@count}"
     @count += 1
 
+  resetCount: =>
+    @count = @get('tools').length + 1
+
   removeTools: =>
     @get('tools').remove @get('tools').models
-    @count = 0
+    @resetCount()
 
 module.exports = Dashboard

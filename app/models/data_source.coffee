@@ -1,6 +1,7 @@
 GalaxyZooSubjects = require 'collections/galaxy_zoo_subjects'
 
 class DataSource extends Backbone.Model
+
   initialize: ->
     @.on 'change:source', @createNewData
     @createNewData() if (not @has('data')) and (@has('source'))
@@ -15,6 +16,8 @@ class DataSource extends Backbone.Model
       @attributes['data'].fetch()
     else
       @trigger 'new-data'
+
+    Backbone.Mediator.publish 'data-received'
 
   createNewData: =>
     sourceType = @sourceToCollection()
