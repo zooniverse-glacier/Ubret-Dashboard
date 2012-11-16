@@ -23,12 +23,6 @@ class Settings extends Backbone.View
     else
       @toolSettings = null
 
-    @model.on 'change:height', @setHeight
-    @setHeight()
-
-  setHeight: =>
-    @$el.css 'height', @model.get('height') - 20
-
   render: =>
     _.each [@dataSettings, @filterSettings, @toolSettings], (subSetting) =>
       @$el.append subSetting?.render().el

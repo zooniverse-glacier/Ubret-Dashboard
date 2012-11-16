@@ -8,8 +8,13 @@ class ToolWindow extends Backbone.View
   tagName: 'div'
   className: 'tool-window'
 
+  windowMinWidth: 300
+  windowMinHeight: 150
+
   events:
     'click': 'focusWindow'
+    'mousedown .resize': 'resizeWindowStart'
+    'mouseup .resize': 'resizeWindowEnd'
 
   initialize: =>
     if @model?
@@ -33,10 +38,84 @@ class ToolWindow extends Backbone.View
     @titleBar.on 'endDrag', @endDrag
     @titleBar.on 'focusWindow', @focusWindow
 
+  render: =>
+    @toggleSettings()
+    _.each [ @titleBar, @settings, @toolContainer ], (section) =>
+      @$el.append section.render().el
+
+
+    # Ugly
+    @$el.wrapInner(document.createElement('div')).children('div').addClass('window')
+
+    for i in ['top left', 'top right', 'bottom right', 'bottom left']
+      @$el.append "<span class=\"resize corner #{i}\"></span>"
+
+    for i in ['top', 'right', 'bottom', 'left']
+      @$el.append "<span class=\"resize bar #{i}\"></span>"
+
+    @
+
   focusWindow: (e) =>
     unless @$el.css('z-index') is @getMaxZIndex()
       @$el.css 'z-index', parseInt(@getMaxZIndex()) + 1
       @model.set 'zindex', @$el.css 'z-index'
+
+  resizeWindowStart: (e) =>
+    $('body').addClass 'unselectable'
+    @resizing = true
+
+    startX = e.pageX
+    startY = e.pageY
+
+    startWidth = @$el.width()
+    startHeight = @$el.height()
+
+    startLeft = @$el.offset().left
+    startTop = @$el.offset().top
+
+    $(document).on 'mousemove', (d_e) =>
+      if @resizing
+
+        if d_e.pageX > $(document).width() or d_e.pageY > $(document).height()
+          return
+
+        deltaX = d_e.pageX - startX
+        deltaY = d_e.pageY - startY
+
+        # Horizontal
+        if $(e.currentTarget).hasClass('left')
+          unless (startWidth - deltaX) < @windowMinWidth
+            @$el.css
+              left: startLeft + deltaX
+              width: startWidth - deltaX  
+
+        if $(e.currentTarget).hasClass('right')
+          unless (startWidth + deltaX) < @windowMinWidth
+            @$el.css
+              width: startWidth + deltaX
+
+        # Vertical
+        if $(e.currentTarget).hasClass('top')
+          unless (startHeight - deltaY) < @windowMinHeight
+            @$el.css
+              top: startTop + deltaY
+              height: startHeight - deltaY
+
+        if $(e.currentTarget).hasClass('bottom')
+          unless (startHeight + deltaY) < @windowMinHeight
+            @$el.css
+              height: startHeight + deltaY
+
+  resizeWindowEnd: (e) =>
+    $('body').removeClass 'unselectable'
+    @resizing = false
+    $(document).off 'mousemove'
+
+    @model.set 
+      left: @$el.css('left')
+      top: @$el.css('top')
+      width: @$el.css('width')
+      height: @$el.css('height')
 
   removeWindow: =>
     @remove()
@@ -49,12 +128,6 @@ class ToolWindow extends Backbone.View
     @$el.css 'height', @model.get('height')
     @$el.css 'width', @model.get('width') 
 
-  render: =>
-    @toggleSettings()
-    _.each([ @titleBar, @settings, @toolContainer ], (section) =>
-      @$el.append section.render().el)
-    @
-
   toggleSettings: =>
     @$el.toggleClass 'settings-active'
 
@@ -66,27 +139,28 @@ class ToolWindow extends Backbone.View
     $('body').addClass 'unselectable'
     @dragging = true
 
-    mouseOffset = @$el.offset()
-    @relX = e.pageX - mouseOffset.left
-    @relY = e.pageY - mouseOffset.top
+    startTop = @$el.offset().top
+    startLeft = @$el.offset().left
 
-    $(document).on 'mousemove', (e) =>
+    @relX = e.pageX - startLeft
+    @relY = e.pageY - startTop
+
+    $(document).on 'mousemove', (d_e) =>
       if @dragging
-        topMove = -(@model.get('top') - (e.pageY - @relY))
-        leftMove = -(@model.get('left') - (e.pageX - @relX))
+        top = -(startTop - (d_e.pageY - @relY))
+        left = -(startLeft - (d_e.pageX - @relX))
         @$el.css
-          transform: "translate(#{leftMove}px, #{topMove}px)"
+          transform: "translate(#{left}px, #{top}px)"
 
   endDrag: (e) =>
+    $('body').removeClass 'unselectable'
     @dragging = false
     $(document).off 'mousemove'
-    mouseOffset = @$el.offset()
 
     @model.set 
       left: e.pageX - @relX
       top: e.pageY - @relY
 
-    $('body').removeClass 'unselectable'
     @$el.css
       transform: ''
 

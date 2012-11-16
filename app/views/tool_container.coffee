@@ -8,8 +8,6 @@ class ToolContainer extends Backbone.View
     if @model?
       @createToolView()
       @model.on 'change:type', @updateTool
-      @model.on 'change:height change:width', @setSize
-      @setSize()
 
   createToolView: =>
     if @model.has('type')
@@ -18,11 +16,7 @@ class ToolContainer extends Backbone.View
   updateTool: =>
     @toolView.remove()
     @createToolView()
-
-  setSize: =>
-    @$el.css 'height', @model.get('height') - 20
-    @$el.css 'width', @model.get('width') 
-
+    
   render: =>
     @$el.html @toolView?.render().el
     @

@@ -1,19 +1,26 @@
 .tool-window
   position: absolute
-  display: inline-block
-  box-shadow: 0 0 13px #444
+  min-width: 300px
+  min-height: 150px
   background: #fff
-  overflow: hidden
   border-radius: 3px
+  box-shadow: 0 0 13px #444
+
+  .window
+    position: relative
+    width: 100%
+    height: 100%
+    overflow: hidden
 
   .title-bar
     position: relative 
     top: 0
     left: 0
-    background: $mid-gray
     width: inherit
-    z-index: 3
     height: 20px
+    padding: 7px 9px
+    z-index: 3
+    background: $mid-gray
 
     span
       padding: 0 3px
@@ -35,12 +42,8 @@
     transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
 
   .tool-container
-    z-index: 1
-    position: absolute 
-    background: #fff
-    display: inline-block
-    float: left
-    overflow: auto
+    height: 100%
+    overflow-y: scroll
 
   &.settings-active
     .settings
@@ -52,3 +55,57 @@
     -webskit-user-select: none
     -ms-user-select: none
     user-select: none
+
+  .resize
+    position: absolute
+    $size = 8px
+    &.corner
+      width: $size
+      height: $size
+      z-index: 5
+      &.top.left
+        cursor: nw-resize
+      &.top.right
+        cursor: ne-resize
+      &.bottom.right
+        cursor: se-resize
+      &.bottom.left
+        cursor: sw-resize
+
+    &.bar
+      z-index: 4
+      &.top
+        cursor: n-resize
+      &.right
+        cursor: e-resize
+      &.bottom
+        cursor: s-resize
+      &.left
+        cursor: w-resize
+
+    &.top
+      top: -($size / 2)
+      height: $size
+      &.bar
+        width: 100%
+
+    &.bottom
+      bottom: -($size / 2)
+      height: $size
+      &.bar
+        width: 100%
+
+    &.right
+      right: -($size / 2)
+      width: $size
+      &.bar
+        top: 0
+        height: 100%
+
+    &.left
+      left: -($size / 2)
+      width: $size
+      &.bar
+        top: 0
+        height: 100%
+
