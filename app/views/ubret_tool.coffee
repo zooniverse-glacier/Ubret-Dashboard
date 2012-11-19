@@ -26,7 +26,7 @@ class UbretTool extends Backbone.View
 
   render: =>
     data = @model.getData()
-
+    
     if data.length is 0
       @$el.html @noDataTemplate()
     else

@@ -18,10 +18,11 @@ class ToolWindow extends Backbone.View
 
   initialize: =>
     if @model?
-      @model.on 'change:top change:left', @setWindowPosition
-      @model.on 'change:width change:height', @setWindowSize
       @model.on 'remove', @removeWindow
-      @setWindowSize()
+
+      @$el.css
+        width: @model.get('width')
+        height: @model.get('height')
 
       @generatePosition()
       @focusWindow() if @collection?
@@ -42,7 +43,6 @@ class ToolWindow extends Backbone.View
     @toggleSettings()
     _.each [ @titleBar, @settings, @toolContainer ], (section) =>
       @$el.append section.render().el
-
 
     # Ugly
     @$el.wrapInner(document.createElement('div')).children('div').addClass('window')
@@ -111,24 +111,18 @@ class ToolWindow extends Backbone.View
     @resizing = false
     $(document).off 'mousemove'
 
-    @toolContainer.render().el
-
     @model.set 
       left: @$el.css('left')
       top: @$el.css('top')
       width: @$el.css('width')
       height: @$el.css('height')
 
+    @toolContainer.render().el
+
+    console.log 'end window resize'
+
   removeWindow: =>
     @remove()
-
-  setWindowPosition: =>
-    @$el.css 'left', @model.get('left')
-    @$el.css 'top', @model.get('top')
-
-  setWindowSize: =>
-    @$el.css 'height', @model.get('height')
-    @$el.css 'width', @model.get('width') 
 
   toggleSettings: =>
     @$el.toggleClass 'settings-active'
@@ -164,6 +158,8 @@ class ToolWindow extends Backbone.View
       top: e.pageY - @relY
 
     @$el.css
+      left: e.pageX - @relX
+      top: e.pageY - @relY
       transform: ''
 
   # Helper functions
@@ -184,6 +180,10 @@ class ToolWindow extends Backbone.View
     y = Math.random() * (y_max - y_min) + y_min
 
     @model.set
+      top: y
+      left: x
+
+    @$el.css
       top: y
       left: x
 
