@@ -119,8 +119,6 @@ class ToolWindow extends Backbone.View
 
     @toolContainer.render().el
 
-    console.log 'end window resize'
-
   removeWindow: =>
     @remove()
 

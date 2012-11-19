@@ -1,3 +1,6 @@
+$title-bar-vertical-padding = 7px
+$title-bar-height = 20px
+
 .tool-window
   position: absolute
   min-width: 300px
@@ -12,22 +15,22 @@
     height: 100%
     overflow: hidden
 
-  .title-bar
-    position: relative 
-    top: 0
-    left: 0
-    width: inherit
-    height: 20px
-    padding: 7px 9px
-    z-index: 3
-    background: $mid-gray
+    .title-bar
+      position: absolute 
+      top: 0
+      left: 0
+      width: 100%
+      height: $title-bar-height
+      padding: $title-bar-vertical-padding 9px
+      z-index: 3
+      background: $mid-gray
 
-    span
-      padding: 0 3px
-      cursor: pointer
+      span
+        padding: 0 3px
+        cursor: pointer
 
-    input
-      display: none
+      input
+        display: none
       
   .settings
     display: inline-block
@@ -42,6 +45,7 @@
     transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
 
   .tool-container
+    position: relative
     height: 100%
 
   &.settings-active
