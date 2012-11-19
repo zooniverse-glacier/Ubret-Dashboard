@@ -87,7 +87,7 @@ class ToolWindow extends Backbone.View
           unless (startWidth - deltaX) < @windowMinWidth
             @$el.css
               left: startLeft + deltaX
-              width: startWidth - deltaX  
+              width: startWidth - deltaX
 
         if $(e.currentTarget).hasClass('right')
           unless (startWidth + deltaX) < @windowMinWidth
@@ -110,6 +110,8 @@ class ToolWindow extends Backbone.View
     $('body').removeClass 'unselectable'
     @resizing = false
     $(document).off 'mousemove'
+
+    @toolContainer.render().el
 
     @model.set 
       left: @$el.css('left')

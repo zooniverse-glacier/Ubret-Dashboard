@@ -1,5 +1,4 @@
 exports.config =
-  # See http://brunch.readthedocs.org/en/latest/config.html for documentation.
   files:
     javascripts:
       joinTo:
@@ -28,7 +27,9 @@ exports.config =
         'stylesheets/app.css': /^app\/styles\/index.styl/
         'test/stylesheets/test.css': /^test/
       order:
-        before: []
+        before: [
+          'vendor/styles/leaflet.css'
+        ]
         after: []
 
     templates:

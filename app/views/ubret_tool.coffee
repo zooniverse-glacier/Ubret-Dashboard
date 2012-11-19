@@ -5,7 +5,6 @@ class UbretTool extends Backbone.View
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
-    @tool_events = []
     if @model?
       @model.get('dataSource').on 'new-data', @render
       @model.on 'change:selectedElements', @toolSelectElements
@@ -13,26 +12,35 @@ class UbretTool extends Backbone.View
       @model.get('filters').on 'add reset', @toolAddFilters
       @model.get('settings').on 'change', @passSetting
 
+    @$el.html @noDataTemplate()
+    @$el.addClass @model.get('type')
+
+    opts = 
+      el: @$el
+      selector: '#' + @id
+      selectElementsCb: @selectElements
+      selectKeyCb: @selectKey
+
+    @tool = new Ubret[@model.get('type')](opts)
+    @$el.attr 'id', @id
+
   render: =>
     data = @model.getData()
+
     if data.length is 0
       @$el.html @noDataTemplate()
     else
-      @$el.empty()
+      @$el.find('.no-data').remove()
       opts =
         data: _.map( data, (datum) -> datum.toJSON() )
-        selector: '#' + @id
         keys: @dataKeys(data)
-        selectElementsCb: @selectElements
-        selectedElements: @model.get('selectedElements')?.slice()
-        selectKeyCb: @selectKey
-        selectedKey: @model.get('selectedKey')
         filters: @model.get('filters').models
-        el: @$el
-        width: @model.get('width')
-        height: @model.get('height') - 30
+        selectedElements: @model.get('selectedElements')?.slice()
+        selectedKey: @model.get('selectedKey')
 
-      @tool = new Ubret[@model.get('type')](opts)
+      @tool.setOpts opts
+      @tool.start()
+
     @
 
   dataKeys: (data) =>
