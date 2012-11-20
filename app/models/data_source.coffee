@@ -1,4 +1,5 @@
 GalaxyZooSubjects = require 'collections/galaxy_zoo_subjects'
+SimbadSubjects = require 'collections/simbad_subjects'
 
 class DataSource extends Backbone.Model
   defaults:
@@ -10,6 +11,7 @@ class DataSource extends Backbone.Model
   sourceToCollection: =>
     switch @attributes['source']
       when 'Galaxy Zoo' then return GalaxyZooSubjects
+      when 'Simbad' then return SimbadSubjects
       else return 'internal'
 
   fetchData: =>

@@ -19,6 +19,7 @@
         <% end %>
       </select>
 
+      <label>Name: <input type="text" name="name" placeholder="Name of Star" /></label>
       <label>Number: <input type="text" name="limit" placeholder="No. of Objects to fetch" /></label>
     </div>
   <% else if @sourceType is 'internal': %>

@@ -5,6 +5,7 @@ class DataSettings extends Backbone.View
 
   extSources:
     'Galaxy Zoo': 'Galaxy Zoo Subjects'
+    'Simbad' : 'Simbad Entries'
 
   events:
     'click .type-select a.external' : 'showExternal'
@@ -82,6 +83,5 @@ class DataSettings extends Backbone.View
         @checkToolSource source_tool, chainedTool, checkedTools
       else
         return false
-
 
 module.exports = DataSettings
