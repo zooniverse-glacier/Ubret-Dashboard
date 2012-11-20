@@ -1,10 +1,11 @@
 GalaxyZooSubjects = require 'collections/galaxy_zoo_subjects'
 
 class DataSource extends Backbone.Model
+  defaults:
+    data: []
 
   initialize: ->
     @.on 'change:source', @createNewData
-    @createNewData() if (not @has('data')) and (@has('source'))
 
   sourceToCollection: =>
     switch @attributes['source']
@@ -13,11 +14,17 @@ class DataSource extends Backbone.Model
 
   fetchData: =>
     if @isExternal()
-      @attributes['data'].fetch()
+      @attributes['data'].fetch
+        success: (collection, res, opts) =>
+          @onSetData()
     else
-      @trigger 'new-data'
+      source = @get('tools').find (tool) =>
+        tool.get('channel') == @get('source')
+      @set('data', source.get('dataSource').get('data'))
+      @onSetData()
 
-    Backbone.Mediator.publish 'data-received'
+  onSetData: =>
+    Backbone.Mediator.publish('data-received')
 
   createNewData: =>
     sourceType = @sourceToCollection()

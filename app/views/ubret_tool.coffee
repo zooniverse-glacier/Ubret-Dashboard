@@ -6,11 +6,11 @@ class UbretTool extends Backbone.View
 
   initialize: ->
     if @model?
-      @model.get('dataSource').on 'new-data', @render
       @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
       @model.get('filters').on 'add reset', @toolAddFilters
       @model.get('settings').on 'change', @passSetting
+      Backbone.Mediator.subscribe 'data-received', @render, @
 
     @$el.html @noDataTemplate()
     @$el.addClass @model.get('type')
@@ -25,15 +25,13 @@ class UbretTool extends Backbone.View
     @$el.attr 'id', @id
 
   render: =>
-    data = @model.getData()
-    
-    if data.length is 0
+    if @model.get('dataSource').get('data').length is 0
       @$el.html @noDataTemplate()
     else
       @$el.find('.no-data').remove()
       opts =
-        data: _.map( data, (datum) -> datum.toJSON() )
-        keys: @dataKeys(data)
+        data: _.map(@model.get('dataSource').get('data').models, (datum) -> datum.toJSON())
+        keys: @dataKeys(@model.get('dataSource').get('data').models)
         filters: @model.get('filters').models
         selectedElements: @model.get('selectedElements')?.slice()
         selectedKey: @model.get('selectedKey')

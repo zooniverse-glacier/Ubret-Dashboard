@@ -11,7 +11,7 @@ class Tool extends Backbone.Model
     "zindex": 1
 
   initialize: ->
-    @set 'dataSource', new DataSource
+    @set 'dataSource', new DataSource({tools: @collection})
     @set 'filters', new Filters
     @set 'settings', new Settings
     @get('dataSource').on 'change:source', @bubbleEvent
@@ -20,14 +20,7 @@ class Tool extends Backbone.Model
     unless @get('dataSource').isExternal()
       @trigger 'bind-tool', @get('dataSource').get('source'), @
     else
-      @boundTool = null if @boundTool
-
-  getData: =>
-    if @boundTool
-      return @boundTool.getData()
-    else if @get('dataSource').has('source')
-      return @get('dataSource').get('data').models
-    return []
+      @boundTool = false
 
   setElements: (ids) =>
     if not @equalElements(ids)
