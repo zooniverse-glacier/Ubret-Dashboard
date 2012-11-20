@@ -13,8 +13,6 @@ exports.config =
           'vendor/scripts/backbone-0.9.2.js',
           'vendor/scripts/backbone-mediator.js',
           'vendor/scripts/sizzle.js',
-          'vendor/scripts/d3.v2.js',
-          'vendor/scripts/leaflet.js',
           'test/vendor/scripts/mocha-1.4.2.js',
           'test/vendor/scripts/chai.js',
           'test/vendor/scripts/sinon-1.4.2.js',
