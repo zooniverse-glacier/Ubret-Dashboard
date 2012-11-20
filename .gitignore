@@ -4,3 +4,5 @@ tiles/
 .DS_Store
 /vendor/scripts/.DS_Store
 vendor/scripts/ubret.js
+build/
+lib/
