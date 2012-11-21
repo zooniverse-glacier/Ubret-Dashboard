@@ -73,10 +73,13 @@ class ToolWindow extends Backbone.View
     startLeft = @$el.offset().left
     startTop = @$el.offset().top
 
+    doc_width = $(document).width()
+    doc_height = $(document).height()
+    
     $(document).on 'mousemove', (d_e) =>
       if @resizing
 
-        if d_e.pageX > $(document).width() or d_e.pageY > $(document).height()
+        if d_e.pageX > doc_width or d_e.pageY > doc_height
           return
 
         deltaX = d_e.pageX - startX
@@ -162,7 +165,7 @@ class ToolWindow extends Backbone.View
 
   # Helper functions
   getMaxZIndex: =>
-    (@collection?.max((tool) -> parseInt(tool.attributes.zindex))).attributes.zindex
+    @collection?.max((tool) -> parseInt(tool.get('zindex'))).get('zindex')
 
   generatePosition: ->
     doc_width = $(document).width()
