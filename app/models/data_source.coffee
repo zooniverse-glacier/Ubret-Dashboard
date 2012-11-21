@@ -16,17 +16,14 @@ class DataSource extends Backbone.Model
 
   fetchData: =>
     if @isExternal()
-      @attributes['data'].fetch
-        success: (collection, res, opts) =>
-          @onSetData()
+      @get('data').fetch
+        success: =>
+          @trigger 'data-received'
     else
       source = @get('tools').find (tool) =>
         tool.get('channel') == @get('source')
       @set('data', source.get('dataSource').get('data'))
-      @onSetData()
-
-  onSetData: =>
-    Backbone.Mediator.publish('data-received')
+      @trigger 'data-received'
 
   createNewData: =>
     sourceType = @sourceToCollection()

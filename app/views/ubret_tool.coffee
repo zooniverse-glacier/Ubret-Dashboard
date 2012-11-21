@@ -10,7 +10,7 @@ class UbretTool extends Backbone.View
       @model.on 'change:selectedKey', @toolSelectKey
       @model.get('filters').on 'add reset', @toolAddFilters
       @model.get('settings').on 'change', @passSetting
-      Backbone.Mediator.subscribe 'data-received', @render, @
+      @model.get('dataSource').on 'data-received', @render
 
     @$el.html @noDataTemplate()
     @$el.addClass @model.get('type')
