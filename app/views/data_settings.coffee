@@ -12,6 +12,9 @@ class DataSettings extends Backbone.View
     'click .type-select a.internal' : 'showInternal'
     'click button[name="fetch"]'    : 'updateModel'
 
+  subscriptions:
+    'data-received': 'updateValidSourceTools'
+
   initialize: (options) ->
     @dataSource = @model.get('dataSource')
     @channel = @model.get('channel')
@@ -21,10 +24,6 @@ class DataSettings extends Backbone.View
     # Data events
     @dataSource.on 'change:source', @render
     @dataSource.on 'change:params', @setParams
-    Backbone.Mediator.subscribe 'data-received', @updateValidSourceTools, @
-
-    # Cleanup
-    @model.on 'remove', @remove
 
   render: =>
     @$el.html @template
@@ -33,9 +32,6 @@ class DataSettings extends Backbone.View
       source: @dataSource?.get('source')
       sourceType: @sourceType
     @
-
-  remove: =>
-    Backbone.Mediator.unsubscribe 'data-received', @updateValidSourceTools, @
 
   showExternal: =>
     @sourceType = 'external'
