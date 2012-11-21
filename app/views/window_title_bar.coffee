@@ -1,6 +1,6 @@
-class WindowTitleBar extends Backbone.View
-  _.extend @prototype, Backbone.Events
+UbretView = require 'views/ubret_view'
 
+class WindowTitleBar extends UbretView
   tagName: 'div'
   className: 'title-bar'
   template: require './templates/window_title_bar'
@@ -15,11 +15,11 @@ class WindowTitleBar extends Backbone.View
     'mouseup' : 'endDrag'
 
   initialize: ->
-    @model?.on 'change:name', @render
+    unless @model throw 'must pass a model'
+    @model.on 'change:name', @render
 
   render: =>
-    title = @model?.get('name')
-    @$el.html @template({name: title})
+    @$el.html @template({name: @model.get('name')})
     @
 
   close: =>
@@ -49,4 +49,5 @@ class WindowTitleBar extends Backbone.View
       else
         @model.set 'name', newTitle
 
-module.exports = WindowTitleBar 
+
+module.exports = WindowTitleBar
