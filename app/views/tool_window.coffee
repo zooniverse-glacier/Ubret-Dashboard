@@ -6,7 +6,7 @@ WindowTitleBar = require 'views/window_title_bar'
 class ToolWindow extends UbretView
   className: 'tool-window'
   template: require './templates/window'
-  
+
   windowMinWidth: 300
   windowMinHeight: 150
 
@@ -159,7 +159,7 @@ class ToolWindow extends UbretView
     @remove()
 
   toggleSettings: =>
-    @$el.toggleClass 'settings-active'
+    @settings.toggleState()
 
   getMaxZIndex: =>
     @collection?.max((tool) -> parseInt(tool.get('zindex'))).get('zindex')

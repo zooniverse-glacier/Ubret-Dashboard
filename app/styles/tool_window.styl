@@ -33,26 +33,11 @@ $title-bar-height = 34px
       input
         display: none
       
-  .settings
-    position: absolute
-    right: 0
-    width: 200px
-    padding: 5px
-    z-index: 2
-    border-left: 1px solid $mid-gray
-    background: darken(rgba(255,255,255,0.8), 17%)
-    transform(translateX(210px))
-    transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
-
   .tool-container
     position: absolute
     top: $title-bar-height + ($title-bar-vertical-padding * 2)
     width: 100%
     height: 100%
-
-  &.settings-active
-    .settings
-      transform(translateX(0))
 
   .resize
     position: absolute

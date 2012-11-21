@@ -1,5 +1,17 @@
 .settings
+  position: absolute
+  right: 0
+  width: 200px
   height: 100%
+  padding: 0 8px
+  z-index: 2
+  background: rgba(200,200,200,0.92)
+  border-left: 1px solid $mid-gray
+  transform(translateX(210px))
+  transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
+  &.active
+    transform(translateX(0))
+
   h3
     margin-top: 0
 

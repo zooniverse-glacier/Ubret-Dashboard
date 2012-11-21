@@ -28,5 +28,8 @@ class Settings extends Backbone.View
       @$el.append subSetting?.render().el
     @
 
+  toggleState: =>
+    @$el.toggleClass('active')
+
 
 module.exports = Settings
