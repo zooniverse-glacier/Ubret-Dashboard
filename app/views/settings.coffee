@@ -1,9 +1,11 @@
+UbretView = require 'views/ubret_view'
+
 DataSettings = require 'views/data_settings'
 FilterSettings = require 'views/filter_settings'
 
-class Settings extends Backbone.View
-  tagName: 'div'
+class Settings extends UbretView
   className: 'settings'
+  template: require './templates/settings'
 
   initialize: ->
     unless @model?
@@ -17,15 +19,17 @@ class Settings extends Backbone.View
         ToolSettings = require 'views/key_settings'
       when 'SubjectViewer'
         ToolSettings = require 'views/subject_settings'
+      else # Temp
+        ToolSettings = require 'views/generic_settings'
 
-    if ToolSettings?
-      @toolSettings = new ToolSettings { model: @model}
-    else
-      @toolSettings = null
+    @toolSettings = new ToolSettings { model: @model}
 
   render: =>
-    _.each [@dataSettings, @filterSettings, @toolSettings], (subSetting) =>
-      @$el.append subSetting?.render().el
+    @$el.html @template()
+    @assign
+      '.data-settings': @dataSettings
+      '.filter-settings': @filterSettings
+      '.tool-settings': @toolSettings
     @
 
   toggleState: =>

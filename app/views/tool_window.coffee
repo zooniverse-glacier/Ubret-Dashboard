@@ -38,13 +38,13 @@ class ToolWindow extends UbretView
     @titleBar.on 'endDrag', @endDrag
     @titleBar.on 'focusWindow', @focusWindow
 
-  render: =>
     @$el.html @template()
+
+  render: =>
     @assign
       '.title-bar': @titleBar
       '.settings': @settings
       '.tool-container': @toolContainer
-
     @
 
 
