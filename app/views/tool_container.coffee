@@ -5,7 +5,7 @@ class ToolContainer extends Backbone.View
   className: 'tool-container'
 
   initialize: =>
-    unless @model throw 'must pass a model'
+    unless @model then throw 'must pass a model'
     @toolView = new UbretTool {model: @model, id: @model.get('channel')}
 
   render: =>

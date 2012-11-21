@@ -15,7 +15,7 @@ class WindowTitleBar extends UbretView
     'mouseup' : 'endDrag'
 
   initialize: ->
-    unless @model throw 'must pass a model'
+    unless @model then throw 'must pass a model'
     @model.on 'change:name', @render
 
   render: =>
