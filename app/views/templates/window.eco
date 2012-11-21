@@ -1,0 +1,12 @@
+<div class="window">
+  <div class="title-bar"></div>
+  <div class="settings"></div>
+  <div class="tool-container ubret-tool"></div>
+</div>
+
+<% for klass in ['top left', 'top right', 'bottom right', 'bottom left']: %>
+  <span class="resize corner <%- klass %>"></span>
+<% end %>
+<% for klass in ['top', 'right', 'bottom', 'left']: %>
+  <span class="resize bar <%- klass %>"></span>
+<% end %>

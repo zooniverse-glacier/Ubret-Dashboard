@@ -1,13 +1,12 @@
+UbretView = require 'views/ubret_view'
 Settings = require 'views/settings'
 ToolContainer = require 'views/tool_container'
 WindowTitleBar = require 'views/window_title_bar'
 
-class ToolWindow extends Backbone.View
-  _.extend @prototype, Backbone.Events
-
-  tagName: 'div'
+class ToolWindow extends UbretView
   className: 'tool-window'
-
+  template: require './templates/window'
+  
   windowMinWidth: 300
   windowMinHeight: 150
 
@@ -40,26 +39,26 @@ class ToolWindow extends Backbone.View
     @titleBar.on 'focusWindow', @focusWindow
 
   render: =>
-    @toggleSettings()
-    _.each [ @titleBar, @settings, @toolContainer ], (section) =>
-      @$el.append section.render().el
-
-    # Ugly
-    @$el.wrapInner(document.createElement('div')).children('div').addClass('window')
-
-    for i in ['top left', 'top right', 'bottom right', 'bottom left']
-      @$el.append "<span class=\"resize corner #{i}\"></span>"
-
-    for i in ['top', 'right', 'bottom', 'left']
-      @$el.append "<span class=\"resize bar #{i}\"></span>"
+    @$el.html @template()
+    @assign
+      '.title-bar': @titleBar
+      '.settings': @settings
+      '.tool-container': @toolContainer
 
     @
+
+
+  # Events
+  close: (e) =>
+    @model.destroy()
+    @removeWindow()
 
   focusWindow: (e) =>
     unless @$el.css('z-index') is @getMaxZIndex()
       @$el.css 'z-index', parseInt(@getMaxZIndex()) + 1
       @model.set 'zindex', @$el.css 'z-index'
 
+  # Resize
   resizeWindowStart: (e) =>
     $('body').addClass 'unselectable'
     @resizing = true
@@ -75,7 +74,7 @@ class ToolWindow extends Backbone.View
 
     doc_width = $(document).width()
     doc_height = $(document).height()
-    
+
     $(document).on 'mousemove', (d_e) =>
       if @resizing
 
@@ -122,16 +121,7 @@ class ToolWindow extends Backbone.View
 
     @toolContainer.render().el
 
-  removeWindow: =>
-    @remove()
-
-  toggleSettings: =>
-    @$el.toggleClass 'settings-active'
-
-  close: (e) =>
-    @model.destroy()
-    @remove()
-
+  # Drag
   startDrag: (e) =>
     $('body').addClass 'unselectable'
     @dragging = true
@@ -163,7 +153,14 @@ class ToolWindow extends Backbone.View
       top: e.pageY - @relY
       transform: ''
 
+
   # Helper functions
+  removeWindow: =>
+    @remove()
+
+  toggleSettings: =>
+    @$el.toggleClass 'settings-active'
+
   getMaxZIndex: =>
     @collection?.max((tool) -> parseInt(tool.get('zindex'))).get('zindex')
 
