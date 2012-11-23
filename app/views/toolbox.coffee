@@ -1,6 +1,6 @@
-class Toolbox extends Backbone.View
-  _.extend @prototype, Backbone.Events
+UbretView = require 'views/ubret_view'
 
+class Toolbox extends UbretView
   tagName: 'div'
   className: 'toolbox'
   template: require './templates/toolbox'
@@ -9,14 +9,13 @@ class Toolbox extends Backbone.View
     'click .tool-icon button' : 'createTool'
     'click button[name="remove-tools"]' : 'removeTools' 
 
+  initialize: ->
+    @tools = []
+    for name, tool of Ubret
+      @tools.push {name: tool::name, class_name: name} if tool::name
+
   render: =>
-    tools = _.keys Ubret
-    toolNames = new Array
-    
-    for tool in tools
-      toolNames.push {name: tool} unless tool in ['BaseTool', 'Graph']
-      
-    @$el.html @template {tools: toolNames}
+    @$el.html @template {tools: @tools}
     @
 
   createTool: (e) =>

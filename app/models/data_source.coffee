@@ -9,7 +9,7 @@ class DataSource extends Backbone.Model
     @.on 'change:source', @createNewData
 
   sourceToCollection: =>
-    switch @attributes['source']
+    switch @get('source')
       when 'Galaxy Zoo' then return GalaxyZooSubjects
       when 'Simbad' then return SimbadSubjects
       else return 'internal'

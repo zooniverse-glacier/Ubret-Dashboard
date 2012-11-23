@@ -9,8 +9,7 @@ class UbretView extends Backbone.View
       selectors = {}
       selectors[selector] = view
     
-    unless selectors
-      return
+    unless selectors then return
 
     _.each selectors, (view, selector) =>
       view.setElement(@$(selector)).render()

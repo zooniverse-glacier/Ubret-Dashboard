@@ -1,6 +1,6 @@
 <% for tool in @tools: %>
-  <div class="tool-icon" data-id="<%- tool.name %>">
-    <button type="button" name="<%- tool.name %>"><%- tool.name %></button>
+  <div class="tool-icon" data-id="<%- tool.class_name %>">
+    <button type="button" name="<%- tool.class_name %>"><%- tool.name %></button>
   </div>
 <% end %>
 
