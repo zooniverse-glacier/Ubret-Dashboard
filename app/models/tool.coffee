@@ -1,8 +1,9 @@
+AppModel = require 'models/app_model'
 DataSource = require 'models/data_source'
 Filters = require 'collections/filters'
 Settings = require 'models/settings'
 
-class Tool extends Backbone.Model
+class Tool extends AppModel
   defaults:
     "height": 480
     "width": 640
@@ -14,19 +15,14 @@ class Tool extends Backbone.Model
     @set 'dataSource', new DataSource({tools: @collection})
     @set 'filters', new Filters
     @set 'settings', new Settings
-    @get('dataSource').on 'data-received', @bubbleEvent
+    @get('dataSource').on 'data:received', @onDataReceived
 
-  bubbleEvent: =>
-    unless @get('dataSource').isExternal()
-      @trigger 'bind-tool', @get('dataSource').get('source'), @
-    else
+  onDataReceived: =>
+    if @get('dataSource').isExternal()
       @boundTool = false
-
-  setElements: (ids) =>
-    if not @equalElements(ids)
-      @set 'selectedElements', ids
-      @trigger 'change'
-      @trigger 'change:selectedElements'
+      @triggerEvent 'data:processed'
+    else
+      @trigger 'bind-tool', @get('dataSource').get('source'), @
 
   bindTool: (tool) =>
     @boundTool = tool
@@ -37,7 +33,10 @@ class Tool extends Backbone.Model
     @boundTool.on 'change:selectedElements', @updateSelectedElements
     @boundTool.on 'change:selectedKey', @updateSelectedKey
     @boundTool.get('filters').on 'add', @updateFilters
+    @triggerEvent 'data:processed'
 
+
+  # Elements, Keys, Filters
   updateSelectedElements: =>
     @set 'selectedElements', @boundTool.get('selectedElements').slice()
     
@@ -47,6 +46,12 @@ class Tool extends Backbone.Model
   updateFilters: (filter) =>
     @get('filters').add filter
     console.log @get 'filters'
+
+  setElements: (ids) =>
+    if not @equalElements(ids)
+      @set 'selectedElements', ids
+      @trigger 'change'
+      @trigger 'change:selectedElements'
 
   equalElements: (ids) =>
     oldIds = @get 'selectedElements'

@@ -1,5 +1,5 @@
 
-class UbretView extends Backbone.View
+class AppView extends Backbone.View
   _.extend @prototype, Backbone.Events
 
   assign: (selector, view) =>
@@ -14,4 +14,4 @@ class UbretView extends Backbone.View
     _.each selectors, (view, selector) =>
       view.setElement(@$(selector)).render()
 
-module.exports = UbretView
+module.exports = AppView

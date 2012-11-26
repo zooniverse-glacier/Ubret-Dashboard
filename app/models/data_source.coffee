@@ -1,7 +1,8 @@
+AppModel = require 'models/app_model'
 GalaxyZooSubjects = require 'collections/galaxy_zoo_subjects'
 SimbadSubjects = require 'collections/simbad_subjects'
 
-class DataSource extends Backbone.Model
+class DataSource extends AppModel
   defaults:
     data: []
 
@@ -19,16 +20,12 @@ class DataSource extends Backbone.Model
     if @isExternal()
       @get('data').fetch
         success: =>
-          @onSetData()
+          @triggerEvent 'data:received'
     else
       source = @get('tools').find (tool) =>
         tool.get('channel') == @get('source')
       @set('data', source.get('dataSource').get('data'))
-      @onSetData()
-
-  onSetData: =>
-    @trigger 'data-received'
-    Backbone.Mediator.publish 'data-received' # Temp
+      @triggerEvent 'data:received'
 
   createNewData: =>
     sourceType = @sourceToCollection()

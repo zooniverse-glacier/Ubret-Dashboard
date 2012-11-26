@@ -1,6 +1,6 @@
-UbretView = require 'views/ubret_view'
+AppView = require 'views/app_view'
 
-class Toolbox extends UbretView
+class Toolbox extends AppView
   tagName: 'div'
   className: 'toolbox'
   template: require './templates/toolbox'
@@ -15,7 +15,7 @@ class Toolbox extends UbretView
       @tools.push {name: tool::name, class_name: name} if tool::name
 
   render: =>
-    @$el.html @template {tools: @tools}
+    @$el.html @template {available_tools: @tools}
     @
 
   createTool: (e) =>

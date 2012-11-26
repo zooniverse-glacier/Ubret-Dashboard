@@ -1,9 +1,9 @@
-UbretView = require 'views/ubret_view'
+AppView = require 'views/app_view'
 Settings = require 'views/settings'
 ToolContainer = require 'views/tool_container'
 WindowTitleBar = require 'views/window_title_bar'
 
-class ToolWindow extends UbretView
+class ToolWindow extends AppView
   className: 'tool-window'
   template: require './templates/window'
 

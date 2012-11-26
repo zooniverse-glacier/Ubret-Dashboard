@@ -1,5 +1,5 @@
-UbretView = require 'views/ubret_view'
+AppView = require 'views/app_view'
 
-class GenericSettings extends UbretView
+class GenericSettings extends AppView
 
 module.exports = GenericSettings

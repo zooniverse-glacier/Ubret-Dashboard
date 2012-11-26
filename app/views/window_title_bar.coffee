@@ -1,6 +1,6 @@
-UbretView = require 'views/ubret_view'
+AppView = require 'views/app_view'
 
-class WindowTitleBar extends UbretView
+class WindowTitleBar extends AppView
   tagName: 'div'
   className: 'title-bar'
   template: require './templates/window_title_bar'

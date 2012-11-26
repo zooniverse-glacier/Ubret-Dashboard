@@ -1,9 +1,9 @@
-UbretView = require 'views/ubret_view'
+AppView = require 'views/app_view'
 
 DataSettings = require 'views/data_settings'
 FilterSettings = require 'views/filter_settings'
 
-class Settings extends UbretView
+class Settings extends AppView
   className: 'settings'
   template: require './templates/settings'
 

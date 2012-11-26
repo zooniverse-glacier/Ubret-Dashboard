@@ -1,4 +1,4 @@
-<% for tool in @tools: %>
+<% for tool in @available_tools: %>
   <div class="tool-icon" data-id="<%- tool.class_name %>">
     <button type="button" name="<%- tool.class_name %>"><%- tool.name %></button>
   </div>
