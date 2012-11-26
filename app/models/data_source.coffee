@@ -6,7 +6,7 @@ class DataSource extends Backbone.Model
     data: []
 
   initialize: ->
-    @.on 'change:source', @createNewData
+    @.on 'change:source', @fetchData
 
   sourceToCollection: =>
     switch @get('source')
@@ -15,6 +15,7 @@ class DataSource extends Backbone.Model
       else return 'internal'
 
   fetchData: =>
+    @createNewData()
     if @isExternal()
       @get('data').fetch
         success: =>

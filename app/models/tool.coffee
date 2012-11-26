@@ -14,7 +14,7 @@ class Tool extends Backbone.Model
     @set 'dataSource', new DataSource({tools: @collection})
     @set 'filters', new Filters
     @set 'settings', new Settings
-    @get('dataSource').on 'change:source', @bubbleEvent
+    @get('dataSource').on 'data-received', @bubbleEvent
 
   bubbleEvent: =>
     unless @get('dataSource').isExternal()
@@ -30,8 +30,8 @@ class Tool extends Backbone.Model
 
   bindTool: (tool) =>
     @boundTool = tool
-    @set 'selectedElements', @boundTool.get('selectedElements')
-    @set 'selectedKey', @boundTool.get('selectedKey')
+    @set({'selectedElements': @boundTool.get('selectedElements')}, {silent: true})
+    @set({'selectedKey': @boundTool.get('selectedKey')}, {silent: true})
     @get('filters').add @boundTool.get('filters').models.slice()
 
     @boundTool.on 'change:selectedElements', @updateSelectedElements

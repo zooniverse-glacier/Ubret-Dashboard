@@ -23,7 +23,7 @@ class DataSettings extends Backbone.View
 
     # Data events
     @dataSource.on 'change:source', @render
-    @dataSource.on 'change:params', @setParams
+    # @dataSource.on 'change:params', @setParams
 
   render: =>
     @$el.html @template
@@ -54,11 +54,9 @@ class DataSettings extends Backbone.View
       source = @$('select.internal-sources').val()
       
     @dataSource.set 'source', source
-    @dataSource.fetchData()
 
   updateValidSourceTools: =>
     @intSources = []
-    console.log @model.collection
     @model.collection.each (tool) =>
       isValid = @checkToolSource @model, tool, []
       if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
