@@ -64,7 +64,6 @@ class DataSettings extends Backbone.View
     @render()
 
   checkToolSource: (source_tool, tool, checkedTools) =>
-    console.log 'checking tool', tool
     if _.isEqual source_tool, tool
       return false
 
