@@ -1,11 +1,9 @@
+Manager = require 'modules/manager'
+
 class DataSettings extends Backbone.View
   tagName: 'div'
   className: 'data-settings'
   template: require './templates/data_settings'
-
-  extSources:
-    'Galaxy Zoo': 'Galaxy Zoo Subjects'
-    'Simbad' : 'Simbad Entries'
 
   events:
     'click .type-select a.external' : 'showExternal'
@@ -27,7 +25,7 @@ class DataSettings extends Backbone.View
 
   render: =>
     @$el.html @template
-      extSources: @extSources
+      extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
       source: @dataSource?.get('source')
       sourceType: @sourceType
@@ -42,8 +40,11 @@ class DataSettings extends Backbone.View
     @render()
 
   updateModel: =>
-    if @sourceType is 'external'
-      source = @$('select.external-sources').val()
+    @dataSource.set('type', @sourceType)
+
+    if @dataSource.get('type') is 'external'
+      source_id = @$('select.external-sources').val()
+      source = Manager.get('sources').getByCid(source_id)
       params = new Object
       @$('.external-settings input').each (index) ->
         name = $(this).attr('name')
@@ -53,7 +54,7 @@ class DataSettings extends Backbone.View
     else
       source = @$('select.internal-sources').val()
       
-    @dataSource.set 'source', source
+    @dataSource.set('source', source)
 
   updateValidSourceTools: =>
     @intSources = []
@@ -63,6 +64,7 @@ class DataSettings extends Backbone.View
     @render()
 
   checkToolSource: (source_tool, tool, checkedTools) =>
+    console.log 'checking tool', tool
     if _.isEqual source_tool, tool
       return false
 

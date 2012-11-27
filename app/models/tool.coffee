@@ -1,7 +1,8 @@
 AppModel = require 'models/app_model'
 DataSource = require 'models/data_source'
-Filters = require 'collections/filters'
 Settings = require 'models/settings'
+
+Filters = require 'collections/filters'
 
 class Tool extends AppModel
   defaults:
@@ -15,12 +16,12 @@ class Tool extends AppModel
     @set 'dataSource', new DataSource({tools: @collection})
     @set 'filters', new Filters
     @set 'settings', new Settings
-    @get('dataSource').on 'data:received', @onDataReceived
+    @get('dataSource').on 'source:dataReceived', @onDataReceived
 
   onDataReceived: =>
     if @get('dataSource').isExternal()
       @boundTool = false
-      @triggerEvent 'data:processed'
+      @triggerEvent 'tool:dataProcessed'
     else
       @trigger 'bind-tool', @get('dataSource').get('source'), @
 
@@ -33,7 +34,7 @@ class Tool extends AppModel
     @boundTool.on 'change:selectedElements', @updateSelectedElements
     @boundTool.on 'change:selectedKey', @updateSelectedKey
     @boundTool.get('filters').on 'add', @updateFilters
-    @triggerEvent 'data:processed'
+    @triggerEvent 'tool:dataProcessed'
 
 
   # Elements, Keys, Filters

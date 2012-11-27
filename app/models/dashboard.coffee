@@ -1,4 +1,5 @@
 Tools = require 'collections/tools'
+Sources = require 'collections/sources'
 
 class Dashboard extends Backbone.Model
   defaults:

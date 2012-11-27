@@ -10,7 +10,7 @@ class UbretTool extends Backbone.View
       @model.on 'change:selectedKey', @toolSelectKey
       @model.get('filters').on 'add reset', @toolAddFilters
       @model.get('settings').on 'change', @passSetting
-      @model.on 'data:processed', @render
+      @model.on 'tool:dataProcessed', @render
 
     @$el.html @noDataTemplate()
     @$el.addClass @model.get('type')
@@ -25,7 +25,6 @@ class UbretTool extends Backbone.View
     @$el.attr 'id', @id
 
   render: =>
-    console.log 'rendering tool', @
     if @model.get('dataSource').get('data').length is 0
       @$el.html @noDataTemplate()
     else

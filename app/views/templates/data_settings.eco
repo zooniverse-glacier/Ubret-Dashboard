@@ -9,13 +9,9 @@
   <% if @sourceType is 'external': %>
     <div class="external-settings">
       <select class="external-sources">
-          <option value="">Select External API</option>
-        <% for key, value of @extSources: %>
-          <% if key is @source: %>
-            <option value="<%- key %>" selected><%- value %></option>
-          <% else: %>
-            <option value="<%- key %>"><%- value %></option>
-          <% end %>
+        <option value="">Select External API</option>
+        <% for source in @extSources: %>
+          <option value="<%- source.id %>" selected><%- source.name %></option>
         <% end %>
       </select>
 
@@ -25,7 +21,7 @@
   <% else if @sourceType is 'internal': %>
     <div class="internal-settings">
       <select class="internal-sources">
-          <option value="">Select Tool</option>
+        <option value="">Select Tool</option>
         <% for source in @intSources: %>
           <% if source.channel is @source: %>
             <option value="<%- source.channel %>" selected><%- source.name %></option>
