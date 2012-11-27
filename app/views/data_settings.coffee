@@ -85,6 +85,7 @@ class DataSettings extends AppView
       source = @$('select.internal-sources').val()
       
     @dataSource.set('source', source)
+    @dataSource.fetchData()
 
   updateValidSourceTools: =>
     @intSources = []

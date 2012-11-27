@@ -7,7 +7,7 @@ class Param extends AppView
 
   render: =>
     switch @model.get('type')
-      when 'String' then template = require './templates/params/input'
+      when 'String' then template = require './templates/params/string'
       else template = require './templates/params/empty'
 
     @$el.html template(@model)

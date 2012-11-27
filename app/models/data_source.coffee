@@ -5,9 +5,6 @@ class DataSource extends AppModel
   defaults:
     data: []
 
-  initialize: ->
-    @.on 'change:source', @fetchData
-
   fetchData: =>
     if @get('type') is 'external'
       subjects = new Subjects([], {params: @get('params'), url: @get('source').get('url')})
