@@ -1,6 +1,5 @@
 AppModel = require 'models/app_model'
 Subjects = require 'collections/subject_collection'
-Manager = require 'modules/manager'
 
 class DataSource extends AppModel
   defaults:

@@ -1,6 +1,12 @@
+AppView = require 'views/app_view'
 Manager = require 'modules/manager'
 
-class DataSettings extends Backbone.View
+Param = require 'models/param'
+Params = require 'collections/params'
+ParamView = require 'views/param'
+ParamsView = require 'views/params'
+
+class DataSettings extends AppView
   tagName: 'div'
   className: 'data-settings'
   template: require './templates/data_settings'
@@ -8,6 +14,7 @@ class DataSettings extends Backbone.View
   events:
     'click .type-select a.external' : 'showExternal'
     'click .type-select a.internal' : 'showInternal'
+    'change .external-sources': 'onSelectExternalSource'
     'click button[name="fetch"]'    : 'updateModel'
 
   subscriptions:
@@ -19,17 +26,42 @@ class DataSettings extends Backbone.View
     @sourceType = false
     @updateValidSourceTools()
 
-    # Data events
-    @dataSource.on 'change:source', @render
-    # @dataSource.on 'change:params', @setParams
+    @params = new Params()
+    @paramsView = new ParamsView({collection: @params})
 
   render: =>
-    @$el.html @template
+    opts =
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
-      source: @dataSource?.get('source')
       sourceType: @sourceType
+
+    if @selectedSource
+      new_opts =
+        search_types: @selectedSource.get('search_types')
+        selectedSourceId: @selectedSource.cid
+      opts = _.extend new_opts, opts
+
+    @$el.html @template opts
+
+    @assign
+      '.params': @paramsView
     @
+
+  # Events
+  onSelectExternalSource: (e) =>
+    @params.reset()
+    @searchTypes = []
+
+    @selectedSource = Manager.get('sources').getByCid($(e.currentTarget).val())
+    _.each @selectedSource.get('search_types'), (search_type) =>
+      @searchTypes.push search_type
+
+    # Choose first search type as default
+    @selectedSearchType = _.first @searchTypes
+    _.each @selectedSearchType.params, (param, key) =>
+      @params.add _.extend {key: key}, param
+
+    @render()
 
   showExternal: =>
     @sourceType = 'external'
@@ -45,12 +77,17 @@ class DataSettings extends Backbone.View
     if @dataSource.get('type') is 'external'
       source_id = @$('select.external-sources').val()
       source = Manager.get('sources').getByCid(source_id)
-      params = new Object
-      @$('.external-settings input').each (index) ->
-        name = $(this).attr('name')
-        value = $(this).val()
-        params[name] = value
-      @dataSource.set 'params', params
+
+      # Retrieve params data
+      @paramsView.setState()
+      @dataSource.set('params', @params)
+
+      # params = new Object
+      # @$('.external-settings input').each (index) ->
+      #   name = $(this).attr('name')
+      #   value = $(this).val()
+      #   params[name] = value
+      # @dataSource.set 'params', params
     else
       source = @$('select.internal-sources').val()
       
@@ -61,7 +98,6 @@ class DataSettings extends Backbone.View
     @model.collection.each (tool) =>
       isValid = @checkToolSource @model, tool, []
       if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
-    @render()
 
   checkToolSource: (source_tool, tool, checkedTools) =>
     if _.isEqual source_tool, tool

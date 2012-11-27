@@ -9,7 +9,8 @@ class SubjectCollection extends Backbone.Collection
     @base = options.url || '/etc'
 
     @params = new Object
-    @params[key] = value for key, value of options.params when value isnt ''
+    options.params.each (param) =>
+      @params[param.get('key')] = param.get('value')
 
   url: =>
     @base + '?' + @processParams()

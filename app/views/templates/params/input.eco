@@ -1,0 +1,2 @@
+<label><%- @get('label') %>:</label>
+<input type="text" data-cid="<%- @.cid %>" placeholder="<%- @get('description') %>" />
