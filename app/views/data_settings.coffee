@@ -81,13 +81,6 @@ class DataSettings extends AppView
       # Retrieve params data
       @paramsView.setState()
       @dataSource.set('params', @params)
-
-      # params = new Object
-      # @$('.external-settings input').each (index) ->
-      #   name = $(this).attr('name')
-      #   value = $(this).val()
-      #   params[name] = value
-      # @dataSource.set 'params', params
     else
       source = @$('select.internal-sources').val()
       
