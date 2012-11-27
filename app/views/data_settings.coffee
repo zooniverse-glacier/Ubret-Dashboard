@@ -11,7 +11,7 @@ class DataSettings extends Backbone.View
     'click button[name="fetch"]'    : 'updateModel'
 
   subscriptions:
-    'data:received': 'updateValidSourceTools'
+    'source:dataReceived': 'updateValidSourceTools'
 
   initialize: (options) ->
     @dataSource = @model.get('dataSource')
