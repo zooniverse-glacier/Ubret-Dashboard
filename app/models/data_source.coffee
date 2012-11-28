@@ -5,6 +5,10 @@ class DataSource extends AppModel
   defaults:
     data: []
 
+  toJSON: ->
+    json = new Object
+    json[key] = value for key, value of @attributes when key isnt 'tools'
+
   fetchData: =>
     if @get('type') is 'external'
       subjects = new Subjects([], {params: @get('params'), url: @get('source').get('url')})
