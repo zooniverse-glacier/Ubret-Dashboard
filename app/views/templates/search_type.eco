@@ -1,0 +1,7 @@
+<% if @types: %>
+<ul>
+  <% for type in @types: %>
+    <li data-type="<%- type.name %>"><%- type.name %></li>
+  <% end %>
+</ul>
+<% end %>

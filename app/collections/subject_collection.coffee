@@ -18,7 +18,6 @@ class SubjectCollection extends Backbone.Collection
   processParams: =>
     params = new Array
     params.push "#{key}=#{value}" for key, value of @params
-    params.join '&'
-    "#{params}&format=json"
+    "#{params.join('&')}&format=json"
 
 module.exports = SubjectCollection

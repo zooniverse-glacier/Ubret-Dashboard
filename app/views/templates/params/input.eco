@@ -1,0 +1,6 @@
+<% if @get('label'): %>
+  <label><%- @get('label') %>:</label>
+<% else: %>
+  <label><%- @get('key') %>:</label>
+<% end %>
+<input type="text" data-cid="<%- @.cid %>" placeholder="<%- @get('description') %>">

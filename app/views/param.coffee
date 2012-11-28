@@ -6,16 +6,11 @@ class Param extends AppView
     throw 'must pass a param' unless @model
 
   render: =>
-    switch @model.get('type')
-      when 'String' then template = require './templates/params/string'
-      else template = require './templates/params/empty'
-
-    @$el.html template(@model)
+    @$el.html @template(@model)
     @
 
   setState: =>
-    switch @model.get('type')
-      when 'String' then @model.set('value', @$el.find('[data-cid=' + @model.cid + ']').val())
-      else @model.set('value', '')
+    # getCurrentValue implemented by subclasses
+    @model.set('value', @getCurrentValue())
 
 module.exports = Param

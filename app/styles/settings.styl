@@ -1,3 +1,5 @@
+$settings-bg-color = rgba(200,200,200,0.92)
+
 .settings
   position: absolute
   right: 0
@@ -5,7 +7,7 @@
   height: 100%
   padding: 0 8px
   z-index: 2
-  background: rgba(200,200,200,0.92)
+  background: $settings-bg-color
   border-left: 1px solid $mid-gray
   transform(translateX(210px))
   transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
@@ -16,6 +18,34 @@
     margin-top: 0
 
   .data-settings
-    
     ul
       list-style: none
+
+    .params
+      > div
+        padding: 5px 0
+
+    .range
+      .track
+        position: relative
+        height: 30px
+        border-bottom: 1px solid #c0c0c0
+        span
+          position: absolute
+          bottom: -6px
+          width: 10px
+          height: 10px
+          z-index: 1
+          background: #900
+          border-radius: 10px
+          cursor: pointer
+        .min, .max
+          position: absolute
+          bottom: 3px
+          z-index: 1
+          color: #666
+          font-size: 0.8em
+        .min
+          left: 0
+        .max
+          right: 0

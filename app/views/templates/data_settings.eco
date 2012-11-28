@@ -7,8 +7,8 @@
 
 <% if @sourceType: %>
   <% if @sourceType is 'external': %>
-    <div class="external-settings">
-      <select class="external-sources">
+    <div class="external">
+      <select class="sources">
         <option value="">Select External API</option>
         <% for source in @extSources: %>
           <% if source.id is @selectedSourceId: %>
@@ -18,11 +18,12 @@
           <% end %>
         <% end %>
       </select>
+      <div class="search-type"></div>
       <div class="params"></div>
     </div>
   <% else if @sourceType is 'internal': %>
-    <div class="internal-settings">
-      <select class="internal-sources">
+    <div class="internal">
+      <select class="sources">
         <option value="">Select Tool</option>
         <% for source in @intSources: %>
           <% if source.channel is @source: %>

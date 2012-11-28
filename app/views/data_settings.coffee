@@ -1,10 +1,9 @@
 AppView = require 'views/app_view'
 Manager = require 'modules/manager'
 
-Param = require 'models/param'
 Params = require 'collections/params'
-ParamView = require 'views/param'
 ParamsView = require 'views/params'
+SearchTypeView = require 'views/search_type'
 
 class DataSettings extends AppView
   tagName: 'div'
@@ -14,7 +13,7 @@ class DataSettings extends AppView
   events:
     'click .type-select a.external' : 'showExternal'
     'click .type-select a.internal' : 'showInternal'
-    'change .external-sources': 'onSelectExternalSource'
+    'change .external .sources': 'onSelectExternalSource'
     'click button[name="fetch"]'    : 'updateModel'
 
   subscriptions:
@@ -26,8 +25,11 @@ class DataSettings extends AppView
     @sourceType = false
     @updateValidSourceTools()
 
+    @searchTypeView = new SearchTypeView()
     @params = new Params()
     @paramsView = new ParamsView({collection: @params})
+
+    @searchTypeView.on 'searchType:typeSelected', @onSetSearchType
 
   render: =>
     opts =
@@ -44,23 +46,28 @@ class DataSettings extends AppView
     @$el.html @template opts
 
     @assign
+      '.search-type': @searchTypeView
       '.params': @paramsView
     @
 
   # Events
+  onSetSearchType: (search_type) =>
+    @selectedSearchType = _.find @searchTypes, (type) -> type.name is search_type
+    @setParams()
+    @render()
+
   onSelectExternalSource: (e) =>
-    @params.reset()
     @searchTypes = []
 
     @selectedSource = Manager.get('sources').getByCid($(e.currentTarget).val())
     _.each @selectedSource.get('search_types'), (search_type) =>
       @searchTypes.push search_type
 
+    @searchTypeView.set @searchTypes
+
     # Choose first search type as default
     @selectedSearchType = _.first @searchTypes
-    _.each @selectedSearchType.params, (param, key) =>
-      @params.add _.extend {key: key}, param
-
+    @setParams()
     @render()
 
   showExternal: =>
@@ -75,17 +82,22 @@ class DataSettings extends AppView
     @dataSource.set('type', @sourceType)
 
     if @dataSource.get('type') is 'external'
-      source_id = @$('select.external-sources').val()
+      source_id = @$('.external .sources').val()
       source = Manager.get('sources').getByCid(source_id)
 
       # Retrieve params data
       @paramsView.setState()
       @dataSource.set('params', @params)
     else
-      source = @$('select.internal-sources').val()
+      source = @$('.internal .sources').val()
       
     @dataSource.set('source', source)
     @dataSource.fetchData()
+
+  setParams: =>
+    @params.reset()
+    _.each @selectedSearchType.params, (param, key) =>
+      @params.add _.extend {key: key}, param
 
   updateValidSourceTools: =>
     @intSources = []
