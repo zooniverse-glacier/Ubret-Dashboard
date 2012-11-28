@@ -15,11 +15,13 @@ class Dashboard extends Backbone.Model
       @get('tools').fetch()
     @resetCount()
     @save()
+    Backbone.Mediator.subscribe 'tool-saves', @save
 
   parse: (response) ->
     tools = new Array
-    tools.push new Tool {id: id} for id in response.tools
-    response.tools = new Tools tools
+    tools.push new Tool {id: id} for id in response.tools when typeof @get('tools').get(id) is 'undefined'
+    console.log 'here'
+    response.tools = @get('tools').add tools
     response
 
   createTool: (toolType) =>
@@ -28,7 +30,6 @@ class Dashboard extends Backbone.Model
       name: "new-#{toolType}-#{@count}" 
       channel: "#{toolType}-#{@count}"
     @count += 1
-    @save()
 
   toJSON: ->
     tools = @get 'tools'
@@ -38,7 +39,7 @@ class Dashboard extends Backbone.Model
     @count = @get('tools').length + 1
 
   removeTools: =>
-    @get('tools').remove @get('tools').models
+    @get('tools').each (tool) -> tool.destroy()
     @resetCount()
     @save()
 

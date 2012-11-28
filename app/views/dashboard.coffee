@@ -20,6 +20,7 @@ class DashboardView extends Backbone.View
     @$el.append toolWindow.render().el
 
   addTool: =>
+    console.log 'here'
     @createToolWindow @model.get('tools').last()
     toolChannels = new Array
     @model.get('tools').each (tool) ->

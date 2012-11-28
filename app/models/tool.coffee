@@ -41,7 +41,6 @@ class Tool extends AppModel
     @boundTool.get('filters').on 'add', @updateFilters
     @triggerEvent 'tool:dataProcessed'
 
-
   # Elements, Keys, Filters
   updateSelectedElements: =>
     @set 'selectedElements', @boundTool.get('selectedElements').slice()
