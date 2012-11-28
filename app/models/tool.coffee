@@ -1,10 +1,14 @@
 AppModel = require 'models/app_model'
 DataSource = require 'models/data_source'
 Settings = require 'models/settings'
-
 Filters = require 'collections/filters'
+corsSync = require 'sync'
 
 class Tool extends AppModel
+  urlRoot: '/tools'
+
+  sync: corsSync
+
   defaults:
     "height": 480
     "width": 640
@@ -17,6 +21,7 @@ class Tool extends AppModel
     @set 'filters', new Filters
     @set 'settings', new Settings
     @get('dataSource').on 'source:dataReceived', @onDataReceived
+    @save()
 
   onDataReceived: =>
     if @get('dataSource').isExternal()
