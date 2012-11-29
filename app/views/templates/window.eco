@@ -1,7 +1,7 @@
 <div class="window">
   <div class="title-bar"></div>
   <div class="settings active"></div>
-  <div class="tool-container ubret-tool"></div>
+  <div class="tool-container"></div>
 </div>
 
 <% for klass in ['top left', 'top right', 'bottom right', 'bottom left']: %>

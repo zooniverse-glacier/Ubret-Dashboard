@@ -2,7 +2,7 @@
   <label><%- @get('label') %></label>
   <div class="track">
     <div class="min"><%- @get('validation')[0] %></div>
-    <span></span>
+    <span></span><div class="value"></div>
     <div class="max"><%- @get('validation')[1] %></div>
   </div>
 </div>

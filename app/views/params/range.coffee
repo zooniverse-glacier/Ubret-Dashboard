@@ -9,6 +9,8 @@ class Range extends Param
   render: =>
     super
     @span = @$el.find('span')
+    @value = @$el.find('.value')
+    @value.html @getCurrentValue().toFixed(2)
     @
 
   onUserStartDrag: (e) =>
@@ -16,8 +18,8 @@ class Range extends Param
     @dragging = true
 
     startPositionLeft = @span.position().left
-    borderLeft = @$el.offset().left
-    borderRight = @$el.offset().left + @$el.width()
+    borderLeft = @$el.offset().left + (@span.width() / 2)
+    borderRight = @$el.offset().left + @$el.width() - (@span.width() / 2)
 
     $(document).on 'mousemove', (d_e) =>
       if @dragging
@@ -27,10 +29,12 @@ class Range extends Param
             left: 0
         else if e.pageX + deltaX > borderRight
           @span.css
-            left: @$el.width()
+            left: @$el.width() - @span.width()
         else
           @span.css
             left: startPositionLeft + deltaX
+
+        @value.html @getCurrentValue().toFixed(2)
 
     $(document).on 'mouseup', @onUserEndDrag
 
@@ -44,8 +48,8 @@ class Range extends Param
     max = @model.get('validation')[1]
 
     # Rescale span position to within range
-    return (@span.position().left - 0) * (max - min) / (@$el.width() - 0) + min
-
+    val = (@span.position().left - 0) * (max - min) / ((@$el.width() - @span.width()) - 0) + min
+    if _.isNaN val then min else val
 
 
 module.exports = Range
