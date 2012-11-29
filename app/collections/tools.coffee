@@ -4,7 +4,7 @@ class Tools extends Backbone.Collection
   model: Tool
 
   url: =>
-    "/dashboards/#{@dashboard_id}/tools"
+    "/dashboards/#{@dashboardId}/tools"
 
   initialize: ->
     @.on 'bind-tool', @bindTool

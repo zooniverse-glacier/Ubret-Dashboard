@@ -18,7 +18,7 @@ class Tool extends AppModel
     @get('dataSource').on 'source:dataReceived', @onDataReceived
     @generatePosition()
     @focusWindow() if @collection?
-    @save()
+    @save [], { success: => @get('dataSource')['toolId'] = @id }
 
   onDataReceived: =>
     if @get('dataSource').isExternal()

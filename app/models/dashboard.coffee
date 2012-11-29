@@ -11,7 +11,7 @@ class Dashboard extends Backbone.Model
   parse: (response) ->
     response.tools = @get('tools').add tool for tool in response.tools
     delete response.tools
-    @get('tools')['dashboard_id'] = response.id
+    @get('tools')['dashboardId'] = response.id
     @resetCount()
     response
 

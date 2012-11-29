@@ -6,6 +6,9 @@ class DataSource extends AppModel
   defaults:
     data: []
 
+  urlRoot: =>
+    "/dashboards/#{@get('tools').dashboardId}/tools/#{@toolId}/data_sources"
+
   toJSON: ->
     json = new Object
     json[key] = value for key, value of @attributes when key isnt 'tools'
