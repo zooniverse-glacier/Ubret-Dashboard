@@ -10,15 +10,14 @@ class Tool extends AppModel
   defaults:
     "height": 480
     "width": 640
-    "left": 20
-    "top": 20
-    "zindex": 1
 
   initialize: ->
     @set 'dataSource', new DataSource({tools: @collection})
     @set 'filters', new Filters
     @set 'settings', new Settings
     @get('dataSource').on 'source:dataReceived', @onDataReceived
+    @generatePosition()
+    @focusWindow() if @collection?
     @save()
 
   onDataReceived: =>
@@ -65,5 +64,33 @@ class Tool extends AppModel
       test = (ids.length is _.filter(oldIds, (id) -> id in ids).length)
       test = test or ids.length < oldIds.length
     return test
+
+  # initializers
+  focusWindow: =>
+    zindex = @getMaxZIndex()
+    @set 'zindex', zindex + 1 unless @get('zindex') is zindex
+
+  getMaxZIndex: =>
+    if @collection.length isnt 0
+      @collection.max((tool) -> tool.get('zindex')).get('zindex')
+    else
+      0
+
+  generatePosition: ->
+    doc_width = $(document).width()
+    doc_height = $(document).height()
+
+    x_max = doc_width * 0.6
+    x_min = doc_width * 0.02
+
+    y_max = doc_height * 0.35
+    y_min = doc_height * 0.05
+
+    x = Math.random() * (x_max - x_min) + x_min
+    y = Math.random() * (y_max - y_min) + y_min
+
+    @set
+      top: y
+      left: x
 
 module.exports = Tool

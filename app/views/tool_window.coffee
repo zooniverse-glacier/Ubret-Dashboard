@@ -18,14 +18,10 @@ class ToolWindow extends AppView
   initialize: =>
     if @model?
       @model.on 'remove', @removeWindow
+      @model.on 'change:zindex', @setZindex
+      @model.on 'change:left, change:top', @setPosition
 
-      @$el.css
-        width: @model.get('width')
-        height: @model.get('height')
-
-      @generatePosition()
-      @focusWindow() if @collection?
-      @model.set 'zindex', @$el.css 'z-index'
+      @$el.css @initialSizeAndPosition()
 
     @settings = new Settings { model: @model }
     
@@ -39,6 +35,12 @@ class ToolWindow extends AppView
     @titleBar.on 'focusWindow', @focusWindow
     @$el.html @template()
 
+  initialSizeAndPosition: =>
+    sizeAndPos = new Object
+    sizeAndPos[key] = @model.get(key) for key in ['left', 'top', 'width', 'height', 'zindex']
+    sizeAndPos['z-index'] = sizeAndPos.zindex
+    sizeAndPos
+
   render: =>
     @assign
       '.title-bar': @titleBar
@@ -46,16 +48,21 @@ class ToolWindow extends AppView
       '.tool-container': @toolContainer
     @
 
-
   # Events
   close: (e) =>
     @model.destroy()
     @removeWindow()
 
-  focusWindow: (e) =>
-    unless @$el.css('z-index') is @getMaxZIndex()
-      @$el.css 'z-index', parseInt(@getMaxZIndex()) + 1
-      @model.set 'zindex', @$el.css 'z-index'
+  setZindex: =>
+    @$el.css 'z-index', @model.get('zindex')
+
+  setPosition: =>
+    @$el.css
+      top: @model.get('top')
+      left: @model.get('left')
+
+  focusWindow: =>
+    @model.focusWindow()
 
   # Resize
   resizeWindowStart: (e) =>
@@ -148,10 +155,7 @@ class ToolWindow extends AppView
       top: e.pageY - @relY
 
     @$el.css
-      left: e.pageX - @relX
-      top: e.pageY - @relY
       transform: ''
-
 
   # Helper functions
   removeWindow: =>
@@ -159,30 +163,6 @@ class ToolWindow extends AppView
 
   toggleSettings: =>
     @settings.toggleState()
-
-  getMaxZIndex: =>
-    @collection?.max((tool) -> parseInt(tool.get('zindex'))).get('zindex')
-
-  generatePosition: ->
-    doc_width = $(document).width()
-    doc_height = $(document).height()
-
-    x_max = doc_width * 0.6
-    x_min = doc_width * 0.02
-
-    y_max = doc_height * 0.35
-    y_min = doc_height * 0.05
-
-    x = Math.random() * (x_max - x_min) + x_min
-    y = Math.random() * (y_max - y_min) + y_min
-
-    @model.set
-      top: y
-      left: x
-
-    @$el.css
-      top: y
-      left: x
 
 
 module.exports = ToolWindow
