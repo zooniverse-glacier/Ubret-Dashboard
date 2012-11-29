@@ -35,11 +35,11 @@ class Tool extends AppModel
     @boundTool = tool
     @set({'selectedElements': @boundTool.get('selectedElements')}, {silent: true})
     @set({'selectedKey': @boundTool.get('selectedKey')}, {silent: true})
-    @get('filters').add @boundTool.get('filters').models.slice()
+    # @get('filters').add @boundTool.get('filters').models.slice()
 
     @boundTool.on 'change:selectedElements', @updateSelectedElements
     @boundTool.on 'change:selectedKey', @updateSelectedKey
-    @boundTool.get('filters').on 'add', @updateFilters
+    # @boundTool.get('filters').on 'add', @updateFilters
     @triggerEvent 'tool:dataProcessed'
 
   # Elements, Keys, Filters
