@@ -3,7 +3,8 @@ Tool = require 'models/tool'
 class Tools extends Backbone.Collection
   model: Tool
 
-  url: '/tools'
+  url: =>
+    "/dashboards/#{@dashboard_id}/tools"
 
   initialize: ->
     @.on 'bind-tool', @bindTool

@@ -5,9 +5,6 @@ Filters = require 'collections/filters'
 corsSync = require 'sync'
 
 class Tool extends AppModel
-  url: =>
-    "/dashboards/#{@collection.dashboard_id}/tools"
-
   sync: corsSync
 
   defaults:
