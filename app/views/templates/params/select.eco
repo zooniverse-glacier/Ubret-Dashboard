@@ -1,0 +1,11 @@
+<% if @get('label'): %>
+  <label><%- @get('label') %>:</label>
+<% else: %>
+  <label><%- @get('key') %>:</label>
+<% end %>
+
+<select data-cid="<%- @.cid %>">
+  <% for key, value of @get('choices'): %>
+    <option value="<%- key %>"><%- value %></option>
+  <% end %>
+</select>
