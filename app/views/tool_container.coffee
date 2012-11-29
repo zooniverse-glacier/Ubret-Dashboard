@@ -10,6 +10,11 @@ class ToolContainer extends Backbone.View
 
   render: =>
     @$el.html @toolView.render().el
+    delay = =>
+      @$el.css
+        height: @$el.parent().height() - @$el.parent().find('.title-bar').first().height()
+
+    window.setTimeout(delay, 0)
     @
 
 

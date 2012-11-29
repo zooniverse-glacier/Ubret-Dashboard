@@ -37,7 +37,6 @@ class ToolWindow extends AppView
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
     @titleBar.on 'focusWindow', @focusWindow
-
     @$el.html @template()
 
   render: =>
