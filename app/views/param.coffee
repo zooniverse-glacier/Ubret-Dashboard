@@ -13,4 +13,7 @@ class Param extends AppView
     # getCurrentValue implemented by subclasses
     @model.set('value', @getCurrentValue())
 
+  getCurrentValue: =>
+    @$el.find('[data-cid=' + @model.cid + ']').val()
+    
 module.exports = Param
