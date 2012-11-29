@@ -101,9 +101,10 @@ class DataSettings extends AppView
 
   updateValidSourceTools: =>
     @intSources = []
-    @model.collection.each (tool) =>
-      isValid = @checkToolSource @model, tool, []
-      if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
+    if @model.collection
+      @model.collection.each (tool) =>
+        isValid = @checkToolSource @model, tool, []
+        if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
 
   checkToolSource: (source_tool, tool, checkedTools) =>
     if _.isEqual source_tool, tool
