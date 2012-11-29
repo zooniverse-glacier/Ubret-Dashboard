@@ -8,21 +8,17 @@ class Dashboard extends Backbone.Model
 
   sync: corsSync
 
+  parse: (response) ->
+    response.tools = @get('tools').add tool for tool in response.tools
+    delete response.tools
+    @get('tools')['dashboard_id'] = response.id
+    @resetCount()
+    response
+
   initialize: ->
-    unless @id
-      @set 'tools', new Tools
-    else
-      @get('tools').fetch()
+    @set 'tools', new Tools
     @resetCount()
     @save()
-    Backbone.Mediator.subscribe 'tool-saves', @save
-
-  parse: (response) ->
-    tools = new Array
-    tools.push new Tool {id: id} for id in response.tools when typeof @get('tools').get(id) is 'undefined'
-    console.log 'here'
-    response.tools = @get('tools').add tools
-    response
 
   createTool: (toolType) =>
     @get('tools').add 
@@ -30,10 +26,6 @@ class Dashboard extends Backbone.Model
       name: "new-#{toolType}-#{@count}" 
       channel: "#{toolType}-#{@count}"
     @count += 1
-
-  toJSON: ->
-    tools = @get 'tools'
-    {tools: tools.map (tool) -> tool.id}
 
   resetCount: =>
     @count = @get('tools').length + 1

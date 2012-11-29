@@ -10,7 +10,7 @@ class Sources extends Backbone.Collection
 
   getSources: =>
     @map (source) ->
-      'id': source.cid
+      'id': source.id
       'name': source.get('name')
 
 module.exports = Sources

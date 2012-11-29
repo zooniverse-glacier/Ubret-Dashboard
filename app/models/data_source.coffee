@@ -1,5 +1,6 @@
 AppModel = require 'models/app_model'
 Subjects = require 'collections/subject_collection'
+Manager = require 'modules/manager'
 
 class DataSource extends AppModel
   defaults:
@@ -8,10 +9,12 @@ class DataSource extends AppModel
   toJSON: ->
     json = new Object
     json[key] = value for key, value of @attributes when key isnt 'tools'
+    json
 
   fetchData: =>
     if @get('type') is 'external'
-      subjects = new Subjects([], {params: @get('params'), url: @get('source').get('url')})
+      url = Manager.get('sources').get(@get('source')).get('url')
+      subjects = new Subjects([], {params: @get('params'), url: url })
       subjects.url()
       @set('data', subjects)
       @get('data').fetch
@@ -26,7 +29,7 @@ class DataSource extends AppModel
       throw 'unknown source type'
 
   isExternal: =>
-    if @get('type') is 'external' then true else false
+    (@get('type') is 'external')
 
   dataExtents: (key, ids) =>
     selectedModels = _.map((@get('data').filter (item) ->

@@ -40,7 +40,7 @@ class DataSettings extends AppView
     if @selectedSource
       new_opts =
         search_types: @selectedSource.get('search_types')
-        selectedSourceId: @selectedSource.cid
+        selectedSourceId: @selectedSource.id
       opts = _.extend new_opts, opts
 
     @$el.html @template opts
@@ -59,7 +59,7 @@ class DataSettings extends AppView
   onSelectExternalSource: (e) =>
     @searchTypes = []
 
-    @selectedSource = Manager.get('sources').getByCid($(e.currentTarget).val())
+    @selectedSource = Manager.get('sources').get($(e.currentTarget).val())
     _.each @selectedSource.get('search_types'), (search_type) =>
       @searchTypes.push search_type
 
@@ -83,7 +83,7 @@ class DataSettings extends AppView
 
     if @dataSource.get('type') is 'external'
       source_id = @$('.external .sources').val()
-      source = Manager.get('sources').getByCid(source_id)
+      source = source_id
 
       # Retrieve params data
       @paramsView.setState()
