@@ -3,7 +3,7 @@ class User extends Backbone.Events
     if location.port > 1024 then "dev" else "api"
 
   @apiUrl: =>
-    if location.port > 1024 then "http://localhost:3000/users/" else "https://spelunker.herokuapp.com/users/"
+    if location.port > 1024 then "http://localhost:3000/users/" else "https://spelunker.herokuapp.com/users"
 
   @login: ({username, password}) =>
     url = "https://#{@zooniverseUrl()}.zooniverse.org/login?username=#{username}&password=#{password}&callback=?"
@@ -21,6 +21,19 @@ class User extends Backbone.Events
     logout
 
   @currentUser: =>
+    $.ajax
+      url: @apiUrl
+      dataType: 'json'
+      crossDomain: true
+      xhrFields:
+        withCredentials: true
+      success: (response) =>
+        User.current = new User response
+        User.trigger 'sign-in'
+      error: (response) =>
+        @currentOuroborosUser()
+
+  @currentOuroborosUser: =>
     url = "https://#{@zooniverseUrl()}.zooniverse.org/current_user?callback=?"
     current = $.getJSON(url)
     current.always @createuser
@@ -37,7 +50,7 @@ class User extends Backbone.Events
   @createUser: (response) =>
     if response.success
       $.ajax
-        url: @apiUrl + response.id
+        url: "#{@apiUrl}/#{response.id}?name=#{response.name}"
         dataType: 'json'
         crossDomain: true
         xhrFields:
@@ -49,7 +62,8 @@ class User extends Backbone.Events
     else
       User.trigger 'sign-in-error', response
 
-   constructor: (options) ->
-     @[key] = value for key, value of options
+  constructor: (options) ->
+    @name = options.username
+    @dashboards = options.dashboards
 
 module.exports = User
