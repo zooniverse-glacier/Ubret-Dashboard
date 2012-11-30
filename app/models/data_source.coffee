@@ -1,10 +1,21 @@
 AppModel = require 'models/app_model'
 Subjects = require 'collections/subject_collection'
 Manager = require 'modules/manager'
+corsSync = require 'sync'
 
 class DataSource extends AppModel
   defaults:
     data: []
+
+  parse: (response) ->
+    delete response.data if response.data
+    response
+
+  initialize: ->
+    @on 'change', => 
+      @save()
+
+  sync: corsSync
 
   urlRoot: =>
     "/dashboards/#{@get('tools').dashboardId}/tools/#{@toolId}/data_sources"

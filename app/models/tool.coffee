@@ -11,6 +11,15 @@ class Tool extends AppModel
     "height": 480
     "width": 640
 
+  parse: (response) =>
+    @get('dataSource').set(key, value, {silent: true}) for key, value of response.data_source when key isnt 'data' 
+    @get('filters').add(filter, {silent: true}) for filter in response.filters
+
+    delete response.filters
+    delete response.data_source
+
+    response
+
   initialize: ->
     @set 'dataSource', new DataSource({tools: @collection})
     @set 'filters', new Filters
