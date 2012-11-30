@@ -13,7 +13,6 @@ class ToolWindow extends AppView
   events:
     'click': 'focusWindow'
     'mousedown .resize': 'resizeWindowStart'
-    'mouseup .resize': 'resizeWindowEnd'
 
   initialize: =>
     if @model?
@@ -81,6 +80,7 @@ class ToolWindow extends AppView
     doc_width = $(document).width()
     doc_height = $(document).height()
 
+    $(document).on 'mouseup', @resizeWindowEnd
     $(document).on 'mousemove', (d_e) =>
       if @resizing
 
@@ -114,7 +114,8 @@ class ToolWindow extends AppView
             @$el.css
               height: startHeight + deltaY
 
-  resizeWindowEnd: (e) =>
+
+  resizeWindowEnd: =>
     $('body').removeClass 'unselectable'
     @resizing = false
     $(document).off 'mousemove'
