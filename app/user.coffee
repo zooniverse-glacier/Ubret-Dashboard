@@ -1,4 +1,6 @@
 class User extends Backbone.Events
+  @current: null
+
   @zooniverseUrl: =>
     if location.port > 1024 then "dev" else "api"
 
@@ -20,8 +22,10 @@ class User extends Backbone.Events
   @currentUser: =>
     url = "https://#{@zooniverseUrl()}.zooniverse.org/current_user?callback=?"
     current = $.getJSON(url)
+    current.always (response) =>
+      User.trigger 'sign-in' if response.success
+      response
     current.always @createUser
-    current.success => User.trigger 'sign-in'
     current
 
   @signup: ({username, password, email}) =>

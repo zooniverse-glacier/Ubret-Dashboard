@@ -1,4 +1,5 @@
 AppView = require 'app_view'
+User = require 'user'
 
 class Router extends Backbone.Router
   routes:
@@ -13,9 +14,11 @@ class Router extends Backbone.Router
     $('.dashboard').html require('views/templates/index')()
 
   retrieveDashboard: (id) =>
+    @navigate("", {trigger: true}) if User.current is null
     @appView.createDashboard(id)
 
   newDashboard: =>
+    @navigate("", {trigger: true}) if User.current is null
     @appView.createDashboard()
 
 

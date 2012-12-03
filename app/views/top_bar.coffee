@@ -10,7 +10,8 @@ class TopBar extends Backbone.View
     User.on 'sign-in-error', @render
     User.on 'sign-out', @render
 
-    User.currentUser()
+    User.currentUser().always =>
+      @toggleVisible() if User.current is null
 
   events:
     'click button[name="signout"]' : 'onSignOut'
@@ -23,7 +24,7 @@ class TopBar extends Backbone.View
     @
 
   toggleVisible: (e) =>
-    e.preventDefault()
+    e?.preventDefault()
     @$el.toggleClass 'active'
 
   onLogIn: =>
