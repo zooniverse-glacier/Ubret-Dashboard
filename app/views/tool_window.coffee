@@ -118,7 +118,7 @@ class ToolWindow extends AppView
   resizeWindowEnd: =>
     $('body').removeClass 'unselectable'
     @resizing = false
-    $(document).off 'mousemove'
+    $(document).off 'mousemove mouseup'
 
     @model.set 
       left: @$el.css('left')
