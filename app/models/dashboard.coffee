@@ -1,6 +1,7 @@
 Tools = require 'collections/tools'
 Tool = require  'models/tool'
 Sources = require 'collections/sources'
+User = require 'user'
 corsSync = require 'sync'
 
 class Dashboard extends Backbone.Model
@@ -18,7 +19,8 @@ class Dashboard extends Backbone.Model
   initialize: ->
     @set 'tools', new Tools
     @resetCount()
-    @save()
+    @save().success => 
+      User.updateDashboards @id
 
   createTool: (toolType) =>
     @get('tools').add 

@@ -42,8 +42,11 @@ class User extends Backbone.Events
       User.trigger 'sign-in-error', response
       null
 
+  @updateDashboards: (id) =>
+    url = "https://#{@zooniverseUrl()}.zooniverse.org/users/dashboards/add?dashboard_ids[]=#{id}&callback=?"
+    $.getJSON(url)
+
   constructor: (options) ->
-    console.log options
     @name = options.name
     @dashboards = options.dashboards
     @id = options.id
