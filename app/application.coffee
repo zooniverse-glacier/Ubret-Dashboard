@@ -1,6 +1,8 @@
 Router = require 'router'
 Manager = require 'modules/manager'
 
+TopBar = require 'views/top_bar'
+
 Sources = require 'collections/sources'
 
 application =
@@ -9,6 +11,9 @@ application =
     sources.fetch()
 
     Manager.save('sources', sources)
+
+    topBar = new TopBar {el: '.zooniverse-top-bar'}
+    topBar.render()
 
     router = new Router
     Backbone.history.start()
