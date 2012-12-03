@@ -22,10 +22,9 @@ class User extends Backbone.Events
   @currentUser: =>
     url = "https://#{@zooniverseUrl()}.zooniverse.org/current_user?callback=?"
     current = $.getJSON(url)
-    current.always (response) =>
-      User.trigger 'sign-in' if response.success
-      response
     current.always @createUser
+    current.always (response) =>
+      User.trigger 'sign-in' if User.current isnt null
     current
 
   @signup: ({username, password, email}) =>
@@ -44,7 +43,9 @@ class User extends Backbone.Events
       null
 
   constructor: (options) ->
+    console.log options
     @name = options.name
     @dashboards = options.dashboards
+    @id = options.id
 
 module.exports = User

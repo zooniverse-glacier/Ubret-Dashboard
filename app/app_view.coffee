@@ -10,11 +10,12 @@ class AppView
     @toolboxEvents()
 
   createDashboard: (id) ->
-    args = if typeof id isnt 'undefined' then { id: id, user: User.current.id } else { user: User.current.id }
+    args = if typeof id isnt 'undefined' then { id: id, user_id: User.current.id } else { user_id: User.current.id }
     @dashboardModel = new DashboardModel args
-    @dashboardModel.fetch() if typeof id isnt 'undefined'
-    @dashboardView = new DashboardView { model: @dashboardModel, el: '.dashboard' }
-    @dashboardView.render()
+    fetcher = @dashboardModel.fetch() if typeof id isnt 'undefined'
+    fetcher.success(=> 
+      @dashboardView = new DashboardView { model: @dashboardModel, el: '.dashboard' }
+      @dashboardView.render()) if fetcher?
 
   toolboxEvents: =>
     @toolbox.on 'create', @addTool
