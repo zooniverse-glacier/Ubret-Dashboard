@@ -1,9 +1,10 @@
+<ul class='tools'>
 <% for tool in @available_tools: %>
-  <div class="tool-icon" data-id="<%- tool.class_name %>">
-    <button type="button" name="<%- tool.class_name %>"><%- tool.name %></button>
-  </div>
+  <li><a href="#" class="tool" name="<%- tool.class_name %>"><%- tool.name %></a></li>
 <% end %>
+</ul>
 
-<div class="remove-tools">
-  <button type="button" name="remove-tools">Clear Tools</button>
-</div>
+<ul class="interactions">
+  <li><a href="#" class="remove-tools">Clear Tools</a></li>
+  <li><a href="#" class="saved-dashboards">Saved Dashboards</a></li>
+<ul>

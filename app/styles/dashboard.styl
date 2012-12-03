@@ -5,18 +5,44 @@
   width: 100%
   height: 50px
   margin: 0
+  padding: 0
   z-index: 9999
   background: #fff
   border-top: 1px solid $mid-gray
 
-  .tool-icon
+  ul
     height: inherit
-    display: inline-block
-    float: left
-    padding: 10px 2px
+    list-style: none
+    padding: 0
 
-  .remove-tools
-    height: inherit
-    display: inline-block
+    li
+      padding: 16px
+      display: inline
+      height: inherit
+      border-right: 1px solid $mid-gray
+
+      a
+        text-decoration: none
+       
+
+  ul.tools
+    float: left
+
+  ul.interactions
     float: right
-    padding: 10px
+
+    li:first-child
+      border-left: 1px solid $mid-gray
+
+.index
+  position: fixed
+  text-align: center
+  margin: 0 auto
+  display: inline-block
+  border: 1px solid $mid-gray
+  padding: 30px
+
+.saved-list
+  display: none
+
+

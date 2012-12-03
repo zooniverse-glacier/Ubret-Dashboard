@@ -1,0 +1,1 @@
+<li><a href="/#/dashboard/<%- @id %>"><%- @name %></a></li>

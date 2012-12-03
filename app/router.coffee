@@ -1,40 +1,22 @@
-DashboardModel = require 'models/dashboard'
-DashboardView = require 'views/dashboard'
-Toolbox = require 'views/toolbox'
+AppView = require 'app_view'
 
 class Router extends Backbone.Router
   routes:
     ''              : 'index'
+    'dashboard/new' : 'newDashboard'
     'dashboard/:id' : 'retrieveDashboard'
 
+  initialize: ->
+    @appView = new AppView
+
   index: =>
-    @dashboardModel = new DashboardModel
-    @dashboard = new DashboardView { model: @dashboardModel, el: '.dashboard' }
-    @toolbox = new Toolbox { el: '.toolbox' } unless @toolbox?
+    $('.dashboard').html require('views/templates/index')()
 
-    @dashboard.render()
-    @toolbox.render()
-    @toolboxEvents()
+  retrieveDashboard: (id) =>
+    @appView.createDashboard(id)
 
-  retrieveDashbaord: (id) =>
-    @dashboardModel = new DashboardModel { id: id }
-    @dashboardModel.fetch()
-    @dashboard = new DashboardView { model: @dashboardModel, el: '.dashboard' }
-    @toolbox = new Toolbox { el: '.toolbox' } unless @toolbox?
+  newDashboard: =>
+    @appView.createDashboard()
 
-    @dashboard.render()
-    @toolbox.render()
-    @toolboxEvents()
-
-  toolboxEvents: =>
-    @toolbox.on 'create', @addTool
-    @toolbox.on 'remove-tools', @removeTools
-
-  addTool: (tool_type) =>
-    @dashboardModel.createTool tool_type
-
-  removeTools: =>
-    @dashboardModel.removeTools()
-  
 
 module.exports = Router
