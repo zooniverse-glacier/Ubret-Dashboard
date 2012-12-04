@@ -37,7 +37,8 @@ class Toolbox extends AppView
     @savedList.$el.toggleClass 'active'
 
   loadSaved: =>
-    @savedList = new SavedList { collection: new Backbone.Collection User.current.dashboards }
-    @render()
+    User.current.on 'loaded-dashboards', =>
+      @savedList = new SavedList { collection: User.current.dashboards }
+      @render()
 
 module.exports = Toolbox

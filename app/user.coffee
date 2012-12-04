@@ -2,7 +2,7 @@ class User extends Backbone.Events
   @current: null
 
   @apiUrl: =>
-    if location.por > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
+    if location.port > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
 
   @zooniverseUrl: =>
     if location.port > 1024 then "dev" else "api"
@@ -46,13 +46,23 @@ class User extends Backbone.Events
       null
 
   constructor: (options) ->
+    _.extend @, Backbone.Events
     @name = options.name
     @id = options.id
+    @syncToSpelunker()
 
   syncToSpelunker: =>
     url = "#{User.apiUrl()}/users?id=#{@id}&name=#{@name}"
     $.get url, (response) => 
-      @dashboards = response.dashboards
-      User.current.trigger 'loaded-dashboards'
+      @dashboards = new Backbone.Collection response.dashboards
+      @trigger 'loaded-dashboards'
+
+  updateDashboards: (id, name) =>
+    @dashboards.push { id: id, name: name }
+    url = "#{User.apiUrl()}/users/dashboards/add"
+    $.ajax
+      url: url
+      type: 'PUT'
+      data: { id: id }
 
 module.exports = User

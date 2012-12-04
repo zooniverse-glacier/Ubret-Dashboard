@@ -1,4 +1,4 @@
-AppView = require 'app_view'
+AppView = require 'main_view'
 User = require 'user'
 
 class Router extends Backbone.Router

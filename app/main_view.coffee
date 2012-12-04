@@ -10,7 +10,7 @@ class AppView
     @toolboxEvents()
 
   createDashboard: (id) ->
-    args = if typeof id isnt 'undefined' then { id: id, user_id: User.current.id } else { user_id: User.current.id }
+    args = if typeof id isnt 'undefined' then { id: id } else { }
     @dashboardModel = new DashboardModel args
     fetcher = @dashboardModel.fetch() if typeof id isnt 'undefined'
     fetcher.success(=> 

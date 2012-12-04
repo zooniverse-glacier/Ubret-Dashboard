@@ -4,8 +4,7 @@ class SavedList extends Backbone.View
   template: require './templates/saved_dashboard'
 
   initialize: ->
-    Backbone.Mediator.subscribe 'new-dashboard', (dashboard) =>
-      @collection.add dashboard
+    @collection.on 'add reset', @render
 
   render: =>
     @$el.append(@collection.each (dashboard) => 

@@ -20,7 +20,7 @@ class Dashboard extends Backbone.Model
     @set 'tools', new Tools
     @resetCount()
     @save().success => 
-      User.updateDashboards @id
+      User.current.updateDashboards @id, @get('name')
 
   createTool: (toolType) =>
     @get('tools').add 
