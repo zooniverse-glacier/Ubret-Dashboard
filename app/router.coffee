@@ -14,10 +14,12 @@ class Router extends Backbone.Router
     $('.dashboard').html require('views/templates/index')()
 
   retrieveDashboard: (id) =>
+    $('.dashboard').empty()
     @navigate("", {trigger: true}) if User.current is null
     @appView.createDashboard(id)
 
   newDashboard: =>
+    $('.dashboard').empty()
     @navigate("", {trigger: true}) if User.current is null
     @appView.createDashboard()
 

@@ -1,6 +1,9 @@
 class User extends Backbone.Events
   @current: null
 
+  @apiUrl: =>
+    if location.por > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
+
   @zooniverseUrl: =>
     if location.port > 1024 then "dev" else "api"
 
@@ -42,13 +45,14 @@ class User extends Backbone.Events
       User.trigger 'sign-in-error', response
       null
 
-  @updateDashboards: (id) =>
-    url = "https://#{@zooniverseUrl()}.zooniverse.org/users/dashboards/add?dashboard_ids[]=#{id}&callback=?"
-    $.getJSON(url)
-
   constructor: (options) ->
     @name = options.name
-    @dashboards = options.dashboards
     @id = options.id
+
+  syncToSpelunker: =>
+    url = "#{User.apiUrl()}/users?id=#{@id}&name=#{@name}"
+    $.get url, (response) => 
+      @dashboards = response.dashboards
+      User.current.trigger 'loaded-dashboards'
 
 module.exports = User
