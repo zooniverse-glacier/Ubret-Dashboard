@@ -1,8 +1,9 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
+
 SavedList = require 'views/saved_list'
 User = require 'user'
 
-class Toolbox extends AppView
+class Toolbox extends BaseView
   tagName: 'div'
   className: 'toolbox'
   template: require './templates/toolbox'

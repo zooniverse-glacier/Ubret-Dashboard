@@ -1,5 +1,5 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 
-class GenericSettings extends AppView
+class GenericSettings extends BaseView
 
 module.exports = GenericSettings

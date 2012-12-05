@@ -1,9 +1,9 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 
 DataSettings = require 'views/data_settings'
 FilterSettings = require 'views/filter_settings'
 
-class Settings extends AppView
+class Settings extends BaseView
   className: 'settings'
   template: require './templates/settings'
 

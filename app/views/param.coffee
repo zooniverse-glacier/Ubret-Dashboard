@@ -1,6 +1,6 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 
-class Param extends AppView
+class Param extends BaseView
 
   initialize: ->
     throw 'must pass a param' unless @model

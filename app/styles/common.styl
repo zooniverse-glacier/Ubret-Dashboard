@@ -29,3 +29,130 @@ transition-transform(t, a)
   -webkit-user-select: none
   -ms-user-select: none
   user-select: none
+
+
+// Zoo Common Styles
+$black = #000;
+$white = #fff;
+
+$gray-dark = hsl(0, 0, 20%);
+$gray-less-dark = hsl(0, 0, 40%);
+$gray = hsl(0, 0, 60%)
+$gray-less-light = hsl(0, 0, 85%);
+$gray-light = hsl(0, 0, 95%);
+
+$blue = hsl(200, 100, 60);
+
+#block-header {
+  border-bottom: 2px solid $gray-dark;
+  font-size: 20px;
+}
+
+#standard-button {
+  background: $gray-light;
+  border: 1px solid rgba($black, 0.33);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba($white, 0.75) inset;
+  color: $gray-dark;
+  font-weight: bold;
+  padding: 1px 10px;
+  text-shadow: 0 1px 0 $white;
+  
+  &:disabled {
+    background-color: $gray-less-light;
+    color: $gray;
+    cursor: auto;
+  }
+  
+  &:hover {
+    border-color: rgba($black, 0.67);
+  }
+  
+  &:hover:disabled {
+    border-color: rgba($black, 0.33);
+  }
+  
+  &:active,
+  &.selected {
+    box-shadow: 0 100px 0 rgba($black, 0.1) inset, 0 1px 3px rgba($black, 0.25) inset;
+  }
+  
+  &:active:disabled,
+  &.selected:disabled {
+    box-shadow: 0 1px 0 rgba($white, 0.75) inset;
+  }
+}
+
+#bold-button {
+  background linear-gradient($blue, darken($blue, 33%));
+  border: 1px solid rgba($black, 0.67);
+  border-radius: 15px;
+  box-shadow: 0 1px 0 rgba($white, 0.33) inset, 0 1px 0 rgba($white, 0.33);
+  color: $white;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1.25em;
+  padding: 3px 15px;
+  text-shadow: 0 1px 0 rgba($black, 0.67);
+
+  &:hover {
+    box-shadow: 0 100px 0 rgba($white, 0.125) inset, 0 1px 0 rgba($white, 0.33);
+    text-decoration: none;
+  }
+
+  &:active {
+    box-shadow: 0 100px 0 rgba($black, 0.125) inset, 0 1px 3px rgba($black, 0.67) inset, 0 1px 0 rgba($white, 0.33);
+  }
+}
+
+#rule-below {
+  position: relative;
+
+  &:after {
+    border-bottom: 1px solid $white;
+    border-top: 1px solid rgba($black, 0.125);
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+  }
+}
+
+#rule-left {
+  position: relative;
+
+  &:before {
+    border-right: 1px solid $white;
+    border-left: 1px solid rgba($black, 0.125);
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 0;
+  }
+}
+
+.columns {
+  clearfix();
+
+  .column {
+    box-sizing: border-box;
+    float: left;
+    padding-left: 30px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &.one-quarter {width: 25%;}
+    &.one-half {width: 50%;}
+    &.three-quarters {width: 75%;}
+  }
+}
+
+
+

@@ -1,11 +1,11 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 Manager = require 'modules/manager'
 
 Params = require 'collections/params'
 ParamsView = require 'views/params'
 SearchTypeView = require 'views/search_type'
 
-class DataSettings extends AppView
+class DataSettings extends BaseView
   tagName: 'div'
   className: 'data-settings'
   template: require './templates/data_settings'

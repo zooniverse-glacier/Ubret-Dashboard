@@ -1,6 +1,8 @@
+BaseView = require 'views/base_view'
+
 UbretTool = require 'views/ubret_tool'
 
-class ToolContainer extends Backbone.View
+class ToolContainer extends BaseView
   tagName: 'div'
   className: 'tool-container'
 

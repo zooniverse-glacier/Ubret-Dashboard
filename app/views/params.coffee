@@ -1,11 +1,11 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 
 InputView = require 'views/params/input'
 RangeView = require 'views/params/range'
 SelectView = require 'views/params/select'
 EmptyView = require 'views/params/empty'
 
-class Params extends AppView
+class Params extends BaseView
 
   render: =>
     @views = []

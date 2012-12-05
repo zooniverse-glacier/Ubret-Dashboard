@@ -1,0 +1,12 @@
+<div class="main">
+  <div class="group"></div>
+  <div class="group">
+    <nav>
+      <ul>
+        <li><a href="#">Etc</a></li>
+        <li><a href="#">Etcc</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="group"></div>
+</div>

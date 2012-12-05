@@ -1,9 +1,10 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
+
 Settings = require 'views/settings'
 ToolContainer = require 'views/tool_container'
 WindowTitleBar = require 'views/window_title_bar'
 
-class ToolWindow extends AppView
+class ToolWindow extends BaseView
   className: 'tool-window'
   template: require './templates/window'
 

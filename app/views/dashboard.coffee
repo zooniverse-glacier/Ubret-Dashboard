@@ -1,7 +1,9 @@
+BaseView = require 'views/base_view'
+
 ToolWindow = require 'views/tool_window'
 Tools = require 'collections/tools'
 
-class DashboardView extends Backbone.View
+class DashboardView extends BaseView
   tagName: 'div'
   className: 'dashboard'
 

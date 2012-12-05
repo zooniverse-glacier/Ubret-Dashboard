@@ -1,6 +1,6 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 
-class WindowTitleBar extends AppView
+class WindowTitleBar extends BaseView
   tagName: 'div'
   className: 'title-bar'
   template: require './templates/window_title_bar'

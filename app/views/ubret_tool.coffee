@@ -1,4 +1,6 @@
-class UbretTool extends Backbone.View
+BaseView = require 'views/base_view'
+
+class UbretTool extends BaseView
   tagName: 'div'
   className: 'ubret-tool'
   nonDisplayKeys: ['id']

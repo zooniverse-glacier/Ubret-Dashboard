@@ -1,4 +1,6 @@
-class SavedList extends Backbone.View
+BaseView = require 'views/base_view'
+
+class SavedList extends BaseView
   tagName: "ul"
   className: "saved-list"
   template: require './templates/saved_dashboard'

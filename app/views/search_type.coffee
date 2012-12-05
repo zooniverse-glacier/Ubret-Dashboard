@@ -1,6 +1,6 @@
-AppView = require 'views/app_view'
+BaseView = require 'views/base_view'
 
-class SearchType extends AppView
+class SearchType extends BaseView
   template: require './templates/search_type'
 
   events:

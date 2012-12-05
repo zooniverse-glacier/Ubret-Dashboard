@@ -1,5 +1,6 @@
-AppView = require 'main_view'
 User = require 'user'
+
+AppView = require 'app_view'
 
 class Router extends Backbone.Router
   routes:
@@ -8,7 +9,7 @@ class Router extends Backbone.Router
     'dashboard/:id' : 'retrieveDashboard'
 
   initialize: ->
-    @appView = new AppView
+    @appView = new AppView({el: $('#app')})
 
   index: =>
     $('.dashboard').html require('views/templates/index')()

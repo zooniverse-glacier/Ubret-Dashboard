@@ -1,4 +1,6 @@
-class FilterSettings extends Backbone.View
+BaseView = require 'views/base_view'
+
+class FilterSettings extends BaseView
   tagName: 'div'
   className: 'filter-settings'
   template: require './templates/filter_settings'

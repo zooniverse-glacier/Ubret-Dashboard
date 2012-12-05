@@ -1,5 +1,5 @@
 
-class AppView extends Backbone.View
+class BaseView extends Backbone.View
   _.extend @prototype, Backbone.Events
 
   assign: (selector, view) =>
@@ -14,4 +14,4 @@ class AppView extends Backbone.View
     _.each selectors, (view, selector) =>
       view.setElement(@$(selector)).render()
 
-module.exports = AppView
+module.exports = BaseView

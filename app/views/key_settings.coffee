@@ -1,4 +1,6 @@
-class KeySettings extends Backbone.View
+BaseView = require 'views/base_view'
+
+class KeySettings extends BaseView
   tagName: 'div'
   className: 'key-settings'
   template: require './templates/key_settings'
