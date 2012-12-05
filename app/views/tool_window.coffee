@@ -121,7 +121,7 @@ class ToolWindow extends BaseView
     @resizing = false
     $(document).off 'mousemove mouseup'
 
-    @model.set 
+    @model.save
       left: @$el.css('left')
       top: @$el.css('top')
       width: @$el.css('width')
@@ -152,7 +152,7 @@ class ToolWindow extends BaseView
     @dragging = false
     $(document).off 'mousemove'
 
-    @model.set 
+    @model.save
       left: e.pageX - @relX
       top: e.pageY - @relY
 

@@ -28,15 +28,24 @@ class AppView extends BaseView
     @
 
   createDashboard: (id) ->
-    args = if typeof id isnt 'undefined' then { id: id } else { }
-    @dashboardModel = new DashboardModel args
-    fetcher = @dashboardModel.fetch() if typeof id isnt 'undefined'
-    fetcher.success(=> 
-      @dashboardView = new DashboardView { model: @dashboardModel, el: '.dashboard' }
-      @dashboardView.render()) if fetcher?
+    if typeof id is 'undefined'
+      @dashboardModel = new DashboardModel
+      @createDashboardView()
+    else
+      @dashboardModel = new DashboardModel { id: id }
+      fetcher = @dashboardModel.fetch
+      fetcher.success @createDashboardView
 
-  addTool: (tool_type) =>
-    @dashboardModel.createTool tool_type
+  createDashboardView: =>
+    @dashboardView = new DashboardView { model: @dashboardModel, el: '.dashboard' }
+    @dashboardView.render()
+
+  toolboxEvents: =>
+    @toolbox.on 'create', @addTool
+    @toolbox.on 'remove-tools', @removeTools
+
+  addTool: (toolType) =>
+    @dashboardModel.createTool toolType
 
   removeTools: =>
     @dashboardModel.removeTools()

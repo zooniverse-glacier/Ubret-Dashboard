@@ -38,8 +38,8 @@ class Tool extends AppModel
 
   bindTool: (tool) =>
     @boundTool = tool
-    @set({'selectedElements': @boundTool.get('selectedElements')}, {silent: true})
-    @set({'selectedKey': @boundTool.get('selectedKey')}, {silent: true})
+    @save({'selectedElements': @boundTool.get('selectedElements')}, {silent: true})
+    @save({'selectedKey': @boundTool.get('selectedKey')}, {silent: true})
     # @get('filters').add @boundTool.get('filters').models.slice()
 
     @boundTool.on 'change:selectedElements', @updateSelectedElements
@@ -49,10 +49,10 @@ class Tool extends AppModel
 
   # Elements, Keys, Filters
   updateSelectedElements: =>
-    @set 'selectedElements', @boundTool.get('selectedElements').slice()
+    @save 'selectedElements', @boundTool.get('selectedElements').slice()
     
   updateSelectedKey: =>
-    @set 'selectedKey', @boundTool.get('selectedKey')
+    @save 'selectedKey', @boundTool.get('selectedKey')
 
   updateFilters: (filter) =>
     @get('filters').add filter
@@ -60,7 +60,7 @@ class Tool extends AppModel
 
   setElements: (ids) =>
     if not @equalElements(ids)
-      @set 'selectedElements', ids
+      @save 'selectedElements', ids
       @trigger 'change'
       @trigger 'change:selectedElements'
 
@@ -77,7 +77,7 @@ class Tool extends AppModel
   # initializers
   focusWindow: =>
     zindex = @getMaxZIndex()
-    @set 'zindex', zindex + 1 unless @get('zindex') is zindex
+    @save 'zindex', zindex + 1 unless @get('zindex') is zindex
 
   getMaxZIndex: =>
     if @collection.length isnt 0
@@ -98,7 +98,7 @@ class Tool extends AppModel
     x = Math.random() * (x_max - x_min) + x_min
     y = Math.random() * (y_max - y_min) + y_min
 
-    @set
+    @save
       top: y
       left: x
 
