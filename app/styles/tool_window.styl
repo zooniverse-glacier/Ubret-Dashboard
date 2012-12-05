@@ -1,13 +1,14 @@
 $title-bar-vertical-padding = 0
-$title-bar-height = 34px
+$title-bar-height = 25px
 
 .tool-window
-  position: absolute
-  min-width: 300px
-  min-height: 150px
   background: #fff
+  border: 1px solid $white
   border-radius: 3px
   box-shadow: 0 0 13px #444
+  min-height: 150px
+  min-width: 300px
+  position: absolute
 
   .window
     position: relative
@@ -16,15 +17,14 @@ $title-bar-height = 34px
     overflow: hidden
 
     .title-bar
-      position: absolute 
-      top: 0
-      left: 0
-      width: 100%
+      background: $gray-dark
+      color: $white
       height: $title-bar-height
-      padding: $title-bar-vertical-padding 0
+      line-height: $title-bar-height
+      position: absolute
+      top: 0
+      width: 100%
       z-index: 3
-      background: $mid-gray
-      line-height: 34px
 
       span
         padding: 0 3px
