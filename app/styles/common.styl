@@ -50,13 +50,16 @@ $blue = hsl(200, 100, 60);
 
 #standard-button {
   background: $gray-light;
-  border: 1px solid rgba($black, 0.33);
+  border: 1px solid $gray-less-light;
   border-radius: 3px;
-  box-shadow: 0 1px 0 rgba($white, 0.75) inset;
+  box-shadow: 0 1px 4px rgba($black, 0.15);
   color: $gray-dark;
+  font-size: 0.9em
   font-weight: bold;
-  padding: 1px 10px;
+  padding: 4px 10px;
+  text-align: center;
   text-shadow: 0 1px 0 $white;
+  text-decoration: none;
   
   &:disabled {
     background-color: $gray-less-light;

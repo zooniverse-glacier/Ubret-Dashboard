@@ -3,19 +3,19 @@
   @extends .container
 
   ul
-    height: inherit
     list-style: none
+    margin: 0
     padding: 0
 
     li
-      padding: 16px
-      display: inline
-      height: inherit
-      border-right: 1px solid $mid-gray
+      float: left
 
       a
-        text-decoration: none
-       
+        display: block
+        padding: 4px 0
+        width: 90px
+        @extends #standard-button
+
   ul.tools
     float: left
 
