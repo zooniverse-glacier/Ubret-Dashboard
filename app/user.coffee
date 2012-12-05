@@ -53,9 +53,17 @@ class User extends Backbone.Events
 
   syncToSpelunker: =>
     url = "#{User.apiUrl()}/users?id=#{@id}&name=#{@name}"
-    $.get url, (response) => 
-      @dashboards = new Backbone.Collection response.dashboards
-      @trigger 'loaded-dashboards'
+    $.ajax 
+      url: url
+      type: 'GET'
+      crossDomain: true
+      contentType: 'application/json'
+      dataType: 'json'
+      xhrFields:
+        withCredentials: true
+      success: (response) => 
+        @dashboards = new Backbone.Collection response.dashboards
+        @trigger 'loaded-dashboards'
 
   updateDashboards: (id, name) =>
     @dashboards.push { id: id, name: name }
@@ -63,6 +71,11 @@ class User extends Backbone.Events
     $.ajax
       url: url
       type: 'PUT'
-      data: { id: id }
+      data: JSON.stringify({ id: id })
+      crossDomain: true
+      contentType: 'application/json'
+      dataType: 'json'
+      xhrFields:
+        withCredentials: true
 
 module.exports = User
