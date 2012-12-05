@@ -11,6 +11,9 @@ Toolbox = require 'views/toolbox'
 class AppView extends BaseView
   template: require './views/templates/layout/app'
 
+  subscriptions:
+    'dashboard:create': 'createDashboard'
+
   initialize: ->
     @appHeader = new AppHeader
     @toolbox = new Toolbox
