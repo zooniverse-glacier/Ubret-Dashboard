@@ -14,9 +14,11 @@ class Tool extends AppModel
   parse: (response) =>
     @get('dataSource').set(key, value, {silent: true}) for key, value of response.data_source when key isnt 'data' 
     @get('filters').add(filter, {silent: true}) for filter in response.filters
+    @get('settings').set(key, value, {silent: true}) for key, value of response.settings
 
     delete response.filters
     delete response.data_source
+    delete response.settings
 
     response
 

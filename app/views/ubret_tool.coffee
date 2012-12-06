@@ -14,17 +14,9 @@ class UbretTool extends BaseView
       @model.get('settings').on 'change', @passSetting
       @model.on 'tool:dataProcessed', @render
 
-    @$el.html @noDataTemplate()
     @$el.addClass @model.get('type')
-
-    opts = 
-      el: @$el
-      selector: '#' + @id
-      selectElementsCb: @selectElements
-      selectKeyCb: @selectKey
-
-    @tool = new Ubret[@model.get('type')](opts)
     @$el.attr 'id', @id
+
 
   render: =>
     if @model.get('dataSource').get('data').length is 0
@@ -32,15 +24,19 @@ class UbretTool extends BaseView
     else
       @$el.find('.no-data').remove()
       opts =
-        data: _.map(@model.get('dataSource').get('data').models, (datum) -> datum.toJSON())
+        data: @model.get('dataSource').get('data').map (datum) -> datum.toJSON()
         keys: @dataKeys(@model.get('dataSource').get('data').models)
         filters: @model.get('filters').models
         selectedElements: @model.get('selectedElements')?.slice()
         selectedKey: @model.get('selectedKey')
+        el: @$el
+        selector: '#' + @id
+        selectElementsCb: @selectElements
+        selectKeyCb: @selectKey
 
-      @tool.setOpts opts
+      console.log opts
+      @tool = new Ubret[@model.get('type')](opts)
       @tool.start()
-
     @
 
   dataKeys: (data) =>
