@@ -21,6 +21,7 @@ class Dashboard extends Backbone.Model
     @resetCount()
     @save().success => 
       User.current.updateDashboards @id, @get('name')
+      Backbone.Mediator.publish 'dashboard:initialized', @
 
   createTool: (toolType) =>
     @get('tools').add 

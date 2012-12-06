@@ -13,15 +13,19 @@ class Toolbox extends BaseView
     'click a.remove-tools' : 'removeTools' 
     'click a.saved-dashboards' : 'toggleSaved'
 
+  subscriptions:
+    'dashboard:initialized': 'onDashboardInit'
+
   initialize: ->
     User.on 'sign-in', @loadSaved
     @tools = []
+    @db_state = false
     for name, tool of Ubret
       @tools.push {name: tool::name, class_name: name} if tool::name
 
   render: =>
-    @$el.html @template {available_tools: @tools}
-    @$el.append @savedList.render().el if typeof @savedList isnt 'undefined'
+    @$el.html @template {available_tools: @tools, db_state: @db_state}
+    # @$el.append @savedList.render().el if typeof @savedList isnt 'undefined'
     @
 
   createTool: (e) =>
@@ -41,5 +45,9 @@ class Toolbox extends BaseView
     User.current.on 'loaded-dashboards', =>
       @savedList = new SavedList { collection: User.current.dashboards }
       @render()
+
+  onDashboardInit: =>
+    @db_state = true
+    @render()
 
 module.exports = Toolbox

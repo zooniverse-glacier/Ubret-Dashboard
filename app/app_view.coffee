@@ -16,6 +16,7 @@ class AppView extends BaseView
 
   initialize: ->
     @appHeader = new AppHeader
+    @dashboardView = new DashboardView
     @toolbox = new Toolbox
 
     @$el.html @template()
@@ -28,6 +29,7 @@ class AppView extends BaseView
     @assign
       '.app-header': @appHeader
       '.toolbox': @toolbox
+      '.dashboard': @dashboardView
     @
 
   createDashboard: (id) ->
@@ -40,12 +42,9 @@ class AppView extends BaseView
       fetcher.success @createDashboardView
 
   createDashboardView: =>
-    @dashboardView = new DashboardView { model: @dashboardModel, el: '.dashboard' }
+    @dashboardView.model = @dashboardModel
+    # @dashboardView = new DashboardView { model: @dashboardModel, el: '.dashboard' }
     @dashboardView.render()
-
-  toolboxEvents: =>
-    @toolbox.on 'create', @addTool
-    @toolbox.on 'remove-tools', @removeTools
 
   addTool: (toolType) =>
     @dashboardModel.createTool toolType

@@ -100,7 +100,7 @@ class Tool extends AppModel
     x = Math.random() * (x_max - x_min) + x_min
     y = Math.random() * (y_max - y_min) + y_min
 
-    @save
+    @set
       top: y
       left: x
 

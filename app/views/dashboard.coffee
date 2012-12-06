@@ -4,15 +4,13 @@ ToolWindow = require 'views/tool_window'
 Tools = require 'collections/tools'
 
 class DashboardView extends BaseView
-  tagName: 'div'
-  className: 'dashboard'
 
-  initialize: ->
-    @model?.get('tools').on 'add', @addTool
-    @model?.get('tools').on 'reset', @removeTools
+  subscriptions:
+    'dashboard:initialized': 'onDashboardInit'
 
   render: =>
-    @model.get('tools').each @createToolWindow
+    if @model
+      @model.get('tools').each @createToolWindow
     @
 
   createToolWindow: (tool) =>
@@ -31,6 +29,11 @@ class DashboardView extends BaseView
 
   removeTools: =>
     @$el.empty()
+
+  onDashboardInit: (model) =>
+    @model = model
+    @model.get('tools').on 'add', @addTool
+    @model.get('tools').on 'reset', @removeTools
 
   _setToolWindow: (toolWindow) ->
     ToolWindow = toolWindow
