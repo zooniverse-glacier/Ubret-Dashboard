@@ -5,6 +5,7 @@
   box-sizing: border-box
   color: $white
   height: 100%
+  font-weight: 700
   padding: 35px 29px
   position: absolute
   right: -234px
@@ -29,7 +30,7 @@
     .toggle
       left: 4px
       transform: rotate(0)
-    
+
   .data-settings
     ul
       list-style: none
@@ -41,30 +42,40 @@
     .range
       .value
         position: absolute
-        bottom: 3px
+        bottom: 8px
         width: 100%
         font-size: 0.9em
         text-align: center
+        text-shadow: 0 1px 1px $black
 
       .track
         position: relative
         height: 30px
-        border-bottom: 1px solid #c0c0c0
+        &:after
+          border-bottom: 1px solid $gray-less-dark
+          border-top: 1px solid $black
+          content: ''
+          bottom: 0
+          position: absolute
+          width: 100%
         span
-          position: absolute
-          bottom: -6px
-          width: 10px
-          height: 10px
-          z-index: 1
-          background: #900
+          background: $blue
+          border: 1px solid $black
           border-radius: 10px
+          bottom: -4px
+          box-shadow: 0 1px 2px darken($gray-dark, 20%)
           cursor: pointer
-        .min, .max
+          height: 8px
+          width: 8px
           position: absolute
-          bottom: 3px
           z-index: 1
-          color: #666
+        .min, .max
+          bottom: 8px
+          color: $black
           font-size: 0.8em
+          position: absolute
+          text-shadow: 0 1px 1px $gray-less-dark
+          z-index: 1
         .min
           left: 0
         .max
