@@ -28,6 +28,7 @@ class ToolWindow extends BaseView
     @toolContainer = new ToolContainer { model: @model }
 
     @titleBar = new WindowTitleBar { model: @model }
+    @titleBar.on 'minimize', @minimize
     @titleBar.on 'close', @close
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
@@ -48,6 +49,9 @@ class ToolWindow extends BaseView
     @
 
   # Events
+  minimize: (e) =>
+    @$el.toggleClass 'minimized'
+
   close: (e) =>
     @model.destroy()
     @removeWindow()

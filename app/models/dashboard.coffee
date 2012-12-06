@@ -26,7 +26,7 @@ class Dashboard extends Backbone.Model
   createTool: (toolType) =>
     @get('tools').add 
       type: toolType 
-      name: "new-#{toolType}-#{@count}" 
+      name: "#{toolType}-#{@count}" 
       channel: "#{toolType}-#{@count}"
     @count += 1
 

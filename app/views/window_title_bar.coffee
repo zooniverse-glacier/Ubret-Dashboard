@@ -6,6 +6,7 @@ class WindowTitleBar extends BaseView
   template: require './templates/window_title_bar'
 
   events:
+    'click .window-min': 'minimize'
     'click .window-close' : 'close'
     'dblclick .window-title' : 'editTitle'
     'keypress input[name="window-title"]' : 'updateModel'
@@ -20,6 +21,9 @@ class WindowTitleBar extends BaseView
   render: =>
     @$el.html @template({name: @model.get('name')})
     @
+
+  minimize: =>
+    @trigger 'minimize'
 
   close: =>
     @trigger 'close'

@@ -10,17 +10,26 @@ $title-bar-height = 25px
   min-width: 300px
   position: absolute
 
+  &.minimized
+    height: $title-bar-height !important
+    min-height: 0
+
+    .window-min
+      background-position: -29px 3px !important
+
   .window
     position: relative
     width: 100%
     height: 100%
     overflow: hidden
 
+
     .title-bar
       background: $gray-dark
       box-sizing: border-box
       color: $white
       height: $title-bar-height
+      font-weight: 700
       line-height: $title-bar-height
       padding: 0 9px
       position: absolute
@@ -29,8 +38,14 @@ $title-bar-height = 25px
       z-index: 3
 
       span
-        padding: 0 3px
         cursor: pointer
+        float: left
+        height: 100%
+        padding: 0 3px
+
+        &.window-min
+          background: url(../images/minimize-toggle.png) no-repeat -7px 3px
+          width: 10px
 
       input
         display: none
