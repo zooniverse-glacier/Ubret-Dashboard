@@ -29,7 +29,6 @@ class ToolWindow extends BaseView
 
     @titleBar = new WindowTitleBar { model: @model }
     @titleBar.on 'close', @close
-    @titleBar.on 'settings', @toggleSettings
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
     @titleBar.on 'focusWindow', @focusWindow
@@ -162,9 +161,6 @@ class ToolWindow extends BaseView
   # Helper functions
   removeWindow: =>
     @remove()
-
-  toggleSettings: =>
-    @settings.toggleState()
 
 
 module.exports = ToolWindow

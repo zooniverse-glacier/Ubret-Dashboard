@@ -1,5 +1,3 @@
-<h3>Data Source</h3>
-
 <ul class="type-select">
   <li><a class="external">External API</a></li>
   <li><a class="internal">Other Tool</a></li>

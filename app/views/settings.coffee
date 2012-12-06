@@ -7,11 +7,13 @@ class Settings extends BaseView
   className: 'settings'
   template: require './templates/settings'
 
+  events:
+    'click .toggle': 'toggleState'
+
   initialize: ->
     unless @model?
       return
     @dataSettings = new DataSettings { model: @model } if @model?
-    @filterSettings = new FilterSettings { model: @model }
     switch @model?.get('type')
       when 'Histogram', 'Scatterplot', 'Histogram2', 'Scatter2D'
         ToolSettings = require 'views/graph_settings'
@@ -28,12 +30,12 @@ class Settings extends BaseView
     @$el.html @template()
     @assign
       '.data-settings': @dataSettings
-      '.filter-settings': @filterSettings
       '.tool-settings': @toolSettings
     @
 
+
+  # Events
   toggleState: =>
     @$el.toggleClass('active')
-
 
 module.exports = Settings

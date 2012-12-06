@@ -2,19 +2,32 @@
 .settings
   background: $gray-dark
   border-left: 1px solid $black
+  box-sizing: border-box
   color: $white
   height: 100%
-  overflow-y: auto
-  padding: 0 8px
+  padding: 35px 29px
   position: absolute
-  right: 0
-  transform(translateX(210px))
-  transition-transform(0.3s, cubic-bezier(0.0, 0.0, 0.35, 1.0))
+  right: -234px
   top: 0
-  width: 200px
+  transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
+  width: 234px
   z-index: 4
+
+  .toggle
+    background: url(../images/settings-toggle.png) no-repeat 4px 4px
+    cursor: pointer
+    height: 16px
+    left: -24px
+    position: absolute
+    transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
+    top: 4px
+    width: 20px
+
   &.active
-    transform(translateX(0))
+    right: 0
+    .toggle
+      left: 4px
+      transform: rotate(180deg)
     
   .data-settings
     ul

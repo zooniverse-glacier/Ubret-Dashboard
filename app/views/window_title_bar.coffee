@@ -7,7 +7,6 @@ class WindowTitleBar extends BaseView
 
   events:
     'click .window-close' : 'close'
-    'click .open-settings' : 'settings'
     'dblclick .window-title' : 'editTitle'
     'keypress input[name="window-title"]' : 'updateModel'
     'blur input[name="window-title"]' : 'updateModel'
@@ -24,9 +23,6 @@ class WindowTitleBar extends BaseView
 
   close: =>
     @trigger 'close'
-
-  settings: =>
-    @trigger 'settings'
 
   startDrag: (e) =>
     @trigger 'focusWindow', e

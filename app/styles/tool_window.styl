@@ -5,7 +5,7 @@ $title-bar-height = 25px
   background: #fff
   border: 1px solid $white
   border-radius: 3px
-  box-shadow: 0 0 13px #444
+  box-shadow: 0 2px 8px $gray-less-light
   min-height: 150px
   min-width: 300px
   position: absolute
@@ -18,9 +18,11 @@ $title-bar-height = 25px
 
     .title-bar
       background: $gray-dark
+      box-sizing: border-box
       color: $white
       height: $title-bar-height
       line-height: $title-bar-height
+      padding: 0 9px
       position: absolute
       top: 0
       width: 100%
