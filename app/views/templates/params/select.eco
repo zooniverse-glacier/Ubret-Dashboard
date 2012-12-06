@@ -1,9 +1,6 @@
-<% if @get('label'): %>
-  <label><%- @get('label') %>:</label>
-<% else: %>
-  <label><%- @get('key') %>:</label>
-<% end %>
+<% label = require('./label')(@) %>
 
+<%- label %>
 <select data-cid="<%- @.cid %>">
   <% for key, value of @get('choices'): %>
     <option value="<%- key %>"><%- value %></option>

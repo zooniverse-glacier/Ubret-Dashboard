@@ -1,5 +1,7 @@
+<% label = require('./label')(@) %>
+
 <div class="range">
-  <label><%- @get('label') %></label>
+  <%- label %>
   <div class="track">
     <div class="min"><%- @get('validation')[0] %></div>
     <span></span><div class="value"></div>

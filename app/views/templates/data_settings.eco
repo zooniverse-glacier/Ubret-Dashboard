@@ -35,5 +35,5 @@
   <% else: %>
     <p>Invalid source type.</p>
   <% end %>
-  <button type="button" name="fetch">Fetch Data</button>
+  <button type="button" class="action" name="fetch">Fetch Data</button>
 <% end %>
