@@ -12,6 +12,9 @@ class Tool extends AppModel
     "width": 640
 
   parse: (response) =>
+    if not response?
+      return ''
+
     @get('dataSource').set(key, value, {silent: true}) for key, value of response.data_source when key isnt 'data' 
     @get('filters').add(filter, {silent: true}) for filter in response.filters
     @get('settings').set(key, value, {silent: true}) for key, value of response.settings
