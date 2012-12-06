@@ -13,7 +13,6 @@ $title-bar-height = 25px
   &.minimized
     height: $title-bar-height !important
     min-height: 0
-    transition: height 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
     
     .window-min
       background-position: -29px 3px !important
@@ -46,6 +45,7 @@ $title-bar-height = 25px
 
         &.window-min
           background: url(../images/minimize-toggle.png) no-repeat -7px 3px
+          transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
           width: 10px
 
       input
