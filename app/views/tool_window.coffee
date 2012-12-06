@@ -127,7 +127,7 @@ class ToolWindow extends BaseView
       width: @$el.css('width')
       height: @$el.css('height')
 
-    @toolContainer.render().el
+    @toolContainer.update()
 
   # Drag
   startDrag: (e) =>

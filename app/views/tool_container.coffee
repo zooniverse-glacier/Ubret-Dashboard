@@ -12,12 +12,10 @@ class ToolContainer extends BaseView
 
   render: =>
     @$el.html @toolView.render().el
-    delay = =>
-      @$el.css
-        height: @$el.parent().height() - @$el.parent().find('.title-bar').first().height()
-
-    window.setTimeout(delay, 0)
     @
+
+  update: =>
+    @toolView.tool.start()
 
 
 module.exports = ToolContainer
