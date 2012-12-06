@@ -40,9 +40,10 @@
         padding: 5px 0
 
     .range
+      $range-base = 10px
       .value
         position: absolute
-        bottom: 8px
+        bottom: $range-base + 6
         width: 100%
         font-size: 0.9em
         text-align: center
@@ -55,14 +56,14 @@
           border-bottom: 1px solid $gray-less-dark
           border-top: 1px solid $black
           content: ''
-          bottom: 0
+          bottom: $range-base
           position: absolute
           width: 100%
         span
           background: $blue
           border: 1px solid $black
           border-radius: 10px
-          bottom: -4px
+          bottom: $range-base - 4
           box-shadow: 0 1px 2px darken($gray-dark, 20%)
           cursor: pointer
           height: 8px
@@ -70,7 +71,7 @@
           position: absolute
           z-index: 1
         .min, .max
-          bottom: 8px
+          bottom: $range-base + 9
           color: $black
           font-size: 0.8em
           position: absolute

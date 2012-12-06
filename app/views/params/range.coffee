@@ -4,7 +4,7 @@ class Range extends Param
   template: require 'views/templates/params/range'
 
   events:
-    'mousedown span': 'onUserStartDrag'
+    'mousedown .track': 'onUserStartDrag'
 
   render: =>
     super
@@ -17,9 +17,17 @@ class Range extends Param
     $('body').addClass 'unselectable'
     @dragging = true
 
-    startPositionLeft = @span.position().left
+    # Set bounds
     borderLeft = @$el.offset().left + (@span.width() / 2)
     borderRight = @$el.offset().left + @$el.width() - (@span.width() / 2)
+
+    # Make sure point snaps to the mousedown position
+    @span.css
+      left: e.offsetX
+    @value.html @getCurrentValue().toFixed(2)
+
+    # Then set span starting position
+    startPositionLeft = @span.position().left
 
     $(document).on 'mousemove', (d_e) =>
       if @dragging
