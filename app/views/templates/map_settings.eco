@@ -1,0 +1,10 @@
+<h3>Tool Settings</h3>
+<select name="spectrum" class="select-spectrum" id="select-spectrum">
+  <% for key, value of @spectra: %> 
+    <% if key is @curSpectrum: %>
+      <option value="<%- key %>" selected><%- value %></option>
+    <% else: %>
+      <option value="<%- key %>><%- value %></option>
+    <% end %>
+  <% end %>
+</select>

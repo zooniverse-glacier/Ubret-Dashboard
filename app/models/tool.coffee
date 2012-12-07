@@ -98,7 +98,7 @@ class Tool extends AppModel
     x_min = doc_width * 0.02
 
     y_max = doc_height * 0.35
-    y_min = doc_height * 0.05
+    y_min = doc_height * 0.10
 
     x = Math.random() * (x_max - x_min) + x_min
     y = Math.random() * (y_max - y_min) + y_min

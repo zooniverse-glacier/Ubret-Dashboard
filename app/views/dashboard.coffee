@@ -4,7 +4,6 @@ ToolWindow = require 'views/tool_window'
 Tools = require 'collections/tools'
 
 class DashboardView extends BaseView
-
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
 
@@ -12,6 +11,8 @@ class DashboardView extends BaseView
     if @model
       @model.get('tools').each @createToolWindow
     @
+    Backbone.Mediator.subscribe 'show-snap', @drawSnap
+    Backbone.Mediator.subscribe 'stop-snap', @stopSnap
 
   createToolWindow: (tool) =>
     toolWindow = new ToolWindow
@@ -35,7 +36,19 @@ class DashboardView extends BaseView
     @model.get('tools').on 'add', @addTool
     @model.get('tools').on 'reset', @removeTools
 
+  stopSnap: =>
+    @snap.remove() if @snap
+
+  drawSnap: (direction, dashHeight) =>
+    @snap.remove() if @snap
+    @$el.append("""<div class="snap #{direction}"></div>""")
+    @snap = @$('.snap')
+    @snap.css 
+      height: dashHeight - 20
+      width: if direction is 'left' or direction is 'right' then ((window.innerWidth / 2) - 20) else (window.innerWidth - 20)
+
   _setToolWindow: (toolWindow) ->
     ToolWindow = toolWindow
+
 
 module.exports = DashboardView

@@ -20,6 +20,7 @@ class ToolWindow extends BaseView
       @model.on 'remove', @removeWindow
       @model.on 'change:zindex', @setZindex
       @model.on 'change:left, change:top', @setPosition
+      @model.on 'change:width, change:height', @setSize
 
       @$el.css @initialSizeAndPosition()
 
@@ -34,6 +35,16 @@ class ToolWindow extends BaseView
     @titleBar.on 'endDrag', @endDrag
     @titleBar.on 'focusWindow', @focusWindow
     @$el.html @template()
+    
+    @dashWidth = window.innerWidth
+    @dashTop = 134
+    @dashBottom = window.innerHeight - 50
+    @dashHeight = @dashBottom - @dashTop
+
+    $(window).on 'resize', =>
+      @dashWidht = window.innerWidth
+      @dashBottom = window.innerHeight - 50
+      @dashHeight = @dashBottom - @dashTop
 
   initialSizeAndPosition: =>
     sizeAndPos = new Object
@@ -63,6 +74,11 @@ class ToolWindow extends BaseView
     @$el.css
       top: @model.get('top')
       left: @model.get('left')
+
+  setSize: =>
+    @$el.css
+      width: @model.get('width')
+      height: @model.get('height')
 
   focusWindow: =>
     @model.focusWindow()
@@ -118,7 +134,6 @@ class ToolWindow extends BaseView
             @$el.css
               height: startHeight + deltaY
 
-
   resizeWindowEnd: =>
     $('body').removeClass 'unselectable'
     @resizing = false
@@ -145,6 +160,14 @@ class ToolWindow extends BaseView
 
     $(document).on 'mousemove', (d_e) =>
       if @dragging
+        if d_e.pageX < 0
+          Backbone.Mediator.publish 'show-snap', 'left', @dashHeight
+        else if d_e.pageX > @dashWidth
+          Backbone.Mediator.publish 'show-snap', 'right', @dashHeight
+        else if d_e.pageY < @dashTop or d_e.pageY > @dashBottom
+          Backbone.Mediator.publish 'show-snap', 'full', @dashHeight
+        else
+          Backbone.Mediator.publish 'stop-snap'
         top = -(startTop - (d_e.pageY - @relY))
         left = -(startLeft - (d_e.pageX - @relX))
         @$el.css
@@ -155,10 +178,18 @@ class ToolWindow extends BaseView
     @dragging = false
     $(document).off 'mousemove'
 
-    @model.save
-      left: e.pageX - @relX
-      top: e.pageY - @relY
+    if e.pageX < 0
+      @snapLeft()
+    else if e.pageX > @dashWidth
+      @snapRight()
+    else if e.pageY < @dashTop or e.pageY > @dashBottom
+      @snapFull()
+    else
+      @model.save
+        left: e.pageX - @relX
+        top: e.pageY - @relY
 
+    Backbone.Mediator.publish 'stop-snap'
     @$el.css
       transform: ''
 
@@ -166,5 +197,25 @@ class ToolWindow extends BaseView
   removeWindow: =>
     @remove()
 
+  snapLeft: =>
+    @model.save
+      top: @dashTop
+      left: 0
+      height: @dashHeight 
+      width: @dashWidth / 2
+
+  snapRight: =>
+    @model.save
+      top: @dashTop
+      left: @dashWidth / 2
+      height: @dashHeight
+      width: @dashWidth / 2
+
+  snapFull: =>
+    @model.save
+      top: @dashTop
+      left: 0
+      height: @dashHeight
+      width: @dashWidth
 
 module.exports = ToolWindow

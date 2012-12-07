@@ -33,6 +33,7 @@ class UbretTool extends BaseView
         selectElementsCb: @selectElements
         selectKeyCb: @selectKey
 
+      _.extend opts, @model.get('settings').toJSON()
       @tool = new Ubret[@model.get('type')](opts)
       @tool.start()
     @
