@@ -9,22 +9,17 @@ class SubjectSettings extends BaseView
     'click .nav .prev' : 'onSelectPrevSubject'
     'click .nav .next' : 'onSelectNextSubject'
 
-  initialize: ->
-    Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
-
   render: =>
     @$el.html @template
     @
 
-  setKeys: (keys) =>
-    @keys = keys
-    @render()
-
   #Events
   onSelectPrevSubject: =>
+    nextSubject = @model.get('dataSource').get('data').previous(_.last(@model.get('selectedElements')))
+    @model.setElements [nextSubject]
     
-
   onSelectNextSubject: =>
-
+    prevSubject = @model.get('dataSource').get('data').next(_.last(@model.get('selectedElements')))
+    @model.setElements [prevSubject] 
 
 module.exports = SubjectSettings

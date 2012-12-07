@@ -17,7 +17,6 @@ class UbretTool extends BaseView
     @$el.addClass @model.get('type')
     @$el.attr 'id', @id
 
-
   render: =>
     if @model.get('dataSource').get('data').length is 0
       @$el.html @noDataTemplate()
@@ -50,7 +49,7 @@ class UbretTool extends BaseView
     @model.setElements ids
 
   selectKey: (key) =>
-    @model.set 'selectedKey', key
+    @model.save 'selectedKey', key
 
   toolSelectKey: =>
     @tool?.selectKey @model.get('selectedKey')
