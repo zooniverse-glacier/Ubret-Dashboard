@@ -42,11 +42,27 @@
     display: block
 
 .snap
-  position: absolute
-  top: 134px
+  position: absolute 
   border: 10px solid rgba(255, 186, 0, 0.6)
   background-color: rgba(255, 255, 255, 0.1)
+  z-index: 9999
   &.right
+    top: 134px
     right: 0
   &.left
+    top: 134px
     left: 0
+  &.top-left
+    top: 134px
+    left: 0
+  &.top-right
+    top: 134px
+    right: 0
+  &.full
+    top: 134px
+  &.bottom-right
+    bottom: 50px
+    right: 0
+  &.bottom-left
+    left: 0
+    bottom: 50px

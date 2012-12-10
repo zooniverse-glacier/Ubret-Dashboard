@@ -4,7 +4,11 @@ Settings = require 'views/settings'
 ToolContainer = require 'views/tool_container'
 WindowTitleBar = require 'views/window_title_bar'
 
+Snapping = require 'views/snapping'
+
 class ToolWindow extends BaseView
+  _.extend @prototype, Snapping
+
   className: 'tool-window'
   template: require './templates/window'
 
@@ -160,14 +164,7 @@ class ToolWindow extends BaseView
 
     $(document).on 'mousemove', (d_e) =>
       if @dragging
-        if d_e.pageX < 0
-          Backbone.Mediator.publish 'show-snap', 'left', @dashHeight
-        else if d_e.pageX > @dashWidth
-          Backbone.Mediator.publish 'show-snap', 'right', @dashHeight
-        else if d_e.pageY < @dashTop or d_e.pageY > @dashBottom
-          Backbone.Mediator.publish 'show-snap', 'full', @dashHeight
-        else
-          Backbone.Mediator.publish 'stop-snap'
+        @showSnap d_e.pageX, d_e.pageY
         top = -(startTop - (d_e.pageY - @relY))
         left = -(startLeft - (d_e.pageX - @relX))
         @$el.css
@@ -178,12 +175,8 @@ class ToolWindow extends BaseView
     @dragging = false
     $(document).off 'mousemove'
 
-    if e.pageX < 0
-      @snapLeft()
-    else if e.pageX > @dashWidth
-      @snapRight()
-    else if e.pageY < @dashTop or e.pageY > @dashBottom
-      @snapFull()
+    if @snap 
+      @setSnap e.pageX, e.pageY
     else
       @model.save
         left: e.pageX - @relX
@@ -196,26 +189,5 @@ class ToolWindow extends BaseView
   # Helper functions
   removeWindow: =>
     @remove()
-
-  snapLeft: =>
-    @model.save
-      top: @dashTop
-      left: 0
-      height: @dashHeight 
-      width: @dashWidth / 2
-
-  snapRight: =>
-    @model.save
-      top: @dashTop
-      left: @dashWidth / 2
-      height: @dashHeight
-      width: @dashWidth / 2
-
-  snapFull: =>
-    @model.save
-      top: @dashTop
-      left: 0
-      height: @dashHeight
-      width: @dashWidth
 
 module.exports = ToolWindow
