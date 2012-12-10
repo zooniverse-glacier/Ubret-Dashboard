@@ -17,7 +17,6 @@ class Toolbox extends BaseView
     'dashboard:initialized': 'onDashboardInit'
 
   initialize: ->
-    User.on 'sign-in', @loadSaved
     @tools = []
     @db_state = false
     for name, tool of Ubret
@@ -40,11 +39,6 @@ class Toolbox extends BaseView
   toggleSaved: (e) =>
     e.preventDefault()
     @savedList.$el.toggleClass 'active'
-
-  loadSaved: =>
-    User.current.on 'loaded-dashboards', =>
-      @savedList = new SavedList { collection: User.current.dashboards }
-      @render()
 
   onDashboardInit: =>
     @db_state = true

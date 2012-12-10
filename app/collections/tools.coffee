@@ -1,7 +1,10 @@
 Tool = require 'models/tool'
+corsSync = require 'sync'
 
 class Tools extends Backbone.Collection
   model: Tool
+
+  sync: corsSync
 
   url: =>
     "/dashboards/#{@dashboardId}/tools"

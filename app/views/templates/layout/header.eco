@@ -4,7 +4,7 @@
     <nav>
       <ul>
         <li><a href="#">Current Dashboard</a></li>
-        <li><a href="#">My Dashboards</a></li>
+        <li><a href="/#/my_dashboards">My Dashboards</a></li>
         <li><a href="#">My Data</a></li>
       </ul>
     </nav>

@@ -5,15 +5,17 @@ class SavedList extends BaseView
   className: "saved-list"
   template: require './templates/saved_dashboard'
 
-  initialize: ->
-    @collection.on 'add reset', @render
-
   render: =>
-    @$el.append(@collection.each (dashboard) => 
+    @collection?.each (dashboard) => 
+      console.log dashboard
+
       item =
         id: dashboard.id
-        name: dashboard.name
-      @template(item))
+        name: dashboard.get('name')
+        lastModified: dashboard.get('last_modified')
+
+      console.log item
+      @$el.append @template(item)
     @
 
 module.exports = SavedList

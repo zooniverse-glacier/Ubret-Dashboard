@@ -13,11 +13,8 @@ application =
 
     Manager.save('sources', sources)
 
-    User.currentUser()
-    # topBar = new TopBar {el: '.zooniverse-top-bar'}
-    # topBar.render()
-
-    router = new Router
-    Backbone.history.start()
+    User.currentUser().always ->
+      router = new Router
+      Backbone.history.start()
 
 module.exports = application

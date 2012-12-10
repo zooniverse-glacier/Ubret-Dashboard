@@ -6,24 +6,25 @@ Tools = require 'collections/tools'
 class DashboardView extends BaseView
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
+    'show-snap' : 'drawSnap'
+    'stopSnap' : 'stopSnap'
 
   render: =>
     if @model
-      @model.get('tools').each @createToolWindow
+      @model.tools.each @createToolWindow
     @
-    Backbone.Mediator.subscribe 'show-snap', @drawSnap
-    Backbone.Mediator.subscribe 'stop-snap', @stopSnap
 
   createToolWindow: (tool) =>
+    console.log @model.tools
     toolWindow = new ToolWindow
       model: tool
-      collection: @model.get('tools')
+      collection: @model.tools
     @$el.append toolWindow.render().el
 
   addTool: =>
-    @createToolWindow @model.get('tools').last()
+    @createToolWindow @model.tools.last()
     toolChannels = new Array
-    @model.get('tools').each (tool) ->
+    @model.tools.each (tool) ->
       toolChannels.push 
         name: tool.get('name')
         channel: tool.get('channel')
@@ -33,8 +34,9 @@ class DashboardView extends BaseView
 
   onDashboardInit: (model) =>
     @model = model
-    @model.get('tools').on 'add', @addTool
-    @model.get('tools').on 'reset', @removeTools
+    @render()
+    @model.tools.on 'add', @addTool
+    @model.tools.on 'reset', @removeTools
 
   stopSnap: =>
     @snap.remove() if @snap

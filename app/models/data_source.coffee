@@ -21,6 +21,7 @@ class DataSource extends AppModel
     "/dashboards/#{@get('tools').dashboardId}/tools/#{@toolId}/data_sources"
 
   toJSON: ->
+    console.log @attributes
     json = new Object
     json[key] = value for key, value of @attributes when key isnt 'tools'
     json

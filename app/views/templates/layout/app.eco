@@ -1,3 +1,6 @@
 <div class="app-header"></div>
 <div class="toolbox"></div>
 <div class="dashboard"></div>
+<div class="saved-dashboards">
+  <ul class="saved"></ul>
+</div>

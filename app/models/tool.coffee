@@ -30,9 +30,12 @@ class Tool extends AppModel
     @set 'filters', new Filters
     @set 'settings', new Settings
     @get('dataSource').on 'source:dataReceived', @onDataReceived
-    @generatePosition()
-    @focusWindow() if @collection?
-    @save [], { success: => @get('dataSource')['toolId'] = @id }
+    if typeof @id is 'undefined'
+      @generatePosition()
+      @focusWindow() if @collection?
+      @save [], { success: => @get('dataSource')['toolId'] = @id } 
+    else
+      @get('dataSource')['toolId'] = @id
 
   onDataReceived: =>
     if @get('dataSource').isExternal()

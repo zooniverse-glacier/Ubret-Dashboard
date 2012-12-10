@@ -59,6 +59,7 @@ class User extends Backbone.Events
       crossDomain: true
       contentType: 'application/json'
       dataType: 'json'
+      cache: false
       xhrFields:
         withCredentials: true
       success: (response) => 

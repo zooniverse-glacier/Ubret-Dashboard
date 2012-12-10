@@ -10,31 +10,38 @@ class Dashboard extends Backbone.Model
   sync: corsSync
 
   parse: (response) ->
-    response.tools = @get('tools').add tool for tool in response.tools
+    @tools.add { id: tool.id }, {silent: true} for tool in response.tools
     delete response.tools
-    @get('tools')['dashboardId'] = response.id
+    @tools['dashboardId'] = response.id
+    @tools.fetch()
     @resetCount()
     response
 
   initialize: ->
-    @set 'tools', new Tools
+    @tools = new Tools
     @resetCount()
-    @save().success => 
+    @save().success(=> 
       User.current.updateDashboards @id, @get('name')
-      Backbone.Mediator.publish 'dashboard:initialized', @
+      Backbone.Mediator.publish 'dashboard:initialized', @) if typeof @id is 'undefined'
 
   createTool: (toolType) =>
-    @get('tools').add 
+    @tools.add 
       type: toolType 
       name: "#{toolType}-#{@count}" 
       channel: "#{toolType}-#{@count}"
     @count += 1
 
+  toJSON: ->
+    json = new Object
+    json[key] = value for key, value of @attributes
+    json['tools'] = tool.id for tool in @tools.toJSON if @tools.length > 0
+    json
+
   resetCount: =>
-    @count = @get('tools').length + 1
+    @count = @tools.length + 1
 
   removeTools: =>
-    @get('tools').each (tool) -> tool.destroy()
+    @tools.each (tool) -> tool.destroy()
     @resetCount()
     @save()
 
