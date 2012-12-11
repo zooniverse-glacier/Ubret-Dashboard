@@ -17,9 +17,13 @@ class AppView extends BaseView
 
   initialize: ->
     @appHeader = new AppHeader
-    @dashboardView = new DashboardView
     @toolbox = new Toolbox
-    @savedList = new SavedList
+
+    # Main area views. Switched out when appropriate.
+    @dashboardView = new DashboardView
+    @savedListView = new SavedList
+
+    @appFocusView = @dashboardView
 
     @toolbox.on 'create', @addTool
     @toolbox.on 'remove-tools', @removeTools
@@ -29,8 +33,7 @@ class AppView extends BaseView
     @assign
       '.app-header': @appHeader
       '.toolbox': @toolbox
-      '.dashboard': @dashboardView
-      '.saved': @savedList
+      '.main-focus': @appFocusView
     @
 
   createDashboard: (id) =>
@@ -44,8 +47,7 @@ class AppView extends BaseView
       fetcher.success @createDashboardView
 
   createDashboardView: =>
-    @savedList.$el.hide()
-    @dashboardView.render().$el.show()
+    @appFocusView = @dashboardView
 
   addTool: (toolType) =>
     @dashboardModel.createTool toolType
@@ -54,12 +56,12 @@ class AppView extends BaseView
     @dashboardModel.removeTools()
 
   showIndex: =>
-    console.log 'index'
+    @appFocusView = @dashboardView
+    @render()
 
   showSaved: =>
-    console.log User.current.dashboards
-    @savedList.collection = User.current.dashboards
-    @savedList.render().$el.show()
-    @dashboardView.$el.hide()
+    @savedListView.collection = User.current.dashboards
+    @appFocusView = @savedListView
+    @render()
   
 module.exports = AppView

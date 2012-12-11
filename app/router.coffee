@@ -23,6 +23,7 @@ class Router extends Backbone.Router
     @appView.createDashboard()
 
   savedDashboards: =>
+    console.log 'wot'
     @navigate("", {trigger: true}) if User.current is null
     @appView.showSaved()
 

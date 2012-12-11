@@ -104,7 +104,7 @@ class Tool extends AppModel
 
   getMaxZIndex: =>
     if @collection.length isnt 0
-      @collection.max((tool) -> tool.get('zindex')).get('zindex')
+      @collection.max((tool) -> tool.get('zindex'))?.get('zindex')
     else
       0
 
