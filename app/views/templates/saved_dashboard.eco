@@ -1,7 +1,0 @@
-<li>
-  <ul class="saved-dashboard">
-    <li><img src="http://placehold.it/200x150" /></li>
-    <li><a href="/#/dashboard/<%- @id %>"><%- @name %></a></li>
-    <li><%- @lastModified %></li>
-  </ul>
-</li>

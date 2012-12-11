@@ -10,6 +10,7 @@ class Tool extends AppModel
   defaults:
     "height": 480
     "width": 640
+    "zindex": 1
 
   parse: (response) =>
     if not response?

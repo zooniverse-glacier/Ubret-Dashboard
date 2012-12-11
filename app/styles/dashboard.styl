@@ -1,3 +1,25 @@
+
+.main-focus
+  @extends .container
+
+
+// Saved Dashboards
+.dashboards
+  clearfix()
+  ul
+    box-sizing: border-box
+    float: left
+    padding: 8px 0
+    text-align: center
+    width: 33%
+    @extends #semantic-list
+    li
+      .title
+        font-weight: 700
+      .meta
+        color: $gray
+        font-style: italic
+
 .toolbox
   height: 50px
   padding-bottom: 20px
@@ -26,6 +48,7 @@
     li:first-child
       border-left: 1px solid $mid-gray
 
+
 .index
   text-align: center
   margin: 0 auto
@@ -34,6 +57,7 @@
   padding: 30px
   top: 40%
   left: 35%
+
 
 .snap
   position: absolute 

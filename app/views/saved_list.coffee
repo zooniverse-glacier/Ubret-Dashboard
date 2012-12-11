@@ -1,21 +1,20 @@
 BaseView = require 'views/base_view'
 
 class SavedList extends BaseView
-  tagName: "ul"
-  className: "saved-list"
-  template: require './templates/saved_dashboard'
+  itemTemplate: require './templates/saved_dashboards/item'
+  listTemplate: require './templates/saved_dashboards/list'
 
   render: =>
-    @collection?.each (dashboard) => 
-      console.log dashboard
+    @$el.html @listTemplate()
+
+    @collection?.each (dashboard) =>
 
       item =
         id: dashboard.id
         name: dashboard.get('name')
         lastModified: dashboard.get('last_modified')
 
-      console.log item
-      @$el.append @template(item)
+      @$el.find('.dashboards').append @itemTemplate(item)
     @
 
 module.exports = SavedList
