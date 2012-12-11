@@ -1,4 +1,5 @@
 User = require 'user'
+
 AppView = require 'app_view'
 
 class Router extends Backbone.Router
@@ -23,7 +24,6 @@ class Router extends Backbone.Router
     @appView.createDashboard()
 
   savedDashboards: =>
-    console.log 'wot'
     @navigate("", {trigger: true}) if User.current is null
     @appView.showSaved()
 

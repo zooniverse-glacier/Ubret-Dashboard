@@ -6,10 +6,14 @@ class AppHeader extends BaseView
 
   events:
     'click .create-dashboard': 'onCreateDashboard'
+    'click nav a': 'onNavigate'
 
   render: =>
     @$el.html @template()
     @
+
+  onNavigate: (e) =>
+    $(e.currentTarget).addClass('active')
 
   onCreateDashboard: (e) =>
     Backbone.Mediator.publish 'dashboard:create'

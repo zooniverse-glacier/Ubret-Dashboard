@@ -14,4 +14,5 @@ class BaseView extends Backbone.View
     _.each selectors, (view, selector) =>
       view.setElement(@$(selector)).render()
 
+
 module.exports = BaseView
