@@ -1,6 +1,6 @@
 <div class="window">
   <div class="title-bar"></div>
-  <div class="settings active"></div>
+  <div class="settings <%- @active %>"></div>
   <div class="tool-container"></div>
 </div>
 

@@ -38,7 +38,6 @@ class ToolWindow extends BaseView
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
     @titleBar.on 'focusWindow', @focusWindow
-    @$el.html @template()
     
     @dashWidth = window.innerWidth
     @dashTop = 134
@@ -57,6 +56,8 @@ class ToolWindow extends BaseView
     sizeAndPos
 
   render: =>
+    active = if @model.settings.get('active') then 'active' else ''
+    @$el.html @template({active: active})
     @assign
       '.title-bar': @titleBar
       '.settings': @settings
