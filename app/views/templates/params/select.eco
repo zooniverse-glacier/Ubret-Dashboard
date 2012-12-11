@@ -1,8 +1,12 @@
 <% label = require('./label')(@) %>
 
-<%- label %>
-<select data-cid="<%- @.cid %>">
-  <% for key, value of @get('choices'): %>
-    <option value="<%- key %>"><%- value %></option>
-  <% end %>
-</select>
+<div class="columns">
+  <div class="column one-quarter"><%- label %></div>
+  <div class="column three-quarters">
+    <select data-cid="<%- @.cid %>">
+      <% for key, value of @get('choices'): %>
+        <option value="<%- key %>"><%- value %></option>
+      <% end %>
+    </select>
+  </div>
+</div>
