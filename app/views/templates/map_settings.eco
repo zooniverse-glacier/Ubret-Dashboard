@@ -4,7 +4,7 @@
     <% if key is @curSpectrum: %>
       <option value="<%- key %>" selected><%- value %></option>
     <% else: %>
-      <option value="<%- key %>><%- value %></option>
+      <option value="<%- key %>"><%- value %></option>
     <% end %>
   <% end %>
 </select>

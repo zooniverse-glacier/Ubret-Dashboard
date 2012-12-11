@@ -14,18 +14,18 @@ class MapSettings extends BaseView
     halpha: 'H-Alpha'
 
   events:
-    'change select.spectrum' : 'changeSpectrum'
+    'change select.select-spectrum' : 'changeSpectrum'
 
   initialize: ->
-    @model.settings.set 'spectrum', 'visible'
+    @model.settings.set 'spectrum', 'visible' if typeof @model.settings.get('spectrum') is 'undefined'
 
-  render: ->
+  render: =>
     curSpectrum = @model.settings.get('spectrum')
     @$el.html @template({curSpectrum: curSpectrum, spectra: @spectra})
     @
 
-  changeSpectrum: (e) ->
+  changeSpectrum: (e) =>
     spectrum = e.target.value
-    @model.get('settings').set  'specturm', spectrum
+    @model.settings.set  'spectrum', spectrum
 
 module.exports = MapSettings
