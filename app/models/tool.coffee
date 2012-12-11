@@ -39,7 +39,7 @@ class Tool extends AppModel
     @dataSource.set 'tools', @collection
     @dataSource.on 'source:dataReceived', @onDataReceived
 
-    @settings.on 'change', => @save()
+    @settings.on 'change', => @save() unless typeof @id is null
 
     if typeof @id is 'undefined'
       @save [], 

@@ -23,6 +23,7 @@ exports.config =
     stylesheets:
       joinTo:
         'stylesheets/app.css': /^app\/styles\/index.styl/
+        'stylesheets/vendor.css' : /^vendor/
         'test/stylesheets/test.css': /^test/
       order:
         before: [
