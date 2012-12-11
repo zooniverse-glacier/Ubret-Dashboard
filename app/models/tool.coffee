@@ -40,9 +40,12 @@ class Tool extends AppModel
     @dataSource.on 'source:dataReceived', @onDataReceived
 
     if typeof @id is 'undefined'
-      @generatePosition()
-      @focusWindow() if @collection?
-      @save [], { success: => @dataSource['toolId'] = @id } 
+      @save [], 
+        success: => 
+          console.log 'here'
+          @dataSource['toolId'] = @id 
+          @generatePosition()
+          @focusWindow() if @collection?
     else
       @dataSource['toolId'] = @id
 
