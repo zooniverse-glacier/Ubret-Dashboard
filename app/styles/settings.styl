@@ -38,11 +38,15 @@
 
   ul
     @extends #semantic-list
+    @extends section
     li
       button
         @extends #choice-button
 
   .data-settings
+    .type-select
+      @extends section
+
     .params
       > div
         padding: 5px 0
