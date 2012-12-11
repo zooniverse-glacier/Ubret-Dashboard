@@ -19,7 +19,7 @@ class DataSettings extends BaseView
     'source:dataReceived': 'updateValidSourceTools'
 
   initialize: (options) ->
-    @dataSource = @model.get('dataSource')
+    @dataSource = @model.dataSource
     @channel = @model.get('channel')
     @sourceType = false
     @updateValidSourceTools()
@@ -109,15 +109,15 @@ class DataSettings extends BaseView
     if _.isEqual source_tool, tool
       return false
 
-    if _.isUndefined tool.get('dataSource').get('source')
+    if _.isUndefined tool.dataSource.get('source')
       return false
 
-    if tool.get('dataSource').isExternal()
+    if tool.dataSource.isExternal()
       return true
     else
       unless _.find checkedTools, ((checkedTool) -> _.isEqual(tool, checkedTool))
         checkedTools.push tool
-        chainedTool = tool.collection.find((next_tool) -> tool.get('dataSource').get('source') == next_tool.get('channel'))
+        chainedTool = tool.collection.find((next_tool) -> tool.dataSource.get('source') == next_tool.get('channel'))
         @checkToolSource source_tool, chainedTool, checkedTools
       else
         return false

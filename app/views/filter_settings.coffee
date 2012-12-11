@@ -13,7 +13,7 @@ class FilterSettings extends BaseView
 
   addFilter: (e) =>
     key = @model.get('selectedKey') or 'id'
-    extents = @model.get('dataSource').dataExtents key, @model.get('selectedElements')
+    extents = @model.dataSource.dataExtents key, @model.get('selectedElements')
     @model.get('filters').add
       key: key
       min: extents.min

@@ -15,9 +15,9 @@ class Tool extends AppModel
     if not response?
       return ''
 
-    @get('dataSource').set(key, value, {silent: true}) for key, value of response.data_source when key isnt 'data' 
-    @get('filters').add(filter, {silent: true}) for filter in response.filters
-    @get('settings').set(key, value, {silent: true}) for key, value of response.settings
+    @dataSource = new DataSource response.data_source, {silent: true}
+    @filters = new Filters response.filters, {silent: true}
+    @settings = new Settings response.settings, {silent: true}
 
     delete response.filters
     delete response.data_source
@@ -25,24 +25,34 @@ class Tool extends AppModel
 
     response
 
+  toJSON: ->
+    json = new Object
+    json[key] = value for key, value of @attributes
+    json[key] = @[key].toJSON() for key in ['dataSource', 'filters', 'settings']
+    json
+
   initialize: ->
-    @set 'dataSource', new DataSource({tools: @collection})
-    @set 'filters', new Filters
-    @set 'settings', new Settings
-    @get('dataSource').on 'source:dataReceived', @onDataReceived
+    @filters = @filters or new Filters
+    @settings = @settings or new Settings
+
+    @dataSource = @dataSource or new DataSource
+    @dataSource.set 'tools', @collection
+    @dataSource.on 'source:dataReceived', @onDataReceived
+
     if typeof @id is 'undefined'
       @generatePosition()
       @focusWindow() if @collection?
-      @save [], { success: => @get('dataSource')['toolId'] = @id } 
+      @save [], { success: => @dataSource['toolId'] = @id } 
     else
-      @get('dataSource')['toolId'] = @id
+      @dataSource['toolId'] = @id
 
   onDataReceived: =>
-    if @get('dataSource').isExternal()
+    if @dataSource.isExternal()
       @boundTool = false
       @triggerEvent 'tool:dataProcessed'
+
     else
-      @trigger 'bind-tool', @get('dataSource').get('source'), @
+      @trigger 'bind-tool', @dataSource.get('source'), @
 
   bindTool: (tool) =>
     @boundTool = tool

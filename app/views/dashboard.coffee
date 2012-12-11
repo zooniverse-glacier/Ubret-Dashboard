@@ -7,7 +7,7 @@ class DashboardView extends BaseView
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
     'show-snap' : 'drawSnap'
-    'stopSnap' : 'stopSnap'
+    'stop-snap' : 'stopSnap'
 
   render: =>
     if @model
@@ -31,6 +31,7 @@ class DashboardView extends BaseView
 
   removeTools: =>
     @$el.empty()
+    @render()
 
   onDashboardInit: (model) =>
     @model = model

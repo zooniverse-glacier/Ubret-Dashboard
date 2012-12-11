@@ -40,10 +40,10 @@ class AppView extends BaseView
     else
       @dashboardModel = new DashboardModel { id: id }
       fetcher = @dashboardModel.fetch()
+      fetcher.success Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
       fetcher.success @createDashboardView
 
   createDashboardView: =>
-    @dashboardView.model = @dashboardModel
     @savedList.$el.hide()
     @dashboardView.render().$el.show()
 

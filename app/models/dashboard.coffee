@@ -10,11 +10,9 @@ class Dashboard extends Backbone.Model
   sync: corsSync
 
   parse: (response) ->
-    @tools.add { id: tool.id }, {silent: true} for tool in response.tools
-    delete response.tools
     @tools['dashboardId'] = response.id
-    @tools.fetch()
-    @resetCount()
+    @tools.fetch
+      success: => @resetCount()
     response
 
   initialize: ->

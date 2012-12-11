@@ -10,22 +10,28 @@ class UbretTool extends BaseView
     if @model?
       @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
-      @model.get('filters').on 'add reset', @toolAddFilters
-      @model.get('settings').on 'change', @passSetting
+      @model.filters.on 'add reset', @toolAddFilters
+      @model.settings.on 'change', @passSetting
       @model.on 'tool:dataProcessed', @render
 
     @$el.addClass @model.get('type')
     @$el.attr 'id', @id
 
   render: =>
-    if @model.get('dataSource').get('data').length is 0
+    if @model.dataSource.get('data').length is 0
       @$el.html @noDataTemplate()
     else
-      @$el.find('.no-data').remove()
+      @$('.no-data').remove()
+      data = @model.dataSource.get('data').map (datum) ->
+        try
+          return datum.toJSON()
+        catch error
+          return datum
+
       opts =
-        data: @model.get('dataSource').get('data').map (datum) -> datum.toJSON()
-        keys: @dataKeys(@model.get('dataSource').get('data').models)
-        filters: @model.get('filters').models
+        data: data
+        keys: @dataKeys data[0]
+        filters: @model.filters.models
         selectedElements: @model.get('selectedElements')?.slice()
         selectedKey: @model.get('selectedKey')
         el: @$el
@@ -33,13 +39,17 @@ class UbretTool extends BaseView
         selectElementsCb: @selectElements
         selectKeyCb: @selectKey
 
-      _.extend opts, @model.get('settings').toJSON()
+      _.extend opts, @model.settings.toJSON()
       @tool = new Ubret[@model.get('type')](opts)
-      @tool.start()
+
+      # This is Horrifically ugly
+      if $("##{@id}").length isnt 0
+        @tool.start()
+      else
+        setTimeout @tool.start, 500
     @
 
-  dataKeys: (data) =>
-    dataModel = data[0].toJSON()
+  dataKeys: (dataModel) =>
     keys = new Array
     for key, value of dataModel
       keys.push key unless key in @nonDisplayKeys
@@ -59,9 +69,9 @@ class UbretTool extends BaseView
     @tool?.selectElements @model.get('selectedElements').slice()
 
   toolAddFilters: =>
-    @tool.addFilters @model.get('filters').toJSON()
+    @tool.addFilters @model.filters.toJSON()
 
   passSetting: =>
-    @tool.receiveSetting key, value for key, value of @model.get('settings').changed
+    @tool.receiveSetting key, value for key, value of @model.settings.changed
 
 module.exports = UbretTool

@@ -14,7 +14,8 @@ application =
     Manager.save('sources', sources)
 
     User.currentUser().always ->
-      router = new Router
-      Backbone.history.start()
+      User.current.on 'loaded-dashboards', ->
+        router = new Router
+        Backbone.history.start()
 
 module.exports = application

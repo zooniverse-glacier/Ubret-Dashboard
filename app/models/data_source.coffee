@@ -11,10 +11,6 @@ class DataSource extends AppModel
     delete response.data if response.data
     response
 
-  initialize: ->
-    @on 'change', => 
-      @save()
-
   sync: corsSync
 
   urlRoot: =>
@@ -31,15 +27,17 @@ class DataSource extends AppModel
       url = Manager.get('sources').get(@get('source')).get('url')
       subjects = new Subjects([], {params: @get('params'), url: url })
       subjects.url()
-      @set('data', subjects)
+      @save('data', subjects)
       @get('data').fetch
         success: =>
           @triggerEvent 'source:dataReceived'
+          @save()
     else if @get('type') is 'internal'
       source = @get('tools').find (tool) =>
         tool.get('channel') == @get('source')
-      @set('data', source.get('dataSource').get('data'))
+      @save('data', source.dataSource.get('data'))
       @triggerEvent 'source:dataReceived'
+      @save()
     else
       throw 'unknown source type'
 
