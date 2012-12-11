@@ -37,7 +37,7 @@ $white = #fff;
 
 $gray-dark = hsl(0, 0, 20%);
 $gray-less-dark = hsl(0, 0, 33%);
-$gray = hsl(0, 0, 60%)
+$gray = hsl(0, 0, 67%)
 $gray-less-light = hsl(0, 0, 84%);
 $gray-light = hsl(0, 0, 93%);
 $gray-more-light = hsl(0, 0, 96%);
@@ -49,6 +49,8 @@ $blue = rgba(0, 155, 253, 1);
   font-size: 20px;
 }
 
+
+// Button Styles
 #standard-button {
   background: $gray-more-light;
   border: 1px solid $gray-less-light;
@@ -88,6 +90,28 @@ $blue = rgba(0, 155, 253, 1);
   }
 }
 
+#choice-button {
+  background: $gray;
+  border: 1px solid $black;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba($white, 0.33) inset, 0 1px 2px rgba($black, 0.33);
+  color: $black;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 0;
+  text-align: center;
+
+  &.on {
+    background: hsl(0, 0, 45%);
+    box-shadow: 0 1px 1px rgba($black, 0.45) inset, 0 1px 1px rgba($white, 0.30);
+  }
+
+  &.full {
+    width: 100%;
+  }
+}
+
 #bold-button {
   background: $blue;
   border: 1px solid rgba($black, 0.67);
@@ -111,6 +135,8 @@ $blue = rgba(0, 155, 253, 1);
   }
 }
 
+
+// Border Styles
 #rule-below {
   position: relative;
 
@@ -141,13 +167,15 @@ $blue = rgba(0, 155, 253, 1);
   }
 }
 
+
+// "Grid"
 .columns {
   clearfix();
 
   .column {
     box-sizing: border-box;
     float: left;
-    padding-left: 30px;
+    padding-left: 2px;
 
     &:first-child {
       padding-left: 0;
@@ -157,6 +185,14 @@ $blue = rgba(0, 155, 253, 1);
     &.one-half {width: 50%;}
     &.three-quarters {width: 75%;}
   }
+}
+
+
+// List Styles
+#semantic-list {
+  list-style: none;
+  margin: 0 0 5px 0;
+  padding: 0;
 }
 
 .container {

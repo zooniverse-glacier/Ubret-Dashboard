@@ -36,10 +36,13 @@
       left: 4px
       transform: rotate(0)
 
-  .data-settings
-    ul
-      list-style: none
+  ul
+    @extends #semantic-list
+    li
+      button
+        @extends #choice-button
 
+  .data-settings
     .params
       > div
         padding: 5px 0

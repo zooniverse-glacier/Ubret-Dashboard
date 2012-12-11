@@ -1,7 +1,9 @@
-<% if @types: %>
-<ul>
+<% if @types.length: %>
+<select>
   <% for type in @types: %>
-    <li data-type="<%- type.name %>"><%- type.name %></li>
+    <option value="<%- type.name %>" <% if @selectedType is type.name: %>selected<% end %>>
+      <button><%- type.name %></button>
+    </option>
   <% end %>
-</ul>
+</select>
 <% end %>

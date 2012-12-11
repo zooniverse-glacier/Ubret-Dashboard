@@ -4,6 +4,7 @@ class Param extends BaseView
 
   initialize: ->
     throw 'must pass a param' unless @model
+    @$el.addClass @model.get('type').toLowerCase()
 
   render: =>
     @$el.html @template(@model)

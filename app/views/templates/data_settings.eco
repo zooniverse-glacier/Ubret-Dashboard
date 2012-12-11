@@ -1,6 +1,20 @@
-<ul class="type-select">
-  <li><a class="external">External API</a></li>
-  <li><a class="internal">Other Tool</a></li>
+<ul class="type-select columns">
+  <li class="external column one-half">
+    <% if @sourceType is 'external': %>
+      <% buttonClass = 'full on' %>
+    <% else: %>
+      <% buttonClass = 'full' %>
+    <% end %>
+    <button class="<%- buttonClass %>">External API</button>
+  </li>
+  <li class="internal column one-half">
+    <% if @sourceType is 'internal': %>
+      <% buttonClass = 'full on' %>
+    <% else: %>
+      <% buttonClass = 'full' %>
+    <% end %>
+    <button class="<%- buttonClass %>">Other Tool</button>
+  </li>
 </ul>
 
 <% if @sourceType: %>

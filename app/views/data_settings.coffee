@@ -11,8 +11,8 @@ class DataSettings extends BaseView
   template: require './templates/data_settings'
 
   events:
-    'click .type-select a.external' : 'showExternal'
-    'click .type-select a.internal' : 'showInternal'
+    'click .type-select .external button' : 'showExternal'
+    'click .type-select .internal button' : 'showInternal'
     'change .external .sources': 'onSelectExternalSource'
     'click button[name="fetch"]'    : 'updateModel'
 
@@ -70,11 +70,11 @@ class DataSettings extends BaseView
     @setParams()
     @render()
 
-  showExternal: =>
+  showExternal: (e) =>
     @sourceType = 'external'
     @render()
 
-  showInternal: =>
+  showInternal: (e) =>
     @sourceType = 'internal'
     @render()
 

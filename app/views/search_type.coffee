@@ -4,7 +4,8 @@ class SearchType extends BaseView
   template: require './templates/search_type'
 
   events:
-    'click li': 'onSelectType'
+    'change select': 'onSelectType'
+
   initialize: ->
     @types = []
 
@@ -15,12 +16,12 @@ class SearchType extends BaseView
       @types.push types
 
   render: =>
-    @$el.html @template({types: @types})
+    @$el.html @template({types: @types, selectedType: @selectedType})
     @
 
   # Events
   onSelectType: (e) =>
-    type = $(e.currentTarget).data('type')
-    @trigger 'searchType:typeSelected', type
+    @selectedType = $(e.currentTarget).val()
+    @trigger 'searchType:typeSelected', @selectedType
 
 module.exports = SearchType
