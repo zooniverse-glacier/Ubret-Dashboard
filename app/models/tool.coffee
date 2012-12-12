@@ -1,10 +1,10 @@
-AppModel = require 'models/app_model'
+BaseModel = require 'models/base_model'
 DataSource = require 'models/data_source'
 Settings = require 'models/settings'
 Filters = require 'collections/filters'
 corsSync = require 'sync'
 
-class Tool extends AppModel
+class Tool extends BaseModel
   sync: corsSync
 
   defaults:
@@ -43,7 +43,7 @@ class Tool extends AppModel
     @settings.on 'change', => @save() unless typeof @id is null
 
     @generatePosition()
-    
+
     if typeof @id is 'undefined'
       @save [], 
         success: => 

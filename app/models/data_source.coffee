@@ -1,10 +1,10 @@
-AppModel = require 'models/app_model'
+BaseModel = require 'models/base_model'
 Subjects = require 'collections/subject_collection'
 Manager = require 'modules/manager'
 Params = require 'collections/params'
 corsSync = require 'sync'
 
-class DataSource extends AppModel
+class DataSource extends BaseModel
   defaults:
     data: []
 

@@ -1,5 +1,5 @@
-AppModel = require 'models/app_model'
+BaseModel = require 'models/base_model'
 
-class Param extends AppModel
+class Param extends BaseModel
 
 module.exports = Param

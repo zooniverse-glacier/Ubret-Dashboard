@@ -1,6 +1,6 @@
-AppModel = require 'models/app_model'
+BaseModel = require 'models/base_model'
 
-class Subject extends AppModel
+class Subject extends BaseModel
 
   initialize: ->
     @set 'uid', _.uniqueId('subject_')
