@@ -14,8 +14,10 @@ class AppView extends BaseView
 
   subscriptions:
     'dashboard:create': 'createDashboard'
+    'router:dashboardCreate': 'createDashboard'
     'router:dashboardRetrieve': 'createDashboard'
     'router:viewSavedDashboards': 'showSaved'
+    'router:index': 'showIndex'
 
   initialize: ->
     @appHeader = new AppHeader
