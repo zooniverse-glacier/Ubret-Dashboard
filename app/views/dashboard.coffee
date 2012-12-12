@@ -1,16 +1,27 @@
 BaseView = require 'views/base_view'
 
-ToolWindow = require 'views/tool_window'
 Tools = require 'collections/tools'
 
+Toolbox = require 'views/toolbox'
+ToolWindow = require 'views/tool_window'
+
 class DashboardView extends BaseView
+  template: require './templates/layout/dashboard'
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
     'show-snap' : 'drawSnap'
     'stop-snap' : 'stopSnap'
 
+  initialize: ->
+    @toolboxView = new Toolbox
+    @toolboxView.on 'create', @addTool
+    @toolboxView.on 'remove-tools', @removeTools
+
   render: =>
-    @$el.html ''
+    @$el.html @template()
+    @assign
+      '.toolbox': @toolboxView
+
     if @model
       @model.tools.each @createToolWindow
     @

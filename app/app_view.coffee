@@ -6,7 +6,6 @@ DashboardModel = require 'models/dashboard'
 DashboardView = require 'views/dashboard'
 
 AppHeader = require 'views/app_header'
-Toolbox = require 'views/toolbox'
 SavedList = require 'views/saved_list'
 
 class AppView extends BaseView
@@ -21,7 +20,6 @@ class AppView extends BaseView
 
   initialize: ->
     @appHeader = new AppHeader
-    @toolbox = new Toolbox
 
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
@@ -31,13 +29,9 @@ class AppView extends BaseView
 
     @$el.html @template()
 
-    @toolbox.on 'create', @addTool
-    @toolbox.on 'remove-tools', @removeTools
-
   render: =>
     @assign
       '.app-header': @appHeader
-      '.toolbox': @toolbox
       '.main-focus': @appFocusView
     @
 
