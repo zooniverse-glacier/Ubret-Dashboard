@@ -42,12 +42,13 @@ class Tool extends AppModel
 
     @settings.on 'change', => @save() unless typeof @id is null
 
+    @generatePosition()
+    
     if typeof @id is 'undefined'
       @save [], 
         success: => 
           console.log 'here'
           @dataSource['toolId'] = @id 
-          @generatePosition()
           @focusWindow()
     else
       @dataSource['toolId'] = @id
