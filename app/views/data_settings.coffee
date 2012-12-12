@@ -21,7 +21,7 @@ class DataSettings extends BaseView
   initialize: (options) ->
     @dataSource = @model.dataSource
     @channel = @model.get('channel')
-    @sourceType = false
+    @sourceType = @dataSource.get('type') or false
     @updateValidSourceTools()
 
     @searchTypeView = new SearchTypeView()
@@ -100,10 +100,9 @@ class DataSettings extends BaseView
 
   updateValidSourceTools: =>
     @intSources = []
-    if @model.collection
-      @model.collection.each (tool) =>
-        isValid = @checkToolSource @model, tool, []
-        if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
+    @model.collection?.each (tool) =>
+      isValid = @checkToolSource @model, tool, []
+      if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
 
   checkToolSource: (source_tool, tool, checkedTools) =>
     if _.isEqual source_tool, tool

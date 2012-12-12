@@ -41,18 +41,19 @@ class AppView extends BaseView
       '.main-focus': @appFocusView
     @
 
-  createDashboard: (id) =>
-    if typeof id is 'undefined'
-      @dashboardModel = new DashboardModel
-      @createDashboardView()
-    else
-      @dashboardModel = new DashboardModel { id: id }
-      fetcher = @dashboardModel.fetch()
-      fetcher.success Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
-      fetcher.success @createDashboardView
+  createDashboard: =>
+    @dashboardModel = new DashboardModel
+    @createDashboardView()
+
+  loadDashboard: (id) =>
+    @dashboardModel = new DashboardModel { id: id }
+    fetcher = @dashboardModel.fetch()
+    fetcher.success @createDashboardView
+    fetcher.success Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   createDashboardView: =>
     @appFocusView = @dashboardView
+    @render()
 
   addTool: (toolType) =>
     @dashboardModel.createTool toolType

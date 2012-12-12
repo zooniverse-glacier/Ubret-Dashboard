@@ -1,6 +1,6 @@
 
 <ul>
   <li><img src="http://placehold.it/200x150" /></li>
-  <li class="title"><a href="/#/dashboard/<%- @id %>"><b><%- @name %></b></a></li>
+  <li class="title"><a href="/#/<%- @id %>"><b><%- @name %></b></a></li>
   <li class="meta"><%- @lastModified %></li>
 </ul>

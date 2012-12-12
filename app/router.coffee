@@ -5,9 +5,9 @@ AppView = require 'app_view'
 class Router extends Backbone.Router
   routes:
     ''              : 'index'
-    'dashboard/new' : 'newDashboard'
-    'dashboard/:id' : 'retrieveDashboard'
+    'new'           : 'newDashboard'
     'my_dashboards' : 'savedDashboards'
+    ':id'           : 'retrieveDashboard'
 
   initialize: ->
     @appView = new AppView({el: $('#app')})
@@ -18,6 +18,7 @@ class Router extends Backbone.Router
 
   retrieveDashboard: (id) =>
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
+    @appView.loadDashboard(id)
 
   newDashboard: =>
     @navigate("", {trigger: true}) if User.current is null

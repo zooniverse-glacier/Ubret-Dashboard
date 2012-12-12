@@ -40,7 +40,7 @@ class ToolWindow extends BaseView
     @titleBar.on 'focusWindow', @focusWindow
     
     @dashWidth = window.innerWidth
-    @dashTop = 134
+    @dashTop = 141
     @dashBottom = window.innerHeight - 50
     @dashHeight = @dashBottom - @dashTop
 
