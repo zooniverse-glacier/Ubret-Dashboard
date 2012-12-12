@@ -6,16 +6,35 @@ class AppHeader extends BaseView
 
   events:
     'click .create-dashboard': 'onCreateDashboard'
-    'click nav a': 'onNavigate'
+
+  subscriptions:
+    'router:index': 'onViewCurrent'
+    'router:dashboardCreate': 'onViewCurrent'
+    'router:dashboardRetrieve': 'onViewCurrent'
+    'router:viewSavedDashboards': 'onViewSaved'
+
+  rendered: false
 
   render: =>
-    @$el.html @template()
+    @$el.html @template() unless @rendered
+    @rendered = true
     @
 
-  onNavigate: (e) =>
-    $(e.currentTarget).addClass('active')
+  onViewCurrent: =>
+    @removeActive()
+    $('nav.main-nav').find('.current').addClass('active')
+
+  onViewSaved: =>
+    @removeActive()
+    $('nav.main-nav').find('.my-dashboards').addClass('active')
 
   onCreateDashboard: (e) =>
     Backbone.Mediator.publish 'dashboard:create'
+
+  # Helpers
+  removeActive: =>
+    $('nav.main-nav').find('.active').each (i) ->
+      $(@).removeClass('active')
+
     
 module.exports = AppHeader

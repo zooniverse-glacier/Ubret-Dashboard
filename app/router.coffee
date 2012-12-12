@@ -14,17 +14,17 @@ class Router extends Backbone.Router
     @appView.render()
 
   index: ->
-    @appView.showIndex()
+    Backbone.Mediator.publish 'router:index'
 
   retrieveDashboard: (id) =>
-    @appView.createDashboard(id)
+    Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
   newDashboard: =>
     @navigate("", {trigger: true}) if User.current is null
-    @appView.createDashboard()
+    Backbone.Mediator.publish 'router:dashboardCreate'
 
   savedDashboards: =>
     @navigate("", {trigger: true}) if User.current is null
-    @appView.showSaved()
+    Backbone.Mediator.publish 'router:viewSavedDashboards'
 
 module.exports = Router

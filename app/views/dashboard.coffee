@@ -10,6 +10,7 @@ class DashboardView extends BaseView
     'stop-snap' : 'stopSnap'
 
   render: =>
+    @$el.html ''
     if @model
       @model.tools.each @createToolWindow
     @

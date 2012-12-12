@@ -3,10 +3,10 @@
     <a href="/#/"><img class="logo" src="/images/logo.png"></a>
   </div>
   <div class="group">
-    <nav>
+    <nav class="main-nav">
       <ul>
-        <li><a href="#">Current Dashboard</a></li>
-        <li><a href="/#/my_dashboards">My Dashboards</a></li>
+        <li><a class="current" href="#">Current Dashboard</a></li>
+        <li><a class="my-dashboards" href="/#/my_dashboards">My Dashboards</a></li>
         <li><a href="#">My Data</a></li>
       </ul>
     </nav>

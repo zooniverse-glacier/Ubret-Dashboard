@@ -14,6 +14,8 @@ class AppView extends BaseView
 
   subscriptions:
     'dashboard:create': 'createDashboard'
+    'router:dashboardRetrieve': 'createDashboard'
+    'router:viewSavedDashboards': 'showSaved'
 
   initialize: ->
     @appHeader = new AppHeader
@@ -25,11 +27,12 @@ class AppView extends BaseView
 
     @appFocusView = @dashboardView
 
+    @$el.html @template()
+
     @toolbox.on 'create', @addTool
     @toolbox.on 'remove-tools', @removeTools
 
   render: =>
-    @$el.html @template()
     @assign
       '.app-header': @appHeader
       '.toolbox': @toolbox
