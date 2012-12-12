@@ -18,7 +18,6 @@ class Router extends Backbone.Router
 
   retrieveDashboard: (id) =>
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
-    @appView.loadDashboard(id)
 
   newDashboard: =>
     @navigate("", {trigger: true}) if User.current is null

@@ -79,4 +79,15 @@ class User extends Backbone.Events
       xhrFields:
         withCredentials: true
 
+  removeDashboards: (id) =>
+    url = "#{User.apiUrl()}/users/dashboards/remove/#{id}"
+    $.ajax
+      url: url
+      type: 'DELETE'
+      crossDomain: true
+      dataType: 'json'
+      xhrFields:
+        withCredentials: true
+
+
 module.exports = User

@@ -14,7 +14,7 @@ class AppView extends BaseView
   subscriptions:
     'dashboard:create': 'createDashboard'
     'router:dashboardCreate': 'createDashboard'
-    'router:dashboardRetrieve': 'createDashboard'
+    'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
     'router:index': 'showIndex'
 
@@ -23,7 +23,7 @@ class AppView extends BaseView
 
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
-    @savedListView = new SavedList
+    @savedListView = new SavedList { collection: User.current.dashboards }
 
     @appFocusView = @dashboardView
 
@@ -60,7 +60,6 @@ class AppView extends BaseView
     @render()
 
   showSaved: =>
-    @savedListView.collection = User.current.dashboards
     @appFocusView = @savedListView
     @render()
   
