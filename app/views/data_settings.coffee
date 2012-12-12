@@ -25,7 +25,7 @@ class DataSettings extends BaseView
     @updateValidSourceTools()
 
     @searchTypeView = new SearchTypeView()
-    @params = new Params()
+    @params = @dataSource.params
     @paramsView = new ParamsView({collection: @params})
 
     @searchTypeView.on 'searchType:typeSelected', @onSetSearchType

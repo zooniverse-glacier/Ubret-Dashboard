@@ -24,8 +24,8 @@ class DataSource extends AppModel
     json
 
   initialize: ->
-    @params = new Params(@get('params')) if typeof @get('params') isnt 'undefined'
-    @params = @params or new Params()
+    @params = new Params(@get('params'))
+    @data = new Subjects(@get('data'), {params: @params})
 
   fetchData: =>
     if @get('type') is 'external'

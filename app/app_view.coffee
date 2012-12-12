@@ -49,12 +49,6 @@ class AppView extends BaseView
     @appFocusView = @dashboardView
     @render()
 
-  addTool: (toolType) =>
-    @dashboardModel.createTool toolType
-
-  removeTools: =>
-    @dashboardModel.removeTools()
-
   showIndex: =>
     @appFocusView = @dashboardView
     @render()

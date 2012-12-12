@@ -11,32 +11,27 @@ class Dashboard extends Backbone.Model
 
   parse: (response) ->
     @tools['dashboardId'] = response.id
-    @tools.fetch
-      success: => @resetCount()
+    @tools.fetch()
     response
 
   initialize: ->
     @tools = new Tools
-    @resetCount()
     @save().success(=> 
       User.current.updateDashboards @id, @get('name')
       Backbone.Mediator.publish 'dashboard:initialized', @) if typeof @id is 'undefined'
 
   createTool: (toolType) =>
+    name = _.uniqueId "#{toolType}-"
     @tools.add 
       type: toolType 
-      name: "#{toolType}-#{@count}" 
-      channel: "#{toolType}-#{@count}"
-    @count += 1
+      name: name
+      channel: name
 
   toJSON: ->
     json = new Object
     json[key] = value for key, value of @attributes
     json['tools'] = tool.id for tool in @tools.toJSON if @tools.length > 0
     json
-
-  resetCount: =>
-    @count = @tools.length + 1
 
   removeTools: =>
     @tools.each (tool) -> tool.destroy()

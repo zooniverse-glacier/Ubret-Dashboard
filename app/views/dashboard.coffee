@@ -14,7 +14,7 @@ class DashboardView extends BaseView
 
   initialize: ->
     @toolboxView = new Toolbox
-    @toolboxView.on 'create', @addTool
+    @toolboxView.on 'create', @addToolModel
     @toolboxView.on 'remove-tools', @removeTools
 
   render: =>
@@ -33,13 +33,11 @@ class DashboardView extends BaseView
       collection: @model.tools
     @$el.append toolWindow.render().el
 
+  addToolModel: (type) =>
+    @model.createTool type
+
   addTool: =>
     @createToolWindow @model.tools.last()
-    toolChannels = new Array
-    @model.tools.each (tool) ->
-      toolChannels.push 
-        name: tool.get('name')
-        channel: tool.get('channel')
 
   removeTools: =>
     @$el.empty()

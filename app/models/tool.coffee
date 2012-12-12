@@ -48,7 +48,7 @@ class Tool extends AppModel
           console.log 'here'
           @dataSource['toolId'] = @id 
           @generatePosition()
-          @focusWindow() if @collection?
+          @focusWindow()
     else
       @dataSource['toolId'] = @id
 
