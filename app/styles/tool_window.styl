@@ -15,7 +15,7 @@ $title-bar-height = 25px
     min-height: 0
     
     .window-min
-      background-position: -29px 3px !important
+      background-position: -29px 4px !important
 
   .window
     position: relative
@@ -44,9 +44,16 @@ $title-bar-height = 25px
         padding: 0 3px
 
         &.window-min
-          background: url(../images/minimize-toggle.png) no-repeat -7px 3px
+          background: url(../images/minimize-toggle.png) no-repeat -7px 4px
           transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
           width: 10px
+
+        &.window-close
+          background: url(../images/close-toggle.png) no-repeat 2px 8px
+          width: 10px
+
+        &.window-title
+          padding: 0 5px
 
       input
         display: none

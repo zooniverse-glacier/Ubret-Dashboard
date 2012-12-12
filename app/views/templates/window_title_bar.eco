@@ -1,5 +1,5 @@
 <span class="window-min"></span>
-<span class="window-close">X</span>
+<span class="window-close"></span>
 <span class="window-title"><%- @name %></span>
 
 <input type="text" name="window-title" value="<%- @name %>">
