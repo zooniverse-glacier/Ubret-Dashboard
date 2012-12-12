@@ -22,6 +22,7 @@ class DataSettings extends BaseView
     @dataSource = @model.dataSource
     @channel = @model.get('channel')
     @sourceType = @dataSource.get('type') or false
+    @selectedSource = Manager.get('sources').get(@dataSource.get('source')) if typeof @dataSource.get('source') isnt 'undefined'
     @updateValidSourceTools()
 
     @searchTypeView = new SearchTypeView()

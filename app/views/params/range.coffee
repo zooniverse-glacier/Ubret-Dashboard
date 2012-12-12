@@ -6,11 +6,24 @@ class Range extends Param
   events:
     'mousedown .track': 'onUserStartDrag'
 
+  initialize: ->
+    super
+    @firstRender = true
+    @min = @model.get('validation')[0]
+    @max = @model.get('validation')[1]
+
   render: =>
     super
     @span = @$el.find('span')
     @value = @$el.find('.value')
-    @value.html @getCurrentValue().toFixed(2)
+    if @firstRender and typeof @model.get('value') isnt 'undefined'
+      @value.html @model.get('value').toFixed(2)
+      position = (167 * (@model.get('value') - @min)) / (@max - @min)
+      @span.css
+        left: position
+      @firstRender = false
+    else
+      @value.html @getCurrentValue().toFixed(2)
     @
 
   onUserStartDrag: (e) =>
@@ -52,12 +65,10 @@ class Range extends Param
     $(document).off 'mousemove'
 
   getCurrentValue: =>
-    min = @model.get('validation')[0]
-    max = @model.get('validation')[1]
 
     # Rescale span position to within range
-    val = (@span.position().left - 0) * (max - min) / ((@$el.width() - @span.width()) - 0) + min
-    if _.isNaN val then min else val
+    val = (@span.position().left - 0) * (@max - @min) / ((@$el.width() - @span.width()) - 0) + @min
+    if _.isNaN val then @min else val
 
 
 module.exports = Range

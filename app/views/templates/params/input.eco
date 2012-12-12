@@ -3,6 +3,6 @@
 <div class="columns">
   <div class="column one-quarter"><%- label %></div>
   <div class="column three-quarters">
-    <input type="text" data-cid="<%- @.cid %>" placeholder="<%- @get('description') %>">
+    <input type="text" data-cid="<%- @.cid %>" placeholder="<%- @get('description') %>" value="<%- @get('value') %>">
   </div>
 </div>
