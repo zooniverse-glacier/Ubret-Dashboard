@@ -42,12 +42,10 @@ class Tool extends BaseModel
 
     @settings.on 'change', => @save() unless typeof @id is null
 
-    @generatePosition()
-
     if typeof @id is 'undefined'
+      @generatePosition()
       @save [], 
-        success: => 
-          console.log 'here'
+        success: =>
           @dataSource['toolId'] = @id 
           @focusWindow()
     else

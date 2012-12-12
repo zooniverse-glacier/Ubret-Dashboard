@@ -27,7 +27,6 @@ class DashboardView extends BaseView
     @
 
   createToolWindow: (tool) =>
-    console.log @model.tools
     toolWindow = new ToolWindow
       model: tool
       collection: @model.tools
