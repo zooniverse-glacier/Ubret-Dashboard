@@ -8,11 +8,11 @@ class DataSource extends BaseModel
   sync: corsSync
 
   urlRoot: =>
-    "/dashboards/#{@get('tools').dashboardId}/tools/#{@toolId}/data_sources"
+    "/dashboards/#{@tools.dashboardId}/tools/#{@toolId}/data_sources"
 
   toJSON: ->
     json = new Object
-    json[key] = value for key, value of @attributes when key isnt 'tools'
+    json[key] = value for key, value of @attributes
     json
 
   initialize: ->
@@ -28,7 +28,7 @@ class DataSource extends BaseModel
           @triggerEvent 'source:dataReceived'
           @save()
     else if @get('type') is 'internal'
-      source = @get('tools').find (tool) =>
+      source = @tools.find (tool) =>
         tool.get('channel') == @get('source')
       @data = source.dataSource.data
       @triggerEvent 'source:dataReceived'

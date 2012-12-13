@@ -20,7 +20,7 @@ class Tool extends BaseModel
       @dataSource.set response.data_source, {silent: true}
     else
       @dataSource = new DataSource response.data_source
-      @dataSource.fetchData() if @dataSource.get('type') in ['external', 'internal']
+      @dataSource.tools = @collection
 
     if @filters
       @filters.add response.filters
@@ -49,7 +49,7 @@ class Tool extends BaseModel
     @settings = @settings or new Settings
 
     @dataSource = @dataSource or new DataSource
-    @dataSource.set 'tools', @collection
+    @dataSource.tools = @collection
     @dataSource.on 'source:dataReceived', @onDataReceived
 
     @settings.on 'change', => @save() unless typeof @id is null

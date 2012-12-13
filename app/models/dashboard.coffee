@@ -12,7 +12,9 @@ class Dashboard extends Backbone.Model
   parse: (response) =>
     @tools['dashboardId'] = response.id
     @tools.fetch
-      success: => @resetCount()
+      success: => 
+        @resetCount()
+        @loadInternalTools()
     response
 
   initialize: ->
@@ -52,5 +54,15 @@ class Dashboard extends Backbone.Model
     @tools.each (tool) -> tool.destroy()
     @resetCount()
     @save()
+
+  loadInternalTools: =>
+    @tools.map (tool) =>
+      if tool.dataSource.get('type') is 'internal'
+        source = @tools.find (sourceTool) =>
+          sourceTool.get('channel') is tool.dataSource.get('source')
+        console.log source
+        source.dataSource.on 'source:dataReceived', => console.log 'here'; tool.dataSource.fetchData()
+    @tools.map (tool) => 
+      tool.dataSource.fetchData() if tool.dataSource.get('type') is 'external'
 
 module.exports = Dashboard
