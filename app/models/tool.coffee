@@ -112,13 +112,16 @@ class Tool extends BaseModel
   # initializers
   focusWindow: =>
     zindex = @getMaxZIndex()
-    @save 'zindex', zindex + 1 unless @get('zindex') is zindex
+    @save 'zindex', zindex + 1 unless zindex is 0
 
+  # Does not count current tool
   getMaxZIndex: =>
-    if @collection.length isnt 0
-      @collection.max((tool) -> tool.get('zindex'))?.get('zindex')
-    else
-      0
+    max = @collection.max (tool) =>
+      unless tool.cid is @cid
+        return tool.get('zindex')
+      else
+        return 0
+    max.get('zindex')
 
   generatePosition: ->
     doc_width = $(document).width()

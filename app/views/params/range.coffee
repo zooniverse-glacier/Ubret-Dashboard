@@ -65,7 +65,6 @@ class Range extends Param
     $(document).off 'mousemove'
 
   getCurrentValue: =>
-
     # Rescale span position to within range
     val = (@span.position().left - 0) * (@max - @min) / ((@$el.width() - @span.width()) - 0) + @min
     if _.isNaN val then @min else val
