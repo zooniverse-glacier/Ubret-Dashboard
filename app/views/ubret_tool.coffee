@@ -18,7 +18,7 @@ class UbretTool extends BaseView
     @$el.attr 'id', @id
 
   render: =>
-    if @model.dataSource.data.length is 0
+    if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0)
       @$el.html @noDataTemplate()
     else
       @$('.no-data').remove()
