@@ -20,7 +20,7 @@ class Settings extends BaseView
         ToolSettings = require 'views/graph_settings'
       when 'Statistics'
         ToolSettings = require 'views/key_settings'
-      when 'SubjectViewer'
+      when 'SubjectViewer', "Spectra"
         ToolSettings = require 'views/subject_settings'
       when 'Map'
         ToolSettings = require 'views/map_settings'
