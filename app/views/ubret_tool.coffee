@@ -18,11 +18,11 @@ class UbretTool extends BaseView
     @$el.attr 'id', @id
 
   render: =>
-    if @model.dataSource.get('data').length is 0
+    if @model.dataSource.data.length is 0
       @$el.html @noDataTemplate()
     else
       @$('.no-data').remove()
-      data = @model.dataSource.get('data').map (datum) ->
+      data = @model.dataSource.data.map (datum) ->
         try
           return datum.toJSON()
         catch error

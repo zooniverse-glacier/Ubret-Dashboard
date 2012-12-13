@@ -9,19 +9,21 @@ class Dashboard extends Backbone.Model
 
   sync: corsSync
 
-  parse: (response) ->
+  parse: (response) =>
     @tools['dashboardId'] = response.id
-    @tools.fetch()
+    @tools.fetch
+      success: => @resetCount()
     response
 
   initialize: ->
     @tools = new Tools
     @save().success(=> 
       User.current.updateDashboards @id, @get('name')
-      Backbone.Mediator.publish 'dashboard:initialized', @) if typeof @id is 'undefined'
+      Backbone.Mediator.publish 'dashboard:initialized', @
+      @resetCount()) if typeof @id is 'undefined'
 
   createTool: (toolType) =>
-    name = _.uniqueId "#{toolType}-"
+    name = "#{toolType}-#{@count}"
     @tools.add 
       type: toolType 
       name: name
@@ -32,6 +34,9 @@ class Dashboard extends Backbone.Model
     json[key] = value for key, value of @attributes
     json['tools'] = tool.id for tool in @tools.toJSON if @tools.length > 0
     json
+
+  resetCount: =>
+    @count = @tools.length + 1
 
   removeTools: =>
     @tools.each (tool) -> tool.destroy()

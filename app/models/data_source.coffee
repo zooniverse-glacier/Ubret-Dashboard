@@ -18,7 +18,6 @@ class DataSource extends BaseModel
     "/dashboards/#{@get('tools').dashboardId}/tools/#{@toolId}/data_sources"
 
   toJSON: ->
-    console.log @attributes
     json = new Object
     json[key] = value for key, value of @attributes when key isnt 'tools'
     json
@@ -30,17 +29,15 @@ class DataSource extends BaseModel
   fetchData: =>
     if @get('type') is 'external'
       url = Manager.get('sources').get(@get('source')).get('url')
-      subjects = new Subjects([], {params: @params, url: url })
-      subjects.url()
-      @save('data', subjects)
-      @get('data').fetch
+      @data = new Subjects([], {params: @params, url: url })
+      @data.fetch
         success: =>
           @triggerEvent 'source:dataReceived'
           @save()
     else if @get('type') is 'internal'
       source = @get('tools').find (tool) =>
         tool.get('channel') == @get('source')
-      @save('data', source.dataSource.get('data'))
+      @data = source.dataSource.data
       @triggerEvent 'source:dataReceived'
       @save()
     else
@@ -50,7 +47,7 @@ class DataSource extends BaseModel
     (@get('type') is 'external')
 
   dataExtents: (key, ids) =>
-    selectedModels = _.map((@get('data').filter (item) ->
+    selectedModels = _.map((@data.filter (item) ->
       item.id in ids), (model) -> model.toJSON())
     selectedValues = _.pluck(selectedModels, key)
     selectedValues.sort()
