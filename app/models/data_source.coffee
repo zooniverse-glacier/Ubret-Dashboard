@@ -5,13 +5,6 @@ Params = require 'collections/params'
 corsSync = require 'sync'
 
 class DataSource extends BaseModel
-  defaults:
-    data: []
-
-  parse: (response) ->
-    delete response.data if response.data
-    response
-
   sync: corsSync
 
   urlRoot: =>

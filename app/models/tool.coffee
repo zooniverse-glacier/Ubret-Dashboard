@@ -20,7 +20,7 @@ class Tool extends BaseModel
       @dataSource.set response.data_source, {silent: true}
     else
       @dataSource = new DataSource response.data_source, {silent: true}
-      @dataSource.fetchData()
+      @dataSource.fetchData() if @dataSource.get('type') in ['external', 'internal']
     @filters = new Filters response.filters, {silent: true}
     @settings = new Settings response.settings, {silent: true}
 

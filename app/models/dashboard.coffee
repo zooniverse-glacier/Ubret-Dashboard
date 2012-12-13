@@ -23,7 +23,7 @@ class Dashboard extends Backbone.Model
       @resetCount()) if typeof @id is 'undefined'
 
   createTool: (toolType) =>
-    name = "#{toolType}-#{@count}"
+    name = @namer toolType
     @tools.add 
       type: toolType 
       name: name
@@ -37,6 +37,17 @@ class Dashboard extends Backbone.Model
 
   resetCount: =>
     @count = @tools.length + 1
+
+  namer: (type) =>
+    name = "#{type}-#{@count}"
+    console.log name
+    tool = @tools.filter (tool) ->
+      tool.get('name') is name
+    if tool.length isnt 0
+      @count = @count + 1
+      @namer type
+    else
+      name
 
   removeTools: =>
     @tools.each (tool) -> tool.destroy()
