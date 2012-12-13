@@ -16,7 +16,10 @@ class Tool extends BaseModel
     if not response?
       return ''
 
-    @dataSource = new DataSource response.data_source, {silent: true}
+    if @dataSource
+      @dataSource.set response.data_source, {silent: true}
+    else
+      @dataSource = new DataSource response.data_source, {silent: true}
     @filters = new Filters response.filters, {silent: true}
     @settings = new Settings response.settings, {silent: true}
 

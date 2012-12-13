@@ -30,7 +30,7 @@ class DataSource extends BaseModel
   fetchData: =>
     if @get('type') is 'external'
       url = Manager.get('sources').get(@get('source')).get('url')
-      subjects = new Subjects([], {params: @get('params'), url: url })
+      subjects = new Subjects([], {params: @params, url: url })
       subjects.url()
       @save('data', subjects)
       @get('data').fetch
