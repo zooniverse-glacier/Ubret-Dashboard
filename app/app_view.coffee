@@ -23,7 +23,9 @@ class AppView extends BaseView
 
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
-    @savedListView = new SavedList { collection: User.current.dashboards }
+    User.currentUser().always =>
+      User.current.on 'loaded-dashboards', =>
+        @savedListView = new SavedList { collection: User.current.dashboards }
 
     @appFocusView = @dashboardView
 
