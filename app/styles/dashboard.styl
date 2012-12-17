@@ -6,7 +6,7 @@
 // Saved Dashboards
 .dashboards
   clearfix()
-  ul
+  > ul
     box-sizing: border-box
     float: left
     padding: 8px 0
@@ -21,11 +21,7 @@
         font-style: italic
 
       ul
-        text-align: center
-        display: inline-block
-        li
-          width: auto
-          display: inline
+        @extends #button-row
           
 
 .toolbox
