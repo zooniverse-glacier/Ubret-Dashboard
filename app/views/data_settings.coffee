@@ -37,6 +37,9 @@ class DataSettings extends BaseView
       intSources: @intSources or []
       sourceType: @sourceType
 
+    if @sourceType is 'internal'
+      opts['source'] = @model.dataSource.get('source')
+
     if @selectedSource
       new_opts =
         search_types: @selectedSource.get('search_types')
