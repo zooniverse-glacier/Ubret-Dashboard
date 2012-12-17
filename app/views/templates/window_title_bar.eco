@@ -2,4 +2,8 @@
 <span class="window-close"></span>
 <span class="window-title"><%- @name %></span>
 
+<% if @link: %>
+  <span class="link"><%- @link %></span>
+<% end %>
+
 <input type="text" name="window-title" value="<%- @name %>">

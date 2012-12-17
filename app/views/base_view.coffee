@@ -2,6 +2,8 @@
 class BaseView extends Backbone.View
   _.extend @prototype, Backbone.Events
 
+  view_opts: {}
+
   assign: (selector, view) =>
     if _.isObject(selector)
       selectors = selector

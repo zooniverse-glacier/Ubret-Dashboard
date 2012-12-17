@@ -16,10 +16,13 @@ class WindowTitleBar extends BaseView
 
   initialize: ->
     unless @model then throw 'must pass a model'
+
+    @view_opts = _.extend @view_opts, {name: @model.get('name')}
     @model.on 'change:name', @render
+    @model.on 'tool:dataProcessed', @updateToolLink
 
   render: =>
-    @$el.html @template({name: @model.get('name')})
+    @$el.html @template(@view_opts)
     @
 
   minimize: =>
@@ -38,6 +41,14 @@ class WindowTitleBar extends BaseView
   editTitle: =>
     @$('.window-title').hide()
     @$('input').show()
+
+  updateToolLink: =>
+    unless @model.dataSource.isExternal()
+      @view_opts = _.extend @view_opts, {link: @model.dataSource.get('source')}
+    else
+      @view_opts = _.omit @view_opts, 'link'
+
+    @render()
 
   updateModel: (e) =>
     if e.type is 'focusout' or e.which is 13

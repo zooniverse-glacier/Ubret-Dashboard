@@ -41,7 +41,7 @@ class Dashboard extends Backbone.Model
     @count = @tools.length + 1
 
   namer: (type) =>
-    name = "#{type}-#{@count}"
+    name = "#{type} #{@count}"
     tool = @tools.filter (tool) ->
       tool.get('name') is name
     if tool.length isnt 0
