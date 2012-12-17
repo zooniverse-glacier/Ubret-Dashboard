@@ -39,6 +39,13 @@ class DataSource extends BaseModel
   isExternal: =>
     (@get('type') is 'external')
 
+  sourceName: =>
+    if @isExternal()
+      name = Manager.get('sources').get(@get('source')).get('name')
+    else
+      name = @tools.find((tool) => tool.get('channel') == @get('source')).get('name')
+    return name
+
   dataExtents: (key, ids) =>
     selectedModels = _.map((@data.filter (item) ->
       item.id in ids), (model) -> model.toJSON())

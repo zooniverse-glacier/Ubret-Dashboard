@@ -19,12 +19,12 @@ class WindowTitleBar extends BaseView
     @viewOpts = new Object
 
     @model.on 'change:name', @render
-    @model.on 'tool:dataProcessed', @updateToolLink
+    @model.on 'tool:dataProcessed', @render
 
   render: =>
+    @viewOpts['link'] = @model.dataSource.sourceName()
     @viewOpts['name'] = @model.get('name')
     @$el.html @template(@viewOpts)
-    @
 
   minimize: =>
     @trigger 'minimize'
@@ -42,14 +42,6 @@ class WindowTitleBar extends BaseView
   editTitle: =>
     @$('.window-title').hide()
     @$('input').show().focus().select()
-
-  updateToolLink: =>
-    unless @model.dataSource.isExternal()
-      @viewOpts['link'] = @model.dataSource.get('source')
-    else
-      @viewOpts['link'] = null
-
-    @render()
 
   updateModel: (e) =>
     if e.type is 'focusout' or e.which is 13
