@@ -16,13 +16,14 @@ class WindowTitleBar extends BaseView
 
   initialize: ->
     unless @model then throw 'must pass a model'
+    @viewOpts = new Object
 
     @model.on 'change:name', @render
     @model.on 'tool:dataProcessed', @updateToolLink
 
   render: =>
-    @view_opts = _.extend @view_opts, {name: @model.get('name')}
-    @$el.html @template(@view_opts)
+    @viewOpts['name'] = @model.get('name')
+    @$el.html @template(@viewOpts)
     @
 
   minimize: =>
@@ -44,9 +45,9 @@ class WindowTitleBar extends BaseView
 
   updateToolLink: =>
     unless @model.dataSource.isExternal()
-      @view_opts = _.extend @view_opts, {link: @model.dataSource.get('source')}
+      @viewOpts['link'] = @model.dataSource.get('source')
     else
-      @view_opts = _.omit @view_opts, 'link'
+      @viewOpts['link'] = null
 
     @render()
 
