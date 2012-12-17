@@ -43,12 +43,7 @@ class UbretTool extends BaseView
       _.extend opts, @model.settings.toJSON()
 
       @tool.setOpts opts
-
-      # This is Horrifically ugly
-      if $("##{@id}").length isnt 0
-        @tool.start()
-      else
-        setTimeout @tool.start, 500
+      _.defer @tool.start
     @
 
   dataKeys: (dataModel) =>
