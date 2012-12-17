@@ -39,11 +39,16 @@ class DataSource extends BaseModel
   isExternal: =>
     (@get('type') is 'external')
 
+  isInternal: =>
+    (@get('type') is 'internal')
+
   sourceName: =>
     if @isExternal()
       name = Manager.get('sources').get(@get('source')).get('name')
+    else if @isInternal()
+      name = @tools.find((tool) => tool.get('channel') == @get('source')).get('name') 
     else
-      name = @tools.find((tool) => tool.get('channel') == @get('source')).get('name')
+      name = ''
     return name
 
   dataExtents: (key, ids) =>
