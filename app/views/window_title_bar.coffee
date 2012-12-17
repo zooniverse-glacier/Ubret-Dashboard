@@ -17,11 +17,11 @@ class WindowTitleBar extends BaseView
   initialize: ->
     unless @model then throw 'must pass a model'
 
-    @view_opts = _.extend @view_opts, {name: @model.get('name')}
     @model.on 'change:name', @render
     @model.on 'tool:dataProcessed', @updateToolLink
 
   render: =>
+    @view_opts = _.extend @view_opts, {name: @model.get('name')}
     @$el.html @template(@view_opts)
     @
 
@@ -40,7 +40,7 @@ class WindowTitleBar extends BaseView
 
   editTitle: =>
     @$('.window-title').hide()
-    @$('input').show()
+    @$('input').show().focus().select()
 
   updateToolLink: =>
     unless @model.dataSource.isExternal()
@@ -58,7 +58,7 @@ class WindowTitleBar extends BaseView
         @$('.window-title').show()
         @$('input').hide()
       else
-        @model.set 'name', newTitle
+        @model.save 'name', newTitle
 
 
 module.exports = WindowTitleBar
