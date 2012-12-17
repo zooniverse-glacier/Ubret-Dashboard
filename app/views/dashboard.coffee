@@ -52,7 +52,6 @@ class DashboardView extends BaseView
     @snap.remove() if @snap
 
   drawSnap: (direction, dashHeight) =>
-    console.log direction, dashHeight
     @snap.remove() if @snap
     @$el.append("""<div class="snap #{direction}"></div>""")
     @snap = @$('.snap')
