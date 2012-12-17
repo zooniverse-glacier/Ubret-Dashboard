@@ -24,6 +24,7 @@ class AppView extends BaseView
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
     User.currentUser().always =>
+
       User.current.on 'loaded-dashboards', =>
         @savedListView = new SavedList { collection: User.current.dashboards }
 
@@ -39,7 +40,9 @@ class AppView extends BaseView
 
   createDashboard: =>
     @dashboardModel = new DashboardModel
-    @createDashboardView()
+    @dashboardModel.on 'change', =>
+      window.location.hash = "/#{@dashboardModel.id}"
+      @createDashboardView()
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel { id: id }
