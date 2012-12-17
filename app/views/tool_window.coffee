@@ -23,8 +23,8 @@ class ToolWindow extends BaseView
     if @model?
       @model.on 'remove', @removeWindow
       @model.on 'change:zindex', @setZindex
-      @model.on 'change:left, change:top', @setPosition
-      @model.on 'change:width, change:height', @setSize
+      @model.on 'change:left change:top', @setPosition
+      @model.on 'change:width change:height', @setSize
 
       @$el.css @initialSizeAndPosition()
 
@@ -45,7 +45,7 @@ class ToolWindow extends BaseView
     @dashHeight = @dashBottom - @dashTop
 
     $(window).on 'resize', =>
-      @dashWidht = window.innerWidth
+      @dashWidth = window.innerWidth
       @dashBottom = window.innerHeight - 50
       @dashHeight = @dashBottom - @dashTop
 
@@ -81,6 +81,7 @@ class ToolWindow extends BaseView
       left: @model.get('left')
 
   setSize: =>
+    console.log @model.get('width'), @model.get('height')
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
@@ -178,13 +179,13 @@ class ToolWindow extends BaseView
 
     if @snap 
       @setSnap e.pageX, e.pageY
+      @toolContainer.update()
     else
       @model.save
         left: e.pageX - @relX
         top: e.pageY - @relY
 
     Backbone.Mediator.publish 'stop-snap'
-    @toolContainer.update()
     @$el.css
       transform: ''
 
