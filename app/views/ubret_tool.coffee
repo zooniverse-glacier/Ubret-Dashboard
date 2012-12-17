@@ -16,6 +16,9 @@ class UbretTool extends BaseView
 
     @$el.addClass @model.get('type')
     @$el.attr 'id', @id
+    @tool = new Ubret[@model.get('type')]
+      selector: '#' + @id
+      el: @$el
 
   render: =>
     if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0)
@@ -34,13 +37,12 @@ class UbretTool extends BaseView
         filters: @model.filters.models
         selectedElements: @model.get('selectedElements')?.slice()
         selectedKey: @model.get('selectedKey')
-        el: @$el
-        selector: '#' + @id
         selectElementsCb: @selectElements
         selectKeyCb: @selectKey
 
       _.extend opts, @model.settings.toJSON()
-      @tool = new Ubret[@model.get('type')](opts)
+
+      @tool.setOpts opts
 
       # This is Horrifically ugly
       if $("##{@id}").length isnt 0
