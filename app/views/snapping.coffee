@@ -1,20 +1,22 @@
 Snapping = 
+  margins: 20
+
   showSnap: (x, y) ->
-    if x < 0
-      if y < @dashTop
+    if x < @margins
+      if y < ( @dashTop + @margins )
         Backbone.Mediator.publish 'show-snap', 'top-left', @dashHeight
-      else if y > @dashBottom
+      else if y > ( @dashBottom - @margins ) 
         Backbone.Mediator.publish 'show-snap', 'bottom-left', @dashHeight
       else
         Backbone.Mediator.publish 'show-snap', 'left', @dashHeight
-    else if x > @dashWidth
-      if y < @dashTop
+    else if x > ( @dashWidth - @margins )
+      if y < ( @dashTop + @margins )
         Backbone.Mediator.publish 'show-snap', 'top-right', @dashHeight
-      else if y > @dashBottom
+      else if y > ( @dashBottom - @margins)
         Backbone.Mediator.publish 'show-snap', 'bottom-right', @dashHeight
       else
         Backbone.Mediator.publish 'show-snap', 'right', @dashHeight
-    else if y < @dashTop or y > @dashBottom
+    else if y < ( @dashTop + @margins )  or y > ( @dashBottom - @margins )
       Backbone.Mediator.publish 'show-snap', 'full', @dashHeight
     else
       Backbone.Mediator.publish 'stop-snap'
@@ -72,21 +74,21 @@ Snapping =
       width: @dashWidth / 2
 
   setSnap: (x, y) ->
-    if x < 0
-      if y < @dashTop
+    if x < @margins 
+      if y < ( @dashTop + @margins )
         @snapTopLeft()
-      else if y > @dashBottom
+      else if y > ( @dashBottom - @margins )
         @snapBottomLeft()
       else
         @snapLeft()
-    else if x > @dashWidth
-      if y < @dashTop
+    else if x > ( @dashWidth - @margins)
+      if y < ( @dashTop + @margins )
         @snapTopRight()
-      else if y > @dashBottom
+      else if y > ( @dashBottom - @margins )
         @snapBottomRight()
       else
         @snapRight()
-    else if y < @dashTop or y > @dashBottom
+    else if y < ( @dashTop - @margins ) or y > ( @dashBottom + @margins ) 
       @snapFull()
 
 module.exports = Snapping

@@ -184,6 +184,7 @@ class ToolWindow extends BaseView
         top: e.pageY - @relY
 
     Backbone.Mediator.publish 'stop-snap'
+    @toolContainer.update()
     @$el.css
       transform: ''
 
