@@ -58,6 +58,7 @@ class Tool extends BaseModel
     if typeof @id is 'undefined'
       @generatePosition()
       @save [], 
+        silent: true
         success: =>
           @dataSource['toolId'] = @id 
           @focusWindow()
@@ -113,7 +114,7 @@ class Tool extends BaseModel
   # initializers
   focusWindow: =>
     zindex = @getMaxZIndex()
-    @save 'zindex', zindex + 1 unless zindex is 0
+    @save 'zindex', zindex + 1 unless zindex is 0 or zindex is @get('zindex')
 
   # Does not count current tool
   getMaxZIndex: =>
