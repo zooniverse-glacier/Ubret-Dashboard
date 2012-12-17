@@ -11,6 +11,7 @@ class Tool extends BaseModel
     "height": 480
     "width": 640
     "zindex": 1
+    "active": true
 
   parse: (response) =>
     if not response?

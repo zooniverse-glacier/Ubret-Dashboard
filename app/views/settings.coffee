@@ -11,7 +11,7 @@ class Settings extends BaseView
     'click .toggle': 'toggleState'
 
   initialize: ->
-    @active = @model.settings.get('active')
+    @active = @model.get('active')
     unless @model?
       return
     @dataSettings = new DataSettings { model: @model } if @model?
@@ -39,7 +39,7 @@ class Settings extends BaseView
   # Events
   toggleState: =>
     @active = if @active then false else true
-    @model.settings.set('active', @active)
+    @model.set('active', @active)
     @$el.toggleClass('active')
 
 module.exports = Settings

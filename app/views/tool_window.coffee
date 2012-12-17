@@ -56,7 +56,7 @@ class ToolWindow extends BaseView
     sizeAndPos
 
   render: =>
-    active = if @model.settings.get('active') then 'active' else ''
+    active = if @model.get('active') then 'active' else ''
     @$el.html @template({active: active})
     @assign
       '.title-bar': @titleBar
