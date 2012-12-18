@@ -216,12 +216,14 @@
   color: #777;
   }
 .leaflet-control-zoom-in {
+  background-image: url(../images/zoom-in.png);
   border-bottom: 1px solid #aaa;
   font: bold 18px/24px Arial, Helvetica, sans-serif;
   -webkit-border-radius: 5px 5px 0 0;
           border-radius: 5px 5px 0 0;
   }
 .leaflet-control-zoom-out {
+  background-image: url(../images/zoom-out.png);
   font: bold 23px/20px Tahoma, Verdana, sans-serif;
   -webkit-border-radius: 0 0 5px 5px;
           border-radius: 0 0 5px 5px;
