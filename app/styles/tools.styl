@@ -76,9 +76,14 @@
         span
 
   .subject
-    border: 1px
+    border-top: 1px solid $gray-less-dark
     box-sizing: border-box
     font-size: 12px
+    margin: 15px 0
+
+    &:first-child
+      border-top-color: transparent
+      margin: 0
 
     ul
       @extends #semantic-list
@@ -91,6 +96,7 @@
           border-bottom-color: transparent
 
         &.heading
+          font-size: 1.1em
           font-weight: 700
 
         label
@@ -102,6 +108,8 @@
           margin-left: 105px
 
     img
+      border-left: 10px solid $white
+      border-bottom: 10px solid $white
       float: right
       max-width: 300px
 
