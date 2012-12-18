@@ -7,6 +7,7 @@ ToolWindow = require 'views/tool_window'
 
 class DashboardView extends BaseView
   template: require './templates/layout/dashboard'
+
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
     'show-snap' : 'drawSnap'

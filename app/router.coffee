@@ -10,7 +10,6 @@ class Router extends Backbone.Router
 
   initialize: ->
     @appView = new AppView({el: $('#app')})
-    @appView.render()
 
   index: ->
     @navigate("my_dashboards", {trigger: true}) if User.current isnt null

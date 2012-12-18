@@ -23,8 +23,6 @@ class AppView extends BaseView
 
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
-    User.current?.on 'loaded-dashboards', =>
-      @savedListView = new SavedList { collection: User.current.dashboards }
 
     @appFocusView = @dashboardView
 
@@ -57,7 +55,13 @@ class AppView extends BaseView
     @render()
 
   showSaved: =>
-    @appFocusView = @savedListView
-    @render()
+    if typeof @savedListView is 'undefined'
+      User.current?.on 'loaded-dashboards', =>
+        @savedListView = new SavedList { collection: User.current.dashboards }
+        @appFocusView = @savedListView
+        @render()
+    else
+      @appFocusView = @savedListView
+      @render()
   
 module.exports = AppView
