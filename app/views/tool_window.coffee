@@ -16,7 +16,6 @@ class ToolWindow extends BaseView
   windowMinHeight: 150
 
   events:
-    'click': 'focusWindow'
     'mousedown .resize': 'resizeWindowStart'
 
   initialize: =>
@@ -37,10 +36,9 @@ class ToolWindow extends BaseView
     @titleBar.on 'close', @close
     @titleBar.on 'startDrag', @startDrag
     @titleBar.on 'endDrag', @endDrag
-    @titleBar.on 'focusWindow', @focusWindow
     
     @dashWidth = window.innerWidth
-    @dashTop = 168
+    @dashTop = 170
     @dashBottom = window.innerHeight - 50
     @dashHeight = @dashBottom - @dashTop
 
@@ -58,6 +56,7 @@ class ToolWindow extends BaseView
   render: =>
     active = if @model.get('active') then 'active' else ''
     @$el.html @template({active: active})
+    @$el.attr('data-channel', @model.get('channel'))
     @assign
       '.title-bar': @titleBar
       '.settings': @settings
@@ -85,9 +84,6 @@ class ToolWindow extends BaseView
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
-
-  focusWindow: =>
-    @model.focusWindow()
 
   # Resize
   resizeWindowStart: (e) =>

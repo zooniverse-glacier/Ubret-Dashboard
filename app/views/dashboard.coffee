@@ -13,6 +13,9 @@ class DashboardView extends BaseView
     'show-snap' : 'drawSnap'
     'stop-snap' : 'stopSnap'
 
+  events: 
+    'click .tool-window' : "focusWindow"
+
   initialize: ->
     @toolboxView = new Toolbox
     @toolboxView.on 'create', @addToolModel
@@ -27,6 +30,16 @@ class DashboardView extends BaseView
       @model.tools.each @createToolWindow
     @
 
+  focusWindow: (e) =>
+    toolChannel = e.currentTarget.dataset['channel']
+    tool = @model.tools.find (tool) -> tool.get('channel') is toolChannel
+    @focus tool
+
+  focus: (tool) ->
+    maxZindex = @model.tools.max((tool) -> tool.get('zindex')).get('zindex')
+    console.log maxZindex
+    tool.save({ zindex: maxZindex + 1})
+
   createToolWindow: (tool) =>
     toolWindow = new ToolWindow
       model: tool
@@ -37,7 +50,9 @@ class DashboardView extends BaseView
     @model.createTool type
 
   addTool: =>
-    @createToolWindow @model.tools.last()
+    tool = @model.tools.last()
+    @focus tool
+    @createToolWindow tool
 
   removeTools: =>
     @$el.empty()

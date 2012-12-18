@@ -61,7 +61,6 @@ class Tool extends BaseModel
         silent: true
         success: =>
           @dataSource['toolId'] = @id 
-          @focusWindow()
     else
       @dataSource['toolId'] = @id
 
@@ -110,20 +109,6 @@ class Tool extends BaseModel
       test = (ids.length is _.filter(oldIds, (id) -> id in ids).length)
       test = test or ids.length < oldIds.length
     return test
-
-  # initializers
-  focusWindow: =>
-    zindex = @getMaxZIndex()
-    @save 'zindex', zindex + 1 unless zindex is 0 or zindex is @get('zindex')
-
-  # Does not count current tool
-  getMaxZIndex: =>
-    max = @collection.max (tool) =>
-      unless tool.cid is @cid
-        return tool.get('zindex')
-      else
-        return 0
-    max.get('zindex')
 
   generatePosition: ->
     doc_width = $(document).width()

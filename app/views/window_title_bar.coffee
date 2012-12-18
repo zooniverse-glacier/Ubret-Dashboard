@@ -33,7 +33,6 @@ class WindowTitleBar extends BaseView
     @trigger 'close'
 
   startDrag: (e) =>
-    @trigger 'focusWindow', e
     @trigger 'startDrag', e
 
   endDrag: (e) =>
