@@ -78,6 +78,7 @@ class Tool extends BaseModel
     @save({'selectedKey': @boundTool.get('selectedKey')}, {silent: true})
     # @get('filters').add @boundTool.get('filters').models.slice()
 
+    @boundTool.on 'remove', @destroy
     @boundTool.on 'change:selectedElements', @updateSelectedElements
     @boundTool.on 'change:selectedKey', @updateSelectedKey
     # @boundTool.get('filters').on 'add', @updateFilters

@@ -10,7 +10,6 @@ class AppHeader extends BaseView
     'click .create-dashboard': 'onCreateDashboard'
 
   subscriptions:
-    'router:index': 'onViewCurrent'
     'router:dashboardCreate': 'onViewCurrent'
     'dashboard:initialized' : 'updateLink'
     'router:dashboardRetrieve': 'onViewCurrent'
@@ -26,6 +25,7 @@ class AppHeader extends BaseView
 
   render: =>
     @$el.html @template({id: @id})
+    console.log @active
     if @active is 'current'
       @$('li a.my-dashboards').removeClass 'active'
       @$('li a.current').addClass 'active'
@@ -40,11 +40,9 @@ class AppHeader extends BaseView
     @
 
   onViewCurrent: =>
-    @removeActive()
     @active = 'current'
 
   onViewSaved: =>
-    @removeActive()
     @active = 'saved'
 
   onCreateDashboard: (e) =>

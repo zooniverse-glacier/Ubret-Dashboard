@@ -6,7 +6,7 @@ class Router extends Backbone.Router
   routes:
     ''              : 'index'
     'my_dashboards' : 'savedDashboards'
-    ':id'           : 'retrieveDashboard'
+    'dashboards/:id'           : 'retrieveDashboard'
 
   initialize: ->
     @appView = new AppView({el: $('#app')})

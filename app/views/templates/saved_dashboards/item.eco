@@ -1,10 +1,10 @@
 <ul>
   <li><img src="http://placehold.it/200x150" /></li>
-  <li class="title"><a href="/#/<%- @id %>"><b><%- @name %></b></a></li>
+  <li class="title"><a href="/#/dashboards/<%- @id %>"><b><%- @name %></b></a></li>
   <li class="meta"><%- @lastModified %></li>
   <li class="actions">
     <ul>
-      <li><a href="/#/<%- @id %>">View</a></li>
+      <li><a href="/#/dashboards/<%- @id %>">View</a></li>
       <li><a data-id="<%- @id %>" href="#" class="share">Share</a></li>
       <li><a data-id="<%- @id %>" href="#" class="delete">Delete</a></li>
     </ul>

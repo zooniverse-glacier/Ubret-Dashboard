@@ -41,6 +41,7 @@ class DashboardView extends BaseView
     tool.save({ zindex: maxZindex + 1})
 
   createToolWindow: (tool) =>
+    console.log tool, @model.tools
     toolWindow = new ToolWindow
       model: tool
       collection: @model.tools
