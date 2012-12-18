@@ -76,9 +76,32 @@
         span
 
   .subject
-    display: inline-block
-    padding: 5px
-    font-size: 12px
     border: 1px
-    float: left
+    box-sizing: border-box
+    font-size: 12px
+
+    ul
+      @extends #semantic-list
+      
+      li
+        border-bottom: 1px solid $gray-light
+        padding: 3px 0 3px 10px
+
+        &:last-child
+          border-bottom-color: transparent
+
+        &.heading
+          font-weight: 700
+
+        label
+          float: left
+          width: 85px
+
+        span
+          display: block
+          margin-left: 105px
+
+    img
+      float: right
+      max-width: 300px
 
