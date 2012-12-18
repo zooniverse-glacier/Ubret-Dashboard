@@ -1,0 +1,12 @@
+<% if not @name?: %>
+  <header>Sign in to Participate</header>
+  <input type="text" placeholder="username" name="username" />
+  <input type="password" placeholder="password" name="password" />
+  <button class="login" name="login">Sign in</button>
+  <a class="forgot" href="https://www.zooniverse.org/password/reset">Forgot your password?</a>
+  <div class="error" style="display: none;"></div>
+<% else: %>
+  <header>Hello <%- @name %>!</header>
+  <a class="signout" href="#">Sign out</a>
+<% end %>
+  

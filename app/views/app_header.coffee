@@ -1,5 +1,7 @@
 BaseView = require 'views/base_view'
 Manager = require 'modules/manager'
+User = require 'user'
+Login = require 'views/login'
 
 class AppHeader extends BaseView
   template: require './templates/layout/header'
@@ -13,11 +15,16 @@ class AppHeader extends BaseView
     'router:dashboardRetrieve': 'onViewCurrent'
     'router:viewSavedDashboards': 'onViewSaved'
 
+  initialize: ->
+    User.on 'sign-in', @render
+    @login = new Login
+
   rendered: false
 
   render: =>
-    @$el.html @template() unless @rendered
-    @rendered = true
+    @$el.html @template()
+    @assign
+      '.login' : @login
     @
 
   onViewCurrent: =>

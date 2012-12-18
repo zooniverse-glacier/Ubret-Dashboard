@@ -5,7 +5,6 @@ AppView = require 'app_view'
 class Router extends Backbone.Router
   routes:
     ''              : 'index'
-    'new'           : 'newDashboard'
     'my_dashboards' : 'savedDashboards'
     ':id'           : 'retrieveDashboard'
 
@@ -14,14 +13,11 @@ class Router extends Backbone.Router
     @appView.render()
 
   index: ->
+    @navigate("my_dashboards", {trigger: true}) if User.current isnt null
     Backbone.Mediator.publish 'router:index'
 
   retrieveDashboard: (id) =>
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
-
-  newDashboard: =>
-    @navigate("", {trigger: true}) if User.current is null
-    Backbone.Mediator.publish 'router:dashboardCreate'
 
   savedDashboards: =>
     @navigate("", {trigger: true}) if User.current is null

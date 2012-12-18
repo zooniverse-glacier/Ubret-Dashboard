@@ -42,7 +42,7 @@ class User extends Backbone.Events
       delete response.success
       new User response
     else
-      User.trigger 'sign-in-error', response
+      User.trigger 'sign-in-error', response.message
       null
 
   constructor: (options) ->

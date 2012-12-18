@@ -13,7 +13,8 @@ application =
 
     Manager.save('sources', sources)
 
-    router = new Router
-    Backbone.history.start()
+    User.currentUser().always =>
+      router = new Router
+      Backbone.history.start()
 
 module.exports = application
