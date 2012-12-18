@@ -37,11 +37,9 @@ class DashboardView extends BaseView
 
   focus: (tool) ->
     maxZindex = @model.tools.max((tool) -> tool.get('zindex')).get('zindex')
-    console.log maxZindex
     tool.save({ zindex: maxZindex + 1})
 
   createToolWindow: (tool) =>
-    console.log tool, @model.tools
     toolWindow = new ToolWindow
       model: tool
       collection: @model.tools

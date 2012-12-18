@@ -93,7 +93,6 @@ class Tool extends BaseModel
 
   updateFilters: (filter) =>
     @get('filters').add filter
-    console.log @get 'filters'
 
   setElements: (ids) =>
     if not @equalElements(ids)

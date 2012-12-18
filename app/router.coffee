@@ -4,9 +4,9 @@ AppView = require 'app_view'
 
 class Router extends Backbone.Router
   routes:
-    ''              : 'index'
-    'my_dashboards' : 'savedDashboards'
-    'dashboards/:id'           : 'retrieveDashboard'
+    ''               : 'index'
+    'my_dashboards'  : 'savedDashboards'
+    'dashboards/:id' : 'retrieveDashboard'
 
   initialize: ->
     @appView = new AppView({el: $('#app')})

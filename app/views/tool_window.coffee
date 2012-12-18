@@ -80,7 +80,6 @@ class ToolWindow extends BaseView
       left: @model.get('left')
 
   setSize: =>
-    console.log @model.get('width'), @model.get('height')
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
