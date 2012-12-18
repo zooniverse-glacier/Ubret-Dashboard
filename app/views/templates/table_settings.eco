@@ -1,0 +1,5 @@
+<h3>Tool Settings</h3>
+<div class="nav">
+  <button class="prev">Previous Page</button>
+  <button class="next">Next Page</button>
+</div>

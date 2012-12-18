@@ -24,6 +24,8 @@ class Settings extends BaseView
         ToolSettings = require 'views/subject_settings'
       when 'Map'
         ToolSettings = require 'views/map_settings'
+      when 'Table'
+        ToolSettings = require 'views/table_page_settings'
       else # Temp
         ToolSettings = require 'views/generic_settings'
 
