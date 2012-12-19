@@ -1,4 +1,4 @@
-<h3>Graph Settings</h3>
+<h4>Tool Settings</h4>
 <ul>
   <li class="x">
     <label>X-Axis: <select class="axis x-axis" data-axis='1'>

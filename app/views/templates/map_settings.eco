@@ -1,4 +1,4 @@
-<h3>Tool Settings</h3>
+<h4>Tool Settings</h4>
 <select name="spectrum" class="select-spectrum" id="select-spectrum">
   <% for key, value of @spectra: %> 
     <% if key is @curSpectrum: %>

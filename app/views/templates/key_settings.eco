@@ -1,4 +1,4 @@
-<h3>Tool Settings</h3>
+<h4>Tool Settings</h4>
 <% if @keys: %>
   <select name="key" class="select-key" id="select-key">
     <% for key in @keys: %>

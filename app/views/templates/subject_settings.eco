@@ -1,5 +1,5 @@
-<h3>Tool Settings</h3>
-<div class="nav">
-  <button class="prev">prev</button>
-  <button class="next">next</button>
+<h4>Tool Settings</h4>
+<div class="nav columns">
+  <button class="action column one-half prev">Previous</button>
+  <button class="action column one-half next">Next</button>
 </div>
