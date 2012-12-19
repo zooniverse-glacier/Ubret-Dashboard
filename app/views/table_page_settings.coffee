@@ -9,7 +9,7 @@ class TablePageSettings extends BaseView
     'click button.prev' : 'prevPage'
 
   initialize: ->
-    @page = @model.settings.get('currentPage')
+    @page = @model.settings.get('currentPage') or 0
 
   render: =>
     @$el.html @template()
