@@ -54,7 +54,7 @@ class DashboardView extends BaseView
     @createToolWindow tool
 
   removeTools: =>
-    @$el.empty()
+    @model.removeTools()
     @render()
 
   onDashboardInit: (model) =>

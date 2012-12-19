@@ -6,5 +6,9 @@
       <li><a href="#" class="tool" name="<%- tool.class_name %>"><%- tool.name %></a></li>
     <% end %>
     </ul>
+
+    <ul class="interactions">
+      <li><a class="remove-tools" href="#">Clear Tools</a></li>
+    </ul>
   </div>
 <% end %>

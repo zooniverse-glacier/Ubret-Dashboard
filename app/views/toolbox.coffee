@@ -34,7 +34,7 @@ class Toolbox extends BaseView
 
   removeTools: (e) =>
     e.preventDefault()
-    @trigger "remove-tools"
+    @trigger 'remove-tools'
 
   toggleSaved: (e) =>
     e.preventDefault()
