@@ -61,6 +61,7 @@ class Tool extends BaseModel
         silent: true
         success: =>
           @dataSource['toolId'] = @id 
+          @collection.focus @
     else
       @dataSource['toolId'] = @id
 

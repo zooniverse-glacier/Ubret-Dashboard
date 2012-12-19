@@ -33,11 +33,7 @@ class DashboardView extends BaseView
   focusWindow: (e) =>
     toolChannel = e.currentTarget.dataset['channel']
     tool = @model.tools.find (tool) -> tool.get('channel') is toolChannel
-    @focus tool
-
-  focus: (tool) ->
-    maxZindex = @model.tools.max((tool) -> tool.get('zindex')).get('zindex')
-    tool.save({ zindex: maxZindex + 1})
+    @model.tools.focus tool
 
   createToolWindow: (tool) =>
     toolWindow = new ToolWindow
@@ -50,7 +46,6 @@ class DashboardView extends BaseView
 
   addTool: =>
     tool = @model.tools.last()
-    @focus tool
     @createToolWindow tool
 
   removeTools: =>

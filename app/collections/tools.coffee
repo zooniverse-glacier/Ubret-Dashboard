@@ -17,4 +17,8 @@ class Tools extends Backbone.Collection
       tool.channel is outToolModel
     inTool.bindTool outToolModel
 
+  focus: (tool) ->
+    maxZindex = @max((tool) -> tool.get('zindex')).get('zindex')
+    tool.save({ zindex: maxZindex + 1})
+
 module.exports = Tools
