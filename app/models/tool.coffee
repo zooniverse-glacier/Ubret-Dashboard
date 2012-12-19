@@ -114,12 +114,16 @@ class Tool extends BaseModel
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
+    toolbox_bot = $('.toolbox').offset().top + $('.toolbox').height() + 20
 
     x_max = doc_width * 0.6
     x_min = doc_width * 0.02
 
     y_max = doc_height * 0.35
-    y_min = doc_height * 0.10
+    if doc_height * 0.10 < toolbox_bot
+      y_min = toolbox_bot
+    else
+      y_min = doc_height * 0.10
 
     x = Math.random() * (x_max - x_min) + x_min
     y = Math.random() * (y_max - y_min) + y_min
