@@ -22,6 +22,22 @@
 
       ul
         @extends #button-row
+
+        li
+          position: relative 
+          
+          .sharer 
+            position: absolute 
+            left: -68px
+            top: 30px
+            width: 200px
+
+            div.url
+              display: none
+
+            &.active-url
+              div.url
+                display: block 
           
 
 .toolbox

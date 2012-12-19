@@ -1,6 +1,8 @@
 BaseView = require 'views/base_view'
 User = require 'user'
 
+Sharing = require 'views/sharing'
+
 class SavedList extends BaseView
   itemTemplate: require './templates/saved_dashboards/item'
   listTemplate: require './templates/saved_dashboards/list'
@@ -11,6 +13,7 @@ class SavedList extends BaseView
 
   initialize: ->
     @collection.on 'remove', @render
+    @sharers = new Object
 
   render: =>
     @$el.html @listTemplate()
@@ -20,17 +23,26 @@ class SavedList extends BaseView
         id: dashboard.id
         name: dashboard.get('name')
         lastModified: dashboard.get('last_modified')
-
+      if typeof @sharers[dashboard.id] is 'undefined'
+        @sharers[dashboard.id] = new Sharing {model: dashboard}
       @$el.find('.dashboards').append @itemTemplate(item)
     @
 
   shareDashboard: (e) =>
     e.preventDefault()
+    id = e.currentTarget.dataset.id
+    @$('.sharer').remove()
+    if id is @openId
+      @openId = null
+    else
+      @$(e.currentTarget).parent().append @sharers[id].render().el
+      @openId = id
 
   deleteDashboard: (e) =>
     e.preventDefault()
     id = e.currentTarget.dataset.id
     @collection.remove id
+    delete @sharers[id]
     User.current.removeDashboards id
 
 module.exports = SavedList

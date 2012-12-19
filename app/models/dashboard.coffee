@@ -65,4 +65,5 @@ class Dashboard extends Backbone.Model
     @tools.map (tool) => 
       tool.dataSource.fetchData() if tool.dataSource.get('type') is 'external'
 
+
 module.exports = Dashboard
