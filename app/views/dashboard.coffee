@@ -61,6 +61,7 @@ class DashboardView extends BaseView
     @model = model
     @render()
     @model.tools.on 'add', @addTool
+    @model.tools.on 'reset', @render
 
   stopSnap: =>
     @snap.remove() if @snap

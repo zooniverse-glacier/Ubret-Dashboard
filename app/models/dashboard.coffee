@@ -56,6 +56,7 @@ class Dashboard extends Backbone.Model
     @save()
 
   loadInternalTools: =>
+    console.log @tools
     @tools.map (tool) =>
       if tool.dataSource.get('type') is 'internal'
         source = @tools.find (sourceTool) =>
