@@ -25,7 +25,6 @@ class AppHeader extends BaseView
 
   render: =>
     @$el.html @template({id: @id})
-    console.log @active
     if @active is 'current'
       @$('li a.my-dashboards').removeClass 'active'
       @$('li a.current').addClass 'active'
