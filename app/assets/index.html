@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width">
 
     <script>
-      window.brunch = window.brunch || {}
-      window.brunch['auto-reload'] = { enabled: true }
+      if (window.location.port > 1024) {
+        window.brunch = window.brunch || {}
+        window.brunch['auto-reload'] = { enabled: true }
+      }
     </script>
 
     <link rel="stylesheet" href="stylesheets/vendor.css">

@@ -1,5 +1,5 @@
 <ul>
-  <li><img src="/dashboard-preview.png" /></li>
+  <li><img src="/images/dashboard-preview.png" /></li>
   <li class="title"><a href="/#/dashboards/<%- @id %>"><b><%- @name %></b></a></li>
   <li class="meta"><%- @lastModified %></li>
   <li class="actions">
