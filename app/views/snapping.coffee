@@ -1,5 +1,5 @@
 Snapping = 
-  margins: 20
+  margins: 30
 
   showSnap: (x, y) ->
     if x < @margins
@@ -88,7 +88,7 @@ Snapping =
         @snapBottomRight()
       else
         @snapRight()
-    else if y < ( @dashTop - @margins ) or y > ( @dashBottom + @margins ) 
+    else if y < ( @dashTop + @margins ) or y > ( @dashBottom - @margins ) 
       @snapFull()
 
 module.exports = Snapping

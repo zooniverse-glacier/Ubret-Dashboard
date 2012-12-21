@@ -35,7 +35,6 @@ class ToolWindow extends BaseView
     @titleBar.on 'minimize', @minimize
     @titleBar.on 'close', @close
     @titleBar.on 'startDrag', @startDrag
-    @titleBar.on 'endDrag', @endDrag
     
     @dashWidth = window.innerWidth
     @dashTop = 170
@@ -167,10 +166,13 @@ class ToolWindow extends BaseView
         @$el.css
           transform: "translate(#{left}px, #{top}px)"
 
+    $(document).on 'mouseup', @endDrag
+
   endDrag: (e) =>
     $('body').removeClass 'unselectable'
     @dragging = false
     $(document).off 'mousemove'
+    $(document).off 'mouseup'
 
     if @snap 
       @setSnap e.pageX, e.pageY

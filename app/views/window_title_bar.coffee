@@ -12,7 +12,6 @@ class WindowTitleBar extends BaseView
     'keypress input[name="window-title"]' : 'updateModel'
     'blur input[name="window-title"]' : 'updateModel'
     'mousedown' : 'startDrag'
-    'mouseup' : 'endDrag'
 
   initialize: ->
     unless @model then throw 'must pass a model'
