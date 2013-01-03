@@ -16,34 +16,22 @@ class UbretTool extends BaseView
 
     @$el.addClass @model.get('type')
     @$el.attr 'id', @id
-    @tool = new Ubret[@model.get('type')]
-      selector: '#' + @id
-      el: @$el
+    @tool = new Ubret[@model.get('type')]('#' + @id)
 
   render: =>
     if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0)
       @$el.html @noDataTemplate()
     else
+      console.log @model.get('selectedElements')
       @$('.no-data').remove()
-      data = @model.dataSource.data.map (datum) ->
-        try
-          return datum.toJSON()
-        catch error
-          return datum
-
-      opts =
-        data: data
-        keys: @dataKeys data[0]
-        filters: @model.filters.models
-        selectedElements: @model.get('selectedElements')?.slice()
-        selectedKey: @model.get('selectedKey')
-        selectElementsCb: @selectElements
-        selectKeyCb: @selectKey
-
-      _.extend opts, @model.settings.toJSON()
-
-      @tool.setOpts opts
-      _.defer @tool.start
+      @tool.parentTool(@model.dataSource.source) if @model.dataSource.isInternal()
+      @tool.data(@model.dataSource.data.toJSON())
+        .keys(@dataKeys(@model.dataSource.data.toJSON()[0]))
+        .selectIds(@model.get('selectedElements'))
+        .selectKeys(@model.get('selectedKey'))
+        .settings(@model.settings.toJSON())
+        #.filters(@model.filters)
+        .start()
     @
 
   dataKeys: (dataModel) =>
@@ -69,6 +57,6 @@ class UbretTool extends BaseView
     @tool.addFilters @model.filters.toJSON()
 
   passSetting: =>
-    @tool.receiveSetting key, value for key, value of @model.settings.changed
+    @tool.settings @model.settings.changed
 
 module.exports = UbretTool

@@ -28,9 +28,9 @@ class DataSource extends BaseModel
           @triggerEvent 'source:dataReceived'
           @save()
     else if @get('type') is 'internal'
-      source = @tools.find (tool) =>
+      @source = @tools.find (tool) =>
         tool.get('channel') == @get('source')
-      @data = source.dataSource.data
+      @data = []
       @triggerEvent 'source:dataReceived'
       @save()
     else
