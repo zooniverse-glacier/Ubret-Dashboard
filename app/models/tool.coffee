@@ -66,23 +66,6 @@ class Tool extends BaseModel
       @dataSource['toolId'] = @id
 
   onDataReceived: =>
-    if @dataSource.isExternal()
-      @boundTool = false
-      @triggerEvent 'tool:dataProcessed'
-
-    else
-      @trigger 'bind-tool', @dataSource.get('source'), @
-
-  bindTool: (tool) =>
-    @boundTool = tool
-    @save({'selectedElements': @boundTool.get('selectedElements')}, {silent: true})
-    @save({'selectedKey': @boundTool.get('selectedKey')}, {silent: true})
-    # @get('filters').add @boundTool.get('filters').models.slice()
-
-    @boundTool.on 'destroy', => @destroy()
-    @boundTool.on 'change:selectedElements', @updateSelectedElements
-    @boundTool.on 'change:selectedKey', @updateSelectedKey
-    # @boundTool.get('filters').on 'add', @updateFilters
     @triggerEvent 'tool:dataProcessed'
 
   # Elements, Keys, Filters

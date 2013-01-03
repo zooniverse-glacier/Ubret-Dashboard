@@ -60,7 +60,9 @@ class Dashboard extends Backbone.Model
       if tool.dataSource.get('type') is 'internal'
         source = @tools.find (sourceTool) =>
           sourceTool.get('channel') is tool.dataSource.get('source')
-        source.dataSource.on 'source:dataReceived', => tool.dataSource.fetchData()
+        source.dataSource.on 'source:dataReceived', => 
+          console.log 'here'
+          tool.dataSource.fetchData()
     @tools.map (tool) => 
       tool.dataSource.fetchData() if tool.dataSource.get('type') is 'external'
 

@@ -16,21 +16,24 @@ class UbretTool extends BaseView
 
     @$el.addClass @model.get('type')
     @$el.attr 'id', @id
-    @tool = new Ubret[@model.get('type')]('#' + @id)
+    @model.tool = new Ubret[@model.get('type')]('#' + @id)
+    @model.tool.on 'keys-received', (keys) =>
+      Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
 
   render: =>
-    if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0)
+    if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0 and @model.dataSource.isExternal())
       @$el.html @noDataTemplate()
     else
-      console.log @model.get('selectedElements')
       @$('.no-data').remove()
-      @tool.parentTool(@model.dataSource.source) if @model.dataSource.isInternal()
-      @tool.data(@model.dataSource.data.toJSON())
-        .keys(@dataKeys(@model.dataSource.data.toJSON()[0]))
-        .selectIds(@model.get('selectedElements'))
-        .selectKeys(@model.get('selectedKey'))
+      if @model.dataSource.isInternal()
+        @model.tool.parentTool(@model.dataSource.source.tool)
+      else
+        @model.tool.data(@model.dataSource.data.toJSON())
+          .keys(@dataKeys(@model.dataSource.data.toJSON()[0]))
+
+      @model.tool.selectIds(@model.get('selectedElements'))
+        .selectKeys([@model.get('selectedKey')])
         .settings(@model.settings.toJSON())
-        #.filters(@model.filters)
         .start()
     @
 
@@ -38,7 +41,6 @@ class UbretTool extends BaseView
     keys = new Array
     for key, value of dataModel
       keys.push key unless key in @nonDisplayKeys
-    Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     return keys
 
   selectElements: (ids) =>
@@ -48,15 +50,15 @@ class UbretTool extends BaseView
     @model.save 'selectedKey', key
 
   toolSelectKey: =>
-    @tool?.selectKey @model.get('selectedKey')
+    @model.tool.selectKeys @model.get('selectedKey').slice()
 
   toolSelectElements: =>
-    @tool?.selectElements @model.get('selectedElements').slice()
+    @model.tool.selectIds @model.get('selectedElements').slice()
 
   toolAddFilters: =>
-    @tool.addFilters @model.filters.toJSON()
+    @model.tool.addFilters @model.filters.toJSON()
 
   passSetting: =>
-    @tool.settings @model.settings.changed
+    @model.tool.settings @model.settings.changed
 
 module.exports = UbretTool

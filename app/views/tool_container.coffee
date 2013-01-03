@@ -15,7 +15,6 @@ class ToolContainer extends BaseView
     @
 
   update: =>
-    @toolView.tool?.start() if typeof @model.dataSource.data isnt 'undefined'
-
+    @model.tool?.start() if typeof @model.dataSource.data isnt 'undefined'
 
 module.exports = ToolContainer
