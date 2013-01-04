@@ -40,8 +40,14 @@ class Settings extends BaseView
 
   # Events
   toggleState: =>
-    @active = if @active then false else true
-    @model.set('active', @active)
+    if @active is false
+      @active = true
+      @render()
+    else
+      @active = false
+      @dataSettings.remove()
+      @toolSettings.remove()
+    @model.save('active', @active)
     @$el.toggleClass('active')
 
 module.exports = Settings

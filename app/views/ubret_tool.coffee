@@ -50,15 +50,16 @@ class UbretTool extends BaseView
     @model.save 'selectedKey', key
 
   toolSelectKey: =>
-    @model.tool.selectKeys @model.get('selectedKey').slice()
+    @model.tool.selectKeys(@model.get('selectedKey').slice()).start()
 
   toolSelectElements: =>
-    @model.tool.selectIds @model.get('selectedElements').slice()
+    @model.tool.selectIds(@model.get('selectedElements').slice()).start()
 
   toolAddFilters: =>
-    @model.tool.addFilters @model.filters.toJSON()
+    @model.tool.filters(@model.filters.toJSON()).start()
 
   passSetting: =>
-    @model.tool.settings @model.settings.changed
+
+    @model.tool.settings(@model.settings.changed).start()
 
 module.exports = UbretTool
