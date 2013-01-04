@@ -19,6 +19,8 @@ class UbretTool extends BaseView
     @model.tool = new Ubret[@model.get('type')]('#' + @id)
     @model.tool.on 'keys-received', (keys) =>
       Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
+    @model.tool.on 'selection', @selectElements
+    @model.tool.on 'key-selection', @selectKey
 
   render: =>
     if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0 and @model.dataSource.isExternal())
