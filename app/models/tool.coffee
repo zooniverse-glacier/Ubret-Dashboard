@@ -10,42 +10,13 @@ class Tool extends BaseModel
   defaults:
     "height": 480
     "width": 640
-    "zindex": 1
     "active": true
 
-  parse: (response) =>
-    if not response?
-      return ''
-
-    if @dataSource
-      @dataSource.set response.data_source, {silent: true}
-    else
-      @dataSource = new DataSource response.data_source
-      @dataSource.tools = @collection
-
-    if @filters
-      @filters.add response.filters
-    else
-      @filters = new Filters response.filters
-
-    if @settings
-      @settings.set response.settings, {silent: true}
-    else
-      @settings = new Settings response.settings
-
-    delete response.filters
-    delete response.data_source
-    delete response.settings
-
-    response
-
-  toJSON: ->
-    json = new Object
-    json[key] = value for key, value of @attributes
-    json[key] = @[key].toJSON() for key in ['dataSource', 'filters', 'settings']
-    json
-
   initialize: ->
+    unless @get('name') then @set 'name', "#{@get('type')}-#{@collection.length + 1}"
+    unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
+    unless @get('zindex') then @set 'zindex', @collection.length + 1
+
     @filters = @filters or new Filters
     @settings = @settings or new Settings
 
@@ -57,13 +28,38 @@ class Tool extends BaseModel
 
     if typeof @id is 'undefined'
       @generatePosition()
-      @collection.focus @
-      @save [], 
+      @save [],
         silent: true
         success: =>
-          @dataSource['toolId'] = @id 
+          @dataSource['toolId'] = @id
     else
       @dataSource['toolId'] = @id
+
+  parse: (response) =>
+    if not response?
+      return ''
+
+    if @dataSource
+      @dataSource.set response.data_source, {silent: true}
+    else
+      @dataSource = new DataSource response.data_source
+      @dataSource.tools = @collection
+
+    if @settings
+      @settings.set response.settings, {silent: true}
+    else
+      @settings = new Settings response.settings
+
+    delete response.data_source
+    delete response.settings
+
+    response
+
+  toJSON: ->
+    json = new Object
+    json[key] = value for key, value of @attributes
+    json[key] = @[key].toJSON() for key in ['dataSource', 'filters', 'settings']
+    json
 
   onDataReceived: =>
     @triggerEvent 'tool:dataProcessed'
@@ -114,5 +110,6 @@ class Tool extends BaseModel
     @set
       top: y
       left: x
+
 
 module.exports = Tool

@@ -24,7 +24,6 @@ class Toolbox extends BaseView
 
   render: =>
     @$el.html @template {available_tools: @tools, db_state: @db_state}
-    # @$el.append @savedList.render().el if typeof @savedList isnt 'undefined'
     @
 
   createTool: (e) =>

@@ -18,9 +18,9 @@ class ToolWindow extends BaseView
   events:
     'mousedown .resize': 'resizeWindowStart'
 
-  initialize: =>
+  initialize: ->
     if @model?
-      @model.on 'remove', @removeWindow
+      @model.on 'destroy', @removeWindow
       @model.on 'change:zindex', @setZindex
       @model.on 'change:left change:top', @setPosition
       @model.on 'change:width change:height', @setSize
@@ -62,7 +62,11 @@ class ToolWindow extends BaseView
       '.tool-container': @toolContainer
     @
 
+
   # Events
+  removeWindow: =>
+    @remove()
+
   minimize: (e) =>
     @$el.toggleClass 'minimized'
 
@@ -82,6 +86,7 @@ class ToolWindow extends BaseView
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
+
 
   # Resize
   resizeWindowStart: (e) =>
@@ -147,6 +152,7 @@ class ToolWindow extends BaseView
 
     @toolContainer.update()
 
+
   # Drag
   startDrag: (e) =>
     $('body').addClass 'unselectable'
@@ -186,8 +192,5 @@ class ToolWindow extends BaseView
     @$el.css
       transform: ''
 
-  # Helper functions
-  removeWindow: =>
-    @remove()
 
 module.exports = ToolWindow

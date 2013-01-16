@@ -23,11 +23,8 @@ class DashboardView extends BaseView
 
   render: =>
     @$el.html @template()
-    @assign
-      '.toolbox': @toolboxView
-
-    if @model
-      @model.tools.each @createToolWindow
+    @assign '.toolbox', @toolboxView
+    if @model then @model.tools.each @createToolWindow
     @
 
   focusWindow: (e) =>
@@ -49,8 +46,9 @@ class DashboardView extends BaseView
     @createToolWindow tool
 
   removeTools: =>
-    @model.removeTools()
-    @render()
+    while @model.tools.length
+      @model.tools.first().destroy()
+    @model.save()
 
   onDashboardInit: (model) =>
     @model = model

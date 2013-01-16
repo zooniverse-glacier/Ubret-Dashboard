@@ -61,7 +61,6 @@ class UbretTool extends BaseView
     @model.tool.filters(@model.filters.toJSON()).start()
 
   passSetting: =>
-
     @model.tool.settings(@model.settings.changed).start()
 
 module.exports = UbretTool
