@@ -15,7 +15,7 @@ class Tool extends BaseModel
   initialize: ->
     unless @get('name') then @set 'name', "#{@get('type')}-#{@collection.length + 1}"
     unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
-    unless @get('zindex') then @set 'zindex', @collection.length + 1
+    unless @get('zindex') then @collection.focus @, false
 
     @filters = @filters or new Filters
     @settings = @settings or new Settings
