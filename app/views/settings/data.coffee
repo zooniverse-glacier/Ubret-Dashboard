@@ -4,10 +4,11 @@ Manager = require 'modules/manager'
 Params = require 'collections/params'
 ParamsView = require 'views/params'
 SearchTypeView = require 'views/search_type'
+
 class DataSettings extends BaseView
   tagName: 'div'
   className: 'data-settings'
-  template: require './templates/data_settings'
+  template: require 'views/templates/data_settings'
 
   events:
     'click .type-select .external button' : 'showExternal'

@@ -2,7 +2,7 @@ BaseView = require 'views/base_view'
 
 class MapSettings extends BaseView
   className: 'map-settings'
-  template: require './templates/map_settings'
+  template: require 'views/templates/map_settings'
 
   spectra: 
     infrared: 'Infrared'

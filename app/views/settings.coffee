@@ -1,7 +1,5 @@
 BaseView = require 'views/base_view'
-
-DataSettings = require 'views/data_settings'
-FilterSettings = require 'views/filter_settings'
+DataSettings = require 'views/settings/data'
 
 class Settings extends BaseView
   className: 'settings'
@@ -17,17 +15,17 @@ class Settings extends BaseView
     @dataSettings = new DataSettings { model: @model } if @model?
     switch @model?.get('type')
       when 'Histogram', 'Scatterplot', 'Histogram2', 'Scatter2D'
-        ToolSettings = require 'views/graph_settings'
+        ToolSettings = require 'views/settings/graph'
       when 'Statistics'
-        ToolSettings = require 'views/key_settings'
+        ToolSettings = require 'views/settings/key'
       when 'SubjectViewer', "Spectra"
-        ToolSettings = require 'views/subject_settings'
+        ToolSettings = require 'views/settings/subject'
       when 'Map'
-        ToolSettings = require 'views/map_settings'
+        ToolSettings = require 'views/settings/map'
       when 'Table'
-        ToolSettings = require 'views/table_page_settings'
+        ToolSettings = require 'views/settings/table'
       else # Temp
-        ToolSettings = require 'views/generic_settings'
+        ToolSettings = require 'views/settings/generic'
 
     @toolSettings = new ToolSettings { model: @model}
 
