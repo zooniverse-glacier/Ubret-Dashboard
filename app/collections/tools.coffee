@@ -10,7 +10,10 @@ class Tools extends Backbone.Collection
     "/dashboards/#{@dashboardId}/tools"
 
   focus: (tool) ->
-    maxZindex = @max((tool) -> tool.get('zindex')).get('zindex')
-    tool.save({ zindex: maxZindex + 1})
+    if @length is 1
+      tool.save {zindex: 1}
+
+    maxZindexTool = @max((tool) -> tool.get('zindex'))
+    unless tool.cid is maxZindexTool.cid then tool.save({zindex: maxZindexTool.get('zindex') + 1})
 
 module.exports = Tools

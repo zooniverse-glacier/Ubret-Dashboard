@@ -57,11 +57,11 @@ class Tool extends BaseModel
 
     if typeof @id is 'undefined'
       @generatePosition()
+      @collection.focus @
       @save [], 
         silent: true
         success: =>
           @dataSource['toolId'] = @id 
-          @collection.focus @
     else
       @dataSource['toolId'] = @id
 
