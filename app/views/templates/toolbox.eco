@@ -1,14 +1,12 @@
-<% if @db_state: %>
-  <div class="container">
-    <p><b>Select the tools you need:</b></p>
-    <ul class="tools">
-    <% for tool in @available_tools: %>
-      <li><a href="#" class="tool" name="<%- tool.class_name %>"><%- tool.name %></a></li>
-    <% end %>
-    </ul>
+<div class="container">
+  <p><b>Select the tools you need:</b></p>
+  <ul class="tools">
+  <% for tool in @available_tools: %>
+    <li><a href="#" class="tool" name="<%- tool.class_name %>"><%- tool.name %></a></li>
+  <% end %>
+  </ul>
 
-    <ul class="interactions">
-      <li><a class="remove-tools" href="#">Clear Tools</a></li>
-    </ul>
-  </div>
-<% end %>
+  <ul class="interactions">
+    <li><a class="remove-tools" href="#">Clear Tools</a></li>
+  </ul>
+</div>

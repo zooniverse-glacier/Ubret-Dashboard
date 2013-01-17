@@ -1,13 +1,14 @@
-
 class UbretManager
-
   constructor: ->
     @data = []
 
   save: (key, data) =>
     @data[key] = data
 
+  set: (key, data) => @save(key, data)
+
   get: (key) =>
-    @data[key]
+    if @data[key] then @data[key] else false
+
 
 module.exports = new UbretManager()

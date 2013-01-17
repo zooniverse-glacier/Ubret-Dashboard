@@ -1,7 +1,8 @@
 BaseView = require 'views/base_view'
-
+Manager = require 'modules/manager'
 SavedList = require 'views/saved_list'
 User = require 'user'
+
 
 class Toolbox extends BaseView
   tagName: 'div'
@@ -14,17 +15,14 @@ class Toolbox extends BaseView
     'click a.saved-dashboards' : 'toggleSaved'
 
   subscriptions:
-    'dashboard:initialized': 'onDashboardInit'
-
-  initialize: ->
-    @tools = []
-    @db_state = false
-    for name, tool of Ubret
-      @tools.push {name: tool::name, class_name: name} if tool::name
+    'tools:loaded': 'render'
 
   render: =>
-    @$el.html @template {available_tools: @tools, db_state: @db_state}
-    # @$el.append @savedList.render().el if typeof @savedList isnt 'undefined'
+    @tools = []
+    for tool in Manager.get 'tools'
+      @tools.push {name: Ubret[tool]::name, class_name: tool} if Ubret[tool]::name
+
+    @$el.html @template {available_tools: @tools}
     @
 
   createTool: (e) =>
@@ -40,8 +38,5 @@ class Toolbox extends BaseView
     e.preventDefault()
     @savedList.$el.toggleClass 'active'
 
-  onDashboardInit: =>
-    @db_state = true
-    @render()
 
 module.exports = Toolbox

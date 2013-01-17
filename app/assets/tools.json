@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "d3": {
+      "source": "vendor/d3.js"
+    },
+    "Leaflet": {
+      "condition": "L",
+      "source": "vendor/leaflet.js"
+    },
+    "Map": {
+      "dependencies": ["Leaflet"],
+      "source": "ubret/ubret/map.js"
+    },
+    "SubjectViewer": {
+      "source": "ubret/ubret/subject_viewer.js"
+    },
+    "Statistics": {
+      "dependencies": ["d3"],
+      "source": "ubret/ubret/statistics.js"
+    }
+  },
+  "projects": {
+    "galaxy-zoo": ["Map", "Statistics"],
+    "default": ["SubjectViewer", "Statistics"]
+  }
+}
