@@ -3,6 +3,6 @@ public/
 tiles/
 .DS_Store
 /vendor/scripts/.DS_Store
-vendor/scripts/ubret.js
+vendor/scripts/ubret*
 build/
 lib/
