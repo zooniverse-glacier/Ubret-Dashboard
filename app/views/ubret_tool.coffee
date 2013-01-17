@@ -46,6 +46,7 @@ class UbretTool extends BaseView
     return keys
 
   selectElements: (ids) =>
+    console.log 'here'
     @model.setElements ids
 
   selectKey: (key) =>
@@ -55,6 +56,7 @@ class UbretTool extends BaseView
     @model.tool.selectKeys(@model.get('selectedKey').slice()).start()
 
   toolSelectElements: =>
+    console.log 'tool-select'
     @model.tool.selectIds(@model.get('selectedElements').slice()).start()
 
   toolAddFilters: =>
