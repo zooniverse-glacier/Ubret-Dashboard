@@ -3,6 +3,14 @@
     "d3": {
       "source": "vendor/d3.js"
     },
+    "Leaflet": {
+      "condition": "L",
+      "source": "vendor/leaflet.js"
+    },
+    "Map": {
+      "dependencies": ["Leaflet"],
+      "source": "ubret/ubret/map.js"
+    },
     "SubjectViewer": {
       "source": "ubret/ubret/subject_viewer.js"
     },
@@ -12,6 +20,7 @@
     }
   },
   "projects": {
+    "galaxy-zoo": ["Map", "Statistics"],
     "default": ["SubjectViewer", "Statistics"]
   }
 }

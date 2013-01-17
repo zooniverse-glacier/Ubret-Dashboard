@@ -1,5 +1,5 @@
 BaseView = require 'views/base_view'
-
+Manager = require 'modules/manager'
 SavedList = require 'views/saved_list'
 User = require 'user'
 
@@ -19,8 +19,8 @@ class Toolbox extends BaseView
 
   render: =>
     @tools = []
-    for name, tool of Ubret
-      @tools.push {name: tool::name, class_name: name} if tool::name
+    for tool in Manager.get 'tools'
+      @tools.push {name: Ubret[tool]::name, class_name: tool} if Ubret[tool]::name
 
     @$el.html @template {available_tools: @tools}
     @

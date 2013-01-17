@@ -1,4 +1,5 @@
 corsSync = require 'sync'
+Manager = require 'modules/manager'
 Sources = require 'collections/sources'
 Tools = require 'collections/tools'
 Tool = require  'models/tool'
@@ -9,7 +10,9 @@ class Dashboard extends Backbone.Model
   urlRoot: '/dashboards'
 
   initialize: ->
+    @set 'project', Manager.get 'project'
     @tools = new Tools
+    console.log 'inside dbm before save', @
     @save().success(=> 
       User.current.updateDashboards @id, @get('name')
       Backbone.Mediator.publish 'dashboard:initialized', @
