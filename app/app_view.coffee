@@ -14,7 +14,7 @@ class AppView extends BaseView
     'router:dashboardCreate': 'createDashboard'
     'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
-    'router:index': 'showIndex'
+    'router:index': 'createDashboardView'
 
   initialize: ->
     @appHeader = new AppHeader
@@ -102,10 +102,6 @@ class AppView extends BaseView
               Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   createDashboardView: =>
-    @appFocusView = @dashboardView
-    @render()
-
-  showIndex: =>
     @appFocusView = @dashboardView
     @render()
 
