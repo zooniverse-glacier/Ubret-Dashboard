@@ -50,9 +50,9 @@ class AppView extends BaseView
           Also not really the location I want to put this in the end.
           ###
           isScriptNotLoaded = (script) ->
-            if _.isUndefined window[script]
+            if _.isUndefined window[script.name]
               # Not on window. Maybe an Ubret script.
-              if _.isUndefined Ubret[script]
+              if _.isUndefined Ubret[script.name]
                 return true
             return false
 
