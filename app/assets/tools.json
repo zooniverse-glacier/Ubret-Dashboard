@@ -7,6 +7,10 @@
       "condition": "L",
       "source": "vendor/leaflet.js"
     },
+    "Histogram": {
+      "dependencies": ["Graph","d3"],
+      "source": "ubret/ubret/histogram.js"
+    },
     "Graph": {
       "source": "ubret/ubret/graph.js"
     },
@@ -23,7 +27,7 @@
     }
   },
   "projects": {
-    "galaxy-zoo": ["Map", "Statistics"],
+    "galaxy-zoo": ["Histogram", "Map", "Statistics"],
     "default": ["SubjectViewer", "Statistics"]
   }
 }
