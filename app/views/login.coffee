@@ -5,9 +5,10 @@ class Login extends Backbone.View
   className: 'login'
   template: require './templates/login_bar'
 
-  events: 
+  events:
     'click button.login' : 'login'
     'click a.signout' : 'logout'
+    'keypress': 'onKeyPress'
 
   initialize: ->
     User.on 'sign-in', @render
@@ -29,7 +30,11 @@ class Login extends Backbone.View
   showError: (error) =>
     @$('.error').text(error).show()
 
-  login: (e) =>
+  onKeyPress: (e) =>
+    if e.keyCode is 13
+      @login()
+
+  login: =>
     username = @$('input[name="username"]').val()
     password = @$('input[name="password"]').val()
 

@@ -7,6 +7,9 @@
       "condition": "L",
       "source": "vendor/leaflet.js"
     },
+    "Graph": {
+      "source": "ubret/ubret/graph.js"
+    },
     "Map": {
       "dependencies": ["Leaflet"],
       "source": "ubret/ubret/map.js"

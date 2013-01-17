@@ -11,7 +11,7 @@ class UbretTool extends BaseView
     if @model?
       @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
-      @model.filters.on 'add reset', @toolAddFilters
+      # @model.filters.on 'add reset', @toolAddFilters
       @model.settings.on 'change', @passSetting
       @model.on 'tool:dataProcessed', @render
 

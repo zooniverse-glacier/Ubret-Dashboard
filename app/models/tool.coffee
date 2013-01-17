@@ -1,8 +1,7 @@
+corsSync = require 'sync'
 BaseModel = require 'models/base_model'
 DataSource = require 'models/data_source'
 Settings = require 'models/settings'
-Filters = require 'collections/filters'
-corsSync = require 'sync'
 
 class Tool extends BaseModel
   sync: corsSync
@@ -17,7 +16,7 @@ class Tool extends BaseModel
     unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
     unless @get('zindex') then @collection.focus @, false
 
-    @filters = @filters or new Filters
+    # @filters = @filters or new Filters
     @settings = @settings or new Settings
 
     @dataSource = @dataSource or new DataSource
@@ -36,8 +35,7 @@ class Tool extends BaseModel
       @dataSource['toolId'] = @id
 
   parse: (response) =>
-    if not response?
-      return ''
+    unless response? then return ''
 
     if @dataSource
       @dataSource.set response.data_source, {silent: true}
@@ -58,7 +56,7 @@ class Tool extends BaseModel
   toJSON: ->
     json = new Object
     json[key] = value for key, value of @attributes
-    json[key] = @[key].toJSON() for key in ['dataSource', 'filters', 'settings']
+    json[key] = @[key].toJSON() for key in ['dataSource', 'settings']
     json
 
   onDataReceived: =>
