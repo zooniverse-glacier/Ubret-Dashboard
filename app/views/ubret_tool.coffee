@@ -7,6 +7,7 @@ class UbretTool extends BaseView
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
+    
     if @model?
       @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey

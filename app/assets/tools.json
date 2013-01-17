@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "d3": {
+      "source": "vendor/d3.js"
+    },
+    "SubjectViewer": {
+      "source": "ubret/ubret/subject_viewer.js"
+    },
+    "Statistics": {
+      "dependencies": ["d3"],
+      "source": "ubret/ubret/statistics.js"
+    }
+  },
+  "projects": {
+    "default": ["SubjectViewer", "Statistics"]
+  }
+}
