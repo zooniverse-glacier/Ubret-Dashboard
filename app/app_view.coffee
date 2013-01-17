@@ -35,7 +35,6 @@ class AppView extends BaseView
     @
 
   createDashboard: =>
-    console.log 'current project', Manager.get 'project'
     @dashboardModel = new DashboardModel
     @dashboardModel.on 'change', =>
       window.location.hash = "/dashboards/#{@dashboardModel.id}"

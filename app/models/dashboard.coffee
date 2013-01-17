@@ -12,11 +12,11 @@ class Dashboard extends Backbone.Model
   initialize: ->
     @set 'project', Manager.get 'project'
     @tools = new Tools
-    console.log 'inside dbm before save', @
-    @save().success(=> 
-      User.current.updateDashboards @id, @get('name')
-      Backbone.Mediator.publish 'dashboard:initialized', @
-      ) if typeof @id is 'undefined'
+    if typeof @id is 'undefined'
+      @save
+        success: =>
+          User.current.updateDashboards @id, @get('name')
+          Backbone.Mediator.publish 'dashboard:initialized', @
 
   parse: (response) =>
     @tools['dashboardId'] = response.id

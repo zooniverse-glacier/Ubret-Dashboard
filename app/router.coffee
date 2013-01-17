@@ -18,7 +18,6 @@ class Router extends Backbone.Router
     Backbone.Mediator.publish 'router:index'
 
   retrieveDashboard: (id) =>
-    console.log 'loading dashbooard', id
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
   savedDashboards: =>
