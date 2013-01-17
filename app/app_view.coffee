@@ -19,52 +19,6 @@ class AppView extends BaseView
     'router:index': 'showIndex'
 
   initialize: ->
-    $.getJSON '/tools.json', (tools) ->
-      ###
-      Long-form way of checking if scripts are loaded.
-      ###
-      isScriptNotLoaded = (script) ->
-        if _.isUndefined window[script]
-          # Not on window. Maybe an Ubret script.
-          if _.isUndefined Ubret[script]
-            return true
-        return false
-
-      # A probably highly in-efficient way of resolving dependencies.
-      # Not recursive yet either (dependency cannot have a dependency).
-      tempScripts = []
-      for tool in tools.projects.default
-        # Does tool have any dependencies
-        if tools.scripts[tool].hasOwnProperty 'dependencies'
-          # Add dependency to loading array
-          for dependency in tools.scripts[tool].dependencies
-            tempScripts.push
-              name: dependency
-              source: tools.scripts[dependency].source
-
-        # Add script as well.
-        tempScripts.push
-          name: tool
-          source: tools.scripts[tool].source
-
-      uniqueScripts = _.uniq tempScripts, (script) -> script.name
-      console.log 'us', uniqueScripts
-      funcList = []
-      for script in uniqueScripts
-        do (script) ->
-          funcList.push (cb) ->
-            yepnope
-              test: isScriptNotLoaded script
-              yep: script.source
-              complete: -> cb null, true
-
-      async.parallel funcList, (err, results) ->
-        if err
-          console.log 'Error loading tools.', err
-          return
-        else
-          Backbone.Mediator.publish 'tools:loaded'
-
     @appHeader = new AppHeader
 
     # Main area views. Switched out when appropriate.

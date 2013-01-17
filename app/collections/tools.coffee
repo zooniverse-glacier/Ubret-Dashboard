@@ -10,20 +10,11 @@ class Tools extends Backbone.Collection
 
   focus: (tool, save = true) ->
     # Temp hack
-    if save
-      console.log 'saving'
-      if @length is 0
-        tool.save {zindex: 1}
-        return
-      maxZindexTool = @max((tool) -> tool.get('zindex'))
-      unless tool.cid is maxZindexTool.cid then tool.save({zindex: maxZindexTool.get('zindex') + 1})
-    else
-      console.log 'setting'
-      if @length is 0
-        tool.set {zindex: 1}
-        return
-      maxZindexTool = @max((tool) -> tool.get('zindex'))
-      unless tool.cid is maxZindexTool.cid then tool.set({zindex: maxZindexTool.get('zindex') + 1})
-
+    tool.func = if save then tool.save else tool.set
+    if @length is 0
+      tool.func {zindex: 1}
+      return
+    maxZindexTool = @max((tool) -> tool.get('zindex'))
+    unless tool.cid is maxZindexTool.cid then tool.func({zindex: maxZindexTool.get('zindex') + 1})
 
 module.exports = Tools

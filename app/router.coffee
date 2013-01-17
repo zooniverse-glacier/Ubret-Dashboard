@@ -18,7 +18,51 @@ class Router extends Backbone.Router
     Backbone.Mediator.publish 'router:index'
 
   retrieveDashboard: (id) =>
-    Backbone.Mediator.publish 'router:dashboardRetrieve', id
+    $.getJSON '/tools.json', (tools) ->
+      ###
+      Long-form way of checking if scripts are loaded.
+      Also not really the location I want to put this in the end.
+      ###
+      isScriptNotLoaded = (script) ->
+        if _.isUndefined window[script]
+          # Not on window. Maybe an Ubret script.
+          if _.isUndefined Ubret[script]
+            return true
+        return false
+
+      # A highly inefficient way of resolving dependencies.
+      # Not recursive yet either (dependency cannot have a dependency).
+      tempScripts = []
+      for tool in tools.projects.default
+        # Does tool have any dependencies
+        if tools.scripts[tool].hasOwnProperty 'dependencies'
+          # Add dependency to loading array
+          for dependency in tools.scripts[tool].dependencies
+            tempScripts.push
+              name: dependency
+              source: tools.scripts[dependency].source
+        # Add script as well.
+        tempScripts.push
+          name: tool
+          source: tools.scripts[tool].source
+
+      uniqueScripts = _.uniq tempScripts, (script) -> script.name
+      funcList = []
+      for script in uniqueScripts
+        do (script) ->
+          funcList.push (cb) ->
+            yepnope
+              test: isScriptNotLoaded script
+              yep: script.source
+              complete: -> cb null, true
+
+      async.parallel funcList, (err, results) ->
+        if err
+          console.log 'Error loading tools.', err
+          return
+        else
+          Backbone.Mediator.publish 'tools:loaded'
+          Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
   savedDashboards: =>
     @navigate("", {trigger: true}) if User.current is null
