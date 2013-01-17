@@ -42,6 +42,9 @@ class DataSource extends BaseModel
   isInternal: =>
     (@get('type') is 'internal')
 
+  isReady: =>
+    (@isInternal() and (not _.isUndefined(@source))) or (@isExternal() and (not _.isUndefined(@data)))
+
   sourceName: =>
     if @isExternal()
       name = Manager.get('sources').get(@get('source')).get('name')

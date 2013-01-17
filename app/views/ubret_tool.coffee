@@ -23,9 +23,7 @@ class UbretTool extends BaseView
     @model.tool.on 'key-selection', @selectKey
 
   render: =>
-    if (not @model.dataSource.data?) or (@model.dataSource.data.length is 0 and @model.dataSource.isExternal())
-      @$el.html @noDataTemplate()
-    else
+    if @model.dataSource.isReady() 
       @$('.no-data').remove()
       if @model.dataSource.isInternal()
         @model.tool.parentTool(@model.dataSource.source.tool)
@@ -37,6 +35,8 @@ class UbretTool extends BaseView
         .selectKeys([@model.get('selectedKey')])
         .settings(@model.settings.toJSON())
         .start()
+    else
+      @$el.html @noDataTemplate()
     @
 
   dataKeys: (dataModel) =>
