@@ -14,7 +14,7 @@ class Router extends Backbone.Router
     @appView = new AppView({el: $('#app')})
 
   index: ->
-    @navigate("/my_dashboards", {trigger: true}) if User.current isnt null
+    @navigate("#/my_dashboards", {trigger: true}) if User.current isnt null
     Backbone.Mediator.publish 'router:index'
 
   retrieveDashboard: (id) =>

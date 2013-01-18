@@ -49,6 +49,7 @@ class User extends Backbone.Events
     _.extend @, Backbone.Events
     @name = options.name
     @id = options.id
+    @apiToken = options.api_key
     @syncToSpelunker()
 
   syncToSpelunker: =>
