@@ -10,45 +10,41 @@ class AppHeader extends BaseView
     'click .create-dashboard': 'onCreateDashboard'
 
   subscriptions:
+    'dashboard:initialized': 'updateLink'
     'router:dashboardCreate': 'onViewCurrent'
-    'dashboard:initialized' : 'updateLink'
     'router:dashboardRetrieve': 'onViewCurrent'
     'router:viewSavedDashboards': 'onViewSaved'
 
   initialize: ->
     User.on 'sign-in', @render
     @login = new Login
-    @active = ''
-    @id = ''
-
-  rendered: false
+    @$el.html @template()
 
   render: =>
-    @$el.html @template({id: @id})
-    if @active is 'current'
-      @$('li a.my-dashboards').removeClass 'active'
-      @$('li a.current').addClass 'active'
-    else if @active is 'saved'
-      @$('li a.my-dashboards').addClass 'active'
-      @$('li a.current').removeClass 'active'
-    else
-      @$('li a.my-dashboards').removeClass 'active'
-      @$('li a.current').removeClass 'active'
-    @assign
-      '.login' : @login
+    if @id then @$('.current').attr 'href', '/#/dashboards/' + @id
+
+    @removeActive()
+    switch @active
+      when 'current' then @$('li a.current').addClass 'active'
+      when 'saved' then @$('li a.my-dashboards').addClass 'active'
+
+    @assign '.login', @login
     @
 
   onViewCurrent: =>
     @active = 'current'
+    @render()
 
   onViewSaved: =>
     @active = 'saved'
+    @render()
 
   onCreateDashboard: (e) =>
     Backbone.Mediator.publish 'dashboard:create'
 
   updateLink: (model) =>
     @id = model.id
+    @render()
 
   # Helpers
   removeActive: =>

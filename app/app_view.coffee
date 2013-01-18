@@ -17,7 +17,9 @@ class AppView extends BaseView
     'router:index': 'createDashboardView'
 
   initialize: ->
-    @appHeader = new AppHeader
+    @$el.html @template()
+
+    @appHeader = new AppHeader({el: @$('.app-header')})
 
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
@@ -26,7 +28,6 @@ class AppView extends BaseView
 
     @appFocusView = @dashboardView
 
-    @$el.html @template()
 
   render: =>
     @assign
