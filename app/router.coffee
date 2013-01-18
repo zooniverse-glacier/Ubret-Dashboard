@@ -7,8 +7,8 @@ class Router extends Backbone.Router
     '': 'index'
     'my_dashboards': 'savedDashboards'
     'dashboards/:id': 'retrieveDashboard'
-    'project/:projectId': 'loadProject'
-    'project/:projectId/object/:objectId': 'loadObject'
+    'project/:project': 'loadProject'
+    'project/:project/object/:objectId': 'loadObject'
 
   initialize: ->
     @appView = new AppView({el: $('#app')})
@@ -24,11 +24,12 @@ class Router extends Backbone.Router
     @navigate("", {trigger: true}) if User.current is null
     Backbone.Mediator.publish 'router:viewSavedDashboards'
 
-  loadProject: (projectId) ->
-    Manager.save 'project', projectId
+  loadProject: (project) ->
+    Manager.set 'project', project
     @navigate '', {trigger: true, replace: true}
 
-  loadObject: (projectId, objectId = null) ->
+  loadObject: (project, objectId = null) ->
+    Manager.set 'project', project
     console.log 'lo', projectId, objectId
 
 module.exports = Router
