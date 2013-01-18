@@ -25,7 +25,8 @@ class Dashboard extends Backbone.Model
     response
 
   createTool: (toolType) =>
-    @tools.add 
+    @tools.add
+      dashboard_id: @get 'id'
       type: toolType
 
   toJSON: ->
