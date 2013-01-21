@@ -1,7 +1,7 @@
 BaseView = require 'views/base_view'
 
 Settings = require 'views/settings'
-ToolContainer = require 'views/tool_container'
+UbretView = require 'views/ubret'
 WindowTitleBar = require 'views/window_title_bar'
 
 Snapping = require 'views/snapping'
@@ -27,11 +27,10 @@ class ToolWindow extends BaseView
 
       @$el.css @initialSizeAndPosition()
 
-    @settings = new Settings { model: @model }
-    
-    @toolContainer = new ToolContainer { model: @model }
+    @settings = new Settings {model: @model}
+    @ubretView = new UbretView {model: @model, el: @$('.tool-container')}
+    @titleBar = new WindowTitleBar {model: @model}
 
-    @titleBar = new WindowTitleBar { model: @model }
     @titleBar.on 'minimize', @minimize
     @titleBar.on 'close', @close
     @titleBar.on 'startDrag', @startDrag
@@ -59,11 +58,13 @@ class ToolWindow extends BaseView
     @assign
       '.title-bar': @titleBar
       '.settings': @settings
-      '.tool-container': @toolContainer
     @
 
 
   # Events
+  onDashboardAppend: =>
+    @assign '.tool-container', @ubretView
+
   removeWindow: =>
     @remove()
 
@@ -150,7 +151,7 @@ class ToolWindow extends BaseView
       width: @$el.css('width')
       height: @$el.css('height')
 
-    @toolContainer.update()
+    @ubretView.render()
 
 
   # Drag

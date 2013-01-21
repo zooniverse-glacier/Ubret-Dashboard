@@ -1,29 +1,26 @@
 BaseView = require 'views/base_view'
 
 class UbretTool extends BaseView
-  tagName: 'div'
-  className: 'ubret-tool'
   nonDisplayKeys: ['id', 'uid', 'image']
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
-    
     if @model?
       @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
-      # @model.filters.on 'add reset', @toolAddFilters
       @model.settings.on 'change', @passSetting
       @model.on 'tool:dataProcessed', @render
 
-    @$el.addClass @model.get('type')
-    @$el.attr 'id', @id
-    @model.tool = new Ubret[@model.get('type')]('#' + @id)
+    @model.tool = new Ubret[@model.get('type')]('#' + @model.get('channel'))
     @model.tool.on 'keys-received', (keys) =>
       Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     @model.tool.on 'selection', @selectElements
     @model.tool.on 'key-selection', @selectKey
 
   render: =>
+    @$el.addClass @model.get('type')
+    @$el.attr 'id', @model.get('channel')
+
     if @model.dataSource.isReady() 
       @$('.no-data').remove()
       if @model.dataSource.isInternal()
@@ -47,7 +44,6 @@ class UbretTool extends BaseView
     return keys
 
   selectElements: (ids) =>
-    console.log 'here'
     @model.setElements ids
 
   selectKey: (key) =>
@@ -57,7 +53,6 @@ class UbretTool extends BaseView
     @model.tool.selectKeys(@model.get('selectedKey').slice()).start()
 
   toolSelectElements: =>
-    console.log 'tool-select'
     @model.tool.selectIds(@model.get('selectedElements').slice()).start()
 
   toolAddFilters: =>

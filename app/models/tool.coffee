@@ -60,6 +60,7 @@ class Tool extends BaseModel
     json
 
   onDataReceived: =>
+    console.log 'tool:dataProcessed'
     @triggerEvent 'tool:dataProcessed'
 
   # Elements, Keys, Filters

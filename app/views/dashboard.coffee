@@ -1,7 +1,5 @@
 BaseView = require 'views/base_view'
-
 Tools = require 'collections/tools'
-
 Toolbox = require 'views/toolbox'
 ToolWindow = require 'views/tool_window'
 
@@ -37,6 +35,7 @@ class DashboardView extends BaseView
       model: tool
       collection: @model.tools
     @$el.append toolWindow.render().el
+    toolWindow.onDashboardAppend()
 
   addToolModel: (type) =>
     @model.createTool type
