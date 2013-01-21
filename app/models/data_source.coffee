@@ -1,8 +1,8 @@
 BaseModel = require 'models/base_model'
-Subjects = require 'collections/subject_collection'
+corsSync = require 'sync'
 Manager = require 'modules/manager'
 Params = require 'collections/params'
-corsSync = require 'sync'
+Subjects = require 'collections/subjects'
 
 class DataSource extends BaseModel
   sync: corsSync

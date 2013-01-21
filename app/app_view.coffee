@@ -25,10 +25,8 @@ class AppView extends BaseView
     @dashboardView = new DashboardView
     User.current?.on 'loaded-dashboards', =>
       @savedListView = new SavedList { collection: User.current.dashboards }
-    User.on 'sign-out', @render
 
     @appFocusView = @dashboardView
-
 
   render: =>
     @assign
@@ -41,6 +39,7 @@ class AppView extends BaseView
     @dashboardModel.on 'change', =>
       window.location.hash = "/dashboards/#{@dashboardModel.id}"
       @createDashboardView()
+    return @dashboardModel
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
