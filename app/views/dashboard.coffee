@@ -35,7 +35,7 @@ class DashboardView extends BaseView
       model: tool
       collection: @model.tools
     @$el.append toolWindow.render().el
-    toolWindow.onDashboardAppend()
+    toolWindow.postDashboardAppend()
 
   addToolModel: (type) =>
     @model.createTool type

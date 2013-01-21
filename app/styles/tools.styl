@@ -1,9 +1,4 @@
-.ubret-tool
-  height: 100%
-  width: 100%
-  z-index: 0
-  overflow: auto
-
+.tool-container
   h2
     margin-top: 1
 
@@ -79,41 +74,41 @@
           font-weight: 700
         span
 
-  .subject, .stats
-    border-top: 1px solid $gray-less-dark
-    box-sizing: border-box
-    font-size: 12px
-    margin: 15px 0
+.subject, .stats
+  border-top: 1px solid $gray-less-dark
+  box-sizing: border-box
+  font-size: 12px
+  margin: 15px 0
 
-    &:first-child
-      border-top-color: transparent
-      margin: 0
+  &:first-child
+    border-top-color: transparent
+    margin: 0
 
-    ul
-      @extends #semantic-list
-      
-      li
-        border-bottom: 1px solid $gray-light
-        padding: 3px 0 3px 10px
+  ul
+    @extends #semantic-list
+    
+    li
+      border-bottom: 1px solid $gray-light
+      padding: 3px 0 3px 10px
 
-        &:last-child
-          border-bottom-color: transparent
+      &:last-child
+        border-bottom-color: transparent
 
-        &.heading
-          font-size: 1.1em
-          font-weight: 700
+      &.heading
+        font-size: 1.1em
+        font-weight: 700
 
-        label
-          float: left
-          width: 85px
+      label
+        float: left
+        width: 85px
 
-        span
-          display: block
-          margin-left: 105px
+      span
+        display: block
+        margin-left: 105px
 
-    img
-      border-left: 10px solid $white
-      border-bottom: 10px solid $white
-      float: right
-      max-width: 300px
+  img
+    border-left: 10px solid $white
+    border-bottom: 10px solid $white
+    float: right
+    max-width: 300px
 

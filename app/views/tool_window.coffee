@@ -62,7 +62,7 @@ class ToolWindow extends BaseView
 
 
   # Events
-  onDashboardAppend: =>
+  postDashboardAppend: =>
     @assign '.tool-container', @ubretView
 
   removeWindow: =>
