@@ -37,23 +37,17 @@ class AppView extends BaseView
 
   createDashboard: =>
     @dashboardModel = new DashboardModel
-    @dashboardModel.on 'change', =>
-      ToolLoader @dashboardModel, =>
-        Manager.get('router').navigate "/dashboards/#{@dashboardModel.id}", {trigger: false}
-        Backbone.Mediator.publish 'tools:loaded'
-        Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
-        @createDashboardView()
+    @dashboardModel.once 'change', =>
+      ToolLoader @dashboardModel, @createDashboardView
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
     @dashboardModel.fetch
-      success: =>
-        ToolLoader @dashboardModel, =>
-          Backbone.Mediator.publish 'tools:loaded'
-          Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
-          @createDashboardView()
+      success: => ToolLoader @dashboardModel, @createDashboardView
 
   createDashboardView: =>
+    Backbone.Mediator.publish 'tools:loaded'
+    Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
     @appFocusView = @dashboardView
     @render()
 

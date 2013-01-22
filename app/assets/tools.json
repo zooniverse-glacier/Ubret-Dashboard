@@ -3,8 +3,7 @@
     "d3": {
       "source": "vendor/d3.js"
     },
-    "Leaflet": {
-      "condition": "L",
+    "L": {
       "source": "vendor/leaflet.js"
     },
     "Histogram": {
@@ -12,10 +11,11 @@
       "source": "ubret/ubret/histogram.js"
     },
     "Graph": {
+      "dependencies": ["d3"],
       "source": "ubret/ubret/graph.js"
     },
     "Map": {
-      "dependencies": ["Leaflet"],
+      "dependencies": ["L"],
       "source": "ubret/ubret/map.js"
     },
     "SubjectViewer": {
