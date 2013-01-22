@@ -63,12 +63,19 @@ class AppView extends BaseView
           Manager.set 'project', project
           
           # Set valid tools for later retrieval.
-          Manager.set 'tools', tools.projects[project]
+          # If project is Object, use tools key. If not, assume it's the array of tools.
+          if (tools.projects[project] is Object(tools.projects[project])) and tools.projects[project].hasOwnProperty 'tools'
+            Manager.set 'tools', tools.projects[project].tools
+          else
+            Manager.set 'tools', tools.projects[project]
+
+          console.log 'project', Manager.get 'project'
+          console.log 'tools', Manager.get 'tools'
 
           # A highly inefficient way of resolving dependencies.
           # Not recursive yet either (dependency cannot have a dependency).
           tempScripts = []
-          for tool in tools.projects[project]
+          for tool in Manager.get 'tools'
             # Does tool have any dependencies
             if tools.scripts[tool].hasOwnProperty 'dependencies'
               # Add dependency to loading array
@@ -96,25 +103,25 @@ class AppView extends BaseView
               console.log 'Error loading tools.', err
               return
             else
-              @createDashboardView()
               Backbone.Mediator.publish 'tools:loaded'
               Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
+              @createDashboardView()
 
   createDashboardView: =>
     @appFocusView = @dashboardView
     @render()
 
-    @dashboardModel.tools.add
-      dashboard_id: @dashboardModel.get 'id'
-      type: 'SubjectViewer'
-      onInit: (tool) ->
-        tool.dataSource.set 'source', '4'
-        tool.dataSource.set 'type', 'external'
-        tool.dataSource.params.add [
-          {key: 'project', value: Manager.get 'project'}
-          {key: 'id', value: Manager.get 'object'}
-        ]
-        tool.dataSource.fetchData()
+      # @dashboardModel.tools.add
+      #   dashboard_id: @dashboardModel.get 'id'
+      #   type: 'SubjectViewer'
+      #   onInit: (tool) ->
+      #     tool.dataSource.set 'source', '4'
+      #     tool.dataSource.set 'type', 'external'
+      #     tool.dataSource.params.add [
+      #       {key: 'project', value: Manager.get 'project'}
+      #       {key: 'id', value: Manager.get 'object'}
+      #     ]
+      #     tool.dataSource.fetchData()
 
   showSaved: =>
     if typeof @savedListView is 'undefined'

@@ -10,5 +10,8 @@ class UbretManager
   get: (key) =>
     if @data[key] then @data[key] else false
 
+  delete: (key) =>
+    delete @data[key]
+
 
 module.exports = new UbretManager()

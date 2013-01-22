@@ -22,7 +22,7 @@ class DashboardView extends BaseView
   render: =>
     @$el.html @template()
     @assign '.toolbox', @toolboxView
-    if @model then @model.tools.each @createToolWindow
+    if @model then @model.tools.each @addTool
     @
 
   focusWindow: (e) =>
@@ -30,19 +30,15 @@ class DashboardView extends BaseView
     tool = @model.tools.find (tool) -> tool.get('channel') is toolChannel
     @model.tools.focus tool
 
-  createToolWindow: (tool) =>
+  addToolModel: (type) =>
+    @model.createTool type
+
+  addTool: (tool) =>
     toolWindow = new ToolWindow
       model: tool
       collection: @model.tools
     @$el.append toolWindow.render().el
     toolWindow.postDashboardAppend()
-
-  addToolModel: (type) =>
-    @model.createTool type
-
-  addTool: =>
-    tool = @model.tools.last()
-    @createToolWindow tool
 
   removeTools: =>
     while @model.tools.length
