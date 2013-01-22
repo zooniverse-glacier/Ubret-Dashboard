@@ -17,7 +17,6 @@ class Range extends Param
     @span = @$el.find('span')
     @value = @$el.find('.value')
     if @firstRender and typeof @model.get('value') isnt 'undefined'
-      console.log 'first render'
       @value.html @model.get('value').toFixed(2)
       position = (167 * (@model.get('value') - @min)) / (@max - @min)
       @span.css
@@ -28,7 +27,6 @@ class Range extends Param
     @
 
   onUserStartDrag: (e) =>
-    console.log 'starting drag'
     $('body').addClass 'unselectable'
     @dragging = true
 
