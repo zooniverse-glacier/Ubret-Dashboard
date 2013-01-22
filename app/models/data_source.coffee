@@ -1,9 +1,15 @@
-Manager = require 'modules/manager'
-Params = require 'collections/params'
-Subjects = require 'collections/subjects'
-
 class DataSource extends Backbone.AssociatedModel
   sync: require 'sync' 
+
+  relations: [
+    type: Backbone.Many
+    key: 'params'
+    relationModel: require 'models/param'
+    collectionType: require 'collections/params'
+  ]
+
+  manager: require('modules/manager')
+  subjects: require('collections/subjects')
 
   urlRoot: =>
     "/dashboards/#{@tools.dashboardId}/tools/#{@toolId}/data_sources"
@@ -13,26 +19,23 @@ class DataSource extends Backbone.AssociatedModel
     json[key] = value for key, value of @attributes
     json
 
-  initialize: ->
-    @params = new Params(@get('params')) if typeof @get('params') isnt 'undefined'
-    @params = @params or new Params()
-
   fetchData: =>
-    if @get('type') is 'external'
-      url = Manager.get('sources').get(@get('source')).get('url')
-      @data = new Subjects([], {params: @params, url: url })
-      @data.fetch
-        success: =>
-          @triggerEvent 'source:dataReceived'
-          @save()
-    else if @get('type') is 'internal'
-      @source = @tools.find (tool) =>
-        tool.get('channel') == @get('source')
-      @data = []
-      @triggerEvent 'source:dataReceived'
-      @save()
+    @save()
+    if @isExternal()
+      @fetchExt()
+    else if @isInternal()
+      @fetchInt()
     else
       throw 'unknown source type'
+
+  fetchExt: =>
+    url = @manager.get('sources').get(@get('source')).get('url')
+    @data = new @subjects([], {params: @params, url: url })
+    @data.fetch
+
+  fetchInt: =>
+    if not _.isUndefined @source
+      @data = []
 
   isExternal: =>
     (@get('type') is 'external')

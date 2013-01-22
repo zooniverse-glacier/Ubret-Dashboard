@@ -1,5 +1,3 @@
-BaseModel = require 'models/base_model'
-
-class Param extends BaseModel
+class Param extends Backbone.AssociatedModel
 
 module.exports = Param
