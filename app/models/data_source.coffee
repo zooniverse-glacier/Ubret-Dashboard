@@ -8,6 +8,9 @@ class DataSource extends Backbone.AssociatedModel
     collectionType: require 'collections/params'
   ]
 
+  defaults:
+    params: []
+
   manager: require('modules/manager')
   subjects: require('collections/subjects')
 

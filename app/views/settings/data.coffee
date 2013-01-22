@@ -20,14 +20,15 @@ class DataSettings extends BaseView
     'source:dataReceived': 'updateValidSourceTools'
 
   initialize: (options) ->
-    @dataSource = @model.dataSource
+    @dataSource = @model.get('dataSource')
     @channel = @model.get('channel')
     @sourceType = @dataSource.get('type') or false
     @selectedSource = Manager.get('sources').get(@dataSource.get('source')) if typeof @dataSource.get('source') isnt 'undefined'
     @updateValidSourceTools()
 
     @searchTypeView = new SearchTypeView()
-    @params = @dataSource.params
+    @params = @dataSource.get('params')
+    console.log @params
     @paramsView = new ParamsView({collection: @params})
 
     @searchTypeView.on 'searchType:typeSelected', @onSetSearchType
@@ -39,7 +40,7 @@ class DataSettings extends BaseView
       sourceType: @sourceType
 
     if @sourceType is 'internal'
-      opts['source'] = @model.dataSource.get('source')
+      opts['source'] = @dataSource.get('source')
 
     if @selectedSource
       new_opts =

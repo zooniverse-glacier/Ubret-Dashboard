@@ -24,9 +24,6 @@ class Tool extends Backbone.AssociatedModel
     json['settings'] = @get('settings').toJSON()
     json
 
-  onDataReceived: =>
-    @triggerEvent 'tool:dataProcessed'
-
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
