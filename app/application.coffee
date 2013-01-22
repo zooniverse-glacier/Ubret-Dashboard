@@ -1,20 +1,20 @@
-Router = require 'router'
-User = require 'user'
-
+AppView = require 'app_view'
 Manager = require 'modules/manager'
-# TopBar = require 'views/top_bar'
-
+Router = require 'router'
 Sources = require 'collections/sources'
+User = require 'user'
 
 application =
   initialize: ->
     sources = new Sources()
     sources.fetch()
 
-    Manager.save('sources', sources)
+    Manager.set 'sources', sources
 
     User.currentUser().always =>
       router = new Router
+      Manager.set 'router', router
+      appView = new AppView({el: $('#app')})
       Backbone.history.start()
 
 module.exports = application

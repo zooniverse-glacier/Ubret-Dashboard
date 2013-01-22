@@ -4,6 +4,7 @@ DashboardModel = require 'models/dashboard'
 DashboardView = require 'views/dashboard'
 Manager = require 'modules/manager'
 SavedList = require 'views/saved_list'
+ToolLoader = require 'modules/tool_loader'
 User = require 'user'
 
 class AppView extends BaseView
@@ -24,7 +25,7 @@ class AppView extends BaseView
     # Main area views. Switched out when appropriate.
     @dashboardView = new DashboardView
     User.current?.on 'loaded-dashboards', =>
-      @savedListView = new SavedList { collection: User.current.dashboards }
+      @savedListView = new SavedList {collection: User.current.dashboards}
 
     @appFocusView = @dashboardView
 
@@ -37,91 +38,36 @@ class AppView extends BaseView
   createDashboard: =>
     @dashboardModel = new DashboardModel
     @dashboardModel.on 'change', =>
-      window.location.hash = "/dashboards/#{@dashboardModel.id}"
+      ToolLoader @dashboardModel, =>
+        Manager.get('router').navigate "/dashboards/#{@dashboardModel.id}", {trigger: false}
+        Backbone.Mediator.publish 'tools:loaded'
+        Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
+        @createDashboardView()
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
     @dashboardModel.fetch
       success: =>
-        $.getJSON '/tools.json', (tools) =>
-          ###
-          Long-form way of checking if scripts are loaded.
-          Also not really the location I want to put this in the end.
-          ###
-          isScriptNotLoaded = (script) ->
-            if _.isUndefined window[script.name]
-              # Not on window. Maybe an Ubret script.
-              if _.isUndefined Ubret[script.name]
-                return true
-            return false
-
-          project = @dashboardModel.get('project')
-          unless project and tools.projects.hasOwnProperty project
-            project = 'default'
-
-          # Set current project.
-          Manager.set 'project', project
-          
-          # Set valid tools for later retrieval.
-          # If project is Object, use tools key. If not, assume it's the array of tools.
-          if (tools.projects[project] is Object(tools.projects[project])) and tools.projects[project].hasOwnProperty 'tools'
-            Manager.set 'tools', tools.projects[project].tools
-          else
-            Manager.set 'tools', tools.projects[project]
-
-          console.log 'project', Manager.get 'project'
-          console.log 'tools', Manager.get 'tools'
-
-          # A highly inefficient way of resolving dependencies.
-          # Not recursive yet either (dependency cannot have a dependency).
-          tempScripts = []
-          for tool in Manager.get 'tools'
-            # Does tool have any dependencies
-            if tools.scripts[tool].hasOwnProperty 'dependencies'
-              # Add dependency to loading array
-              for dependency in tools.scripts[tool].dependencies
-                tempScripts.push
-                  name: dependency
-                  source: tools.scripts[dependency].source
-            # Add script as well.
-            tempScripts.push
-              name: tool
-              source: tools.scripts[tool].source
-
-          uniqueScripts = _.uniq tempScripts, (script) -> script.name
-          funcList = []
-          for script in uniqueScripts
-            do (script) ->
-              funcList.push (cb) ->
-                yepnope
-                  test: isScriptNotLoaded script
-                  yep: script.source
-                  complete: -> cb null, true
-
-          async.parallel funcList, (err, results) =>
-            if err
-              console.log 'Error loading tools.', err
-              return
-            else
-              Backbone.Mediator.publish 'tools:loaded'
-              Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
-              @createDashboardView()
+        ToolLoader @dashboardModel, =>
+          Backbone.Mediator.publish 'tools:loaded'
+          Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
+          @createDashboardView()
 
   createDashboardView: =>
     @appFocusView = @dashboardView
     @render()
 
-      # @dashboardModel.tools.add
-      #   dashboard_id: @dashboardModel.get 'id'
-      #   type: 'SubjectViewer'
-      #   onInit: (tool) ->
-      #     tool.dataSource.set 'source', '4'
-      #     tool.dataSource.set 'type', 'external'
-      #     tool.dataSource.params.add [
-      #       {key: 'project', value: Manager.get 'project'}
-      #       {key: 'id', value: Manager.get 'object'}
-      #     ]
-      #     tool.dataSource.fetchData()
+    # @dashboardModel.tools.add
+    #   dashboard_id: @dashboardModel.get 'id'
+    #   type: 'SubjectViewer'
+    #   onInit: (tool) ->
+    #     tool.dataSource.set 'source', '4'
+    #     tool.dataSource.set 'type', 'external'
+    #     tool.dataSource.params.add [
+    #       {key: 'project', value: Manager.get 'project'}
+    #       {key: 'id', value: Manager.get 'object'}
+    #     ]
+    #     tool.dataSource.fetchData()
 
   showSaved: =>
     if typeof @savedListView is 'undefined'
