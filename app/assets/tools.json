@@ -27,7 +27,10 @@
     }
   },
   "projects": {
-    "galaxy_zoo": ["Histogram", "Map", "Statistics", "SubjectViewer"],
+    "galaxy_zoo": {
+      "tools": ["Histogram", "Map", "Statistics", "SubjectViewer"],
+      "preload": ["SubjectViewer", "Map"]
+    },
     "default": ["SubjectViewer", "Statistics"]
   }
 }
