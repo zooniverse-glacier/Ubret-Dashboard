@@ -1,11 +1,9 @@
-BaseModel = require 'models/base_model'
-corsSync = require 'sync'
 Manager = require 'modules/manager'
 Params = require 'collections/params'
 Subjects = require 'collections/subjects'
 
-class DataSource extends BaseModel
-  sync: corsSync
+class DataSource extends Backbone.AssociatedModel
+  sync: require 'sync' 
 
   urlRoot: =>
     "/dashboards/#{@tools.dashboardId}/tools/#{@toolId}/data_sources"

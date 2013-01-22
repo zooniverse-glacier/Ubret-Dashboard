@@ -1,40 +1,23 @@
 Tool = require 'models/tool'
-DataSource = require 'models/data_source'
-Filters = require 'collections/filters'
 
 describe 'Tool', ->
-  it 'should be defined', ->
-    expect(Tool).to.be.ok
+  beforeEach ->
+    @tool = new Tool
 
   it 'should be instantiable', ->
-    tool = new Tool
-    expect(tool).to.be.ok
+    expect(@tool).to.be.defined
 
-  describe 'defaults', ->
+  describe '#toJSON', ->
+    it 'should include settings in the generated json', ->
+      expect(@tool.toJSON()).to.have.property('settings')
+
+  describe '#generatePosition', ->
     beforeEach ->
-      @tool = new Tool
+      @tool.generatePosition()
 
-    it 'should have a height of 640', ->
-      expect(@tool.get('height')).to.equal(480)
+    it 'should assign a top attribute to the tool', ->
+      expect(@tool.attributes).to.have.property('top')
 
-    it 'should have a width of 480', ->
-      expect(@tool.get('width')).to.equal(640)
+    it 'should assign a left atribute to the tool', ->
+      expect(@tool.attributes).to.have.property('left')
 
-    it 'should have a new DataSource', ->
-      expect(@tool.get('dataSource')).to.be.an.instanceof(DataSource)
-
-    it 'should have a new Filters collection', ->
-      expect(@tool.get('filters')).to.be.an.instanceof(Filters)
-
-    it 'should have a top of 20', ->
-      expect(@tool.get('top')).to.equal(20)
-
-    it 'should have a left of 20', ->
-      expect(@tool.get('left')).to.equal(20)
-
-    it 'should have a z-index of 1', ->
-      expect(@tool.get('zindex')).to.equal(1)
-
-  describe '#getData', ->
-    beforeEach ->
-      @tool = new Tool { dataSource: new DataSource { source: 'Galaxy Zoo' } }

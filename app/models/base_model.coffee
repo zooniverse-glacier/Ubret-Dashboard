@@ -1,7 +1,3 @@
-class BaseModel extends Backbone.Model
-
-  triggerEvent: (event) ->
-    @trigger event
-    Backbone.Mediator.publish event
+class BaseModel extends Backbone.AssociatedModel
 
 module.exports = BaseModel

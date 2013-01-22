@@ -15,7 +15,7 @@ exports.config =
           'vendor/scripts/backbone-associations.js',
           'test/vendor/scripts/mocha-1.4.2.js',
           'test/vendor/scripts/chai.js',
-          'test/vendor/scripts/sinon-1.4.2.js',
+          'test/vendor/scripts/sinon-1.5.2.js',
           'test/vendor/scripts/sinon-chai-2.1.2.js',
           'test/vendor/scripts/chai-jquery'
         ]
