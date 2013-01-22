@@ -16,7 +16,6 @@ class Tool extends BaseModel
     unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
     unless @get('zindex') then @collection.focus @, false
 
-    # @filters = @filters or new Filters
     @settings = @settings or new Settings
 
     @dataSource = @dataSource or new DataSource
@@ -31,8 +30,10 @@ class Tool extends BaseModel
         silent: true
         success: =>
           @dataSource['toolId'] = @id
+          if @get('onInit') then @get('onInit')(@)
     else
       @dataSource['toolId'] = @id
+      if @get('onInit') then @get('onInit')(@)
 
   parse: (response) =>
     unless response? then return ''
@@ -60,7 +61,6 @@ class Tool extends BaseModel
     json
 
   onDataReceived: =>
-    console.log 'tool:dataProcessed'
     @triggerEvent 'tool:dataProcessed'
 
   # Elements, Keys, Filters
