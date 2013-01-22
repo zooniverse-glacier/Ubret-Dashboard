@@ -50,7 +50,7 @@ class DataSource extends Backbone.AssociatedModel
     if @isExternal()
       name = Manager.get('sources').get(@get('source')).get('name')
     else if @isInternal()
-      name = @tools.find((tool) => tool.get('channel') == @get('source')).get('name') 
+      name = @source.get('name')
     else
       name = ''
     return name

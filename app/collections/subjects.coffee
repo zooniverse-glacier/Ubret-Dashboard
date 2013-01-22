@@ -1,9 +1,6 @@
-corsSync = require 'sync'
-Subject = require 'models/subject'
-
 class SubjectCollection extends Backbone.Collection
-  model: Subject
-  sync: corsSync
+  model: require 'models/subject' 
+  sync: require 'sync'
 
   initialize: (models=[], options={}) ->
     @base = options.url || '/etc'

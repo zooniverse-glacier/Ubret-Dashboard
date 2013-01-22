@@ -16,6 +16,7 @@ class Dashboard extends Backbone.AssociatedModel
 
   defaults:
     tools: []
+    name: "My Great Dashboard"
 
   initialize: ->
     @set 'project', Manager.get 'project'

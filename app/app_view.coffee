@@ -37,8 +37,9 @@ class AppView extends BaseView
 
   createDashboard: =>
     @dashboardModel = new DashboardModel
-    @dashboardModel.once 'change', =>
+    @dashboardModel.save().done =>
       ToolLoader @dashboardModel, @createDashboardView
+    return @dashboardModel
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}

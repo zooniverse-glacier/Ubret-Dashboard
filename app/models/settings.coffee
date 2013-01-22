@@ -1,4 +1,4 @@
-class Settings extends Backbone.Model
+class Settings extends Backbone.AssociatedModel
   defaults:
     "currentPage": 0
   

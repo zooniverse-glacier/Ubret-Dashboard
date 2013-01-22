@@ -1,8 +1,6 @@
-corsSync = require 'sync'
-
 class Sources extends Backbone.Collection
 
-  sync: corsSync
+  sync: require 'sync'
   url: '/endpoints'
 
   initialize: ->
