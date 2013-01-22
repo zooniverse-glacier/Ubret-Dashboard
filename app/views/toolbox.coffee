@@ -15,7 +15,7 @@ class Toolbox extends BaseView
     'click a.saved-dashboards' : 'toggleSaved'
 
   subscriptions:
-    'tools:loaded': 'render'
+    'dashboard:initialized': 'render'
 
   render: =>
     @tools = []
