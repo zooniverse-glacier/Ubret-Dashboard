@@ -8,16 +8,17 @@ class DashboardView extends BaseView
 
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
-    'show-snap' : 'drawSnap'
-    'stop-snap' : 'stopSnap'
+    'show-snap': 'drawSnap'
+    'stop-snap': 'stopSnap'
 
   events: 
-    'click .tool-window' : "focusWindow"
+    'click .tool-window': 'focusWindow'
 
   initialize: ->
     @toolboxView = new Toolbox
-    @toolboxView.on 'create', @addToolModel
-    @toolboxView.on 'remove-tools', @removeTools
+    @toolboxView.on
+      'create': @addToolModel
+      'remove-tools': @removeTools
 
   render: =>
     @$el.html @template()
