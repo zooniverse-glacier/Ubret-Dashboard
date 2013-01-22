@@ -46,10 +46,10 @@ class AppView extends BaseView
       success: => ToolLoader @dashboardModel, @createDashboardView
 
   createDashboardView: =>
-    Backbone.Mediator.publish 'tools:loaded'
-    Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
     @appFocusView = @dashboardView
     @render()
+
+    Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
     # @dashboardModel.tools.add
     #   dashboard_id: @dashboardModel.get 'id'
