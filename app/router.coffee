@@ -10,9 +10,6 @@ class Router extends Backbone.Router
     'project/:project': 'loadProject'
     'project/:project/object/:objectId': 'loadObject'
 
-  initialize: ->
-    @appView = new AppView({el: $('#app')})
-
   index: ->
     @navigate("#/my_dashboards", {trigger: true}) if User.current isnt null
     Backbone.Mediator.publish 'router:index'
