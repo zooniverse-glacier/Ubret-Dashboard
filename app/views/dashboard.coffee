@@ -28,8 +28,9 @@ class DashboardView extends BaseView
 
   focusWindow: (e) =>
     toolChannel = e.currentTarget.dataset['channel']
-    tool = @model.tools.find (tool) -> tool.get('channel') is toolChannel
-    @model.tools.focus tool
+    tool = @model.get('tools').find (tool) -> 
+      tool.get('channel') is toolChannel
+    @model.get('tools').focus tool
 
   addToolModel: (type) =>
     @model.createTool type
@@ -37,7 +38,6 @@ class DashboardView extends BaseView
   addTool: (tool) =>
     toolWindow = new ToolWindow
       model: tool
-      collection: @model.tools
     @$el.append toolWindow.render().el
     toolWindow.postDashboardAppend()
 
@@ -48,9 +48,7 @@ class DashboardView extends BaseView
 
   onDashboardInit: (@model) =>
     @render()
-    @model.tools.on
-      'add': @addTool
-      'reset': @render
+    @model.on ('add:tool
 
   stopSnap: =>
     @snap.remove() if @snap
