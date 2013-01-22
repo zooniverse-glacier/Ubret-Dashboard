@@ -20,10 +20,11 @@ class ToolWindow extends BaseView
 
   initialize: ->
     if @model?
-      @model.on 'destroy', @removeWindow
-      @model.on 'change:zindex', @setZindex
-      @model.on 'change:left change:top', @setPosition
-      @model.on 'change:width change:height', @setSize
+      @model.on
+        'destroy': @removeWindow
+        'change:zindex': @setZindex
+        'change:left change:top': @setPosition
+        'change:width change:height': @setSize
 
       @$el.css @initialSizeAndPosition()
 
@@ -181,7 +182,7 @@ class ToolWindow extends BaseView
     $(document).off 'mousemove'
     $(document).off 'mouseup'
 
-    if @snap 
+    if @snap
       @setSnap e.pageX, e.pageY
       @ubretView.render()
     else

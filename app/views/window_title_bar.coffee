@@ -17,8 +17,9 @@ class WindowTitleBar extends BaseView
     unless @model then throw 'must pass a model'
     @viewOpts = new Object
 
-    @model.on 'change:name', @render
-    @model.on 'tool:dataProcessed', @render
+    @model.on
+      'change:name': @render
+      'tool:dataProcessed': @render
 
   render: =>
     @viewOpts['link'] = @model.dataSource.sourceName()
