@@ -12,7 +12,7 @@ class DashboardView extends BaseView
     'stop-snap': 'stopSnap'
 
   events: 
-    'click .tool-window': 'focusWindow'
+    'mousedown .tool-window': 'focusWindow'
 
   initialize: ->
     @toolboxView = new Toolbox
