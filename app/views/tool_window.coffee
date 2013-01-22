@@ -1,10 +1,8 @@
 BaseView = require 'views/base_view'
-
 Settings = require 'views/settings'
+Snapping = require 'views/snapping'
 UbretView = require 'views/ubret'
 WindowTitleBar = require 'views/window_title_bar'
-
-Snapping = require 'views/snapping'
 
 class ToolWindow extends BaseView
   _.extend @prototype, Snapping
@@ -179,8 +177,7 @@ class ToolWindow extends BaseView
   endDrag: (e) =>
     $('body').removeClass 'unselectable'
     @dragging = false
-    $(document).off 'mousemove'
-    $(document).off 'mouseup'
+    $(document).off 'mousemove mouseup'
 
     if @snap
       @setSnap e.pageX, e.pageY
