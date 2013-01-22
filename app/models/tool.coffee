@@ -25,7 +25,6 @@ class Tool extends Backbone.AssociatedModel
     json
 
   onDataReceived: =>
-    console.log 'tool:dataProcessed'
     @triggerEvent 'tool:dataProcessed'
 
   generatePosition: ->

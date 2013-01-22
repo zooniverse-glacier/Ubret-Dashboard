@@ -183,7 +183,7 @@ class ToolWindow extends BaseView
 
     if @snap 
       @setSnap e.pageX, e.pageY
-      @toolContainer.update()
+      @ubretView.render()
     else
       @model.save
         left: e.pageX - @relX

@@ -38,8 +38,6 @@ class AppView extends BaseView
     @dashboardModel = new DashboardModel
     @dashboardModel.on 'change', =>
       window.location.hash = "/dashboards/#{@dashboardModel.id}"
-      @createDashboardView()
-    return @dashboardModel
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
@@ -105,6 +103,18 @@ class AppView extends BaseView
   createDashboardView: =>
     @appFocusView = @dashboardView
     @render()
+
+    @dashboardModel.tools.add
+      dashboard_id: @dashboardModel.get 'id'
+      type: 'SubjectViewer'
+      onInit: (tool) ->
+        tool.dataSource.set 'source', '4'
+        tool.dataSource.set 'type', 'external'
+        tool.dataSource.params.add [
+          {key: 'project', value: Manager.get 'project'}
+          {key: 'id', value: Manager.get 'object'}
+        ]
+        tool.dataSource.fetchData()
 
   showSaved: =>
     if typeof @savedListView is 'undefined'
