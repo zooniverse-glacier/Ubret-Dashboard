@@ -21,7 +21,7 @@ class SavedList extends BaseView
       item =
         id: dashboard.id
         name: dashboard.get('name')
-        lastModified: dashboard.get('last_modified')
+        lastModified: new Date(dashboard.get('updated_at')).toLocaleString()
       if typeof @sharers[dashboard.id] is 'undefined'
         @sharers[dashboard.id] = new Sharing {model: dashboard}
       @$el.find('.dashboards').append @itemTemplate(item)
