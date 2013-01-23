@@ -11,9 +11,10 @@ class Login extends Backbone.View
     'keypress': 'onKeyPress'
 
   initialize: ->
-    User.on 'sign-in', @render
-    User.on 'sign-out', @render
-    User.on 'sign-in-error', @showError
+    User.on
+      'sign-in': @render
+      'sign-out': @render
+      'sign-in-error': @showError
 
   render: =>
     @$el.html @template(User.current)

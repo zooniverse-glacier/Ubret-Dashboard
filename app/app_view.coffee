@@ -63,13 +63,15 @@ class AppView extends BaseView
     #     tool.dataSource.fetchData()
 
   showSaved: =>
-    if typeof @savedListView is 'undefined'
-      User.current?.on 'loaded-dashboards', =>
-        @savedListView = new SavedList { collection: User.current.dashboards }
-        @appFocusView = @savedListView
-        @render()
-    else
+    unless @savedListView? then @savedListView = new SavedList
+
+    User.current.once 'loaded-dashboards', =>
+      @savedListView.collection = User.current.dashboards
       @appFocusView = @savedListView
       @render()
+
+    User.current.syncToSpelunker()
+
+
   
 module.exports = AppView

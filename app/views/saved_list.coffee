@@ -8,11 +8,11 @@ class SavedList extends BaseView
   listTemplate: require './templates/saved_dashboards/list'
 
   events:
-    'click a.delete' : 'deleteDashboard'
-    'click a.share'  : 'shareDashboard'
+    'click a.delete': 'deleteDashboard'
+    'click a.share': 'shareDashboard'
 
   initialize: ->
-    @collection.on 'remove', @render
+    @collection?.on 'remove', @render
     @sharers = new Object
 
   render: =>

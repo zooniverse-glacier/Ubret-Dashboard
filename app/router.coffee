@@ -18,8 +18,10 @@ class Router extends Backbone.Router
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
   savedDashboards: =>
-    @navigate('', {trigger: true}) if User.current is null
-    Backbone.Mediator.publish 'router:viewSavedDashboards'
+    if User.current is null
+      @navigate('', {trigger: true})
+    else
+      Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->
     Manager.set 'project', project

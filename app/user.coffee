@@ -63,7 +63,7 @@ class User extends Backbone.Events
       cache: false
       xhrFields:
         withCredentials: true
-      success: (response) => 
+      success: (response) =>
         @dashboards = new Backbone.Collection response.dashboards
         @trigger 'loaded-dashboards'
 
