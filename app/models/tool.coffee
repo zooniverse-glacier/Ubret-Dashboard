@@ -24,15 +24,11 @@ class Tool extends Backbone.AssociatedModel
     unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
 
     if @isNew()
-      console.log 'tool is new'
       @save [],
         success: =>
-          console.log 'success', @
           @get('dataSource').set
             tools: @collection
             toolId: @id
-        error: =>
-          console.log 'error', @
 
   parse: (tool) ->
     tool.type = tool.tool_type
@@ -41,6 +37,7 @@ class Tool extends Backbone.AssociatedModel
   toJSON: =>
     json = new Object
     json[key] = value for key, value of @attributes
+    json['dataSource'] = @get('dataSource').toJSON()
     json['settings'] = @get('settings').toJSON()
     json
 

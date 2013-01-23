@@ -23,11 +23,11 @@ class UbretTool extends BaseView
 
     if @model.get('dataSource').isReady() 
       @$('.no-data').remove()
-      if @model.get('dataSource').dataSource.isInternal()
+      if @model.get('dataSource').isInternal()
         @model.tool.parentTool(@model.get('dataSource').source.tool)
       else
-        @model.tool.data(@model.get('dataSource').data.toJSON())
-          .keys(@dataKeys(@model.get('dataSource').data.toJSON()[0]))
+        @model.tool.data(@model.get('dataSource').get('data').toJSON())
+          .keys(@dataKeys(@model.get('dataSource').get('data').toJSON()[0]))
 
       @model.tool.selectIds(@model.get('selectedElements'))
         .selectKeys([@model.get('selectedKey')])

@@ -15,11 +15,15 @@ class DataSource extends Backbone.AssociatedModel
   subjects: require 'collections/subjects'
 
   urlRoot: =>
-    console.log @
     "/dashboards/#{@get('tools').dashboardId}/tools/#{@get('toolId')}/data_sources"
 
+  toJSON: ->
+    json = new Object
+    json[key] = value for key, value of @attributes
+    json
+
   fetchData: =>
-    @save()
+    # @save()
     if @isExternal()
       @fetchExt()
     else if @isInternal()
@@ -29,12 +33,14 @@ class DataSource extends Backbone.AssociatedModel
 
   fetchExt: =>
     url = @manager.get('sources').get(@get('source')).get('url')
-    @data = new @subjects([], {params: @params, url: url })
-    @data.fetch
+    data = new @subjects([], {params: @get('params'), url: url })
+    data.fetch
+      success: (data) =>
+        @set 'data', data
 
   fetchInt: =>
     if not _.isUndefined @source
-      @data = []
+      @set 'data', []
 
   isExternal: =>
     (@get('type') is 'external')
@@ -43,7 +49,7 @@ class DataSource extends Backbone.AssociatedModel
     (@get('type') is 'internal')
 
   isReady: =>
-    (@isInternal() and (not _.isUndefined(@source))) or (@isExternal() and (not _.isUndefined(@data)))
+    (@isInternal() and (not _.isUndefined(@source))) or (@isExternal() and (not _.isUndefined(@get('data'))))
 
   sourceName: =>
     if @isExternal()
