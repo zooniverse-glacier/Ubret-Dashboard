@@ -5,7 +5,7 @@ class User extends Backbone.Events
     if location.port > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
 
   @zooniverseUrl: =>
-    if location.port > 1024 then "dev" else "api"
+    if location.port > 4000 then "dev" else "api"
 
   @login: ({username, password}) =>
     url = "https://#{@zooniverseUrl()}.zooniverse.org/login?username=#{username}&password=#{password}&callback=?"

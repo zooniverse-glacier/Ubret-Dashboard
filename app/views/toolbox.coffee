@@ -19,7 +19,6 @@ class Toolbox extends BaseView
 
   render: =>
     @tools = []
-    console.log Manager
     for tool in Manager.get 'tools'
       @tools.push {name: Ubret[tool]::name, class_name: tool} if Ubret[tool]::name
 

@@ -21,12 +21,9 @@ class AppView extends BaseView
     @$el.html @template()
 
     @appHeader = new AppHeader({el: @$('.app-header')})
+    @dashboardView = new DashboardView
 
     # Main area views. Switched out when appropriate.
-    @dashboardView = new DashboardView
-    User.current?.on 'loaded-dashboards', =>
-      @savedListView = new SavedList {collection: User.current.dashboards}
-
     @appFocusView = @dashboardView
 
   render: =>
@@ -50,7 +47,7 @@ class AppView extends BaseView
     @appFocusView = @dashboardView
     @render()
 
-    Manager.get('router').navigate "/dashboards/#{@dashboardModel.id}", {trigger: false}
+    Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: false}
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
     # @dashboardModel.tools.add

@@ -1,10 +1,9 @@
-corsSync = require 'sync'
 Manager = require 'modules/manager'
 Sources = require 'collections/sources'
 User = require 'user'
 
 class Dashboard extends Backbone.AssociatedModel
-  sync: corsSync
+  sync: require 'sync'
   urlRoot: '/dashboards'
 
   relations: [
@@ -17,9 +16,11 @@ class Dashboard extends Backbone.AssociatedModel
   defaults:
     tools: []
     name: "My Great Dashboard"
+    project: "default"
 
   initialize: ->
-    @set 'project', Manager.get 'project'
+    console.log Manager.get 'project'
+    if Manager.get 'project' then @set 'project', Manager.get 'project'
 
   createTool: (toolType) =>
     @get('tools').add

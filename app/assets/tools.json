@@ -14,7 +14,7 @@
       "dependencies": ["d3"],
       "source": "ubret/ubret/graph.js"
     },
-    "Map": {
+    "Mapper": {
       "dependencies": ["L"],
       "source": "ubret/ubret/map.js"
     },
@@ -28,8 +28,8 @@
   },
   "projects": {
     "galaxy_zoo": {
-      "tools": ["Histogram", "Map", "Statistics", "SubjectViewer"],
-      "preload": ["SubjectViewer", "Map"]
+      "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer"],
+      "preload": ["SubjectViewer", "Mapper"]
     },
     "default": ["SubjectViewer", "Statistics"]
   }

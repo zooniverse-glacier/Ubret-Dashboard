@@ -50,9 +50,9 @@ class DashboardView extends BaseView
 
   onDashboardInit: (@model) =>
     @render()
-    console.log 'here'
-    @model.on 'add:tools', @addTool
-    @model.on 'reset:tools', @removeTools
+    @model.on
+      'add:tools': @addTool
+      'reset:tools': @removeTools
 
   stopSnap: =>
     @snap.remove() if @snap

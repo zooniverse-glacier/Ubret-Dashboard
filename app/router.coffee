@@ -23,7 +23,7 @@ class Router extends Backbone.Router
 
   loadProject: (project) ->
     Manager.set 'project', project
-    @navigate '', {trigger: true, replace: true}
+    Backbone.Mediator.publish 'router:dashboardCreate'
 
   loadObject: (project, objectId = null) =>
     Manager.set 'project', project
