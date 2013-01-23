@@ -19,7 +19,7 @@ class WindowTitleBar extends BaseView
 
     @model.on
       'change:name': @render
-      'change:dataSource': @render
+      'change:dataSource.source': @render
 
   render: =>
     @viewOpts['link'] = @model.get('dataSource').sourceName()

@@ -1,7 +1,7 @@
 class Tool extends Backbone.AssociatedModel
   sync: require 'sync' 
 
-  relations : [
+  relations: [
     type: Backbone.One
     key: 'dataSource'
     relatedModel: require 'models/data_source'
@@ -12,11 +12,16 @@ class Tool extends Backbone.AssociatedModel
   ]
 
   defaults:
+    zindex: 1
     height: 480
     width: 640
     active: true
     dataSource: {} 
     settings: {} 
+
+  initialize: ->
+    console.log 'creating tool', @
+    unless @get('name') then @set 'name', "#{@get('type')}-#{@collection.length + 1}"
 
   toJSON: =>
     json = new Object

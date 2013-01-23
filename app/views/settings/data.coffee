@@ -92,11 +92,11 @@ class DataSettings extends BaseView
 
       # Retrieve params data
       @paramsView.setState()
-      @dataSource.set('params', @params)
+      @dataSource.set 'params', @params
     else
       source = @$('.internal .sources').val()
       
-    @dataSource.set('source', source)
+    @dataSource.set 'source', source
     @dataSource.fetchData()
 
   setParams: =>

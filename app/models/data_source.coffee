@@ -11,8 +11,8 @@ class DataSource extends Backbone.AssociatedModel
   defaults:
     params: []
 
-  manager: require('modules/manager')
-  subjects: require('collections/subjects')
+  manager: require 'modules/manager'
+  subjects: require 'collections/subjects'
 
   urlRoot: =>
     "/dashboards/#{@tools.dashboardId}/tools/#{@toolId}/data_sources"
@@ -51,18 +51,11 @@ class DataSource extends Backbone.AssociatedModel
 
   sourceName: =>
     if @isExternal()
-      name = Manager.get('sources').get(@get('source')).get('name')
+      name = @manager.get('sources').get(@get('source')).get('name')
     else if @isInternal()
       name = @source.get('name')
     else
       name = ''
     return name
-
-  dataExtents: (key, ids) =>
-    selectedModels = _.map((@data.filter (item) ->
-      item.id in ids), (model) -> model.toJSON())
-    selectedValues = _.pluck(selectedModels, key)
-    selectedValues.sort()
-    {min: _.first(selectedValues), max: _.last(selectedValues)}
 
 module.exports = DataSource
