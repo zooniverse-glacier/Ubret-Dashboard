@@ -9,8 +9,8 @@ class Dashboard extends Backbone.AssociatedModel
   relations: [
     type: Backbone.Many
     key: 'tools'
-    relatedModel: require('models/tool')
-    collectionType: require('collections/tools')
+    relatedModel: require 'models/tool'
+    collectionType: require 'collections/tools'
   ]
 
   defaults:
@@ -19,11 +19,11 @@ class Dashboard extends Backbone.AssociatedModel
     project: "default"
 
   initialize: ->
-    console.log Manager.get 'project'
     if Manager.get 'project' then @set 'project', Manager.get 'project'
+    @once 'sync', => @get('tools').dashboardId = @id
 
-  createTool: (toolType) =>
+  createTool: (type) =>
     @get('tools').add
-      type: toolType
+      type: type
 
 module.exports = Dashboard

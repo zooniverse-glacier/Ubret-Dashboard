@@ -33,19 +33,17 @@ class DashboardView extends BaseView
     @model.get('tools').focus tool
 
   addToolModel: (type) =>
-    console.log type
     @model.createTool type
 
   addTool: (tool) =>
-    console.log 'here'
     toolWindow = new ToolWindow
       model: tool
     @$el.append toolWindow.render().el
     toolWindow.postDashboardAppend()
 
   removeTools: =>
-    while @model.tools.length
-      @model.tools.first().destroy()
+    while @model.get('tools').length
+      @model.get('tools').first().destroy()
     @model.save()
 
   onDashboardInit: (@model) =>

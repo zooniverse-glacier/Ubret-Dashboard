@@ -31,10 +31,10 @@ class Tools extends Backbone.Collection
     _(externalTools).each (tool) =>
       tool.get('dataSource').fetchData
 
-  setDataSource: (model) =>
-    if model.get('dataSource').isInternal()
+  setDataSource: (dataSource) =>
+    if dataSource.isInternal()
       source = @find (tool) =>
-        tool.get('channel') is model.get('dataSource').get('source')
-      model.get('dataSource').source = source
+        tool.get('channel') is dataSource.get('source')
+      dataSource.set 'source', source
 
 module.exports = Tools

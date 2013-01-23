@@ -16,12 +16,27 @@ class Tool extends Backbone.AssociatedModel
     height: 480
     width: 640
     active: true
-    dataSource: {} 
+    dataSource: {}
     settings: {} 
 
   initialize: ->
-    console.log 'creating tool', @
     unless @get('name') then @set 'name', "#{@get('type')}-#{@collection.length + 1}"
+    unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
+
+    if @isNew()
+      console.log 'tool is new'
+      @save [],
+        success: =>
+          console.log 'success', @
+          @get('dataSource').set
+            tools: @collection
+            toolId: @id
+        error: =>
+          console.log 'error', @
+
+  parse: (tool) ->
+    tool.type = tool.tool_type
+    tool
 
   toJSON: =>
     json = new Object

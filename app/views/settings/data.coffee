@@ -28,7 +28,6 @@ class DataSettings extends BaseView
 
     @searchTypeView = new SearchTypeView()
     @params = @dataSource.get('params')
-    console.log @params
     @paramsView = new ParamsView({collection: @params})
 
     @searchTypeView.on 'searchType:typeSelected', @onSetSearchType
@@ -114,7 +113,7 @@ class DataSettings extends BaseView
     if _.isEqual source_tool, tool
       return false
 
-    if _.isUndefined tool.dataSource.get('source')
+    if _.isUndefined tool.get('dataSource').get('source')
       return false
 
     if tool.dataSource.isExternal()
@@ -122,7 +121,7 @@ class DataSettings extends BaseView
     else
       unless _.find checkedTools, ((checkedTool) -> _.isEqual(tool, checkedTool))
         checkedTools.push tool
-        chainedTool = tool.collection.find((next_tool) -> tool.dataSource.get('source') == next_tool.get('channel'))
+        chainedTool = tool.collection.find((next_tool) -> tool.get('dataSource').get('source') == next_tool.get('channel'))
         @checkToolSource source_tool, chainedTool, checkedTools
       else
         return false
