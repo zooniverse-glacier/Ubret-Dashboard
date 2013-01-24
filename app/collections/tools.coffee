@@ -21,17 +21,17 @@ class Tools extends Backbone.Collection
 
   loadTools: =>
     internalTools = @filter (tool) =>
-      tool.get('dataSource').isInternal()
+      tool.get('data_source').isInternal()
 
     externalTools = @filter (tool) =>
-      tool.get('dataSource').isExternal()
+      tool.get('data_source').isExternal()
 
     _(internalTools).each (tool) =>
-      tool.get('dataSource').source.on('change:dataSource') =>
-        tool.get('dataSource').fetchData
+      tool.get('data_source').source.on('change:data_source') =>
+        tool.get('data_source').fetchData()
 
     _(externalTools).each (tool) =>
-      tool.get('dataSource').fetchData
+      tool.get('data_source').fetchData()
 
   setDataSource: (dataSource) =>
     if dataSource.isInternal()

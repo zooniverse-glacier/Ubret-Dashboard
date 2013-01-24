@@ -6,8 +6,8 @@ class UbretTool extends BaseView
 
   initialize: ->
     if @model?
-      @model.on 'change:selectedElements', @toolSelectElements
-      @model.on 'change:selectedKey', @toolSelectKey
+      @model.on 'change:selected_ids', @toolSelectElements
+      @model.on 'change:selected_keys', @toolSelectKey
       @model.on 'change:settings', @passSetting
       @model.on 'change:data_source', @render
 
@@ -15,7 +15,7 @@ class UbretTool extends BaseView
     @model.tool.on 'keys-received', (keys) =>
       Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     @model.tool.on 'selection', @selectElements
-    @model.tool.on 'key-selection', @selectKey
+    @model.tool.on 'keys-selection', @selectKeys
 
   render: =>
     @$el.addClass @model.get('type')
@@ -29,8 +29,8 @@ class UbretTool extends BaseView
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@dataKeys(@model.get('data_source').data.toJSON()[0]))
 
-      @model.tool.selectIds(@model.get('selectedElements'))
-        .selectKeys([@model.get('selectedKey')])
+      @model.tool.selectIds(@model.get('selected_ids'), false)
+        .selectKeys(@model.get('selected_keys'), false)
         .settings(@model.get('settings').toJSON())
         .start()
     else
@@ -46,14 +46,15 @@ class UbretTool extends BaseView
   selectElements: (ids) =>
     @model.setElements ids
 
-  selectKey: (key) =>
-    @model.save 'selectedKey', key
+  selectKeys: (key) =>
+    console.log 'sk model', @model
+    @model.save 'selected_keys', key
 
   toolSelectKey: =>
-    @model.tool.selectKeys(@model.get('selectedKey').slice()).start()
+    @model.tool.selectKeys(@model.get('selected_keys')).start()
 
   toolSelectElements: =>
-    @model.tool.selectIds(@model.get('selectedElements').slice()).start()
+    @model.tool.selectIds(@model.get('selected_ids').slice()).start()
 
   toolAddFilters: =>
     @model.tool.filters(@model.filters.toJSON()).start()

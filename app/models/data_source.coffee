@@ -37,6 +37,8 @@ class DataSource extends Backbone.AssociatedModel
     @data.fetch
       success: =>
         @save()
+      error: =>
+        console.log 'error fetching subjects'
 
   fetchInt: =>
     if not _.isUndefined @source

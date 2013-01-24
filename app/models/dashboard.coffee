@@ -21,7 +21,6 @@ class Dashboard extends Backbone.AssociatedModel
   initialize: ->
     if Manager.get 'project' then @set 'project', Manager.get 'project'
     @once 'sync', => Manager.set 'dashboardId', @id
-    console.log @
     super
 
   createTool: (type) =>

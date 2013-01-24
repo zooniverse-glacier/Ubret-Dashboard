@@ -48,6 +48,7 @@ class AppView extends BaseView
     @render()
 
     Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: false}
+    @dashboardModel.get('tools').loadTools()
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
     # @dashboardModel.tools.add

@@ -12,7 +12,7 @@ class KeySettings extends BaseView
     Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.html @template({ keys: @keys, currentKey: @model.get('selectedKey') })
+    @$el.html @template({ keys: @keys, currentKey: @model.get('selected_keys')[0] })
     @
 
   setKeys: (keys) =>
@@ -21,6 +21,6 @@ class KeySettings extends BaseView
 
   #Events
   onSelectKey: (e) =>
-    @model.set 'selectedKey', @$(e.currentTarget).val()
+    @model.set 'selected_keys', [@$(e.currentTarget).val()]
 
 module.exports = KeySettings
