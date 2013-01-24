@@ -12,7 +12,7 @@ class Tool extends Backbone.AssociatedModel
   ]
 
   defaults:
-    active: true
+    settings_active: true
     data_source: {}
     height: 480
     settings: {}
@@ -24,6 +24,7 @@ class Tool extends Backbone.AssociatedModel
     unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
     
     if @isNew()
+      @generatePosition()
       @collection.focus @, false
       @save [],
         success: =>
