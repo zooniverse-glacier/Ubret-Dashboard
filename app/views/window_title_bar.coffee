@@ -22,7 +22,7 @@ class WindowTitleBar extends BaseView
       'change:dataSource.source': @render
 
   render: =>
-    @viewOpts['link'] = @model.get('dataSource').sourceName()
+    @viewOpts['link'] = @model.get('data_source').sourceName()
     @viewOpts['name'] = @model.get('name')
     @$el.html @template(@viewOpts)
 

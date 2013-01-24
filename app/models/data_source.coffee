@@ -4,7 +4,7 @@ class DataSource extends Backbone.AssociatedModel
   relations: [
     type: Backbone.Many
     key: 'params'
-    relationModel: require 'models/param'
+    relatedModel: require 'models/param'
     collectionType: require 'collections/params'
   ]
 
@@ -15,15 +15,15 @@ class DataSource extends Backbone.AssociatedModel
   subjects: require 'collections/subjects'
 
   urlRoot: =>
-    "/dashboards/#{@get('tools').dashboardId}/tools/#{@get('toolId')}/data_sources"
+    "/dashboards/#{@manager.get('dashboardId')}/tools/#{@get('toolId')}/data_sources"
 
-  toJSON: ->
-    json = new Object
-    json[key] = value for key, value of @attributes
-    json
+  # toJSON: ->
+  #   json = new Object
+  #   json[key] = value for key, value of @attributes when key isnt ('tools' or 'params')
+  #   json['params'] = @get('params').toJSON()
+  #   return json
 
   fetchData: =>
-    # @save()
     if @isExternal()
       @fetchExt()
     else if @isInternal()
@@ -33,23 +33,24 @@ class DataSource extends Backbone.AssociatedModel
 
   fetchExt: =>
     url = @manager.get('sources').get(@get('source')).get('url')
-    data = new @subjects([], {params: @get('params'), url: url })
-    data.fetch
-      success: (data) =>
-        @set 'data', data
+    @data = new @subjects([], {params: @get('params'), url: url })
+    @data.fetch
+      success: =>
+        @save()
 
   fetchInt: =>
     if not _.isUndefined @source
-      @set 'data', []
+      @data = []
+      @save()
 
   isExternal: =>
-    (@get('type') is 'external')
+    (@get('source_type') is 'external')
 
   isInternal: =>
-    (@get('type') is 'internal')
+    (@get('source_type') is 'internal')
 
   isReady: =>
-    (@isInternal() and (not _.isUndefined(@source))) or (@isExternal() and (not _.isUndefined(@get('data'))))
+    (@isInternal() and (not _.isUndefined(@source))) or (@isExternal() and (not _.isUndefined(@data)))
 
   sourceName: =>
     if @isExternal()

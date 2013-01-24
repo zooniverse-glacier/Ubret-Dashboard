@@ -9,9 +9,9 @@ class UbretTool extends BaseView
       @model.on 'change:selectedElements', @toolSelectElements
       @model.on 'change:selectedKey', @toolSelectKey
       @model.on 'change:settings', @passSetting
-      @model.on 'change:dataSource', @render
+      @model.on 'change:data_source', @render
 
-    @model.tool = new Ubret[@model.get('type')]('#' + @model.get('channel'))
+    @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
     @model.tool.on 'keys-received', (keys) =>
       Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     @model.tool.on 'selection', @selectElements
@@ -21,13 +21,13 @@ class UbretTool extends BaseView
     @$el.addClass @model.get('type')
     @$el.attr 'id', @model.get('channel')
 
-    if @model.get('dataSource').isReady() 
+    if @model.get('data_source').isReady() 
       @$('.no-data').remove()
-      if @model.get('dataSource').isInternal()
-        @model.tool.parentTool(@model.get('dataSource').source.tool)
+      if @model.get('data_source').isInternal()
+        @model.tool.parentTool(@model.get('data_source').source.tool)
       else
-        @model.tool.data(@model.get('dataSource').get('data').toJSON())
-          .keys(@dataKeys(@model.get('dataSource').get('data').toJSON()[0]))
+        @model.tool.data(@model.get('data_source').data.toJSON())
+          .keys(@dataKeys(@model.get('data_source').data.toJSON()[0]))
 
       @model.tool.selectIds(@model.get('selectedElements'))
         .selectKeys([@model.get('selectedKey')])

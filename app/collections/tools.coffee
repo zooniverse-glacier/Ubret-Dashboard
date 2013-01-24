@@ -1,12 +1,14 @@
+Manager = require 'modules/manager'
+
 class Tools extends Backbone.Collection
   model: require('models/tool')
   sync: require('sync') 
 
-  initialize: -> 
-    @on 'change:dataSource.source', @setDataSource
+  # initialize: -> 
+  #   @on 'change:dataSource.source', @setDataSource
 
   url: =>
-    "/dashboards/#{@dashboardId}/tools"
+    "/dashboards/#{Manager.get('dashboardId')}/tools"
 
   focus: (tool, save = true) ->
     # Temp hack

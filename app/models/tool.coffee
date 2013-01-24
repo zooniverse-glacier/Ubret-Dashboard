@@ -3,7 +3,7 @@ class Tool extends Backbone.AssociatedModel
 
   relations: [
     type: Backbone.One
-    key: 'dataSource'
+    key: 'data_source'
     relatedModel: require 'models/data_source'
   ,
     type: Backbone.One
@@ -12,34 +12,46 @@ class Tool extends Backbone.AssociatedModel
   ]
 
   defaults:
-    zindex: 1
-    height: 480
-    width: 640
     active: true
-    dataSource: {}
-    settings: {} 
+    data_source: {}
+    height: 480
+    settings: {}
+    width: 640
+    zindex: 1
 
   initialize: ->
-    unless @get('name') then @set 'name', "#{@get('type')}-#{@collection.length + 1}"
-    unless @get('channel') then @set 'channel', "#{@get('type')}-#{@collection.length + 1}"
-
+    unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
+    unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
+    
     if @isNew()
       @save [],
         success: =>
-          @get('dataSource').set
-            tools: @collection
+          @get('data_source').set
             toolId: @id
+    else
+      @set 'data_source.toolId', @id
+      
+    super
 
-  parse: (tool) ->
-    tool.type = tool.tool_type
-    tool
+  # initialize: ->
+  #   unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
+  #   unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
 
-  toJSON: =>
-    json = new Object
-    json[key] = value for key, value of @attributes
-    json['dataSource'] = @get('dataSource').toJSON()
-    json['settings'] = @get('settings').toJSON()
-    json
+  #   if @isNew()
+  #     @save [],
+  #       success: =>
+  #         console.log @
+  #         @get('data_source').set
+  #           toolId: @id
+  #   else
+  #     @set 'data_source.toolId', @id
+
+  # toJSON: =>
+  #   json = new Object
+  #   json[key] = value for key, value of @attributes
+  #   json['data_source'] = @get('data_source').toJSON()
+  #   json['settings'] = @get('settings').toJSON()
+  #   json
 
   generatePosition: ->
     doc_width = $(document).width()

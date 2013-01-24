@@ -13,7 +13,7 @@ class Settings extends BaseView
     unless @model?
       return
     @dataSettings = new DataSettings { model: @model } if @model?
-    switch @model?.get('type')
+    switch @model?.get('tool_type')
       when 'Histogram', 'Scatterplot', 'Histogram2', 'Scatter2D'
         ToolSettings = require 'views/settings/graph'
       when 'Statistics'
@@ -27,7 +27,7 @@ class Settings extends BaseView
       else # Temp
         ToolSettings = require 'views/settings/generic'
 
-    @toolSettings = new ToolSettings { model: @model}
+    @toolSettings = new ToolSettings {model: @model}
 
   render: =>
     @$el.html @template()

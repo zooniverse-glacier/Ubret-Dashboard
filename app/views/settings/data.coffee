@@ -11,24 +11,24 @@ class DataSettings extends BaseView
   template: require 'views/templates/data_settings'
 
   events:
-    'click .type-select .external button' : 'showExternal'
-    'click .type-select .internal button' : 'showInternal'
+    'click .type-select .external button': 'showExternal'
+    'click .type-select .internal button': 'showInternal'
     'change .external .sources': 'onSelectExternalSource'
-    'click button[name="fetch"]'    : 'updateModel'
+    'click button[name="fetch"]': 'updateModel'
 
   subscriptions:
     'source:dataReceived': 'updateValidSourceTools'
 
   initialize: (options) ->
-    @dataSource = @model.get('dataSource')
+    @dataSource = @model.get('data_source')
     @channel = @model.get('channel')
-    @sourceType = @dataSource.get('type') or false
+    @sourceType = @dataSource.get('source_type') or false
     @selectedSource = Manager.get('sources').get(@dataSource.get('source')) if typeof @dataSource.get('source') isnt 'undefined'
     @updateValidSourceTools()
 
     @searchTypeView = new SearchTypeView()
     @params = @dataSource.get('params')
-    @paramsView = new ParamsView({collection: @params})
+    @paramsView = new ParamsView @params
 
     @searchTypeView.on 'searchType:typeSelected', @onSetSearchType
 
@@ -83,15 +83,11 @@ class DataSettings extends BaseView
     @render()
 
   updateModel: =>
-    @dataSource.set('type', @sourceType)
+    @dataSource.set('source_type', @sourceType)
 
-    if @dataSource.get('type') is 'external'
-      source_id = @$('.external .sources').val()
-      source = source_id
-
-      # Retrieve params data
-      @paramsView.setState()
-      @dataSource.set 'params', @params
+    if @dataSource.get('source_type') is 'external'
+      source = @$('.external .sources').val()
+      @dataSource.set 'params', @paramsView.setState() # Retrieve params data
     else
       source = @$('.internal .sources').val()
       
@@ -113,15 +109,15 @@ class DataSettings extends BaseView
     if _.isEqual source_tool, tool
       return false
 
-    if _.isUndefined tool.get('dataSource').get('source')
+    if _.isUndefined tool.get('data_source').get('source')
       return false
 
-    if tool.dataSource.isExternal()
+    if tool.get('data_source').isExternal()
       return true
     else
       unless _.find checkedTools, ((checkedTool) -> _.isEqual(tool, checkedTool))
         checkedTools.push tool
-        chainedTool = tool.collection.find((next_tool) -> tool.get('dataSource').get('source') == next_tool.get('channel'))
+        chainedTool = tool.collection.find((next_tool) -> tool.get('data_source').get('source') == next_tool.get('channel'))
         @checkToolSource source_tool, chainedTool, checkedTools
       else
         return false

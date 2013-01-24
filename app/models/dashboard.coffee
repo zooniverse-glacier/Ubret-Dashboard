@@ -20,10 +20,12 @@ class Dashboard extends Backbone.AssociatedModel
 
   initialize: ->
     if Manager.get 'project' then @set 'project', Manager.get 'project'
-    @once 'sync', => @get('tools').dashboardId = @id
+    @once 'sync', => Manager.set 'dashboardId', @id
+    console.log @
+    super
 
   createTool: (type) =>
     @get('tools').add
-      type: type
+      tool_type: type
 
 module.exports = Dashboard
