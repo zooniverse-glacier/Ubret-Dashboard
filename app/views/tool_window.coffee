@@ -30,9 +30,10 @@ class ToolWindow extends BaseView
     @ubretView = new UbretView {model: @model, el: @$('.tool-container')}
     @titleBar = new WindowTitleBar {model: @model}
 
-    @titleBar.on 'minimize', @minimize
-    @titleBar.on 'close', @close
-    @titleBar.on 'startDrag', @startDrag
+    @titleBar.on
+      'close': @close
+      'minimize': @minimize
+      'startDrag': @startDrag
     
     @dashWidth = window.innerWidth
     @dashTop = 170
@@ -65,6 +66,9 @@ class ToolWindow extends BaseView
     @assign '.tool-container', @ubretView
 
   removeWindow: =>
+    @settings.remove()
+    @ubretView.remove()
+    @titleBar.remove()
     @remove()
 
   minimize: (e) =>
@@ -72,7 +76,6 @@ class ToolWindow extends BaseView
 
   close: (e) =>
     @model.destroy()
-    @removeWindow()
 
   setZindex: =>
     @$el.css 'z-index', @model.get('zindex')

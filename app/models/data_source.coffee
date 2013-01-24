@@ -35,15 +35,13 @@ class DataSource extends Backbone.AssociatedModel
     @data = new @subjects([], {params: @get('params'), url: url })
     @data.fetch
       success: =>
-        @save()
-      error: =>
-        console.log 'error fetching subjects'
+        @trigger 'change'
 
   fetchInt: =>
     if not _.isUndefined @get('source')
       @set 'source', @get('source')
       @data = []
-      @save()
+      @trigger 'change'
 
   isExternal: =>
     (@get('source_type') is 'external')

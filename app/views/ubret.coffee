@@ -6,10 +6,10 @@ class UbretTool extends BaseView
 
   initialize: ->
     if @model?
-      @model.on 'change:selected_ids', @toolSelectElements
-      @model.on 'change:selected_keys', @toolSelectKey
-      @model.on 'change:settings', @passSetting
-      @model.on 'change:data_source', @render
+      @listenTo @model, 'change:selected_ids', @toolSelectElements
+      @listenTo @model, 'change:selected_keys', @toolSelectKey
+      @listenTo @model, 'change:settings', @passSetting
+      @listenTo @model, 'change:data_source', @render
 
     @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
     @model.tool.on 'keys-received', (keys) =>
@@ -18,7 +18,7 @@ class UbretTool extends BaseView
     @model.tool.on 'keys-selection', @selectKeys
 
   render: =>
-    @$el.addClass @model.get('type')
+    @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
 
     if @model.get('data_source').isReady() 
@@ -36,6 +36,7 @@ class UbretTool extends BaseView
         .settings(@model.get('settings').toJSON())
         .start()
     else
+      console.log 'no data', @model.get('channel')
       @$el.html @noDataTemplate()
     @
 
@@ -60,7 +61,8 @@ class UbretTool extends BaseView
   toolAddFilters: =>
     @model.tool.filters(@model.filters.toJSON()).start()
 
-  passSetting: =>
+  passSetting: (test) =>
+    console.log 'change:settings event fired', test
     @model.tool.settings(@model.get('settings').changed).start()
 
 module.exports = UbretTool

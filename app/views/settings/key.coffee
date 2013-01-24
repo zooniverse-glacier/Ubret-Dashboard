@@ -9,6 +9,7 @@ class KeySettings extends BaseView
     'change .select-key' : 'onSelectKey'
 
   initialize: ->
+    @model.on 'change:selected_keys', @render
     Backbone.Mediator.subscribe("#{@model.get('channel')}:keys", @setKeys)
 
   render: =>
