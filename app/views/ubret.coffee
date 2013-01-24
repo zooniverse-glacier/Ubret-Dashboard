@@ -36,7 +36,6 @@ class UbretTool extends BaseView
         .settings(@model.get('settings').toJSON())
         .start()
     else
-      console.log 'no data', @model.get('channel')
       @$el.html @noDataTemplate()
     @
 
