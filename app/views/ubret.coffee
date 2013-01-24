@@ -46,7 +46,7 @@ class UbretTool extends BaseView
     return keys
 
   selectElements: (ids) =>
-    @model.setElements ids
+    @model.set 'selected_ids', ids
 
   selectKeys: (key) =>
     @model.save 'selected_keys', key
