@@ -48,7 +48,6 @@ class DataSettings extends BaseView
       opts = _.extend new_opts, opts
 
     @$el.html @template opts
-
     @assign
       '.search-type': @searchTypeView
       '.params': @paramsView
@@ -83,15 +82,16 @@ class DataSettings extends BaseView
     @render()
 
   updateModel: =>
-    @dataSource.set('source_type', @sourceType)
+    @dataSource.set {'source_type': @sourceType}, {silent: true}
 
     if @dataSource.get('source_type') is 'external'
       source = @$('.external .sources').val()
       @dataSource.set 'params', @paramsView.setState() # Retrieve params data
     else
       source = @$('.internal .sources').val()
-      
+
     @dataSource.set 'source', source
+    @dataSource.save()
     @dataSource.fetchData()
 
   setParams: =>

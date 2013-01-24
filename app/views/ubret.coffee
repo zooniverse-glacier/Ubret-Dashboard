@@ -6,10 +6,10 @@ class UbretTool extends BaseView
 
   initialize: ->
     if @model?
-      @model.on 'change:selected_ids', @toolSelectElements
-      @model.on 'change:selected_keys', @toolSelectKey
+      @listenTo @model, 'change:selected_ids', @toolSelectElements
+      @listenTo @model, 'change:selected_keys', @toolSelectKey
       @listenTo @model, 'change:settings', @passSetting
-      @model.on 'change:data_source', @render
+      @listenTo @model, 'change:data_source', @render
 
     @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
     @model.tool.on 'keys-received', (keys) =>
@@ -22,7 +22,6 @@ class UbretTool extends BaseView
     @$el.attr 'id', @model.get('channel')
 
     if @model.get('data_source').isReady() 
-      console.log 'data_source is ready', @model.get('channel')
       @$('.no-data').remove()
       if @model.get('data_source').isInternal()
         source = @model.collection.find (tool) =>

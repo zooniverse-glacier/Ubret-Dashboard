@@ -37,26 +37,6 @@ class Tool extends Backbone.AssociatedModel
 
     super
 
-  # initialize: ->
-  #   unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
-  #   unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
-
-  #   if @isNew()
-  #     @save [],
-  #       success: =>
-  #         console.log @
-  #         @get('data_source').set
-  #           toolId: @id
-  #   else
-  #     @set 'data_source.toolId', @id
-
-  # toJSON: =>
-  #   json = new Object
-  #   json[key] = value for key, value of @attributes
-  #   json['data_source'] = @get('data_source').toJSON()
-  #   json['settings'] = @get('settings').toJSON()
-  #   json
-
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
