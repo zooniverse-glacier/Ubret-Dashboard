@@ -12,6 +12,7 @@ class AppView extends BaseView
 
   subscriptions:
     'dashboard:create': 'createDashboard'
+    'dashboard:fork' : 'forkDashboard'
     'router:dashboardCreate': 'createDashboard'
     'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
@@ -31,6 +32,11 @@ class AppView extends BaseView
       '.app-header': @appHeader
       '.main-focus': @appFocusView
     @
+
+  forkDashboard: =>
+    @dashboardModel.fork().done (response) =>
+      @dashboardModel = new DashboardModel response
+      ToolLoader @dashboardModel, @createDashboardView
 
   createDashboard: =>
     @dashboardModel = new DashboardModel

@@ -19,7 +19,12 @@ class User extends Backbone.Events
     logout = $.getJSON(url)
     logout.success =>
       User.current = null
-      User.trigger 'sign-out'
+      $.ajax "#{@apiUrl()}/users/logout",
+        crossDomain: true
+        xhrFields:
+          withCredentials: true
+        success: =>
+          User.trigger 'sign-out'
     logout
 
   @currentUser: =>

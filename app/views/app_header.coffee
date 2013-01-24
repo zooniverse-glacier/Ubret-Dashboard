@@ -8,6 +8,7 @@ class AppHeader extends BaseView
 
   events:
     'click .create-dashboard': 'onCreateDashboard'
+    'click .fork-dashboard' : 'forkDashboard'
 
   subscriptions:
     'dashboard:initialized': 'updateLink'
@@ -23,6 +24,11 @@ class AppHeader extends BaseView
   render: =>
     if @id then @$('.current').attr 'href', '/#/dashboards/' + @id
 
+    if @isForkable() 
+      @$('.fork-dashboard').show()
+    else
+      @$('.fork-dashboard').hide()
+
     @removeActive()
     switch @active
       when 'current' then @$('li a.current').addClass 'active'
@@ -30,6 +36,11 @@ class AppHeader extends BaseView
 
     @assign '.login', @login
     @
+
+  isForkable: =>
+    location.hash.split('/')[1] is 'dashboards' and
+      _.isUndefined(User.current?.dashboards?.find (dashboard) ->
+        dashboard.id is parseInt(location.hash.split('/')[2]))
 
   onViewCurrent: =>
     @active = 'current'
@@ -41,6 +52,9 @@ class AppHeader extends BaseView
 
   onCreateDashboard: (e) =>
     Backbone.Mediator.publish 'dashboard:create'
+
+  forkDashboard: (e) =>
+    Backbone.Mediator.publish 'dashboard:fork'
 
   updateLink: (model) =>
     @id = model.id

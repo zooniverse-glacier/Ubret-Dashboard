@@ -27,4 +27,14 @@ class Dashboard extends Backbone.AssociatedModel
     @get('tools').add
       tool_type: type
 
+  fork: =>
+    url = if location.port < 1024 then "https://spelunker.herokuapp.com" else "http://localhost:3000"
+    url = "#{url}#{@urlRoot}/#{@id}/fork"
+    $.ajax url,
+      type: 'POST'
+      crossDomain: true
+      dataType: 'json'
+      xhrFields:
+        withCredentials: true
+
 module.exports = Dashboard
