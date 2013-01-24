@@ -17,12 +17,6 @@ class DataSource extends Backbone.AssociatedModel
   urlRoot: =>
     "/dashboards/#{@manager.get('dashboardId')}/tools/#{@get('toolId')}/data_sources"
 
-  # toJSON: ->
-  #   json = new Object
-  #   json[key] = value for key, value of @attributes when key isnt ('tools' or 'params')
-  #   json['params'] = @get('params').toJSON()
-  #   return json
-
   fetchData: =>
     if @isExternal()
       @fetchExt()
