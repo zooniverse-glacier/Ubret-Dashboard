@@ -26,11 +26,14 @@ class Tool extends Backbone.AssociatedModel
     if @isNew()
       @save [],
         success: =>
-          @get('data_source').set
-            toolId: @id
+          @set
+            'data_source.toolId': @id
+            'data_source.tools': @collection
     else
-      @set 'data_source.toolId', @id
-      
+      @set
+        'data_source.toolId': @id
+        'data_source.tools': @collection
+
     super
 
   # initialize: ->

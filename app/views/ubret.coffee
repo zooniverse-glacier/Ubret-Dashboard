@@ -24,7 +24,9 @@ class UbretTool extends BaseView
     if @model.get('data_source').isReady() 
       @$('.no-data').remove()
       if @model.get('data_source').isInternal()
-        @model.tool.parentTool(@model.get('data_source').source.tool)
+        source = @model.collection.find (tool) =>
+          tool.get('channel') is @model.get('data_source').get('source')
+        @model.tool.parentTool(source.tool)
       else
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@dataKeys(@model.get('data_source').data.toJSON()[0]))
@@ -47,7 +49,6 @@ class UbretTool extends BaseView
     @model.setElements ids
 
   selectKeys: (key) =>
-    console.log 'sk model', @model
     @model.save 'selected_keys', key
 
   toolSelectKey: =>

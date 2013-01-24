@@ -17,6 +17,11 @@ class DataSource extends Backbone.AssociatedModel
   urlRoot: =>
     "/dashboards/#{@manager.get('dashboardId')}/tools/#{@get('toolId')}/data_sources"
 
+  toJSON: =>
+    json = super
+    delete json.tools
+    json
+
   fetchData: =>
     if @isExternal()
       @fetchExt()
@@ -35,7 +40,8 @@ class DataSource extends Backbone.AssociatedModel
         console.log 'error fetching subjects'
 
   fetchInt: =>
-    if not _.isUndefined @source
+    if not _.isUndefined @get('source')
+      @set 'source', @get('source')
       @data = []
       @save()
 
@@ -46,13 +52,13 @@ class DataSource extends Backbone.AssociatedModel
     (@get('source_type') is 'internal')
 
   isReady: =>
-    (@isInternal() and (not _.isUndefined(@source))) or (@isExternal() and (not _.isUndefined(@data)))
+    (@isInternal() and (not _.isUndefined(@get('source')))) or (@isExternal() and (not _.isUndefined(@data)))
 
   sourceName: =>
     if @isExternal()
       name = @manager.get('sources').get(@get('source')).get('name')
     else if @isInternal()
-      name = @source.get('name')
+      name = @get('source')
     else
       name = ''
     return name
