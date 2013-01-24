@@ -3,20 +3,22 @@ Collection = require 'collections/recents'
 
 class Recents extends BaseView
   className: 'my-data-recents'
-  template: './templates/recent'
+  template: require './templates/recent_list'
+  templateItem: require './templates/recent'
   
   initialize: ->
     @collection = new Collection
     @collection.on 'add reset', @render
 
   loadCollection: =>
-    @collection.fetch()
+    @collection.fetch().fail (args...) ->
+      console.log args 
 
   render: =>
-    @$el.empty()
+    @$el.html @template()
     if not @collection.isEmpty()
-      @collection.each (model) ->
-        @$el.append @template(model.toJSON())
+      @collection.each (model) =>
+        @$('.recents').append @templateItem(model.toJSON())
     @
 
 
