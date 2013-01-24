@@ -7,6 +7,7 @@ class Router extends Backbone.Router
     '': 'index'
     'my_dashboards': 'savedDashboards'
     'dashboards/:id': 'retrieveDashboard'
+    'my_data' : 'myData'
     'project/:project': 'loadProject'
     'project/:project/object/:objectId': 'loadObject'
 
@@ -16,6 +17,9 @@ class Router extends Backbone.Router
 
   retrieveDashboard: (id) =>
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
+
+  myData: ->
+    Backbone.Mediator.publish 'router:myData'
 
   savedDashboards: =>
     if User.current is null

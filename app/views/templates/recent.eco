@@ -1,0 +1,3 @@
+<div class="recent-subject">
+  <img src="<%- @image %>" />
+</div>

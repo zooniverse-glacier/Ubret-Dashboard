@@ -15,6 +15,7 @@ class AppHeader extends BaseView
     'router:dashboardCreate': 'onViewCurrent'
     'router:dashboardRetrieve': 'onViewCurrent'
     'router:viewSavedDashboards': 'onViewSaved'
+    'router:myData' : 'onViewMyData'
 
   initialize: ->
     User.on 'sign-in', @render
@@ -24,7 +25,7 @@ class AppHeader extends BaseView
   render: =>
     if @id then @$('.current').attr 'href', '/#/dashboards/' + @id
 
-    if @isForkable() 
+    if @isForkable() and (not _.isUndefined(User.current.dashboards))
       @$('.fork-dashboard').show()
     else
       @$('.fork-dashboard').hide()
@@ -33,6 +34,7 @@ class AppHeader extends BaseView
     switch @active
       when 'current' then @$('li a.current').addClass 'active'
       when 'saved' then @$('li a.my-dashboards').addClass 'active'
+      when 'mydata' then @$('li a.my-data').addClass 'active'
 
     @assign '.login', @login
     @
@@ -48,6 +50,10 @@ class AppHeader extends BaseView
 
   onViewSaved: =>
     @active = 'saved'
+    @render()
+
+  onViewMyData: =>
+    @active = 'mydata'
     @render()
 
   onCreateDashboard: (e) =>

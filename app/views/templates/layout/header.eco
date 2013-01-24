@@ -8,7 +8,7 @@
         <li><a class="current" href="/#/dashboards/<%- @id %>">Current Dashboard</a></li>
         <% if require('user').current?: %>
           <li><a class="my-dashboards" href="/#/my_dashboards">My Dashboards</a></li>
-          <!-- <li><a href="/#/">My Data</a></li> -->
+          <li><a class="my-data" href="/#/my_data">My Data</a></li>
         <% end %>
       </ul>
     </nav>

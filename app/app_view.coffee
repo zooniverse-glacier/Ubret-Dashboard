@@ -4,6 +4,7 @@ DashboardModel = require 'models/dashboard'
 DashboardView = require 'views/dashboard'
 Manager = require 'modules/manager'
 SavedList = require 'views/saved_list'
+MyData = require 'views/my_data'
 ToolLoader = require 'modules/tool_loader'
 User = require 'user'
 
@@ -17,6 +18,7 @@ class AppView extends BaseView
     'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
     'router:index': 'createDashboardView'
+    'router:myData': 'showMyData'
 
   initialize: ->
     @$el.html @template()
@@ -79,6 +81,10 @@ class AppView extends BaseView
 
     User.current.syncToSpelunker()
 
-
+  showMyData: =>
+    unless @myDataView? then @myDataView = new MyData
+    @myDataView.loadCollections()
+    @appFocusView = @myDataView
+    @render()
   
 module.exports = AppView
