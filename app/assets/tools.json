@@ -18,6 +18,10 @@
       "dependencies": ["L"],
       "source": "ubret/ubret/map.js"
     },
+    "Scatterplot": {
+      "dependencies": ["d3"],
+      "source": "ubret/ubret/scatterplot.js"
+    },
     "SubjectViewer": {
       "source": "ubret/ubret/subject_viewer.js"
     },
@@ -31,6 +35,6 @@
       "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer"],
       "preload": ["SubjectViewer", "Mapper"]
     },
-    "default": ["SubjectViewer", "Statistics"]
+    "default": ["Histogram", "Scatterplot", "Mapper", "SubjectViewer", "Statistics"]
   }
 }

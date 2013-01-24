@@ -9,9 +9,11 @@ class Settings extends BaseView
     'click .toggle': 'toggleState'
 
   initialize: ->
-    @active = @model.get('active')
+    @listenTo @model, 'change:settings_active', @render
+
     unless @model?
       return
+
     @dataSettings = new DataSettings { model: @model } if @model?
     switch @model?.get('tool_type')
       when 'Histogram', 'Scatterplot', 'Histogram2', 'Scatter2D'
@@ -31,6 +33,12 @@ class Settings extends BaseView
 
   render: =>
     @$el.html @template()
+
+    if @model.get 'settings_active'
+      @$el.addClass 'active'
+    else
+      @$el.removeClass 'active'
+
     @assign
       '.data-settings': @dataSettings
       '.tool-settings': @toolSettings
@@ -38,14 +46,6 @@ class Settings extends BaseView
 
   # Events
   toggleState: =>
-    if @active is false
-      @active = true
-      @render()
-    else
-      @active = false
-      @dataSettings.remove()
-      @toolSettings.remove()
-    @model.save('active', @active)
-    @$el.toggleClass('active')
+    @model.save('settings_active', !@model.get('settings_active'))
 
 module.exports = Settings

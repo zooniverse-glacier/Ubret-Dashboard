@@ -62,6 +62,7 @@ class DataSettings extends BaseView
   onSelectExternalSource: (e) =>
     @searchTypes = []
 
+    unless $(e.currentTarget).val() then return
     @selectedSource = Manager.get('sources').get($(e.currentTarget).val())
     _.each @selectedSource.get('search_types'), (search_type) =>
       @searchTypes.push search_type
