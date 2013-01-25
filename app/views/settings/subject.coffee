@@ -15,11 +15,17 @@ class SubjectSettings extends BaseView
 
   #Events
   onSelectPrevSubject: =>
-    nextSubject = @model.get('data_source').data.previous(_.last(@model.get('selectedElements')))
-    @model.setElements [nextSubject]
+    if @model.get('data_source').isExternal()
+      prevSubject = @model.get('data_source').data.previous(_.last(@model.get('selected_ids')))
+    else
+      prevSubject = @model.get('data_source').source.get('data_source').data.previous(_.last(@model.get('selected_ids')))
+    @model.set 'selected_ids', [prevSubject]
     
   onSelectNextSubject: =>
-    prevSubject = @model.get('data_source').data.next(_.last(@model.get('selectedElements')))
-    @model.setElements [prevSubject] 
+    if @model.get('data_source').isExternal()
+      nextSubject = @model.get('data_source').data.next(_.last(@model.get('selected_ids')))
+    else
+      nextSubject = @model.get('data_source').source.get('data_source').data.next(_.last(@model.get('selected_ids')))
+    @model.set 'selected_ids', [nextSubject] 
 
 module.exports = SubjectSettings

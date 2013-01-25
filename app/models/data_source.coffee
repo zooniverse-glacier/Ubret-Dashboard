@@ -40,7 +40,7 @@ class DataSource extends Backbone.AssociatedModel
   fetchInt: =>
     if not _.isUndefined @get('source')
       @set 'source', @get('source')
-      @data = []
+      @data = undefined
       @trigger 'change'
 
   isExternal: =>

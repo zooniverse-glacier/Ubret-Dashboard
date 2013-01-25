@@ -9,7 +9,7 @@ class TablePageSettings extends BaseView
     'click button.prev' : 'prevPage'
 
   initialize: ->
-    @page = @model.settings.get('currentPage') or 0
+    @page = @model.get('settings').get('currentPage') or 0
 
   render: =>
     @$el.html @template()
@@ -17,11 +17,11 @@ class TablePageSettings extends BaseView
 
   nextPage: =>
     @page = @page + 1
-    @model.settings.set 'currentPage', @page
+    @model.get('settings').set 'currentPage', @page
 
   prevPage: =>
     @page = @page - 1
-    @model.settings.set 'currentPage', @page
+    @model.get('settings').set 'currentPage', @page
 
 module.exports = TablePageSettings
 

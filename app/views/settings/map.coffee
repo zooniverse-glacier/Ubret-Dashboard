@@ -17,15 +17,15 @@ class MapSettings extends BaseView
     'change select.select-spectrum' : 'changeSpectrum'
 
   initialize: ->
-    @model.settings.set 'spectrum', 'visible' if typeof @model.settings.get('spectrum') is 'undefined'
+    @model.get('settings').set 'spectrum', 'visible' if typeof @model.settings.get('spectrum') is 'undefined'
 
   render: =>
-    curSpectrum = @model.settings.get('spectrum')
+    curSpectrum = @model.get('settings').get('spectrum')
     @$el.html @template({curSpectrum: curSpectrum, spectra: @spectra})
     @
 
   changeSpectrum: (e) =>
     spectrum = e.target.value
-    @model.settings.set  'spectrum', spectrum
+    @model.get('settings').set  'spectrum', spectrum
 
 module.exports = MapSettings
