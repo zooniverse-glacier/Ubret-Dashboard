@@ -18,34 +18,37 @@ class DataSettings extends BaseView
   subscriptions:
     'source:dataReceived': 'updateValidSourceTools'
 
-  initialize: ->
-    @dataSource = @model.get('data_source')
+  initialize: (options) ->
     @channel = @model.get('channel')
-
+    @sourceType = @model.get('data_source').get('source_type') or false
+    @selectedSource = Manager.get('sources').get(@model.get('data_source').get('source')) if typeof @model.get('data_source').get('source') isnt 'undefined'
     @updateValidSourceTools()
 
-    @searchTypeView = new SearchTypeView({model: @dataSource})
-    @paramsView = new ParamsView @dataSource.get('params')
+    @searchTypeView = new SearchTypeView()
+    @params = @model.get('data_source').get('params')
+    @paramsView = new ParamsView @params
+
+    @searchTypeView = new SearchTypeView({model: @model.get('data_source')})
+    @paramsView = new ParamsView @model.get('data_source').get('params')
 
   render: =>
     opts =
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
 
-    if @dataSource.get('source_type')?
-      opts.sourceType = @dataSource.get('source_type')
-      opts.source = @dataSource.get('source')
+    if @model.get('data_source').get('source_type')?
+      opts.sourceType = @model.get("data_source").get('source_type')
+      opts.source = @model.get('data_ource').get('source')
 
-      switch @dataSource.get('source_type')
+      switch @model.get('data_source').get('source_type')
         when 'external'
-          if @dataSource.get('source')?
-            opts.source = @getExternalSource @dataSource.get('source')
+          if @model.get('data_source').get('source')?
+            opts.source = @getExternalSource @model.get('data_source').get('source')
             opts.search_types = opts.source.get('search_types')
-
             @searchTypeView.set opts.search_types
             @setParams()
         when 'internal'
-          opts.source = @dataSource.get('source')
+          opts.source = @model.get('data_source').get('source')
 
     @$el.html @template opts
     @assign
@@ -63,28 +66,28 @@ class DataSettings extends BaseView
 
   onSelectExternalSource: (e) =>
     unless $(e.currentTarget).val() then return
-    @dataSource.set 'source', $(e.currentTarget).val()
-    @dataSource.set 'search_type', @getSearchTypes(@dataSource.get('source'))[0].name
+    @model.get('data_source').set 'source', $(e.currentTarget).val()
+    @model.get('data_source').set 'search_type', @getSearchTypes(@model.get('data_source').get('source'))[0].name
 
     @setParams()
     @render()
 
   showExternal: =>
-    @dataSource.set 'source_type', 'external'
+    @model.get('data_source').set 'source_type', 'external'
     @render()
 
   showInternal: =>
-    @dataSource.set 'source_type', 'internal'
+    @model.get('data_source').set 'source_type', 'internal'
     @render()
 
   updateModel: =>
-    @dataSource.save()
-    @dataSource.fetchData()
+    @model.get('data_source').save()
+    @model.get('data_source').fetchData()
 
   setParams: =>
-    if @dataSource.get('search_type')?
-      @dataSource.get('params').reset()
-      @dataSource.get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @dataSource.get('source')
+    if @model.get('data_source').get('search_type')?
+      @model.get('data_source').get('params').reset()
+      @model.get('data_source').get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @model.get('data_source').get('source')
 
   getExternalSource: (sourceId) ->
     Manager.get('sources').get(sourceId)
@@ -94,7 +97,7 @@ class DataSettings extends BaseView
 
   getExternalSourceParams: (externalSource) ->
     for searchType in @getSearchTypes(externalSource)
-      if searchType.name is @dataSource.get('search_type')
+      if searchType.name is @model.get('data_source').get('search_type')
         return searchType.params
 
   updateValidSourceTools: =>

@@ -15,6 +15,7 @@ class DataSource extends Backbone.AssociatedModel
   subjects: require 'collections/subjects'
 
   urlRoot: =>
+    console.log @
     "/dashboards/#{@manager.get('dashboardId')}/tools/#{@get('tool_id')}/data_sources"
 
   toJSON: =>

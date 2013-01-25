@@ -26,7 +26,9 @@ class Tool extends Backbone.AssociatedModel
     if @isNew()
       @generatePosition()
       @collection.focus @, false
-      @save()
+      @save().done =>
+        console.log @
+        console.log @get('data_source')
     super
 
   generatePosition: ->
