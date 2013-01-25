@@ -1,3 +1,4 @@
+<button class="new-dashboard-recent">New Dashboard from Recents</button>
 <h3> Recents </h3>
 <div class="recents my-data-list">
 </div>

@@ -34,7 +34,6 @@ class Tools extends Backbone.Collection
         tool.get('data_source').fetchData()
 
     _(externalTools).each (tool) =>
-      console.log 'here-ext'
       tool.get('data_source').fetchData()
 
   setDataSource: (dataSource) =>

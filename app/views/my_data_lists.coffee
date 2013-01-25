@@ -1,6 +1,9 @@
 BaseView = require 'views/base_view'
 
 class MyDataLists extends BaseView
+  events:
+    'click button' : 'handleEvent'
+
   initialize: ->
     @collection = new @collectionClass
     @collection.on 'add reset', @render
@@ -14,6 +17,9 @@ class MyDataLists extends BaseView
       @collection.each (model) =>
         @$('.recents').append @templateItem(model.toJSON())
     @
+
+  handleEvent: (e) =>
+
 
 
 

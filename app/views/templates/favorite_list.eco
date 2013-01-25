@@ -1,3 +1,4 @@
+<button class="new-dashboard-favorite">New Dashboard from Favorites</button>
 <h3> Favorites </h3>
 <div class="favorites my-data-list">
 </div>
