@@ -26,6 +26,5 @@ class Params extends BaseView
   setState: =>
     _.each @views, (view) ->
       view.setState()
-    return @params
 
 module.exports = Params

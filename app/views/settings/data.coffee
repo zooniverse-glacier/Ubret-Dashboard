@@ -30,7 +30,6 @@ class DataSettings extends BaseView
 
     if @model.get('data_source').get('source_type')?
       opts.sourceType = @model.get('data_source').get('source_type')
-      opts.source = @model.get('data_source').get('source')
 
       switch @model.get('data_source').get('source_type')
         when 'external'
@@ -73,6 +72,7 @@ class DataSettings extends BaseView
     @render()
 
   updateModel: =>
+    @paramsView.setState()
     @model.get('data_source').save()
     @model.get('data_source').fetchData()
 
