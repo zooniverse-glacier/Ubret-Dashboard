@@ -18,16 +18,8 @@ class DataSettings extends BaseView
   subscriptions:
     'source:dataReceived': 'updateValidSourceTools'
 
-  initialize: (options) ->
-    @channel = @model.get('channel')
-    @sourceType = @model.get('data_source').get('source_type') or false
-    @selectedSource = Manager.get('sources').get(@model.get('data_source').get('source')) if typeof @model.get('data_source').get('source') isnt 'undefined'
+  initialize: ->
     @updateValidSourceTools()
-
-    @searchTypeView = new SearchTypeView()
-    @params = @model.get('data_source').get('params')
-    @paramsView = new ParamsView @params
-
     @searchTypeView = new SearchTypeView({model: @model.get('data_source')})
     @paramsView = new ParamsView @model.get('data_source').get('params')
 
