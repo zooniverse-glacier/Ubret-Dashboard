@@ -23,7 +23,7 @@
       <select class="sources">
         <option value="">Select External API</option>
         <% for source in @extSources: %>
-          <% if source.id is @selectedSourceId: %>
+          <% if @source and source.id is @source.get('id'): %>
             <option value="<%- source.id %>" selected><%- source.name %></option>
           <% else: %>
             <option value="<%- source.id %>"><%- source.name %></option>

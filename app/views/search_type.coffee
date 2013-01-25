@@ -15,13 +15,15 @@ class SearchType extends BaseView
     else
       @types.push types
 
+    @model.set 'search_type', @types[0].name
+
   render: =>
-    @$el.html @template({types: @types, selectedType: @selectedType})
+    @$el.html @template({types: @types, selectedType: @model.get('search_type')})
     @
 
   # Events
   onSelectType: (e) =>
-    @selectedType = $(e.currentTarget).val()
-    @trigger 'searchType:typeSelected', @selectedType
+    @model.set 'search_type', $(e.currentTarget).val()
+    @trigger 'change'
 
 module.exports = SearchType

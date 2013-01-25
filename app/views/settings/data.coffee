@@ -1,6 +1,5 @@
 BaseView = require 'views/base_view'
 Manager = require 'modules/manager'
-
 Params = require 'collections/params'
 ParamsView = require 'views/params'
 SearchTypeView = require 'views/search_type'
@@ -19,33 +18,34 @@ class DataSettings extends BaseView
   subscriptions:
     'source:dataReceived': 'updateValidSourceTools'
 
-  initialize: (options) ->
+  initialize: ->
     @dataSource = @model.get('data_source')
     @channel = @model.get('channel')
-    @sourceType = @dataSource.get('source_type') or false
-    @selectedSource = Manager.get('sources').get(@dataSource.get('source')) if typeof @dataSource.get('source') isnt 'undefined'
+
     @updateValidSourceTools()
 
-    @searchTypeView = new SearchTypeView()
-    @params = @dataSource.get('params')
-    @paramsView = new ParamsView @params
-
-    @searchTypeView.on 'searchType:typeSelected', @onSetSearchType
+    @searchTypeView = new SearchTypeView({model: @dataSource})
+    @paramsView = new ParamsView @dataSource.get('params')
 
   render: =>
     opts =
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
-      sourceType: @sourceType
 
-    if @sourceType is 'internal'
-      opts['source'] = @dataSource.get('source')
+    if @dataSource.get('source_type')?
+      opts.sourceType = @dataSource.get('source_type')
+      opts.source = @dataSource.get('source')
 
-    if @selectedSource
-      new_opts =
-        search_types: @selectedSource.get('search_types')
-        selectedSourceId: @selectedSource.id
-      opts = _.extend new_opts, opts
+      switch @dataSource.get('source_type')
+        when 'external'
+          if @dataSource.get('source')?
+            opts.source = @getExternalSource @dataSource.get('source')
+            opts.search_types = opts.source.get('search_types')
+
+            @searchTypeView.set opts.search_types
+            @setParams()
+        when 'internal'
+          opts.source = @dataSource.get('source')
 
     @$el.html @template opts
     @assign
@@ -55,50 +55,47 @@ class DataSettings extends BaseView
 
   # Events
   onSetSearchType: (search_type) =>
-    @selectedSearchType = _.find @searchTypes, (type) -> type.name is search_type
-    @setParams()
+    # This needs to be refactored.
+
+    # @selectedSearchType = _.find @searchTypes, (type) -> type.name is search_type
+    # @setParams()
     @render()
 
   onSelectExternalSource: (e) =>
-    @searchTypes = []
-
     unless $(e.currentTarget).val() then return
-    @selectedSource = Manager.get('sources').get($(e.currentTarget).val())
-    _.each @selectedSource.get('search_types'), (search_type) =>
-      @searchTypes.push search_type
+    @dataSource.set 'source', $(e.currentTarget).val()
+    @dataSource.set 'search_type', @getSearchTypes(@dataSource.get('source'))[0].name
 
-    @searchTypeView.set @searchTypes
-
-    # Choose first search type as default
-    @selectedSearchType = _.first @searchTypes
     @setParams()
     @render()
 
-  showExternal: (e) =>
-    @sourceType = 'external'
+  showExternal: =>
+    @dataSource.set 'source_type', 'external'
     @render()
 
-  showInternal: (e) =>
-    @sourceType = 'internal'
+  showInternal: =>
+    @dataSource.set 'source_type', 'internal'
     @render()
 
   updateModel: =>
-    @dataSource.set {'source_type': @sourceType}, {silent: true}
-
-    if @dataSource.get('source_type') is 'external'
-      source = @$('.external .sources').val()
-      @dataSource.set 'params', @paramsView.setState() # Retrieve params data
-    else
-      source = @$('.internal .sources').val()
-
-    @dataSource.set 'source', source
     @dataSource.save()
     @dataSource.fetchData()
 
   setParams: =>
-    @params.reset()
-    _.each @selectedSearchType.params, (param, key) =>
-      @params.add _.extend {key: key}, param
+    if @dataSource.get('search_type')?
+      @dataSource.get('params').reset()
+      @dataSource.get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @dataSource.get('source')
+
+  getExternalSource: (sourceId) ->
+    Manager.get('sources').get(sourceId)
+
+  getSearchTypes: (externalSource) ->
+    @getExternalSource(externalSource).get('search_types')
+
+  getExternalSourceParams: (externalSource) ->
+    for searchType in @getSearchTypes(externalSource)
+      if searchType.name is @dataSource.get('search_type')
+        return searchType.params
 
   updateValidSourceTools: =>
     @intSources = []
