@@ -50,7 +50,12 @@ class DataSource extends Backbone.AssociatedModel
     (@get('source_type') is 'internal')
 
   isReady: =>
-    (@isInternal() and (not _.isUndefined(@get('source')))) or (@isExternal() and (not (@data?.isEmpty())))
+    if @data? and not @data.isEmpty()
+      dataReady = true
+    else
+      dataReady = false
+
+    (@isInternal() and (not _.isUndefined(@get('source')))) or (@isExternal() and dataReady)
 
   sourceName: =>
     if @isExternal()
