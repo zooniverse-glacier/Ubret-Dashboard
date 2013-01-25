@@ -26,7 +26,11 @@ class UbretTool extends BaseView
       if @model.get('data_source').isInternal()
         source = @model.collection.find (tool) =>
           tool.get('channel') is @model.get('data_source').get('source')
-        @model.tool.parentTool(source.tool)
+        if source.get('data_source').isReady() and (not _.isUndefined(source.tool))
+          @model.tool.parentTool(source.tool) 
+        else
+          @$el.html @noDataTemplate()
+          return @
       else
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@dataKeys(@model.get('data_source').data.toJSON()[0]))
@@ -35,6 +39,8 @@ class UbretTool extends BaseView
         .selectKeys(@model.get('selected_keys'))
         .settings(@model.get('settings').toJSON())
         .start()
+
+      @model.trigger 'started'
     else
       @$el.html @noDataTemplate()
     @

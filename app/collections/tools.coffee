@@ -30,10 +30,11 @@ class Tools extends Backbone.Collection
       source = @find (collection_tool) =>
         collection_tool.get('channel') is tool.get('data_source').get('source')
 
-      source.on 'change:data_source', =>
+      source.on 'started', =>
         tool.get('data_source').fetchData()
 
     _(externalTools).each (tool) =>
+      console.log 'here-ext'
       tool.get('data_source').fetchData()
 
   setDataSource: (dataSource) =>
