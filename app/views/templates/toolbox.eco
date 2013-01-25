@@ -1,5 +1,6 @@
 <div class="container">
-  <p><b>Select the tools you need:</b></p>
+  <p><b>Select the tools you need: <span class="dashboard-name"><%- @name %></b></span><input value="<%- @name %>" type="text" /></p>
+  
   <ul class="tools">
   <% for tool in @available_tools: %>
     <li><a href="#" class="tool" name="<%- tool.class_name %>"><%- tool.name %></a></li>

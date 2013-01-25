@@ -35,12 +35,12 @@
     },
     "Table" : {
       "dependencies" : ["d3"],
-      "source": "ubret/ubret/spectra.js"
+      "source": "ubret/ubret/table.js"
     }
   },
   "projects": {
     "galaxy_zoo": {
-      "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer", "Spectra"],
+      "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table"],
       "preload": ["SubjectViewer", "Mapper"]
     },
     "default": ["Histogram", "Scatterplot", "Mapper", "SubjectViewer", "Statistics"]

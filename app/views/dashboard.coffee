@@ -47,6 +47,7 @@ class DashboardView extends BaseView
     @model.save()
 
   onDashboardInit: (@model) =>
+    @toolboxView.model = @model
     @render()
     @model.on
       'add:tools': @addTool
@@ -62,9 +63,6 @@ class DashboardView extends BaseView
     @snap.css 
       height: if direction in ['top-left', 'top-right', 'bottom-right', 'bottom-left'] then ((dashHeight / 2) - 20) else (dashHeight - 20)
       width: if direction in ['right', 'left', 'top-left', 'top-right', 'bottom-left', 'bottom-right']  then ((window.innerWidth / 2) - 20) else (window.innerWidth - 20)
-
-  _setToolWindow: (toolWindow) ->
-    ToolWindow = toolWindow
 
 
 module.exports = DashboardView
