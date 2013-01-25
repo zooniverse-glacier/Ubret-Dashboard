@@ -12,8 +12,10 @@ class Router extends Backbone.Router
     'project/:project/object/:objectId': 'loadObject'
 
   index: ->
-    @navigate("#/my_dashboards", {trigger: true}) if User.current isnt null
-    Backbone.Mediator.publish 'router:index'
+    if User.current?
+      @navigate("#/my_dashboards", {trigger: true})
+    else
+      Backbone.Mediator.publish 'router:index'
 
   retrieveDashboard: (id) =>
     Backbone.Mediator.publish 'router:dashboardRetrieve', id

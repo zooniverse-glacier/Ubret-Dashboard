@@ -25,7 +25,7 @@ class AppHeader extends BaseView
   render: =>
     if @id then @$('.current').attr 'href', '/#/dashboards/' + @id
 
-    if @isForkable() and (not _.isUndefined(User.current.dashboards))
+    if User.current? and @isForkable()
       @$('.fork-dashboard').show()
     else
       @$('.fork-dashboard').hide()

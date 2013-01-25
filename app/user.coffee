@@ -72,4 +72,17 @@ class User extends Backbone.Events
         @dashboards = new Backbone.Collection response.dashboards
         @trigger 'loaded-dashboards'
 
+  removeDashboard: (id, cb) =>
+    url = "#{User.apiUrl()}/dashboards/#{id}"
+    $.ajax 
+      url: url
+      type: 'DELETE'
+      crossDomain: true
+      cache: false
+      xhrFields:
+        withCredentials: true
+      success: (response) => cb response
+
+
+
 module.exports = User

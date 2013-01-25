@@ -42,6 +42,7 @@ class SavedList extends BaseView
     id = e.currentTarget.dataset.id
     @collection.remove id
     delete @sharers[id]
-    User.current.removeDashboards id
+    User.current.removeDashboard id, ->
+      $(e.currentTarget).parents().eq(3).remove()
 
 module.exports = SavedList

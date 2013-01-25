@@ -12,10 +12,10 @@ class Tool extends Backbone.AssociatedModel
   ]
 
   defaults:
-    settings_active: true
     data_source: {}
     height: 480
     settings: {}
+    settings_active: true
     width: 640
     zindex: 1
 

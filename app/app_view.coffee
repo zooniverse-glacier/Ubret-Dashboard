@@ -50,6 +50,9 @@ class AppView extends BaseView
     @dashboardModel = new DashboardModel {id: id}
     @dashboardModel.fetch
       success: => ToolLoader @dashboardModel, @createDashboardView
+      error: =>
+        delete @dashboardModel
+        Manager.get('router').navigate '', {trigger: true}
 
   createDashboardView: =>
     @appFocusView = @dashboardView
