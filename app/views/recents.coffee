@@ -1,25 +1,10 @@
-BaseView = require 'views/base_view'
+MyDataLists = require 'views/my_data_lists'
 Collection = require 'collections/recents'
 
-class Recents extends BaseView
+class Recents extends MyDataLists
   className: 'my-data-recents'
   template: require './templates/recent_list'
   templateItem: require './templates/recent'
+  collectionClass: Collection
   
-  initialize: ->
-    @collection = new Collection
-    @collection.on 'add reset', @render
-
-  loadCollection: =>
-    @collection.fetch().fail (args...) ->
-      console.log args 
-
-  render: =>
-    @$el.html @template()
-    if not @collection.isEmpty()
-      @collection.each (model) =>
-        @$('.recents').append @templateItem(model.toJSON())
-    @
-
-
 module.exports = Recents

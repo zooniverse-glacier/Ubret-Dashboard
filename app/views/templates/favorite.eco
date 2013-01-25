@@ -1,0 +1,3 @@
+<div class="favorite my-data-subject">
+  <img src="<%- @thumb %>" />
+</div>
