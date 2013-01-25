@@ -21,9 +21,9 @@ class DataSettings extends BaseView
   initialize: ->
     @updateValidSourceTools()
     @searchTypeView = new SearchTypeView({model: @model.get('data_source')})
-    @paramsView = new ParamsView @model.get('data_source').get('params')
 
   render: =>
+    @paramsView = new ParamsView @model.get('data_source').get('params')
     opts =
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
