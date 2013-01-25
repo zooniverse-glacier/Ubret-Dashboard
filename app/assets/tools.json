@@ -28,11 +28,19 @@
     "Statistics": {
       "dependencies": ["d3"],
       "source": "ubret/ubret/statistics.js"
-    }
+    },
+    "Spectra" : {
+      "dependencies": ["d3"],
+      "source" : "ubret/ubret/spectra.js"
+    },
+    "Table" : {
+      "dependencies" : ["d3"],
+      "source": "ubret/ubret/spectra.js"
+    },
   },
   "projects": {
     "galaxy_zoo": {
-      "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer"],
+      "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer", "Spectra"],
       "preload": ["SubjectViewer", "Mapper"]
     },
     "default": ["Histogram", "Scatterplot", "Mapper", "SubjectViewer", "Statistics"]
