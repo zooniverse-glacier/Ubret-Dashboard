@@ -37,8 +37,8 @@ class DataSettings extends BaseView
       intSources: @intSources or []
 
     if @model.get('data_source').get('source_type')?
-      opts.sourceType = @model.get("data_source").get('source_type')
-      opts.source = @model.get('data_ource').get('source')
+      opts.sourceType = @model.get('data_source').get('source_type')
+      opts.source = @model.get('data_source').get('source')
 
       switch @model.get('data_source').get('source_type')
         when 'external'
