@@ -26,16 +26,7 @@ class Tool extends Backbone.AssociatedModel
     if @isNew()
       @generatePosition()
       @collection.focus @, false
-      @save [],
-        success: =>
-          @set
-            'data_source.toolId': @id
-            'data_source.tools': @collection
-    else
-      @set
-        'data_source.toolId': @id
-        'data_source.tools': @collection
-
+      @save()
     super
 
   generatePosition: ->

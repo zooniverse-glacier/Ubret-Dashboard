@@ -5,11 +5,11 @@ class UbretTool extends BaseView
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
-    if @model?
+    @listenTo @model, 'change:data_source', @render
+    @listenTo @model, 'started', =>
       @listenTo @model, 'change:selected_ids', @toolSelectElements
       @listenTo @model, 'change:selected_keys', @toolSelectKey
       @listenTo @model, 'change:settings', @passSetting
-      @listenTo @model, 'change:data_source', @render
 
     @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
     @model.tool.on 'keys-received', (keys) =>
