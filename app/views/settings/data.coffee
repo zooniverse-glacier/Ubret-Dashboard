@@ -21,9 +21,9 @@ class DataSettings extends BaseView
   initialize: ->
     @updateValidSourceTools()
     @searchTypeView = new SearchTypeView({model: @model.get('data_source')})
+    @paramsView = new ParamsView {collection: @model.get('data_source').get('params')}
 
   render: =>
-    @paramsView = new ParamsView @model.get('data_source').get('params')
     opts =
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
@@ -37,7 +37,6 @@ class DataSettings extends BaseView
             opts.source = @getExternalSource @model.get('data_source').get('source')
             opts.search_types = opts.source.get('search_types')
             @searchTypeView.set opts.search_types
-            @setParams()
         when 'internal'
           opts.source = @model.get('data_source').get('source')
 
@@ -61,7 +60,7 @@ class DataSettings extends BaseView
     @model.get('data_source').set 'search_type', @getSearchTypes(@model.get('data_source').get('source'))[0].name
 
     @setParams()
-    @render()
+    _.defer @render
 
   showExternal: =>
     @model.get('data_source').set 'source_type', 'external'
@@ -72,9 +71,12 @@ class DataSettings extends BaseView
     @render()
 
   updateModel: =>
-    @paramsView.setState()
-    @model.get('data_source').save()
-    @model.get('data_source').fetchData()
+    @model.get('data_source').set 'params', @paramsView.setState()
+    @model.get('data_source').save [],
+      success: =>
+        @model.get('data_source').fetchData()
+      error: =>
+        console.log 'an error'
 
   setParams: =>
     if @model.get('data_source').get('search_type')?

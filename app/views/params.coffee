@@ -6,12 +6,12 @@ SelectView = require 'views/params/select'
 EmptyView = require 'views/params/empty'
 
 class Params extends BaseView
-  initialize: (@params) ->
+  initialize: ->
     # Nothing.
 
   render: =>
     @views = []
-    @params.each (param) =>
+    @collection.each (param) =>
       switch param.get('type')
         when 'Input' then paramView = new InputView({model: param})
         when 'Range' then paramView = new RangeView({model: param})
@@ -26,5 +26,6 @@ class Params extends BaseView
   setState: =>
     _.each @views, (view) ->
       view.setState()
+    return @collection
 
 module.exports = Params

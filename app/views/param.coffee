@@ -11,7 +11,7 @@ class Param extends BaseView
 
   setState: =>
     # getCurrentValue implemented by subclasses
-    @model.set 'value', @getCurrentValue()
+    @model.set 'val', @getCurrentValue()
 
   getCurrentValue: =>
     @$el.find('[data-cid=' + @model.cid + ']').val()

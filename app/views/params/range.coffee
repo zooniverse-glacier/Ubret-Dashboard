@@ -16,9 +16,9 @@ class Range extends Param
     super
     @span = @$el.find('span')
     @value = @$el.find('.value')
-    if @firstRender and typeof @model.get('value') isnt 'undefined'
-      @value.html @model.get('value').toFixed(2)
-      position = (167 * (@model.get('value') - @min)) / (@max - @min)
+    if @firstRender and typeof @model.get('val') isnt 'undefined'
+      @value.html @model.get('val').toFixed(2)
+      position = (167 * (@model.get('val') - @min)) / (@max - @min)
       @span.css
         left: position
       @firstRender = false

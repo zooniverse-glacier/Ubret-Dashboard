@@ -22,14 +22,13 @@ class Tool extends Backbone.AssociatedModel
   initialize: ->
     unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
     unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
-    
+
     if @isNew()
       @generatePosition()
       @collection.focus @, false
-      @save().done =>
-        console.log @
-        console.log @get('data_source')
-    super
+      @save()
+    else
+      @get('data_source').set 'tool_id', @id
 
   generatePosition: ->
     doc_width = $(document).width()

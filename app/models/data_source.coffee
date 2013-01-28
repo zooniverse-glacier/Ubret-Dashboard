@@ -1,27 +1,23 @@
+Params = require 'collections/params'
+
 class DataSource extends Backbone.AssociatedModel
   sync: require 'sync' 
-
-  relations: [
-    type: Backbone.Many
-    key: 'params'
-    relatedModel: require 'models/param'
-    collectionType: require 'collections/params'
-  ]
-
-  defaults:
-    params: []
-
   manager: require 'modules/manager'
   subjects: require 'collections/subjects'
+
+  initialize: (opts) ->
+    params = opts.params || []
+    @set 'params', new Params params
+
+  # Server methods
+  parse: (response) ->
+    response.params = new Params response.params
+    return response
 
   urlRoot: =>
     "/dashboards/#{@manager.get('dashboardId')}/tools/#{@get('tool_id')}/data_sources"
 
-  toJSON: =>
-    json = super
-    delete json.tools
-    json
-
+  # DS API
   fetchData: =>
     if @isExternal()
       @fetchExt()
