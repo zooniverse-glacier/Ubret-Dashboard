@@ -13,6 +13,7 @@ class DataSettings extends BaseView
     'click .type-select .external button': 'showExternal'
     'click .type-select .internal button': 'showInternal'
     'change .external .sources': 'onSelectExternalSource'
+    'change .internal .sources': 'onSelectInternalSource'
     'click button[name="fetch"]': 'updateModel'
 
   subscriptions:
@@ -24,6 +25,7 @@ class DataSettings extends BaseView
     @paramsView = new ParamsView {collection: @model.get('data_source').get('params')}
 
   render: =>
+    @paramsView.collection = @model.get('data_source').get('params')
     opts =
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
@@ -38,7 +40,8 @@ class DataSettings extends BaseView
             opts.search_types = opts.source.get('search_types')
             @searchTypeView.set opts.search_types
         when 'internal'
-          opts.source = @model.get('data_source').get('source')
+          if @model.get('data_source').get('source')?
+            opts.source = @model.get('data_source').get('source')
 
     @$el.html @template opts
     @assign
@@ -60,7 +63,11 @@ class DataSettings extends BaseView
     @model.get('data_source').set 'search_type', @getSearchTypes(@model.get('data_source').get('source'))[0].name
 
     @setParams()
-    _.defer @render
+    @render()
+
+  onSelectInternalSource: (e) =>
+    console.log 'setting internal source'
+    @model.get('data_source').set 'source', $(e.currentTarget).val()
 
   showExternal: =>
     @model.get('data_source').set 'source_type', 'external'
@@ -103,6 +110,8 @@ class DataSettings extends BaseView
   checkToolSource: (source_tool, tool, checkedTools) =>
     if _.isEqual source_tool, tool
       return false
+
+    if _.isUndefined tool then return false
 
     if _.isUndefined tool.get('data_source').get('source')
       return false

@@ -4,9 +4,6 @@ class Tools extends Backbone.Collection
   model: require('models/tool')
   sync: require('sync') 
 
-  # initialize: -> 
-  #   @on 'change:dataSource.source', @setDataSource
-
   url: =>
     "/dashboards/#{Manager.get('dashboardId')}/tools"
 
@@ -21,7 +18,7 @@ class Tools extends Backbone.Collection
 
   loadTools: =>
     internalTools = @filter (tool) =>
-      tool.get('data_source').isInternal()
+      tool.get('data_source').isInternal() and tool.get('data_source').isReady()
 
     externalTools = @filter (tool) =>
       tool.get('data_source').isExternal()
@@ -29,7 +26,6 @@ class Tools extends Backbone.Collection
     _(internalTools).each (tool) =>
       source = @find (collection_tool) =>
         collection_tool.get('channel') is tool.get('data_source').get('source')
-
       source.on 'started', =>
         tool.get('data_source').fetchData()
 

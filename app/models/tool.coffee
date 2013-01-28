@@ -35,7 +35,7 @@ class Tool extends Backbone.AssociatedModel
     doc_height = $(document).height()
     toolbox_bot = 168 # tool box height
 
-    x_max = doc_width * 0.6
+    x_max = doc_width * 0.3
     x_min = doc_width * 0.02
 
     y_max = doc_height * 0.35

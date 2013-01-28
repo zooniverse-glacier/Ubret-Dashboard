@@ -5,7 +5,7 @@ class UbretTool extends BaseView
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
-    @listenTo @model, 'change:data_source', @render
+    @listenTo @model.get('data_source'), 'change', @render
     @listenTo @model, 'started', =>
       @listenTo @model, 'change:selected_ids', @toolSelectElements
       @listenTo @model, 'change:selected_keys', @toolSelectKey
@@ -26,11 +26,7 @@ class UbretTool extends BaseView
       if @model.get('data_source').isInternal()
         source = @model.collection.find (tool) =>
           tool.get('channel') is @model.get('data_source').get('source')
-        if source.get('data_source').isReady() and (not _.isUndefined(source.tool))
-          @model.tool.parentTool(source.tool) 
-        else
-          @$el.html @noDataTemplate()
-          return @
+        @model.tool.parentTool(source.tool)
       else
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@dataKeys(@model.get('data_source').data.toJSON()[0]))

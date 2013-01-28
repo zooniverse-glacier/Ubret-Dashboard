@@ -51,7 +51,7 @@ class DataSource extends Backbone.AssociatedModel
     else
       dataReady = false
 
-    (@isInternal() and (not _.isUndefined(@get('source')))) or (@isExternal() and dataReady)
+    (@isInternal() and @get('source')?) or (@isExternal() and dataReady)
 
   sourceName: =>
     if @isExternal()
