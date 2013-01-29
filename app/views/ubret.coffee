@@ -5,8 +5,17 @@ class UbretTool extends BaseView
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
-    @listenTo @model.get('data_source'), 'change', @render
-    @listenTo @model, 'started', =>
+    # An allowance for not having the UI block on tool creation.
+    if @model.isNew()
+      @model.once 'sync', =>
+        console.log 'subscribing to new', "#{@model.get('id')}:dataFetched"
+        Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
+    else
+      console.log 'subscribing to ', "#{@model.get('id')}:dataFetched"
+      Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
+
+
+    @model.once 'started', =>
       @listenTo @model, 'change:selected_ids', @toolSelectElements
       @listenTo @model, 'change:selected_keys', @toolSelectKey
       @listenTo @model, 'change:settings', @passSetting
@@ -18,6 +27,7 @@ class UbretTool extends BaseView
     @model.tool.on 'keys-selection', @selectKeys
 
   render: =>
+    # console.log 'rendering ubrettool', @model
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
 
@@ -29,23 +39,18 @@ class UbretTool extends BaseView
         @model.tool.parentTool(source.tool)
       else
         @model.tool.data(@model.get('data_source').data.toJSON())
-          .keys(@dataKeys(@model.get('data_source').data.toJSON()[0]))
+          .keys(@model.get('data_source').dataKeys())
 
       @model.tool.selectIds(@model.get('selected_ids'))
         .selectKeys(@model.get('selected_keys'))
         .settings(@model.get('settings').toJSON())
         .start()
 
+      console.log 'triggering started on', @model
       @model.trigger 'started'
     else
       @$el.html @noDataTemplate()
     @
-
-  dataKeys: (dataModel) =>
-    keys = new Array
-    for key, value of dataModel
-      keys.push key unless key in @nonDisplayKeys
-    return keys
 
   selectElements: (ids) =>
     if _.difference(ids, @model.get('selected_ids')).length

@@ -67,10 +67,16 @@ class DataSettings extends BaseView
 
   onSelectInternalSource: (e) =>
     console.log 'setting internal source'
-    @model.get('data_source').set 'source', $(e.currentTarget).val()
+    @model.get('data_source').set
+      'source': $(e.currentTarget).val()
+      'search_type': null
 
   showExternal: =>
-    @model.get('data_source').set 'source_type', 'external'
+    @model.get('data_source').set
+      'source_type': 'external'
+      'source': null
+      'search_type': null
+
     @render()
 
   showInternal: =>
