@@ -16,7 +16,7 @@ class Settings extends BaseView
 
     @dataSettings = new DataSettings { model: @model } if @model?
     switch @model?.get('tool_type')
-      when 'Histogram', 'Scatterplot', 'Histogram2', 'Scatter2D'
+      when 'Histogram', 'Scatterplot'
         ToolSettings = require 'views/settings/graph'
       when 'Statistics'
         ToolSettings = require 'views/settings/key'

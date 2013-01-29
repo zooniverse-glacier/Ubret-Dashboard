@@ -15,7 +15,7 @@
     </select></label>
   </li>
   
-  <% if @type is 'Scatter2D': %>
+  <% if @type is 'Scatterplot': %>
   <li class="y">
     <label>Y-Axis: <select class="axis y-axis" data-axis='2'>
       <option value="">Y-Axis Variable</option>

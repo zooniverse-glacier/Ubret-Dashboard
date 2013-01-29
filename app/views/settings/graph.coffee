@@ -6,14 +6,14 @@ class GraphSettings extends BaseView
   template: require 'views/templates/graph_settings'
 
   events:
-    'change .axis'  : 'onChangeAxis'
+    'change .axis': 'onChangeAxis'
 
   initialize: ->
-    @keys = new Array
+    @keys = []
     Backbone.Mediator.subscribe("#{@model?.get('channel')}:keys", @setKeys)
 
   render: =>
-    @$el.html @template({ keys: @keys, currentKey: @model.get('selectedKey'), type: @model?.get('type') })
+    @$el.html @template({keys: @keys, currentKey: @model.get('selected_key'), type: @model?.get('tool_type')})
     @
 
   setKeys: (keys) =>

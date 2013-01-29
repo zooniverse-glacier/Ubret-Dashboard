@@ -37,7 +37,6 @@ class DataSource extends Backbone.AssociatedModel
 
   fetchInt: =>
     if @get('source')?
-      # @set 'source', @get('source')
       @data = undefined
       Backbone.Mediator.publish "#{@get('tool_id')}:dataFetched"
 
@@ -48,7 +47,6 @@ class DataSource extends Backbone.AssociatedModel
     (@get('source_type') is 'internal')
 
   isReady: =>
-    # console.log 'checking data', @data?, @data
     if @data? and not @data.isEmpty()
       dataReady = true
     else

@@ -12,7 +12,6 @@ class UbretTool extends BaseView
     else
       Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
 
-
     @model.once 'started', =>
       @listenTo @model, 'change:selected_ids', @toolSelectElements
       @listenTo @model, 'change:selected_keys', @toolSelectKey
@@ -22,22 +21,31 @@ class UbretTool extends BaseView
       @model.tool.on 'update-setting', @assignSetting
 
     @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
+
     @model.tool.on 'keys-received', (keys) =>
       Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
     @model.tool.on 'selection', @selectElements
     @model.tool.on 'keys-selection', @selectKeys
 
   render: =>
+    # PSA: This entire method is a bit of a hack.
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
 
-    if @model.get('data_source').isReady() 
+    if @model.get('data_source').isReady()
       @$('.no-data').remove()
       if @model.get('data_source').isInternal()
+        # This is a bit of a kludge, but it works.
         source = @model.collection.find (tool) =>
           tool.get('channel') is @model.get('data_source').get('source')
-        @model.tool.parentTool(source.tool)
+        if source.get('data_source').isReady() and source.tool?
+          @model.tool.parentTool(source.tool) 
+        else
+          @$el.html @noDataTemplate()
+          return @
       else
+        # Bit of a hack to make sure the tool doesn't have a parentTool lingering around.
+        @model.tool.removeParentTool()
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@model.get('data_source').dataKeys())
 
@@ -66,14 +74,11 @@ class UbretTool extends BaseView
     @model.save()
 
   # From @model to Ubret tool
-  toolSelectKey: =>
-    @model.tool.selectKeys(@model.get('selected_keys')).start()
-
   toolSelectElements: =>
     @model.tool.selectIds(@model.get('selected_ids').slice()).start()
 
-  toolAddFilters: =>
-    @model.tool.filters(@model.filters.toJSON()).start()
+  toolSelectKey: =>
+    @model.tool.selectKeys(@model.get('selected_keys')).start()
 
   passSetting: =>
     @model.tool.settings(@model.get('settings').changed).start()
