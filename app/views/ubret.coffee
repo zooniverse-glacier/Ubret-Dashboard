@@ -18,6 +18,9 @@ class UbretTool extends BaseView
       @listenTo @model, 'change:selected_keys', @toolSelectKey
       @listenTo @model, 'change:settings', @passSetting
 
+      # Assume @model.tool has been created.
+      @model.tool.on 'update-setting', @assignSetting
+
     @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
     @model.tool.on 'keys-received', (keys) =>
       Backbone.Mediator.publish("#{@model?.get('channel')}:keys", keys)
@@ -48,6 +51,8 @@ class UbretTool extends BaseView
       @$el.html @noDataTemplate()
     @
 
+
+  # From Ubret tool to @model
   selectElements: (ids) =>
     if _.difference(ids, @model.get('selected_ids')).length
       @model.save 'selected_ids', ids
@@ -56,6 +61,11 @@ class UbretTool extends BaseView
     if _.difference(key, @model.get('selected_keys')).length
       @model.save 'selected_keys', key
 
+  assignSetting: (setting) =>
+    @model.get('settings').set setting, {silent: true}
+    @model.save()
+
+  # From @model to Ubret tool
   toolSelectKey: =>
     @model.tool.selectKeys(@model.get('selected_keys')).start()
 
