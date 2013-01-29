@@ -29,20 +29,16 @@ class DataSource extends Backbone.AssociatedModel
       throw 'unknown source type'
 
   fetchExt: =>
-    console.log 'fetching external data'
     url = @manager.get('sources').get(@get('source')).get('url')
     @data = new @subjects([], {params: @get('params'), url: url })
     @data.fetch
       success: =>
-        console.log "fetchExt #{@get('tool_id')}:dataFetched"
         Backbone.Mediator.publish "#{@get('tool_id')}:dataFetched"
 
   fetchInt: =>
-    console.log 'fecthing internal data'
     if @get('source')?
-      @set 'source', @get('source')
+      # @set 'source', @get('source')
       @data = undefined
-      console.log "fetchInt #{@get('tool_id')}:dataFetched"
       Backbone.Mediator.publish "#{@get('tool_id')}:dataFetched"
 
   isExternal: =>

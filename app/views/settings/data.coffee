@@ -16,11 +16,18 @@ class DataSettings extends BaseView
     'change .internal .sources': 'onSelectInternalSource'
     'click button[name="fetch"]': 'updateModel'
 
-  subscriptions:
-    'source:dataReceived': 'updateValidSourceTools'
-
   initialize: ->
-    @updateValidSourceTools()
+    # An allowance for not having the UI block on tool creation.
+    if @model.isNew()
+      @model.once 'sync', =>
+        Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", =>
+          @updateValidSourceTools()
+          @render()
+    else
+      Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", =>
+        @updateValidSourceTools()
+        @render()
+
     @searchTypeView = new SearchTypeView({model: @model.get('data_source')})
     @paramsView = new ParamsView {collection: @model.get('data_source').get('params')}
 
@@ -51,10 +58,7 @@ class DataSettings extends BaseView
 
   # Events
   onSetSearchType: (search_type) =>
-    # This needs to be refactored.
-
-    # @selectedSearchType = _.find @searchTypes, (type) -> type.name is search_type
-    # @setParams()
+    # This needs to do something.
     @render()
 
   onSelectExternalSource: (e) =>
@@ -66,7 +70,6 @@ class DataSettings extends BaseView
     @render()
 
   onSelectInternalSource: (e) =>
-    console.log 'setting internal source'
     @model.get('data_source').set
       'source': $(e.currentTarget).val()
       'search_type': null
@@ -81,6 +84,7 @@ class DataSettings extends BaseView
 
   showInternal: =>
     @model.get('data_source').set 'source_type', 'internal'
+    @updateValidSourceTools()
     @render()
 
   updateModel: =>

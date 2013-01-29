@@ -8,10 +8,8 @@ class UbretTool extends BaseView
     # An allowance for not having the UI block on tool creation.
     if @model.isNew()
       @model.once 'sync', =>
-        console.log 'subscribing to new', "#{@model.get('id')}:dataFetched"
         Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
     else
-      console.log 'subscribing to ', "#{@model.get('id')}:dataFetched"
       Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
 
 
@@ -27,7 +25,6 @@ class UbretTool extends BaseView
     @model.tool.on 'keys-selection', @selectKeys
 
   render: =>
-    # console.log 'rendering ubrettool', @model
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
 
@@ -46,7 +43,6 @@ class UbretTool extends BaseView
         .settings(@model.get('settings').toJSON())
         .start()
 
-      console.log 'triggering started on', @model
       @model.trigger 'started'
     else
       @$el.html @noDataTemplate()
