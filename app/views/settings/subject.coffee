@@ -29,7 +29,7 @@ class SubjectSettings extends BaseView
     else
       source = @model.collection.find (tool) =>
         tool.get('channel') is @model.get('data_source').get('source')
-      nextSubject = source.get('data_source').data.previous(_.last(@model.get('selected_ids')))
+      nextSubject = source.get('data_source').data.next(_.last(@model.get('selected_ids')))
     @model.set 'selected_ids', [nextSubject] 
 
 module.exports = SubjectSettings
