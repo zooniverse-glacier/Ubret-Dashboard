@@ -56,9 +56,22 @@ class DataSettings extends BaseView
       '.params': @paramsView
     @
 
-  # Events
-  onSetSearchType: (search_type) =>
-    # This needs to do something.
+  # Fetch the data.
+  updateModel: =>
+    @model.get('data_source').set 'params', @paramsView.setState()
+    @model.get('data_source').save [],
+      success: =>
+        @model.get('data_source').fetchData()
+      error: =>
+        console.log 'an error'
+
+
+  # External path
+  showExternal: =>
+    @model.get('data_source').set
+      'source_type': 'external'
+      'source': null
+      'search_type': null
     @render()
 
   onSelectExternalSource: (e) =>
@@ -69,31 +82,9 @@ class DataSettings extends BaseView
     @setParams()
     @render()
 
-  onSelectInternalSource: (e) =>
-    @model.get('data_source').set
-      'source': $(e.currentTarget).val()
-      'search_type': null
-
-  showExternal: =>
-    @model.get('data_source').set
-      'source_type': 'external'
-      'source': null
-      'search_type': null
-
+  onSetSearchType: (search_type) =>
+    # This needs to do something.
     @render()
-
-  showInternal: =>
-    @model.get('data_source').set 'source_type', 'internal'
-    @updateValidSourceTools()
-    @render()
-
-  updateModel: =>
-    @model.get('data_source').set 'params', @paramsView.setState()
-    @model.get('data_source').save [],
-      success: =>
-        @model.get('data_source').fetchData()
-      error: =>
-        console.log 'an error'
 
   setParams: =>
     if @model.get('data_source').get('search_type')?
@@ -110,6 +101,18 @@ class DataSettings extends BaseView
     for searchType in @getSearchTypes(externalSource)
       if searchType.name is @model.get('data_source').get('search_type')
         return searchType.params
+
+
+  # Internal path
+  showInternal: =>
+    @model.get('data_source').set 'source_type', 'internal'
+    @updateValidSourceTools()
+    @render()
+
+  onSelectInternalSource: (e) =>
+    @model.get('data_source').set
+      'source': $(e.currentTarget).val()
+      'search_type': null
 
   updateValidSourceTools: =>
     @intSources = []
