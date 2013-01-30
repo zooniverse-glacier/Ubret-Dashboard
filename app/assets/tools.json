@@ -43,6 +43,6 @@
       "tools": ["Histogram", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table"],
       "preload": ["SubjectViewer", "Mapper"]
     },
-    "default": ["Histogram", "Scatterplot", "Mapper", "Spectra", "Statistics", "SubjectViewer"]
+    "default": ["Histogram", "Scatterplot", "Mapper", "Spectra", "Statistics", "SubjectViewer", "Table"]
   }
 }
