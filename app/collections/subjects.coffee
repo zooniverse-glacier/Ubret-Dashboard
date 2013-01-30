@@ -1,3 +1,5 @@
+Manager = require 'modules/manager'
+
 class SubjectCollection extends Backbone.Collection
   model: require 'models/subject' 
   sync: require 'sync'

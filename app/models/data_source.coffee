@@ -5,7 +5,7 @@ class DataSource extends Backbone.AssociatedModel
   manager: require 'modules/manager'
   subjects: require 'collections/subjects'
 
-  nonDisplayKeys: ['id', 'uid', 'image']
+  nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
 
   initialize: (opts) ->
     params = opts.params || []

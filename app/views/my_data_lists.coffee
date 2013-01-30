@@ -1,21 +1,32 @@
 BaseView = require 'views/base_view'
+Manager = require 'modules/manager'
+Subjects = require 'collections/subjects'
+User = require 'user'
+Params = require 'collections/params'
 
 class MyDataLists extends BaseView
+  noProjectTemplate: require './templates/no_project_template'
   events:
     'click button' : 'handleEvent'
 
-  initialize: ->
-    @collection = new @collectionClass
-    @collection.on 'add reset', @render
-
   loadCollection: =>
-    @collection.fetch()
+    if Manager.get('project')
+      @collection = new Subjects [],
+        url: Manager.get('sources').get(2).get('url')
+        params: new Params [{key: 'type', val: @type}, 
+                          {key: 'limit', val: 10},
+                          {key: 'project', val: Manager.get('project')}]
+      @collection.on 'add reset', @render
+      @collection.fetch()
 
   render: =>
-    @$el.html @template()
-    if not @collection.isEmpty()
+    
+    if not _.isUndefined @collection
+      @$el.html @template()
       @collection.each (model) =>
         @$('.recents').append @templateItem(model.toJSON())
+    else
+      @$el.html @noProjectTemplate()
     @
 
   handleEvent: (e) =>

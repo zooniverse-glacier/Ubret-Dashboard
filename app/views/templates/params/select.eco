@@ -4,8 +4,8 @@
   <div class="column one-quarter"><%- label %></div>
   <div class="column three-quarters">
     <select data-cid="<%- @.cid %>">
-      <% for key, value of @get('choices'): %>
-        <option value="<%- key %>"><%- value %></option>
+      <% for opt in @get('options'): %>
+        <option value="<%- opt %>"><%- opt %></option>
       <% end %>
     </select>
   </div>

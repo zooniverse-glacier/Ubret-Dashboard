@@ -4,6 +4,7 @@ InputView = require 'views/params/input'
 RangeView = require 'views/params/range'
 SelectView = require 'views/params/select'
 EmptyView = require 'views/params/empty'
+HiddenView = require 'views/params/hidden'
 
 class Params extends BaseView
   initialize: ->
@@ -16,6 +17,7 @@ class Params extends BaseView
         when 'Input' then paramView = new InputView({model: param})
         when 'Range' then paramView = new RangeView({model: param})
         when 'Select' then paramView = new SelectView({model: param})
+        when 'Hidden' then paramView = new HiddenView({model: param})
         else
           paramView = new EmptyView({model: param}) # Sort of temporary
 
