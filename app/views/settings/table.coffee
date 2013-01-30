@@ -16,12 +16,10 @@ class TablePageSettings extends BaseView
     @
 
   nextPage: =>
-    @page = @page + 1
-    @model.get('settings').set 'currentPage', @page
+    @model.tool.trigger 'next-page'
 
   prevPage: =>
-    @page = @page - 1
-    @model.get('settings').set 'currentPage', @page
+    @model.too.trigger 'prev-page'
 
 module.exports = TablePageSettings
 

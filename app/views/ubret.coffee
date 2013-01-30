@@ -1,7 +1,7 @@
 BaseView = require 'views/base_view'
 
 class UbretTool extends BaseView
-  nonDisplayKeys: ['id', 'uid', 'image']
+  nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
   noDataTemplate: require './templates/no_data'
 
   initialize: ->
@@ -59,7 +59,6 @@ class UbretTool extends BaseView
       @$el.html @noDataTemplate()
     @
 
-
   # From Ubret tool to @model
   selectElements: (ids) =>
     if _.difference(ids, @model.get('selected_ids')).length
@@ -72,15 +71,5 @@ class UbretTool extends BaseView
   assignSetting: (setting) =>
     @model.get('settings').set setting, {silent: true}
     @model.save()
-
-  # From @model to Ubret tool
-  toolSelectElements: =>
-    @model.tool.selectIds(@model.get('selected_ids').slice()).start()
-
-  toolSelectKey: =>
-    @model.tool.selectKeys(@model.get('selected_keys')).start()
-
-  passSetting: =>
-    @model.tool.settings(@model.get('settings').changed).start()
 
 module.exports = UbretTool
