@@ -16,26 +16,26 @@ class Tools extends Backbone.Collection
     maxZindexTool = @max((tool) -> tool.get('zindex'))
     unless tool.cid is maxZindexTool.cid then tool.func({zindex: maxZindexTool.get('zindex') + 1})
 
-  loadTools: =>
-    internalTools = @filter (tool) =>
+  loadTools: ->
+    internalTools = @filter (tool) ->
       tool.get('data_source').isInternal() and tool.get('data_source').isReady()
 
-    externalTools = @filter (tool) =>
+    externalTools = @filter (tool) ->
       tool.get('data_source').isExternal()
 
     _(internalTools).each (tool) =>
-      source = @find (collection_tool) =>
+      source = @find (collection_tool) ->
         collection_tool.get('channel') is tool.get('data_source').get('source')
         
       source.once 'started', ->
         tool.get('data_source').fetchData()
 
-    _(externalTools).each (tool) =>
+    _(externalTools).each (tool) ->
       tool.get('data_source').fetchData()
 
-  setDataSource: (dataSource) =>
+  setDataSource: (dataSource) ->
     if dataSource.isInternal()
-      source = @find (tool) =>
+      source = @find (tool) ->
         tool.get('channel') is dataSource.get('source')
       dataSource.set 'source', source
 

@@ -2,23 +2,37 @@ Tools = require 'collections/tools'
 
 describe 'Tools', ->
   beforeEach ->
-    @tools = new Tools [
-      { top: 1, left: 1, type: 'table', name: 'awesome-table', channel: 'table-1', zindex: 1},
-      { top: 1, left: 1, type: 'table', name: 'awesome-table', channel: 'table-2', zindex: 2},
-      { top: 1, left: 1, type: 'table', name: 'awesome-table', channel: 'table-3', zindex: 3},
-    ]
+    @tools = new Tools
+    @tools.add {type: 'table'}
+    @tools.add {type: 'table'}
+    @tools.add {type: 'table'}
 
   it 'should be instantiable', ->
     expect(@tools).to.be.defined
 
+  it 'should load tools correctly', ->
+    expect(@tools.length).to.equal(3)
+
   describe '#focus', ->
     beforeEach ->
       @tool = @tools.at(0)
+      @highestTool = @tools.at(2)
       @saveSpy = sinon.spy(@tool, 'save')
+      @setSpy = sinon.spy(@tool, 'set')
 
-    it 'should set the tool\'s zindex', ->
+    it 'should set the tool\'s zindex if the tool does not have the highest zindex ', ->
       @tools.focus(@tool)
-      expect(@tool.attributes).to.have.property('zindex', 4)
+      expect(@tool.attributes).to.have.property('zindex')
+        .that.is.a('number')
+        .and.is.equal(4)
+
+    it 'should not set the tool\'s zindex if the tool already has the highest zindex', ->
+      @tools.focus(@highestTool)
+      expect(@highestTool.attributes).to.have.property('zindex')
+        .that.is.a('number')
+        .and.is.equal(3)
+      expect(@saveSpy).to.not.have.been.called
+      expect(@setSpy).to.not.have.been.called
 
     it 'should save the tool', ->
       @tools.focus(@tool)

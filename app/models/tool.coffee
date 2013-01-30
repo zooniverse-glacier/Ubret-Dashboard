@@ -17,7 +17,6 @@ class Tool extends Backbone.AssociatedModel
     settings: {}
     settings_active: true
     width: 640
-    zindex: 1
 
   initialize: ->
     unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
