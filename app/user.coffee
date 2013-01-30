@@ -83,6 +83,4 @@ class User extends Backbone.Events
         withCredentials: true
       success: (response) => cb response
 
-
-
 module.exports = User

@@ -27,6 +27,9 @@ ToolLoader = (dashboard, cb) ->
     else
       Manager.set 'tools', tools.projects[project]
 
+    if tools.projects[project].hasOwnProperty 'defaults'
+      Manager.set 'default_toolset', tools.projects[project].defaults
+
     console.log 'tools', Manager.get 'tools'
     console.log 'project', Manager.get 'project'
 

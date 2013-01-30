@@ -3,6 +3,7 @@ Manager = require 'modules/manager'
 Subjects = require 'collections/subjects'
 User = require 'user'
 Params = require 'collections/params'
+Dashboard = require 'models/dashboard'
 
 class MyDataLists extends BaseView
   noProjectTemplate: require './templates/no_project_template'
@@ -30,8 +31,13 @@ class MyDataLists extends BaseView
     @
 
   handleEvent: (e) =>
+    @loadDashboard()
 
+  loadDashboard: =>
+    dashboard = new Dashboard
+      name: "New Dashboard from #{@type}"
+      project: Manager.get('project')
 
-
+    console.log dashboard
 
 module.exports = MyDataLists

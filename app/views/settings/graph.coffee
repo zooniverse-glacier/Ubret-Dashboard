@@ -23,6 +23,8 @@ class GraphSettings extends BaseView
   # Events
   onChangeAxis: (e) =>
     axis = "axis#{e.target.dataset.axis}"
-    @model.get('settings').set(axis, e.target.value)
+    set = {}
+    set[axis] = e.target.value
+    @model.tool.settings(set).start()
   
 module.exports = GraphSettings
