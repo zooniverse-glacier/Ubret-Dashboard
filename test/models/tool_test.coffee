@@ -1,8 +1,12 @@
+Tools = require 'collections/tools'
 Tool = require 'models/tool'
 
 describe 'Tool', ->
   beforeEach ->
-    @tool = new Tool
+    @tools = new Tools
+    @tools.add {tool_type: 'table'}
+
+    @tool = @tools.at(0)
 
   it 'should be instantiable', ->
     expect(@tool).to.be.defined

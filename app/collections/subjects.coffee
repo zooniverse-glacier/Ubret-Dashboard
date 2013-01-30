@@ -5,11 +5,14 @@ class SubjectCollection extends Backbone.Collection
   sync: require 'sync'
 
   initialize: (models=[], options={}) ->
-    @base = options.url || '/etc'
+    throw new Error('must provide a url') unless options.url
 
+    @base = options.url
     @params = new Object
-    options.params.each (param) =>
-      @params[param.get('key')] = param.get('val')
+
+    if options.params? and options.params.length
+      options.params.each (param) =>
+        @params[param.get('key')] = param.get('val')
 
   url: =>
     @base + '?' + @processParams()

@@ -26,7 +26,7 @@ class DataSource extends Backbone.AssociatedModel
     else if @isInternal()
       @fetchInt()
     else
-      throw 'unknown source type'
+      throw new Error('unknown source type')
 
   fetchExt: =>
     url = @manager.get('sources').get(@get('source')).get('url')

@@ -17,7 +17,9 @@ exports.config =
           'test/vendor/scripts/chai.js',
           'test/vendor/scripts/sinon-1.5.2.js',
           'test/vendor/scripts/sinon-chai-2.1.2.js',
-          'test/vendor/scripts/chai-jquery.js'
+          'test/vendor/scripts/chai-jquery.js',
+          'test/vendor/scripts/backbone-0.9.10.js',
+          'test/vendor/scripts/backbone-mediator.js'
         ]
 
     stylesheets:
