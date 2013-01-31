@@ -9,7 +9,7 @@ class Router extends Backbone.Router
     'dashboards/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
-    'project/:project/object/:objectId': 'loadObject'
+    'project/:project/:name/:tools/:collection/:params': 'loadObjects'
 
   index: ->
     if User.current?
@@ -33,10 +33,12 @@ class Router extends Backbone.Router
     Manager.set 'project', project
     Backbone.Mediator.publish 'router:dashboardCreate'
 
-  loadObject: (project, objectId = null) =>
+  loadObjects: (project, name, tools, collection, params) =>
     Manager.set 'project', project
-    Manager.set 'object', objectId
-    Backbone.Mediator.publish 'router:dashboardCreate'
-
+    Manager.set 'new-dashboard-name', name.split('-')
+    Manager.set 'project-tools', tools.split('-')
+    Manager.set 'data-source', collection.split('-')
+    Manager.set 'params', params.split('-')
+    Backbone.Mediator.publish 'router:dashboardCreateFromParams'
 
 module.exports = Router

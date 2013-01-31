@@ -1,12 +1,15 @@
 AppHeader = require 'views/app_header'
 BaseView = require 'views/base_view'
-DashboardModel = require 'models/dashboard'
 DashboardView = require 'views/dashboard'
-Manager = require 'modules/manager'
 SavedList = require 'views/saved_list'
 MyData = require 'views/my_data'
-ToolLoader = require 'modules/tool_loader'
 User = require 'user'
+
+Manager = require 'modules/manager'
+ToolLoader = require 'modules/tool_loader'
+
+DashboardModel = require 'models/dashboard'
+Params = require 'collections/params'
 
 class AppView extends BaseView
   template: require './views/templates/layout/app'
@@ -15,6 +18,7 @@ class AppView extends BaseView
     'dashboard:create': 'createDashboard'
     'dashboard:fork' : 'forkDashboard'
     'router:dashboardCreate': 'createDashboard'
+    'router:dashboardCreateFromParams' : 'createDashboardFromParams'
     'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
     'router:index': 'createDashboardView'
@@ -40,11 +44,42 @@ class AppView extends BaseView
       @dashboardModel = new DashboardModel response
       ToolLoader @dashboardModel, @createDashboardView
 
-  createDashboard: (model) =>
-    @dashboardModel = model || new DashboardModel
+  createDashboard: =>
+    @dashboardModel = new DashboardModel
     @dashboardModel.save().done =>
       ToolLoader @dashboardModel, @createDashboardView
     return @dashboardModel
+
+  createDashboardFromParams: =>
+    # this is still pretty ugly
+    @dashboardModel = new DashboardModel
+      name: Manager.get('new-dashboard-name').join(' ')
+      project: Manager.get('project')
+
+    @dashboardModel.save().done =>
+      @dashboardModel.on 'sync:tools', (tool) =>
+        params = new Array
+        for param in Manager.get('params')
+          [key, value...] = param.split('_')
+          params.push {key: key, val: value.join('_')}
+
+        dataSource =
+          source: parseInt(Manager.get('data-source')[0])
+          search_type: parseInt(Manager.get('data-source')[1])
+          source_type: 'external'
+          params: new Params params
+        
+        tool.get('data_source').save dataSource
+        Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
+        
+      tools = new Array
+      for toolType, index in Manager.get('project-tools')
+        tools.push 
+          tool_type: toolType
+          name: "#{toolType}-#{index}"
+          channel: "#{toolType}-#{index}"
+      
+      @dashboardModel.get('tools').add tools
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
@@ -61,18 +96,6 @@ class AppView extends BaseView
     Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: false}
     @dashboardModel.get('tools').loadTools()
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
-
-    # @dashboardModel.tools.add
-    #   dashboard_id: @dashboardModel.get 'id'
-    #   type: 'SubjectViewer'
-    #   onInit: (tool) ->
-    #     tool.dataSource.set 'source', '4'
-    #     tool.dataSource.set 'type', 'external'
-    #     tool.dataSource.params.add [
-    #       {key: 'project', value: Manager.get 'project'}
-    #       {key: 'id', value: Manager.get 'object'}
-    #     ]
-    #     tool.dataSource.fetchData()
 
   showSaved: =>
     unless @savedListView? then @savedListView = new SavedList

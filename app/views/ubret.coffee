@@ -20,7 +20,6 @@ class UbretTool extends BaseView
       # Assume @model.tool has been created.
       @model.tool.on 'update-setting', @assignSetting
 
-    console.log @model.get('tool_type')
     @model.tool = new Ubret[@model.get('tool_type')]('#' + @model.get('channel'))
 
     @model.tool.on 'keys-received', (keys) =>

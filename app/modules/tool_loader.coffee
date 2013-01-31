@@ -27,12 +27,6 @@ ToolLoader = (dashboard, cb) ->
     else
       Manager.set 'tools', tools.projects[project]
 
-    if tools.projects[project].hasOwnProperty 'defaults'
-      Manager.set 'default_toolset', tools.projects[project].defaults
-
-    console.log 'tools', Manager.get 'tools'
-    console.log 'project', Manager.get 'project'
-
     # A highly inefficient way of resolving dependencies.
     # Not recursive yet either (dependency cannot have a dependency).
     tempScripts = []
