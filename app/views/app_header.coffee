@@ -40,9 +40,7 @@ class AppHeader extends BaseView
     @
 
   isForkable: =>
-    location.hash.split('/')[1] is 'dashboards' and
-      _.isUndefined(User.current?.dashboards?.find (dashboard) ->
-        dashboard.id is parseInt(location.hash.split('/')[2]))
+    location.hash.split('/')[1] is 'dashboards'
 
   onViewCurrent: =>
     @active = 'current'
