@@ -7,11 +7,7 @@ ToolLoader = (dashboard, cb) ->
     Also not really the location I want to put this in the end.
     ###
     isScriptNotLoaded = (script) ->
-      if _.isUndefined window[script.name]
-        # Not on window. Maybe an Ubret script.
-        if _.isUndefined Ubret[script.name]
-          return true
-      return false
+      not (_.isUndefined window[script.name] or _.isUndefined Ubret[script.name])
 
     project = dashboard.get('project')
     unless project and tools.projects.hasOwnProperty project

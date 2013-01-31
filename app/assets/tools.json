@@ -7,7 +7,7 @@
       "source": "vendor/leaflet.js"
     },
     "Histogram": {
-      "dependencies": ["Graph","d3"],
+      "dependencies": ["d3", "Graph"],
       "source": "ubret/ubret/histogram.js"
     },
     "Graph": {
@@ -19,7 +19,7 @@
       "source": "ubret/ubret/map.js"
     },
     "Scatterplot": {
-      "dependencies": ["d3"],
+      "dependencies": ["d3", "Graph"],
       "source": "ubret/ubret/scatterplot.js"
     },
     "SubjectViewer": {

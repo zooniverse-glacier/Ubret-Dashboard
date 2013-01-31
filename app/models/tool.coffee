@@ -11,6 +11,9 @@ class Tool extends Backbone.AssociatedModel
     relatedModel: require 'models/settings'
   ]
 
+  url: ->
+    "/dashboards/#{@get('dashboard_id')}/tools/#{@id}"
+
   defaults:
     data_source: {}
     height: 480
@@ -19,10 +22,11 @@ class Tool extends Backbone.AssociatedModel
     width: 640
 
   initialize: ->
-    unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
-    unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
+    if @get('saveable')
+      unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
+      unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
 
-    if @isNew()
+    if @isNew() and @get('saveable')
       @generatePosition()
       @collection.focus @, false
       @save()

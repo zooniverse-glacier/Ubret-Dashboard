@@ -7,6 +7,7 @@ class Router extends Backbone.Router
     '': 'index'
     'my_dashboards': 'savedDashboards'
     'dashboards/:id': 'retrieveDashboard'
+    'dashboards/:dash_id/tools/:tool_id' : 'showTool'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
     'project/:project/:name/:tools/:collection/:params': 'loadObjects'
@@ -35,10 +36,13 @@ class Router extends Backbone.Router
 
   loadObjects: (project, name, tools, collection, params) =>
     Manager.set 'project', project
-    Manager.set 'new-dashboard-name', name.split('-')
-    Manager.set 'project-tools', tools.split('-')
-    Manager.set 'data-source', collection.split('-')
-    Manager.set 'params', params.split('-')
-    Backbone.Mediator.publish 'router:dashboardCreateFromParams'
+    name = name.split('-')
+    tools = tools.split('-')
+    collection = collection.split('-')
+    params = params.split('-')
+    Backbone.Mediator.publish 'router:dashboardCreateFromParams', name, tools, collection, params
+
+  showTool: (dash_id, tool_id) ->
+    Backbone.Mediator.publish 'router:showTool', dash_id, tool_id
 
 module.exports = Router

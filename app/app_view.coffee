@@ -50,31 +50,31 @@ class AppView extends BaseView
       ToolLoader @dashboardModel, @createDashboardView
     return @dashboardModel
 
-  createDashboardFromParams: =>
+  createDashboardFromParams: (name, tools, collection, params) =>
     # this is still pretty ugly
     @dashboardModel = new DashboardModel
-      name: Manager.get('new-dashboard-name').join(' ')
+      name: name.join(' ')
       project: Manager.get('project')
 
     @dashboardModel.save().done =>
       @dashboardModel.on 'sync:tools', (tool) =>
-        params = new Array
-        for param in Manager.get('params')
+        paramsFromatted = new Array
+        for param in params
           [key, value...] = param.split('_')
-          params.push {key: key, val: value.join('_')}
+          paramsFormatted.push {key: key, val: value.join('_')}
 
         dataSource =
-          source: parseInt(Manager.get('data-source')[0])
-          search_type: parseInt(Manager.get('data-source')[1])
+          source: parseInt(collection[0])
+          search_type: parseInt(collection[1])
           source_type: 'external'
-          params: new Params params
+          params: new Params paramsFormatted
         
         tool.get('data_source').save dataSource
         Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
         
-      tools = new Array
-      for toolType, index in Manager.get('project-tools')
-        tools.push 
+      toolsFormatted = new Array
+      for toolType, index in tools
+        toolsFormmated.push 
           tool_type: toolType
           name: "#{toolType}-#{index}"
           channel: "#{toolType}-#{index}"
@@ -112,5 +112,5 @@ class AppView extends BaseView
     @myDataView.loadCollections()
     @appFocusView = @myDataView
     @render()
-  
+
 module.exports = AppView
