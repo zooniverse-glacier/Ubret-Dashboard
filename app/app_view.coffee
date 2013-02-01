@@ -58,7 +58,7 @@ class AppView extends BaseView
 
     @dashboardModel.save().done =>
       @dashboardModel.on 'sync:tools', (tool) =>
-        paramsFromatted = new Array
+        paramsFormatted = new Array
         for param in params
           [key, value...] = param.split('_')
           paramsFormatted.push {key: key, val: value.join('_')}
