@@ -21,11 +21,12 @@ class MapSettings extends BaseView
 
   render: =>
     curSpectrum = @model.get('settings').get('spectrum')
+    console.log curSpectrum
     @$el.html @template({curSpectrum: curSpectrum, spectra: @spectra})
     @
 
   changeSpectrum: (e) =>
-    spectrum = e.target.value
-    @model.get('settings').set  'spectrum', spectrum
+    spectrum = e.currentTarget.value
+    @model.tool.settings({spectrum: spectrum}).start()
 
 module.exports = MapSettings

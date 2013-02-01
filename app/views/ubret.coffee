@@ -31,7 +31,6 @@ class UbretTool extends BaseView
     # PSA: This entire method is a bit of a hack.
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
-    console.log @el
 
     if @model.get('data_source').isReady()
       @$('.no-data').remove()

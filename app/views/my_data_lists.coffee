@@ -10,7 +10,7 @@ class MyDataLists extends BaseView
     'click button' : 'handleEvent'
 
   loadCollection: =>
-    if Manager.get('project')
+    if Manager.get('project') or (Manager.get('project') is 'default')
       @collection = new Subjects [],
         url: Manager.get('sources').get(2).get('url')
         params: new Params [{key: 'type', val: @type}, 
