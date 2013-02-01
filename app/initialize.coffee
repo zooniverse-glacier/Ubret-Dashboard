@@ -14,8 +14,5 @@ $(document).on 'ready', ->
   User.currentUser().always =>
     router = new Router
     Manager.set 'router', router
-    if location.hash.split('/')[3] is 'tools'
-      toolView = new ToolView({el: $('#app')})
-    else
-      appView = new AppView({el: $('#app')})
+    appView = new AppView({el: $('#app')})
     Backbone.history.start()

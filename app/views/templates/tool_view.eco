@@ -1,4 +1,0 @@
-<div class="tool-view">
-  <a href="http://tools.zooniverse.org/#/dashboard/<%- @dashboard_id %>">View in the Dashboard</a>
-  <div class="tool-window"></div>
-</div>

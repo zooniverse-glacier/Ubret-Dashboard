@@ -74,7 +74,7 @@ class AppView extends BaseView
         
       toolsFormatted = new Array
       for toolType, index in tools
-        toolsFormmated.push 
+        toolsFormatted.push 
           tool_type: toolType
           name: "#{toolType}-#{index}"
           channel: "#{toolType}-#{index}"
