@@ -73,13 +73,15 @@ class AppView extends BaseView
         Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
         
       toolsFormatted = new Array
+      console.log tools
       for toolType, index in tools
-        toolsFormatted.push 
+        toolFormatted = 
           tool_type: toolType
           name: "#{toolType}-#{index}"
           channel: "#{toolType}-#{index}"
+        toolsFormatted.push toolFormatted
       
-      @dashboardModel.get('tools').add tools
+      @dashboardModel.get('tools').add toolsFormatted
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
