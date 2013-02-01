@@ -1,5 +1,4 @@
 AppView = require 'app_view'
-ToolView = require 'tool_view'
 Manager = require 'modules/manager'
 Router = require 'router'
 Sources = require 'collections/sources'
