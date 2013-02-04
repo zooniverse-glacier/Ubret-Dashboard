@@ -2,18 +2,11 @@ Manager = require 'modules/manager'
 
 ToolLoader = (dashboard, cb) ->
   $.getJSON '/tools.json', (tools) =>
-    ###
-    Long-form way of checking if scripts are loaded.
-    Also not really the location I want to put this in the end.
-    ###
-    isScriptNotLoaded = (script) ->
-      not (_.isUndefined window[script.name] or _.isUndefined Ubret[script.name])
 
     project = dashboard.get('project')
     unless project and tools.projects.hasOwnProperty project
       project = 'default'
 
-    # Set current project.
     Manager.set 'project', project
     
     # Set valid tools for later retrieval.
@@ -23,37 +16,6 @@ ToolLoader = (dashboard, cb) ->
     else
       Manager.set 'tools', tools.projects[project]
 
-    # A highly inefficient way of resolving dependencies.
-    # Not recursive yet either (dependency cannot have a dependency).
-    tempScripts = []
-    for tool in Manager.get 'tools'
-      # Does tool have any dependencies
-      if tools.scripts[tool].hasOwnProperty 'dependencies'
-        # Add dependency to loading array
-        for dependency in tools.scripts[tool].dependencies
-          tempScripts.push
-            name: dependency
-            source: tools.scripts[dependency].source
-      # Add script as well.
-      tempScripts.push
-        name: tool
-        source: tools.scripts[tool].source
-
-    uniqueScripts = _.uniq tempScripts, (script) -> script.name
-    funcList = []
-    for script in uniqueScripts
-      do (script) ->
-        funcList.push (cb) ->
-          yepnope
-            test: isScriptNotLoaded script
-            yep: script.source
-            complete: -> cb null, true
-
-    async.parallel funcList, (err, results) =>
-      if err
-        console.log 'Error loading tools.', err
-        return
-      else
-        cb()
+    Ubret.Loader Manager.get('tools'), cb
 
 module.exports = ToolLoader
