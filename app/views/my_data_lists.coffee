@@ -20,10 +20,11 @@ class MyDataLists extends BaseView
       @collection.fetch()
 
   render: =>
+    console.log @collection
     if not _.isUndefined @collection
       @$el.html @template()
       @collection.each (model) =>
-        @$('.recents').append @templateItem(model.toJSON())
+        @$('.my-data-list').append @templateItem(model.toJSON())
     else
       @$el.html @noProjectTemplate()
     @
