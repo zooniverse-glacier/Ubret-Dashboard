@@ -2,7 +2,7 @@ BaseView = require 'views/base_view'
 
 class TablePageSettings extends BaseView
   className: 'table-settings'
-  template: require 'views/templates/settings/table_settings'
+  template: require 'views/templates/settings/table'
 
   events:
     'click button.next' : 'nextPage'

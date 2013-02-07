@@ -3,7 +3,7 @@ BaseView = require 'views/base_view'
 class KeySettings extends BaseView
   tagName: 'div'
   className: 'key-settings'
-  template: require 'views/templates/settings/key_settings'
+  template: require 'views/templates/settings/key'
 
   events:
     'change .select-key' : 'onSelectKey'

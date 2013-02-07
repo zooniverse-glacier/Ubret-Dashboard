@@ -7,7 +7,7 @@ SearchTypeView = require 'views/search_type'
 class DataSettings extends BaseView
   tagName: 'div'
   className: 'data-settings'
-  template: require 'views/templates/settings/data_settings'
+  template: require 'views/templates/settings/data'
 
   events:
     'click .type-select .external button': 'showExternal'

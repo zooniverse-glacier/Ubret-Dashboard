@@ -3,7 +3,7 @@ BaseView = require 'views/base_view'
 class GraphSettings extends BaseView
   tagName: 'div'
   className: 'graph-settings'
-  template: require 'views/templates/settings/graph_settings'
+  template: require 'views/templates/settings/graph'
 
   events:
     'change .axis': 'onChangeAxis'
