@@ -15,7 +15,8 @@ class MyDataLists extends BaseView
         url: Manager.get('sources').get(2).get('url')
         params: new Params [{key: 'type', val: @type}, 
                             {key: 'limit', val: 10},
-                            {key: 'project', val: Manager.get('project')}]
+                            {key: 'project', val: Manager.get('project')},
+                            {key: 'api', val: if location.port < 1024 then 'api' else 'dev'}]
       @collection.on 'add reset', @render
       @collection.fetch()
 
