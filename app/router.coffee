@@ -9,7 +9,7 @@ class Router extends Backbone.Router
     'dashboards/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
-    'project/:project/:object(/:setting_key/:setting_value)' : 'loadObject'
+    'project/:project/:object(/:setting_keys/:setting_values)' : 'loadObject'
     'project/:project/:name/:tools/:collection/:params': 'loadObjects'
 
   index: ->
@@ -35,10 +35,14 @@ class Router extends Backbone.Router
     Manager.set 'project', project
     Backbone.Mediator.publish 'router:dashboardCreate'
 
-  loadObject: (project, object, settingKey, settingValue) =>
+  loadObject: (project, object, settingKeys, settingValues) =>
     Manager.set 'project', project
     name = "Dashboard with #{object}"
-    Backbone.Mediator.publish 'router:dashboardCreateFromZooid', name, object
+    settings = new Object
+    keys = settingKeys.split('-')
+    values = settingValues.split('-')
+    settings[key] = values[index] for key, index in keys
+    Backbone.Mediator.publish 'router:dashboardCreateFromZooid', name, object, settings
 
   loadObjects: (project, name, tools, collection, params) =>
     Manager.set 'project', project
