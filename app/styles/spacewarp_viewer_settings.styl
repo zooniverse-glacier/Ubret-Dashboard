@@ -1,0 +1,65 @@
+
+.tool-settings
+  .spacewarp-viewer
+    .bands
+      position relative
+      margin-bottom 20px
+      
+      input[type='radio']
+        display none
+        &:checked + label
+          box-shadow 0 100px 0 rgba($black, 0.1) inset, 0 1px 3px rgba($black, 0.25) inset
+          
+      label
+        @extend #standard-button
+        display inline-block
+        cursor pointer
+        
+    .parameters
+      display none
+      
+      .subtitle
+        position relative
+        
+        p
+          font-size 16px
+          text-shadow 0 1px 0 $gray
+          font-weight 200
+          
+      .stretchfn
+        margin-bottom 20px
+        
+        input[type='radio']
+          display none
+          &:checked + label
+            box-shadow 0 100px 0 rgba($black, 0.1) inset, 0 2px 3px rgba($black, 0.25) inset
+            
+        label
+          @extend #standard-button
+          display inline-block
+          font-size 11px
+          text-transform lowercase
+          cursor pointer
+          
+      input[type='range']
+        clear both
+        width 401px
+        display block
+        margin-bottom 10px
+        
+        // Edit display to show parameter value on slide
+        &:active + .parameter
+          display none
+          
+    .parameter
+      display none
+      position absolute
+      width 70px
+      height 25px
+      background $gray-light
+      opacity 0.8
+      border-radius 4px
+      font-size 11px
+      text-align center
+      padding-top 8px
+      font-weight 700

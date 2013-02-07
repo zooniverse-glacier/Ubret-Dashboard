@@ -23,6 +23,7 @@ exports.config =
         ]
 
     stylesheets:
+      defaultExtension: 'styl'
       joinTo:
         'stylesheets/app.css': /^app\/styles\/index.styl/
         'stylesheets/vendor.css' : /^vendor/

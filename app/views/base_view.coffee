@@ -5,6 +5,7 @@ class BaseView extends Backbone.View
   view_opts: {}
 
   assign: (selector, view) =>
+    
     if _.isObject(selector)
       selectors = selector
     else
