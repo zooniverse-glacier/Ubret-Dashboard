@@ -17,11 +17,11 @@ class AppView extends BaseView
   subscriptions:
     'dashboard:create': 'createDashboard'
     'dashboard:fork' : 'forkDashboard'
+    'router:index': 'render'
     'router:dashboardCreate': 'createDashboard'
     'router:dashboardCreateFromParams' : 'createDashboardFromParams'
     'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
-    'router:index': 'createDashboardView'
     'router:myData': 'showMyData'
 
   initialize: ->
@@ -31,12 +31,16 @@ class AppView extends BaseView
     @dashboardView = new DashboardView
 
     # Main area views. Switched out when appropriate.
-    @appFocusView = @dashboardView
+    @appFocusView = null
 
   render: =>
-    @assign
-      '.app-header': @appHeader
-      '.main-focus': @appFocusView
+    unless @appFocusView?
+      @assign
+        '.app-header': @appHeader
+    else
+      @assign
+        '.app-header': @appHeader
+        '.main-focus': @appFocusView
     @
 
   forkDashboard: =>
@@ -94,7 +98,6 @@ class AppView extends BaseView
   createDashboardView: =>
     @appFocusView = @dashboardView
     @render()
-
     Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: false}
     @dashboardModel.get('tools').loadTools()
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel

@@ -2,7 +2,6 @@ Manager = require 'modules/manager'
 
 ToolLoader = (dashboard, cb) ->
   $.getJSON '/tools.json', (tools) =>
-
     project = dashboard.get('project')
     unless project and tools.projects.hasOwnProperty project
       project = 'default'

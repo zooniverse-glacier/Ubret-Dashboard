@@ -30,6 +30,7 @@ class Router extends Backbone.Router
       Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->
+    console.log 'loadProject'
     Manager.set 'project', project
     Backbone.Mediator.publish 'router:dashboardCreate'
 
