@@ -57,7 +57,7 @@ class AppView extends BaseView
       ToolLoader @dashboardModel, @createDashboardView
     return @dashboardModel
 
-  createDashboardFromZooid: (name, zooid) ->
+  createDashboardFromZooid: (name, zooid, settings) ->
     @dashboardModel = new DashboardModel
       name: name
       project: Manager.get('project')
@@ -81,6 +81,7 @@ class AppView extends BaseView
           tool_type: toolType
           name: "#{toolType}-#{index}"
           channel: "#{toolType}-#{index}"
+        tool.settings = settings unless _.isUndefined(settings)
         tools.push tool
       @dashboardModel.get('tools').add tools
 
