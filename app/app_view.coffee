@@ -65,7 +65,9 @@ class AppView extends BaseView
     @dashboardModel.save().done =>
       @dashboardModel.on 'sync:tools', (tool) =>
         params = new Params [ {key: 'project', val: Manager.get('project')},
-                              {key: 'id', val: zooid} ]
+                              {key: 'id', val: zooid},
+                              {key: 'api', val: if location.port < 1024 then 'api' else 'dev'}]
+
         dataSource = 
           source: 2
           search_type: 1
