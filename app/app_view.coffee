@@ -11,6 +11,8 @@ ToolLoader = require 'modules/tool_loader'
 DashboardModel = require 'models/dashboard'
 Params = require 'collections/params'
 
+Toolsets = require 'toolset_config'
+
 class AppView extends BaseView
   template: require './views/templates/layout/app'
 
@@ -20,6 +22,7 @@ class AppView extends BaseView
     'router:index': 'render'
     'router:dashboardCreate': 'createDashboard'
     'router:dashboardCreateFromParams' : 'createDashboardFromParams'
+    'router:dashboardCreateFromZooid' : 'createDashboardFromZooid'
     'router:dashboardRetrieve': 'loadDashboard'
     'router:viewSavedDashboards': 'showSaved'
     'router:myData': 'showMyData'
@@ -54,6 +57,33 @@ class AppView extends BaseView
       ToolLoader @dashboardModel, @createDashboardView
     return @dashboardModel
 
+  createDashboardFromZooid: (name, zooid) ->
+    @dashboardModel = new DashboardModel
+      name: name
+      project: Manager.get('project')
+
+    @dashboardModel.save().done =>
+      @dashboardModel.on 'sync:tools', (tool) =>
+        params = new Params [ {key: 'project', val: Manager.get('project')},
+                              {key: 'id', val: zooid} ]
+        dataSource = 
+          source: 2
+          search_type: 1
+          source_type: 'external'
+          params: params
+
+        tool.get('data_source').save dataSource
+        Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
+
+      tools = new Array
+      for toolType, index in Toolsets.projects[Manager.get('project')].defaults
+        tool =
+          tool_type: toolType
+          name: "#{toolType}-#{index}"
+          channel: "#{toolType}-#{index}"
+        tools.push tool
+      @dashboardModel.get('tools').add tools
+
   createDashboardFromParams: (name, tools, collection, params) =>
     # this is still pretty ugly
     @dashboardModel = new DashboardModel
@@ -84,7 +114,6 @@ class AppView extends BaseView
           name: "#{toolType}-#{index}"
           channel: "#{toolType}-#{index}"
         toolsFormatted.push toolFormatted
-      
       @dashboardModel.get('tools').add toolsFormatted
 
   loadDashboard: (id) =>
