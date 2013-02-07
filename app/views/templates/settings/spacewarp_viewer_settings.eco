@@ -1,0 +1,26 @@
+<h4>Controls</h4>
+
+<div class='bands'>
+  <input type='radio' name='band' id='gri' />
+  <label for='gri' data-band='gri'>g-r-i</label>
+
+  <input type='radio' name='band' id='u' />
+  <label for='u' data-band='u'>u</label>
+
+  <input type='radio' name='band' id='g' />
+  <label for='g' data-band='g'>g</label>
+
+  <input type='radio' name='band' id='r' />
+  <label for='r' data-band='r'>r</label>
+
+  <input type='radio' name='band' id='i' />
+  <label for='i' data-band='i'>i</label>
+
+  <input type='radio' name='band' id='z' />
+  <label for='z' data-band='z'>z</label>
+  
+  <span class='help'>?</span>
+  <div class='info'>
+    Each image from the CFHTLS has been viewed in five wavelengths (u, g, r, i, z).  Astronomical objects look different across these wavelengths.  Use these buttons to view the image in each of these wavelengths.
+  </div>
+</div>

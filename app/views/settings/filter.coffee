@@ -3,7 +3,7 @@ BaseView = require 'views/base_view'
 class FilterSettings extends BaseView
   tagName: 'div'
   className: 'filter-settings'
-  template: require './templates/filter_settings'
+  template: require './templates/settings/filter_settings'
 
   events: 
     'click button[name="filter"]' : 'addFilter'

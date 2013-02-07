@@ -15,6 +15,7 @@ class Settings extends BaseView
       return
 
     @dataSettings = new DataSettings { model: @model } if @model?
+    
     switch @model?.get('tool_type')
       when 'Histogram', 'Scatterplot'
         ToolSettings = require 'views/settings/graph'
@@ -26,9 +27,11 @@ class Settings extends BaseView
         ToolSettings = require 'views/settings/map'
       when 'Table'
         ToolSettings = require 'views/settings/table'
+      when 'SpacewarpViewer'
+        ToolSettings = require 'views/settings/spacewarp_viewer'
       else # Temp
         ToolSettings = require 'views/settings/generic'
-
+    
     @toolSettings = new ToolSettings {model: @model}
 
   render: =>
