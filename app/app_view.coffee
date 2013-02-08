@@ -66,8 +66,7 @@ class AppView extends BaseView
       @dashboardModel.on 'sync:tools', (tool) =>
         params = new Params [ {key: 'project', val: Manager.get('project')},
                               {key: 'id', val: zooid},
-                              {key: 'api', val: if location.port < 1024 then 'api' else 'dev'}]
-
+                              {key: 'api', val: if location.port < 1024 then 'api' else 'dev'} ]
         dataSource = 
           source: 2
           search_type: 1
@@ -78,7 +77,6 @@ class AppView extends BaseView
         Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
 
       tools = []
-      console.log Toolsets, Manager.get('project')
       for toolType, index in Toolsets.projects[Manager.get('project')].defaults
         tool =
           tool_type: toolType
@@ -111,7 +109,6 @@ class AppView extends BaseView
         Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
         
       toolsFormatted = new Array
-      console.log tools
       for toolType, index in tools
         toolFormatted = 
           tool_type: toolType

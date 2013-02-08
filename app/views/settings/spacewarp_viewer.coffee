@@ -5,7 +5,6 @@ class SpacewarpViewerSettings extends BaseView
   template: require 'views/templates/settings/spacewarp_viewer'
 
   initialize: ->
-    console.log 'initializing SpacewarpViewerSettings'
 
   render: =>
     @$el.html @template()

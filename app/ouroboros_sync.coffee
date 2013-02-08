@@ -6,7 +6,7 @@ ouroborosSync = (method, model, options) ->
   options.crossDomain = true
   options.beforeSend = (xhr) ->
     xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{User.current.name}:#{User.current.apiToken}")}"
-
+  
   return Backbone.sync(method, model, options)
 
 module.exports = ouroborosSync
