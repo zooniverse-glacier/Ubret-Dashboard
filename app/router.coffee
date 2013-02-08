@@ -37,10 +37,11 @@ class Router extends Backbone.Router
   loadObject: (project, object, settingKeys, settingValues) =>
     Manager.set 'project', project
     name = "Dashboard with #{object}"
-    settings = new Object
-    keys = settingKeys.split('-')
-    values = settingValues.split('-')
-    settings[key] = values[index] for key, index in keys
+    settings = {}
+    if settingKeys?
+      keys = settingKeys.split('-')
+      values = settingValues.split('-')
+      settings[key] = values[index] for key, index in keys
     Backbone.Mediator.publish 'router:dashboardCreateFromZooid', name, object, settings
 
   loadObjects: (project, name, tools, collection, params) =>

@@ -1,31 +1,31 @@
-AppHeader = require 'views/app_header'
-BaseView = require 'views/base_view'
+AppHeader     = require 'views/app_header'
+BaseView      = require 'views/base_view'
 DashboardView = require 'views/dashboard'
-SavedList = require 'views/saved_list'
-MyData = require 'views/my_data'
-User = require 'user'
+SavedList     = require 'views/saved_list'
+MyData        = require 'views/my_data'
+User          = require 'user'
 
-Manager = require 'modules/manager'
-ToolLoader = require 'modules/tool_loader'
+Manager     = require 'modules/manager'
+ToolLoader  = require 'modules/tool_loader'
 
-DashboardModel = require 'models/dashboard'
-Params = require 'collections/params'
+DashboardModel  = require 'models/dashboard'
+Params          = require 'collections/params'
 
-Toolsets = require 'toolset_config'
+Toolsets  = require 'toolset_config'
 
 class AppView extends BaseView
   template: require './views/templates/layout/app'
 
   subscriptions:
-    'dashboard:create': 'createDashboard'
-    'dashboard:fork' : 'forkDashboard'
-    'router:index': 'render'
-    'router:dashboardCreate': 'createDashboard'
-    'router:dashboardCreateFromParams' : 'createDashboardFromParams'
-    'router:dashboardCreateFromZooid' : 'createDashboardFromZooid'
-    'router:dashboardRetrieve': 'loadDashboard'
-    'router:viewSavedDashboards': 'showSaved'
-    'router:myData': 'showMyData'
+    'dashboard:create'                  : 'createDashboard'
+    'dashboard:fork'                    : 'forkDashboard'
+    'router:index'                      : 'render'
+    'router:dashboardCreate'            : 'createDashboard'
+    'router:dashboardCreateFromParams'  : 'createDashboardFromParams'
+    'router:dashboardCreateFromZooid'   : 'createDashboardFromZooid'
+    'router:dashboardRetrieve'          : 'loadDashboard'
+    'router:viewSavedDashboards'        : 'showSaved'
+    'router:myData'                     : 'showMyData'
 
   initialize: ->
     @$el.html @template()
@@ -75,7 +75,8 @@ class AppView extends BaseView
         tool.get('data_source').save dataSource
         Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
 
-      tools = new Array
+      tools = []
+      console.log Toolsets, Manager.get('project')
       for toolType, index in Toolsets.projects[Manager.get('project')].defaults
         tool =
           tool_type: toolType
