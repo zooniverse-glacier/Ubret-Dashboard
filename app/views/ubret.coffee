@@ -31,7 +31,7 @@ class UbretTool extends BaseView
     # PSA: This entire method is a bit of a hack.
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
-
+    
     if @model.get('data_source').isReady()
       @$('.no-data').remove()
       if @model.get('data_source').isInternal()
@@ -46,6 +46,7 @@ class UbretTool extends BaseView
       else
         # Bit of a hack to make sure the tool doesn't have a parentTool lingering around.
         @model.tool.removeParentTool()
+        console.log @model.get('data_source').data
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@model.get('data_source').dataKeys())
 
