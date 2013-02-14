@@ -1,23 +1,24 @@
-AppHeader     = require 'views/app_header'
-BaseView      = require 'views/base_view'
+AppHeader = require 'views/app_header'
+BaseView = require 'views/base_view'
 DashboardView = require 'views/dashboard'
-SavedList     = require 'views/saved_list'
-MyData        = require 'views/my_data'
-User          = require 'user'
+SavedList = require 'views/saved_list'
+MyData = require 'views/my_data'
+DashboardDialog = require 'views/dashboard_dialog'
+User = require 'user'
 
-Manager     = require 'modules/manager'
-ToolLoader  = require 'modules/tool_loader'
+Manager = require 'modules/manager'
+ToolLoader = require 'modules/tool_loader'
 
-DashboardModel  = require 'models/dashboard'
-Params          = require 'collections/params'
+DashboardModel = require 'models/dashboard'
+Params = require 'collections/params'
 
-Toolsets  = require 'toolset_config'
+Toolsets  = require 'config/toolset_config'
 
 class AppView extends BaseView
   template: require './views/templates/layout/app'
 
   subscriptions:
-    'dashboard:create'                  : 'createDashboard'
+    'dashboard:create'                  : 'createDashboardFromDialog'
     'dashboard:fork'                    : 'forkDashboard'
     'router:index'                      : 'render'
     'router:dashboardCreate'            : 'createDashboard'
@@ -51,8 +52,13 @@ class AppView extends BaseView
       @dashboardModel = new DashboardModel response
       ToolLoader @dashboardModel, @createDashboardView
 
-  createDashboard: =>
-    @dashboardModel = new DashboardModel
+  createDashboardFromDialog: =>
+    dashboardDialog = new DashboardDialog { parent: @ }
+    $('body').append dashboardDialog.render().el
+
+  createDashboard: (name, project) ->
+    Manager.set 'project', project
+    @dashboardModel = new DashboardModel {name: name, project: project}
     @dashboardModel.save().done =>
       ToolLoader @dashboardModel, @createDashboardView
     return @dashboardModel
