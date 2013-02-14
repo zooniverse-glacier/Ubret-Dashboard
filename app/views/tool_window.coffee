@@ -37,12 +37,12 @@ class ToolWindow extends BaseView
     
     @dashWidth = window.innerWidth
     @dashTop = 170
-    @dashBottom = window.innerHeight - 50
+    @dashBottom = window.innerHeight - 70
     @dashHeight = @dashBottom - @dashTop
 
     $(window).on 'resize', =>
       @dashWidth = window.innerWidth
-      @dashBottom = window.innerHeight - 50
+      @dashBottom = window.innerHeight - 70
       @dashHeight = @dashBottom - @dashTop
 
   initialSizeAndPosition: =>
