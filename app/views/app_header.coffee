@@ -18,17 +18,21 @@ class AppHeader extends BaseView
     'router:myData' : 'onViewMyData'
 
   initialize: ->
-    User.on 'sign-in', @render
+    User.on 
+      'sign-in': @render
+      'sign-out': @render
     @login = new Login
-    @$el.html @template()
 
   render: =>
+    @$el.html @template()
     if @id then @$('.current').attr 'href', '/#/dashboards/' + @id
 
-    if User.current? and @isForkable()
-      @$('.fork-dashboard').show()
+    if User.current? 
+      @$('.create-dashboard').removeAttr 'disabled'
+      @$('.fork-dashboard').show() if @isForkable()
     else
-      @$('.fork-dashboard').hide()
+      @$('.fork-dashboard').addClass 'active'
+      @$('.create-dashboard').attr 'disabled', 'disabled'
 
     @removeActive()
     switch @active
