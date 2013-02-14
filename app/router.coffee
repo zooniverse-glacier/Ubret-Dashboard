@@ -31,8 +31,7 @@ class Router extends Backbone.Router
       Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->
-    Manager.set 'project', project
-    Backbone.Mediator.publish 'router:dashboardCreate'
+    Backbone.Mediator.publish 'router:dashboardCreate', 'My Great Dashboard', project
 
   loadObject: (project, object, settingKeys, settingValues) =>
     console.log 'loadObject', arguments
