@@ -1,6 +1,6 @@
 corsSync = (method, model, options) ->
-  baseUrl = if location.hostname is 'localhost' then "http://localhost:3000" else "https://spelunker.herokuapp.com"
-  # baseUrl = 'https://spelunker.herokuapp.com'
+  # baseUrl = if location.hostname is 'localhost' then "http://localhost:3000" else "https://spelunker.herokuapp.com"
+  baseUrl = 'https://spelunker.herokuapp.com'
   options.url = baseUrl + _.result(model, 'url')
   options.crossDomain = true
   options.xhrFields = {withCredentials: true}
