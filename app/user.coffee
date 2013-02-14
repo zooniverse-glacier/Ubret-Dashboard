@@ -2,7 +2,8 @@ class User extends Backbone.Events
   @current: null
 
   @apiUrl: =>
-    if location.port > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
+    # if location.port > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
+    "https://spelunker.herokuapp.com"
 
   @zooniverseUrl: =>
     if location.port > 4000 then "dev" else "api"
