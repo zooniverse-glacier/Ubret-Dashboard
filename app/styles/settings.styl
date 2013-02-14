@@ -1,6 +1,6 @@
 
 .settings
-  background: $gray-dark
+  background: $gray-dark-transparent
   border-left: 1px solid $black
   box-sizing: border-box
   color: $white
@@ -30,11 +30,30 @@
     top: 4px
     width: 20px
 
+  .title-bar-icon
+    cursor: pointer
+    height: 16px
+    position: absolute
+    top: 4px
+    width: 20px
+
+    &.prev
+      left: -45px
+
+    &.next
+      left: -32px
+
   &.active
     right: 0
     .toggle
       left: 4px
       transform: rotate(0)
+
+    .prev
+      left: -28px
+
+    .next
+      left: -15px
 
   ul
     @extends #semantic-list

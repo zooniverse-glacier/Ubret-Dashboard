@@ -7,6 +7,8 @@ class Settings extends BaseView
 
   events:
     'click .toggle': 'toggleState'
+    'click .prev.title-bar-icon' : 'prev'
+    'click .next.title-bar-icon' : 'next'
 
   initialize: ->
     @listenTo @model, 'change:settings_active', @render
@@ -35,7 +37,7 @@ class Settings extends BaseView
     @toolSettings = new ToolSettings {model: @model}
 
   render: =>
-    @$el.html @template()
+    @$el.html @template(@model.toJSON())
 
     if @model.get 'settings_active'
       @$el.addClass 'active'
@@ -46,6 +48,12 @@ class Settings extends BaseView
       '.data-settings': @dataSettings
       '.tool-settings': @toolSettings
     @
+
+  next: =>
+    @toolSettings.next()
+
+  prev: =>
+    @toolSettings.prev()
 
   # Events
   toggleState: =>

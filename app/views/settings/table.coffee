@@ -5,8 +5,8 @@ class TablePageSettings extends BaseView
   template: require 'views/templates/settings/table'
 
   events:
-    'click button.next' : 'nextPage'
-    'click button.prev' : 'prevPage'
+    'click button.next' : 'next'
+    'click button.prev' : 'prev'
 
   initialize: ->
     @page = @model.get('settings').get('currentPage') or 0
@@ -15,10 +15,10 @@ class TablePageSettings extends BaseView
     @$el.html @template()
     @
 
-  nextPage: =>
+  next: =>
     @model.tool.trigger 'next-page'
 
-  prevPage: =>
+  prev: =>
     @model.tool.trigger 'prev-page'
 
 module.exports = TablePageSettings

@@ -6,18 +6,18 @@ class SubjectSettings extends BaseView
   template: require 'views/templates/settings/subject'
 
   events:
-    'click .nav .prev' : 'onSelectPrevSubject'
-    'click .nav .next' : 'onSelectNextSubject'
+    'click .nav .prev' : 'prev'
+    'click .nav .next' : 'next'
 
   render: =>
     @$el.html @template
     @
 
   #Events
-  onSelectPrevSubject: =>
+  prev: =>
     @model.tool.trigger 'prev'
     
-  onSelectNextSubject: =>
+  next: =>
     @model.tool.trigger 'next'
 
 module.exports = SubjectSettings
