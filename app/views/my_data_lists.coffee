@@ -21,7 +21,6 @@ class MyDataLists extends BaseView
       @collection.fetch()
 
   render: =>
-    console.log @collection
     if not _.isUndefined @collection
       @$el.html @template()
       @collection.each (model) =>
