@@ -1,3 +1,7 @@
+<% if (@tool_type is 'Table') or (@tool_type is 'SubjectViewer') or (@tool_type is 'Spectra'): %>
+  <div class="prev title-bar-icon"><%- '<' %> </div>
+  <div class="next title-bar-icon"> <%- '>' %></div>
+<% end %>
 <div class="toggle"></div>
 
 <div class="settings-group">
