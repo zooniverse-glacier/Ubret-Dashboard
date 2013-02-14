@@ -1,5 +1,5 @@
 Manager = require 'modules/manager'
-tools = require 'toolset_config'
+tools = require 'config/toolset_config'
 
 ToolLoader = (dashboard, cb) ->
   project = dashboard.get('project')
