@@ -90,7 +90,6 @@ class ToolWindow extends BaseView
       width: @model.get('width')
       height: @model.get('height')
 
-
   # Resize
   resizeWindowStart: (e) =>
     $('body').addClass 'unselectable'
@@ -152,9 +151,6 @@ class ToolWindow extends BaseView
       top: @$el.css('top')
       width: @$el.css('width')
       height: @$el.css('height')
-
-    @ubretView.render()
-
 
   # Drag
   startDrag: (e) =>
