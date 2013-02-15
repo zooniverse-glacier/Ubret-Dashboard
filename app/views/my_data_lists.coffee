@@ -6,8 +6,6 @@ Params = require 'collections/params'
 
 class MyDataLists extends BaseView
   noProjectTemplate: require './templates/no_project_template'
-  events:
-    'click button' : 'handleEvent'
 
   loadCollection: =>
     if Manager.get('project') or (Manager.get('project') is 'default')
@@ -22,15 +20,11 @@ class MyDataLists extends BaseView
 
   render: =>
     if not _.isUndefined @collection
-      @$el.html @template()
+      @$el.html @template({type: @type, project: Manager.get('project')})
       @collection.each (model) =>
         @$('.my-data-list').append @templateItem(model.toJSON())
     else
       @$el.html @noProjectTemplate()
     @
-
-  handleEvent: (e) =>
-    project = Manager.get('project')
-    Manager.get('router').navigate "#/project/#{project}/Dashboard-from-#{@type}/Table-SubjectViewer/2-0/type_#{@type}-limit_20-project_#{project}"
 
 module.exports = MyDataLists

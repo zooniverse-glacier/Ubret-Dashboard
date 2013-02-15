@@ -112,7 +112,7 @@ class AppView extends BaseView
           source_type: 'external'
           params: new Params paramsFormatted
         
-        tool.get('data_source').save(dataSource) =>
+        tool.get('data_source').save(dataSource).done =>
           Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
         
       toolsFormatted = new Array
