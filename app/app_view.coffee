@@ -79,8 +79,9 @@ class AppView extends BaseView
           source_type: 'external'
           params: params
 
-        tool.get('data_source').save dataSource
-        Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
+
+        tool.get('data_source').save(dataSource).done =>
+          Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
 
       tools = []
       for toolType, index in Toolsets.projects[Manager.get('project')].defaults
@@ -111,8 +112,8 @@ class AppView extends BaseView
           source_type: 'external'
           params: new Params paramsFormatted
         
-        tool.get('data_source').save dataSource
-        Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
+        tool.get('data_source').save(dataSource) =>
+          Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
         
       toolsFormatted = new Array
       for toolType, index in tools
