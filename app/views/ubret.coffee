@@ -49,7 +49,6 @@ class UbretTool extends BaseView
       else
         # Bit of a hack to make sure the tool doesn't have a parentTool lingering around.
         @model.tool.removeParentTool()
-        console.log @model, @model.get('data_source').data
         @model.tool.data(@model.get('data_source').data.toJSON())
           .keys(@model.get('data_source').dataKeys())
 
@@ -78,6 +77,5 @@ class UbretTool extends BaseView
 
   setHeight: =>
     @$el.height(@model.get('height') - 25)
-    console.log @$el.height()
 
 module.exports = UbretTool
