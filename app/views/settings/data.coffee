@@ -14,6 +14,7 @@ class DataSettings extends BaseView
     'click .type-select .internal button': 'showInternal'
     'change .external .sources': 'onSelectExternalSource'
     'change .internal .sources': 'onSelectInternalSource'
+    'change .search-type select': 'onSelectSearchType'
     'click button[name="fetch"]': 'updateModel'
 
   initialize: ->
@@ -79,6 +80,12 @@ class DataSettings extends BaseView
     @model.get('data_source').set 'source', $(e.currentTarget).val()
     @model.get('data_source').set 'search_type', @getSearchTypes(@model.get('data_source').get('source'))[0].name
 
+    @setParams()
+    @render()
+
+  onSelectSearchType: (e) =>
+    unless e.currentTarget.value? then return
+    @model.get('data_source').set 'search_type', e.currentTarget.value
     @setParams()
     @render()
 
