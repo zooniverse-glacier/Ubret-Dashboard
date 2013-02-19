@@ -1,4 +1,4 @@
-<% if (@tool_type is 'Table') or (@tool_type is 'SubjectViewer') or (@tool_type is 'Spectra'): %>
+<% if @tool_type in require('config/tool_settings_config')['TitleBarControls']: %>
   <div class="prev title-bar-icon"><%- '<' %> </div>
   <div class="next title-bar-icon"> <%- '>' %></div>
 <% end %>
