@@ -120,7 +120,7 @@ class AppView extends BaseView
 
     @dashboardModel.save().done =>
       Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
-        
+
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
     @dashboardModel.fetch

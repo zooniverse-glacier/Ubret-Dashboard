@@ -18,7 +18,6 @@ class Settings extends BaseView
       return
 
     @dataSettings = new DataSettings { model: @model } if @model?
-    @toolSettings = new Array
 
     setting = ToolSettingsConfig[@model.get('tool_type')]
     @toolSettings = new setting { model: @model }
