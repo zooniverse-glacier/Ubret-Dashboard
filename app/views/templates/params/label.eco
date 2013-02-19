@@ -1,5 +1,5 @@
 <% if @get('label'): %>
-  <label><%- @get('label').charAt(0).toUpperCase() + @get('label').slice(1) %>:</label>
+  <label><%- console.log @get('label'); @get('label') %>:</label>
 <% else: %>
   <label><%- @get('key').charAt(0).toUpperCase() + @get('key').slice(1) %>:</label>
 <% end %>

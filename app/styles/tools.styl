@@ -1,4 +1,6 @@
-.tool-container
+.tool-window .tool-container
+  &.Mapper
+    overflow-x: hidden
 
   h2
     margin-top: 1
@@ -73,7 +75,21 @@
           float: left
           padding: 0 7px 0 0
           font-weight: 700
-        span
+          span
+
+  &.Spectra
+    ul.spectra-legend
+      width: 300px
+      margin: 0 auto
+
+      li
+        display: inline
+        padding-left: 15px
+        padding-right: 15px
+        border-right: 1px solid black
+
+        &:last-child
+          border-right: none
 
 .subject, .stats
   border-top: 1px solid $gray-less-dark

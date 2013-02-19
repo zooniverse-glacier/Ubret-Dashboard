@@ -7,7 +7,7 @@ ToolLoader = (dashboard, cb) ->
     project = 'default'
 
   Manager.set 'project', project
-    
+  
   # Set valid tools for later retrieval.
   # If project is Object, use tools key. If not, assume it's the array of tools.
   if (tools.projects[project] is Object(tools.projects[project])) and tools.projects[project].hasOwnProperty 'tools'

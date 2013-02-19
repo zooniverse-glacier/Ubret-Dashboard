@@ -1,4 +1,4 @@
-<h4>Tool Settings</h4>
+<h4><%- @type %> Axis Settings</h4>
 <ul>
   <li class="x">
     <label>X-Axis: <select class="axis x-axis" data-axis='1'>
@@ -32,3 +32,11 @@
   </li>
   <% end %>
 </ul>
+
+<% if @type is 'Histogram': %>
+<label>Bins: 
+  <input value="<%- @bins %>" class="bins" type="text" placeholder="Numbers of Bins" />
+</label>
+<button type="button" name="bins" class="action inline bin">Update Bins</button>
+<% end %>
+

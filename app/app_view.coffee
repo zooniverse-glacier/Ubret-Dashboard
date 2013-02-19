@@ -64,65 +64,62 @@ class AppView extends BaseView
     return @dashboardModel
 
   createDashboardFromZooid: (name, zooid, settings) ->
+    params = [ {key: 'project', val: Manager.get('project')},
+               {key: 'id', val: zooid},
+               {key: 'api', val: if location.port < 1024 then 'api' else 'dev'} ]
+
+    dataSource = 
+      source: 2
+      search_type: 1
+      source_type: 'external'
+      params: params
+
+    tools = []
+    for toolType, index in Toolsets.projects[Manager.get('project')].defaults
+      tool =
+        tool_type: toolType
+        name: "#{toolType}-#{index}"
+        channel: "#{toolType}-#{index}"
+        data_source: dataSource
+      tool.settings = settings unless _.isUndefined(settings)
+      tools.push tool
+
     @dashboardModel = new DashboardModel
       name: name
       project: Manager.get('project')
-
+      tools: tools
+    
     @dashboardModel.save().done =>
-      @dashboardModel.on 'sync:tools', (tool) =>
-        params = new Params [ {key: 'project', val: Manager.get('project')},
-                              {key: 'id', val: zooid},
-                              {key: 'api', val: if location.port < 1024 then 'api' else 'dev'} ]
-        dataSource = 
-          source: 2
-          search_type: 1
-          source_type: 'external'
-          params: params
-
-
-        tool.get('data_source').save(dataSource).done =>
-          Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
-
-      tools = []
-      for toolType, index in Toolsets.projects[Manager.get('project')].defaults
-        tool =
-          tool_type: toolType
-          name: "#{toolType}-#{index}"
-          channel: "#{toolType}-#{index}"
-        tool.settings = settings unless _.isUndefined(settings)
-        tools.push tool
-      @dashboardModel.get('tools').add tools
+      Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
 
   createDashboardFromParams: (name, tools, collection, params) =>
-    # this is still pretty ugly
+    paramsFormatted = new Array
+    for param in params
+      [key, value...] = param.split('_')
+      paramsFormatted.push {key: key, val: value.join('_')}
+
+    dataSource =
+      source: parseInt(collection[0])
+      search_type: parseInt(collection[1])
+      source_type: 'external'
+      params: paramsFormatted
+
+    toolsFormatted = new Array
+    for toolType, index in tools
+      toolFormatted = 
+        tool_type: toolType
+        name: "#{toolType}-#{index}"
+        channel: "#{toolType}-#{index}"
+        data_source: dataSource
+      toolsFormatted.push toolFormatted
+
     @dashboardModel = new DashboardModel
       name: name.join(' ')
       project: Manager.get('project')
+      tools: toolsFormatted
 
     @dashboardModel.save().done =>
-      @dashboardModel.on 'sync:tools', (tool) =>
-        paramsFormatted = new Array
-        for param in params
-          [key, value...] = param.split('_')
-          paramsFormatted.push {key: key, val: value.join('_')}
-
-        dataSource =
-          source: parseInt(collection[0])
-          search_type: parseInt(collection[1])
-          source_type: 'external'
-          params: new Params paramsFormatted
-        
-        tool.get('data_source').save(dataSource).done =>
-          Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
-        
-      toolsFormatted = new Array
-      for toolType, index in tools
-        toolFormatted = 
-          tool_type: toolType
-          name: "#{toolType}-#{index}"
-          channel: "#{toolType}-#{index}"
-        toolsFormatted.push toolFormatted
-      @dashboardModel.get('tools').add toolsFormatted
+      Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}

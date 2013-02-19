@@ -1,5 +1,6 @@
 BaseView = require 'views/base_view'
 DataSettings = require 'views/settings/data'
+ToolSettingsConfig = require 'config/tool_settings_config'
 
 class Settings extends BaseView
   className: 'settings'
@@ -17,25 +18,10 @@ class Settings extends BaseView
       return
 
     @dataSettings = new DataSettings { model: @model } if @model?
-    
-    switch @model?.get('tool_type')
-      when 'Histogram', 'Scatterplot'
-        ToolSettings = require 'views/settings/graph'
-      when 'Statistics'
-        ToolSettings = require 'views/settings/key'
-      when 'SubjectViewer', "Spectra"
-        ToolSettings = require 'views/settings/subject'
-      when 'Mapper'
-        ToolSettings = require 'views/settings/map'
-      when 'Table'
-        ToolSettings = require 'views/settings/table'
-      when 'SpacewarpViewer'
-        ToolSettings = require 'views/settings/spacewarp_viewer'
-      else # Temp
-        ToolSettings = require 'views/settings/generic'
-    
-    @toolSettings = new ToolSettings {model: @model}
 
+    setting = ToolSettingsConfig[@model.get('tool_type')]
+    @toolSettings = new setting { model: @model }
+    
   render: =>
     @$el.html @template(@model.toJSON())
 
