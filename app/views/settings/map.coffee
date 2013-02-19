@@ -5,13 +5,13 @@ class MapSettings extends BaseView
   template: require 'views/templates/settings/map'
 
   spectra: 
+    radio: 'Radio'
+    microwave: 'Microwave'
     infrared: 'Infrared'
+    visible: 'Visible'
+    halpha: 'H-Alpha'
     xray: 'X-Ray'
     gamma: 'Gamma Ray'
-    microwave: 'Microwave'
-    visible: 'Visible'
-    radio: 'Radio'
-    halpha: 'H-Alpha'
 
   events:
     'change select.select-spectrum' : 'changeSpectrum'
@@ -21,7 +21,6 @@ class MapSettings extends BaseView
 
   render: =>
     curSpectrum = @model.get('settings').get('spectrum')
-    console.log curSpectrum
     @$el.html @template({curSpectrum: curSpectrum, spectra: @spectra})
     @
 
