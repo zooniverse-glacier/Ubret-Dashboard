@@ -25,7 +25,6 @@ class Tool extends Backbone.AssociatedModel
     if @isNew()
       @generatePosition()
       @collection.focus @, false
-      @save()
     else
       @get('data_source').set 'tool_id', @id
 
