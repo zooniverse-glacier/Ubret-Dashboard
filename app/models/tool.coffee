@@ -28,6 +28,12 @@ class Tool extends Backbone.AssociatedModel
     else
       @get('data_source').set 'tool_id', @id
 
+  fetchData: =>
+    if @get('data_source').isExternal()
+      @get('data_source').fetchData().done => @trigger 'render'
+    else
+      @trigger 'render'
+
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
@@ -48,6 +54,18 @@ class Tool extends Backbone.AssociatedModel
     @set
       top: y
       left: x
+
+  isReady: =>
+    if @get('data_source').isExternal()
+      @get('data_source').data? and not @get('data_source').data.isEmpty()
+    else
+      return false unless @get('data_source').get('source')?
+      source = @sourceTool()
+      source.isReady()
+
+  sourceTool: =>
+    @collection.find (tool) =>
+      tool.get("channel") is @get('data_source').get('source')
 
 
 module.exports = Tool

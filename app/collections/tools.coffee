@@ -18,7 +18,7 @@ class Tools extends Backbone.Collection
 
   loadTools: ->
     internalTools = @filter (tool) ->
-      tool.get('data_source').isInternal() and tool.get('data_source').isReady()
+      tool.get('data_source').isInternal()
 
     externalTools = @filter (tool) ->
       tool.get('data_source').isExternal()
@@ -26,17 +26,11 @@ class Tools extends Backbone.Collection
     _(internalTools).each (tool) =>
       source = @find (collection_tool) ->
         collection_tool.get('channel') is tool.get('data_source').get('source')
-        
+
       source.once 'started', ->
-        tool.get('data_source').fetchData()
+        tool.fetchData()
 
     _(externalTools).each (tool) ->
-      tool.get('data_source').fetchData()
-
-  setDataSource: (dataSource) ->
-    if dataSource.isInternal()
-      source = @find (tool) ->
-        tool.get('channel') is dataSource.get('source')
-      dataSource.set 'source', source
+      tool.fetchData()
 
 module.exports = Tools

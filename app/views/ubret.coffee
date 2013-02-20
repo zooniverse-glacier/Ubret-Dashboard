@@ -5,12 +5,7 @@ class UbretTool extends BaseView
   noDataTemplate: require './templates/no_data'
 
   initialize: (options) ->
-    # An allowance for not having the UI block on tool creation.
-    if @model.isNew()
-      @model.once 'sync', =>
-        Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
-    else
-      Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
+    @model.on 'render', @render
 
     @model.once 'started', =>
       @listenTo @model, 'change:selected_ids', @toolSelectElements
@@ -31,36 +26,32 @@ class UbretTool extends BaseView
 
   render: =>
     # PSA: This entire method is a bit of a hack.
-    @setHeight() unless @$el.height() is 0
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', @model.get('channel')
-    
-    if @model.get('data_source').isReady()
+   
+    if @model.isReady()
       @$('.no-data').remove()
-      if @model.get('data_source').isInternal()
-        # This is a bit of a kludge, but it works.
-        source = @model.collection.find (tool) =>
-          tool.get('channel') is @model.get('data_source').get('source')
-        if source.get('data_source').isReady() and source.tool?
-          @model.tool.parentTool(source.tool) 
-        else
-          @$el.html @noDataTemplate()
-          return @
-      else
-        # Bit of a hack to make sure the tool doesn't have a parentTool lingering around.
-        @model.tool.removeParentTool()
-        @model.tool.data(@model.get('data_source').data.toJSON())
-          .keys(@model.get('data_source').dataKeys())
-
-      @model.tool.selectIds(@model.get('selected_ids'))
-        .selectKeys(@model.get('selected_keys'))
-        .settings(@model.get('settings').toJSON())
-        .start()
-
-      @model.trigger 'started'
+      @drawTool()
     else
       @$el.html @noDataTemplate()
     @
+
+  drawTool: =>
+    @setHeight()
+    if @model.get('data_source').isInternal()
+      console.log "Internal: ", @model.get('tool_type')
+      @model.tool.parentTool(@model.sourceTool().tool) 
+    else
+      @model.tool.removeParentTool()
+      @model.tool.data(@model.get('data_source').data.toJSON())
+        .keys(@model.get('data_source').dataKeys())
+
+    @model.tool.selectIds(@model.get('selected_ids'))
+      .selectKeys(@model.get('selected_keys'))
+      .settings(@model.get('settings').toJSON())
+      .start()
+
+    @model.trigger 'started'
 
   # From Ubret tool to @model
   selectElements: (ids) =>

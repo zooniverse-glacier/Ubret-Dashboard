@@ -22,37 +22,17 @@ class DataSource extends Backbone.AssociatedModel
   # DS API
   fetchData: =>
     if @isExternal()
-      @fetchExt()
-    else if @isInternal()
-      @fetchInt()
+      url = @manager.get('sources').get(@get('source')).get('url')
+      @data = new @subjects([], {params: @get('params'), url: url })
+      @data.fetch()
     else
       throw new Error('unknown source type')
-
-  fetchExt: =>
-    url = @manager.get('sources').get(@get('source')).get('url')
-    @data = new @subjects([], {params: @get('params'), url: url })
-    @data.fetch
-      success: =>
-        Backbone.Mediator.publish "#{@get('tool_id')}:dataFetched"
-
-  fetchInt: =>
-    if @get('source')?
-      @data = undefined
-      Backbone.Mediator.publish "#{@get('tool_id')}:dataFetched"
 
   isExternal: =>
     (@get('source_type') is 'external')
 
   isInternal: =>
     (@get('source_type') is 'internal')
-
-  isReady: =>
-    if @data? and not @data.isEmpty()
-      dataReady = true
-    else
-      dataReady = false
-
-    (@isInternal() and @get('source')?) or (@isExternal() and dataReady)
 
   dataKeys: =>
     unless @data?

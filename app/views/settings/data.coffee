@@ -62,7 +62,7 @@ class DataSettings extends BaseView
     @model.get('data_source').set 'params', @paramsView.setState()
     @model.get('data_source').save [],
       success: =>
-        @model.get('data_source').fetchData()
+        @model.fetchData()
       error: =>
         console.log 'an error'
 
