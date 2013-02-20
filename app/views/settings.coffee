@@ -37,10 +37,10 @@ class Settings extends BaseView
     @
 
   next: =>
-    @toolSettings.next()
+    @toolSettings[0].next()
 
   prev: =>
-    @toolSettings.prev()
+    @toolSettings[0].prev()
 
   # Events
   toggleState: =>
