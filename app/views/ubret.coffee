@@ -39,7 +39,6 @@ class UbretTool extends BaseView
   drawTool: =>
     @setHeight()
     if @model.get('data_source').isInternal()
-      console.log "Internal: ", @model.get('tool_type')
       @model.tool.parentTool(@model.sourceTool().tool) 
     else
       @model.tool.removeParentTool()

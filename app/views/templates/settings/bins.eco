@@ -1,0 +1,4 @@
+<h4>Bin Settings</h4>
+<label>Bins: 
+  <input value="<%- @bins %>" class="bins" type="text" placeholder="Numbers of Bins" />
+</label>

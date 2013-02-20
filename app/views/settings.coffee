@@ -19,8 +19,9 @@ class Settings extends BaseView
 
     @dataSettings = new DataSettings { model: @model } if @model?
 
-    setting = ToolSettingsConfig[@model.get('tool_type')]
-    @toolSettings = new setting { model: @model }
+    @toolSettings = new Array
+    for setting in ToolSettingsConfig[@model.get('tool_type')]
+      @toolSettings.push new setting { model: @model }
     
   render: =>
     @$el.html @template(@model.toJSON())
@@ -30,9 +31,9 @@ class Settings extends BaseView
     else
       @$el.removeClass 'active'
 
-    @assign
-      '.data-settings': @dataSettings
-      '.tool-settings': @toolSettings
+    @assign '.data-settings', @dataSettings
+   
+    @$el.append setting.render().el for setting in @toolSettings
     @
 
   next: =>
