@@ -87,8 +87,7 @@ class DataSettings extends BaseView
     unless e.currentTarget.value? then return
     @model.get('data_source').set 'search_type', e.currentTarget.value
     @setParams()
-    @searchTypeView.render()
-    @paramsView.render()
+    @render()
 
   onSetSearchType: (search_type) =>
     # This needs to do something.

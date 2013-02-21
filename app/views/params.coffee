@@ -11,7 +11,6 @@ class Params extends BaseView
     # Nothing.
 
   render: =>
-    @$el.empty()
     @views = []
     @collection.each (param) =>
       switch param.get('type')

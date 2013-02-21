@@ -28,7 +28,7 @@ class Settings extends BaseView
     if @model.get 'settings_active'
       @$el.addClass 'active'
       @assign '.data-settings', @dataSettings
-      @$('.settings-group').append setting.render().el for setting in @toolSettings
+      @$el.append setting.render().el for setting in @toolSettings
     else
       @$el.removeClass 'active'
       @dataSettings.$el.detach()
