@@ -1,5 +1,6 @@
 class Tool extends Backbone.AssociatedModel
   sync: require 'sync' 
+  manager: require 'modules/manager'
 
   relations: [
     type: Backbone.One
@@ -20,7 +21,6 @@ class Tool extends Backbone.AssociatedModel
 
   initialize: ->
     unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
-    unless @get('channel') then @set 'channel', "#{@get('tool_type')}-#{@collection.length + 1}"
 
     if @isNew()
       @generatePosition()
@@ -64,8 +64,15 @@ class Tool extends Backbone.AssociatedModel
       source.isReady()
 
   sourceTool: =>
-    @collection.find (tool) =>
-      tool.get("channel") is @get('data_source').get('source')
+    @collection.get(@get('data_source').get('source'))
 
+  sourceName: =>
+    if @get('data_source').isExternal()
+      name = @manager.get('sources').get(@get('data_source').get('source')).get('name')
+    else if @get('data_source').isInternal()
+      name = @sourceTool().get('name')
+    else
+      name = ''
+    return name
 
 module.exports = Tool

@@ -27,9 +27,8 @@ class DashboardView extends BaseView
     @
 
   focusWindow: (e) =>
-    toolChannel = e.currentTarget.dataset['channel']
-    tool = @model.get('tools').find (tool) -> 
-      tool.get('channel') is toolChannel
+    id = e.currentTarget.dataset.id
+    tool = @model.get('tools').get id
     @model.get('tools').focus tool
 
   addToolModel: (type) =>

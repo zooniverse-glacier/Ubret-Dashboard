@@ -124,26 +124,6 @@ class DataSettings extends BaseView
   updateValidSourceTools: =>
     @intSources = []
     @model.collection?.each (tool) =>
-      isValid = @checkToolSource @model, tool, []
-      if isValid then @intSources.push { name: tool.get('name'), channel: tool.get('channel') }
-
-  checkToolSource: (source_tool, tool, checkedTools) =>
-    if _.isEqual source_tool, tool
-      return false
-
-    if _.isUndefined tool then return false
-
-    if _.isUndefined tool.get('data_source').get('source')
-      return false
-
-    if tool.get('data_source').isExternal()
-      return true
-    else
-      unless _.find checkedTools, ((checkedTool) -> _.isEqual(tool, checkedTool))
-        checkedTools.push tool
-        chainedTool = tool.collection.find((next_tool) -> tool.get('data_source').get('source') == next_tool.get('channel'))
-        @checkToolSource source_tool, chainedTool, checkedTools
-      else
-        return false
+      if tool.isReady() then @intSources.push { name: tool.get('name'), id: tool.id }
 
 module.exports = DataSettings

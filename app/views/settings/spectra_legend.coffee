@@ -11,15 +11,18 @@ class SpectraLegend extends BaseView
     'click button.emissions' : 'toggleEmissions'
 
   initialize: ->
-    for line in ['bestFitLine', 'fluxLine', 'emissionLines']
-      unless @model.get('settings').get(line)?
-        @model.get('settings').set line, 'show'
+    @model.once 'sync', =>
+      for line in ['bestFitLine', 'fluxLine', 'emissionLines']
+        unless @model.get('settings').get(line)?
+          @model.get('settings').set line, 'show'
+          console.log @model.get('settings').get('bestFitLine')
 
   render: =>
     @$el.html @template(@model.get('settings').toJSON())
     @
 
   toggleBestFit: =>
+    console.log @model.get('settings').get('bestFitLine')
     @model.tool
       .settings({bestFitLine: @toggle(@model.get('settings').get('bestFitLine'))})
       .start()

@@ -20,9 +20,12 @@ class WindowTitleBar extends BaseView
       'render': @render 
       'change:name': @render
 
+    if @model.get('data_source').isInternal()
+      @model.sourceTool().on 'change:name', @render
+
   render: =>
     opts =
-      'link': @model.get('data_source').sourceName()
+      'link': @model.sourceName()
       'name': @model.get('name')
     @$el.html @template(opts)
 
