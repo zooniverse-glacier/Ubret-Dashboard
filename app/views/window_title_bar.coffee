@@ -16,13 +16,8 @@ class WindowTitleBar extends BaseView
   initialize: ->
     unless @model then throw 'must pass a model'
 
-    if @model.isNew()
-      @model.once 'sync', =>
-        Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
-    else
-      Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", @render
-
     @model.on
+      'render': @render 
       'change:name': @render
 
   render: =>
