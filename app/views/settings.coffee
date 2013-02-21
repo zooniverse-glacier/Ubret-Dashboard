@@ -10,6 +10,7 @@ class Settings extends BaseView
     'click .toggle': 'toggleState'
     'click .prev.title-bar-icon' : 'prev'
     'click .next.title-bar-icon' : 'next'
+    'click h4' : 'hideSetting'
 
   initialize: ->
     @listenTo @model, 'change:settings_active', @render
@@ -35,14 +36,17 @@ class Settings extends BaseView
       setting.$el.detach() for setting in @toolSettings
     @
 
+  # Events
+  toggleState: =>
+    @model.save('settings_active', !@model.get('settings_active'))
+
   next: =>
     @toolSettings[0].next()
 
   prev: =>
     @toolSettings[0].prev()
 
-  # Events
-  toggleState: =>
-    @model.save('settings_active', !@model.get('settings_active'))
+  hideSetting: (e) =>
+    @$(e.currentTarget).siblings().slideToggle()
 
 module.exports = Settings
