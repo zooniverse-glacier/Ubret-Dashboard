@@ -5,12 +5,13 @@ class SpacewarpViewerSettings extends BaseView
   template: require 'views/templates/settings/spacewarp_viewer'
   
   events:
-    'click input[name="band"]'    : 'onBandChange'
-    'change input[name="alpha"]'  : 'onAlphaChange'
-    'change input[name="Q"]'      : 'onQChange'
-    'change input.scale'          : 'onScaleChange'
-    
-    
+    'click input[name="band"]'      : 'onBandChange'
+    'change input[name="alpha"]'    : 'onAlphaChange'
+    'change input[name="Q"]'        : 'onQChange'
+    'change input.scale'            : 'onScaleChange'
+    'change input[name="stretch"]'  : 'onStretchChange'
+  
+  
   render: =>
     @$el.html @template()
     @ 
@@ -44,6 +45,10 @@ class SpacewarpViewerSettings extends BaseView
     band = target.name
     value = target.value
     @model.tool.updateScale(band, value)
+  
+  onStretchChange: (e) =>
+    value = e.currentTarget.id
+    @model.tool.updateStretch(value)
 
 
 module.exports = SpacewarpViewerSettings
