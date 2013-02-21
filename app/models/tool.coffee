@@ -32,6 +32,7 @@ class Tool extends Backbone.AssociatedModel
     if @get('data_source').isExternal()
       @get('data_source').fetchData().done => @trigger 'render'
     else
+      @sourceTool().on 'destroy', => @destroy()
       @trigger 'render'
 
   generatePosition: ->
