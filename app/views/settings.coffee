@@ -25,15 +25,14 @@ class Settings extends BaseView
     
   render: =>
     @$el.html @template(@model.toJSON())
-
     if @model.get 'settings_active'
       @$el.addClass 'active'
+      @assign '.data-settings', @dataSettings
+      @$el.append setting.render().el for setting in @toolSettings
     else
       @$el.removeClass 'active'
-
-    @assign '.data-settings', @dataSettings
-   
-    @$el.append setting.render().el for setting in @toolSettings
+      @dataSettings.$el.detach()
+      setting.$el.detach() for setting in @toolSettings
     @
 
   next: =>

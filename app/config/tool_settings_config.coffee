@@ -2,7 +2,7 @@ module.exports =
   "Histogram" : [require('views/settings/graph'), require('views/settings/bins')]
   "Scatterplot" : [require 'views/settings/graph']
   "Statistics" : [require 'views/settings/key']
-  "Spectra" : [require 'views/settings/subject']
+  "Spectra" : [require('views/settings/subject'), require('views/settings/spectra_legend')]
   "SubjectViewer" : [require 'views/settings/subject']
   "Mapper" : [require 'views/settings/map']
   "Table" : [require 'views/settings/table']
