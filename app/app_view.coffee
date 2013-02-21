@@ -79,7 +79,6 @@ class AppView extends BaseView
       tool =
         tool_type: toolType
         name: "#{toolType}-#{index}"
-        channel: "#{toolType}-#{index}"
         data_source: dataSource
       tool.settings = settings unless _.isUndefined(settings)
       tools.push tool
@@ -109,7 +108,6 @@ class AppView extends BaseView
       toolFormatted = 
         tool_type: toolType
         name: "#{toolType}-#{index}"
-        channel: "#{toolType}-#{index}"
         data_source: dataSource
       toolsFormatted.push toolFormatted
 

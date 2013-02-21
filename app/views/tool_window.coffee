@@ -19,6 +19,7 @@ class ToolWindow extends BaseView
   initialize: ->
     if @model?
       @model.on
+        'change:id' : @updateWindowId
         'destroy': @removeWindow
         'change:zindex': @setZindex
         'change:left change:top': @setPosition
@@ -51,10 +52,13 @@ class ToolWindow extends BaseView
     sizeAndPos['z-index'] = sizeAndPos.zindex
     sizeAndPos
 
+  updateWindowId: =>
+    @$el.attr 'data-id', @model.id
+
   render: =>
     active = if @model.get('active') then 'active' else ''
     @$el.html @template({active: active})
-    @$el.attr('data-channel', @model.get('channel'))
+    @$el.attr 'data-id', @model.id
     @assign
       '.title-bar': @titleBar
       '.settings': @settings

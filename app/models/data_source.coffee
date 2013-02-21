@@ -43,13 +43,4 @@ class DataSource extends Backbone.AssociatedModel
       keys.push key unless key in @nonDisplayKeys
     return keys
 
-  sourceName: =>
-    if @isExternal()
-      name = @manager.get('sources').get(@get('source')).get('name')
-    else if @isInternal()
-      name = @get('source')
-    else
-      name = ''
-    return name
-
 module.exports = DataSource

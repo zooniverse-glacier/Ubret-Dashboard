@@ -24,8 +24,7 @@ class Tools extends Backbone.Collection
       tool.get('data_source').isExternal()
 
     _(internalTools).each (tool) =>
-      source = @find (collection_tool) ->
-        collection_tool.get('channel') is tool.get('data_source').get('source')
+      source = tool.sourceTool()
 
       source.once 'started', ->
         tool.fetchData()

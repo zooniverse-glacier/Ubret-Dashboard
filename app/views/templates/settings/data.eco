@@ -1,3 +1,4 @@
+<h4>Data Source</h4>
 <ul class="type-select columns">
   <li class="external column one-half">
     <% if @sourceType is 'external': %>
@@ -38,10 +39,10 @@
       <select class="sources">
         <option value="">Select Tool</option>
         <% for source in @intSources: %>
-          <% if source.channel is @source: %>
-            <option value="<%- source.channel %>" selected><%- source.name %></option>
+          <% if source.id is @source: %>
+            <option value="<%- source.id%>" selected><%- source.name %></option>
           <% else: %>
-            <option value="<%- source.channel %>"><%- source.name %></option>
+            <option value="<%- source.id%>"><%- source.name %></option>
           <% end %>
         <% end %>
       </select>
