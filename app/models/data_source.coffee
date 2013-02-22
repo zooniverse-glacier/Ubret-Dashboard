@@ -1,9 +1,8 @@
 Params = require 'collections/params'
 
 class DataSource extends Backbone.AssociatedModel
-  sync: require 'sync' 
   manager: require 'modules/manager'
-  subjects: require 'collections/subjects'
+  extSubjects: require 'collections/external_subjects'
 
   nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
 
@@ -23,13 +22,18 @@ class DataSource extends Backbone.AssociatedModel
   fetchData: =>
     if @isExternal()
       url = @manager.get('sources').get(@get('source')).get('url')
-      @data = new @subjects([], {params: @get('params'), url: url })
+      @data = new @extSubjects([], {params: @get('params'), url: url })
       @data.fetch()
+    else if @isZooniverse()
+      console.log 'here'
     else
       throw new Error('unknown source type')
 
   isExternal: =>
     (@get('source_type') is 'external')
+
+  isZooniverse: =>
+    (@get('source_type') is 'zoooniverse')
 
   isInternal: =>
     (@get('source_type') is 'internal')

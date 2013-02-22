@@ -1,6 +1,6 @@
 AppView = require 'app_view'
 Manager = require 'modules/manager'
-User = require 'user'
+User = require 'lib/user'
 
 class Router extends Backbone.Router
   routes:

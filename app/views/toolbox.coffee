@@ -1,8 +1,6 @@
 BaseView = require 'views/base_view'
 Manager = require 'modules/manager'
 SavedList = require 'views/saved_list'
-User = require 'user'
-
 
 class Toolbox extends BaseView
   tagName: 'div'

@@ -1,10 +1,6 @@
 class Sources extends Backbone.Collection
-
-  sync: require 'sync'
-  url: '/endpoints'
-
   initialize: ->
-    @fetch()
+    @add require('config/endpoints_config')
 
   getSources: =>
     @map (source) ->

@@ -1,4 +1,4 @@
-User = require 'user'
+User = require 'lib/user'
 
 class Login extends Backbone.View
   tagName: 'div'

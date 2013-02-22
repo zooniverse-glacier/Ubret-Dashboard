@@ -1,5 +1,5 @@
 class Tool extends Backbone.AssociatedModel
-  sync: require 'sync' 
+  sync: require 'lib/ouroboros_sync' 
   manager: require 'modules/manager'
 
   relations: [

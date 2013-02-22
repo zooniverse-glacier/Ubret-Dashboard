@@ -1,13 +1,11 @@
 AppView = require 'app_view'
 Manager = require 'modules/manager'
-Router = require 'router'
+Router = require 'lib/router'
 Sources = require 'collections/sources'
-User = require 'user'
+User = require 'lib/user'
 
 $(document).on 'ready', ->
   sources = new Sources()
-  sources.fetch()
-
   Manager.set 'sources', sources
 
   User.currentUser().always =>
