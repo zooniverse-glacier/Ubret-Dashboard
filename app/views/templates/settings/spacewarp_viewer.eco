@@ -1,74 +1,72 @@
-<div class='spacewarp-viewer'>
-  <h4>Controls</h4>
+<h4>Controls</h4>
+
+<div class='bands'>
+  <input type='radio' name='band' id='gri' />
+  <label for='gri' data-band='gri'>color</label>
   
-  <div class='bands'>
-    <input type='radio' name='band' id='gri' />
-    <label for='gri' data-band='gri'>color</label>
+  <br/><br/>
+  
+  <input type='radio' name='band' id='u' />
+  <label for='u' data-band='u'>u</label>
+  
+  <input type='radio' name='band' id='g' />
+  <label for='g' data-band='g'>g</label>
+  
+  <input type='radio' name='band' id='r' />
+  <label for='r' data-band='r'>r</label>
+  
+  <input type='radio' name='band' id='i' />
+  <label for='i' data-band='i'>i</label>
+  
+  <input type='radio' name='band' id='z' />
+  <label for='z' data-band='z'>z</label>
+</div>
+
+<div class='parameters color'>
+  <div class='subtitle'>
+    <p>Non-linearity Parameters</p>
+  </div>
+  <input type="range" name="alpha" min="0.01" max="1" step="0.01" value="0.03">
+  <div class='parameter'>&alpha;: 0.03</div>
+  
+  <input type="range" name="Q" min="0.01" max="10" step="0.001" value="1">
+  <div class='parameter'>Q: 1</div>
+  
+  <div class='subtitle'>
+    <p>Color Scale Parameters</p>
+  </div>
+  <input type="range" class='scale red' name="i" min="0" max="2" step="0.01" value="1">
+  <div class='parameter'>R: 1</div>
+  <input type="range" class='scale green' name="r" min="0" max="2" step="0.01" value="1">
+  <div class='parameter'>G: 1</div>
+  <input type="range" class='scale blue' name="g" min="0" max="2" step="0.01" value="1">
+  <div class='parameter'>B: 1</div>
+</div>
+
+<div class='parameters grayscale'>
+  <div class='subtitle'>
+    <p>Stretch Function</p>
+  </div>
+  <div class='stretchfn'>
+    <input type='radio' name='stretch' id='linear' />
+    <label for='linear' data-function='linear'>Linear</label>
     
-    <br/><br/>
+    <input type='radio' name='stretch' id='logarithm' />
+    <label for='logarithm' data-function='logarithm'>Logarithm</label>
     
-    <input type='radio' name='band' id='u' />
-    <label for='u' data-band='u'>u</label>
+    <input type='radio' name='stretch' id='sqrt' />
+    <label for='sqrt' data-function='sqrt'>Square Root</label>
     
-    <input type='radio' name='band' id='g' />
-    <label for='g' data-band='g'>g</label>
+    <input type='radio' name='stretch' id='arcsinh' />
+    <label for='arcsinh' data-function='arcsinh'>Arcsinh</label>
     
-    <input type='radio' name='band' id='r' />
-    <label for='r' data-band='r'>r</label>
-    
-    <input type='radio' name='band' id='i' />
-    <label for='i' data-band='i'>i</label>
-    
-    <input type='radio' name='band' id='z' />
-    <label for='z' data-band='z'>z</label>
+    <input type='radio' name='stretch' id='power' />
+    <label for='power' data-function='power'>Power</label>
   </div>
   
-  <div class='parameters color'>
-    <div class='subtitle'>
-      <p>Non-linearity Parameters</p>
-    </div>
-    <input type="range" name="alpha" min="0.01" max="1" step="0.01" value="0.03">
-    <div class='parameter'>&alpha;: 0.03</div>
-    
-    <input type="range" name="Q" min="0.01" max="10" step="0.001" value="1">
-    <div class='parameter'>Q: 1</div>
-    
-    <div class='subtitle'>
-      <p>Color Scale Parameters</p>
-    </div>
-    <input type="range" class='scale red' name="i" min="0" max="2" step="0.01" value="1">
-    <div class='parameter'>R: 1</div>
-    <input type="range" class='scale green' name="r" min="0" max="2" step="0.01" value="1">
-    <div class='parameter'>G: 1</div>
-    <input type="range" class='scale blue' name="g" min="0" max="2" step="0.01" value="1">
-    <div class='parameter'>B: 1</div>
+  <div class='subtitle'>
+    <p>Scale Parameters</p>
   </div>
-  
-  <div class='parameters grayscale'>
-    <div class='subtitle'>
-      <p>Stretch Function</p>
-    </div>
-    <div class='stretchfn'>
-      <input type='radio' name='stretch' id='linear' />
-      <label for='linear' data-function='linear'>Linear</label>
-      
-      <input type='radio' name='stretch' id='logarithm' />
-      <label for='logarithm' data-function='logarithm'>Logarithm</label>
-      
-      <input type='radio' name='stretch' id='sqrt' />
-      <label for='sqrt' data-function='sqrt'>Square Root</label>
-      
-      <input type='radio' name='stretch' id='arcsinh' />
-      <label for='arcsinh' data-function='arcsinh'>Arcsinh</label>
-      
-      <input type='radio' name='stretch' id='power' />
-      <label for='power' data-function='power'>Power</label>
-    </div>
-    
-    <div class='subtitle'>
-      <p>Scale Parameters</p>
-    </div>
-    <input type="range" class='extent' name="min" min="0" max="1000" step="1" value="0">
-    <input type="range" class='extent' name="max" min="0" max="1000" step="1" value="1000">
-  </div>
+  <input type="range" class='extent' name="min" min="0" max="1000" step="1" value="0">
+  <input type="range" class='extent' name="max" min="0" max="1000" step="1" value="1000">
 </div>
