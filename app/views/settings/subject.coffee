@@ -10,7 +10,7 @@ class SubjectSettings extends BaseView
     'click .nav .next' : 'next'
 
   render: =>
-    @$el.html @template
+    @$el.html @template(@model.toJSON())
     @
 
   #Events
