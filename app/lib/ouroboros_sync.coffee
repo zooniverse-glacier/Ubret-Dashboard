@@ -10,8 +10,9 @@ ouroborosSync = (method, model, options) ->
     "https://dev.zooniverse.org"
   options.url = baseURL + "/projects/#{Manager.get('project')}" + _.result(model, 'url')
   options.crossDomain = true
-  options.beforeSend = (xhr) ->
-    xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{User.current.name}:#{User.current.apiToken}")}"
+  if User.current?
+    options.beforeSend = (xhr) ->
+      xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{User.current.name}:#{User.current.apiToken}")}"
   
   return Backbone.sync(method, model, options)
 

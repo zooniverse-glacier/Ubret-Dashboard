@@ -26,7 +26,7 @@ class Tools extends Backbone.Collection
     _(internalTools).each (tool) =>
       source = tool.sourceTool()
 
-      source.once 'started', ->
+      source?.once 'started', ->
         tool.fetchData()
 
     _(externalTools).each (tool) ->

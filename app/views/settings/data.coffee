@@ -38,6 +38,8 @@ class DataSettings extends BaseView
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
 
+    console.log @intSources
+
     if @model.get('data_source').get('source_type')?
       opts.sourceType = @model.get('data_source').get('source_type')
 
@@ -60,7 +62,7 @@ class DataSettings extends BaseView
   # Fetch the data.
   updateModel: =>
     @model.get('data_source').set 'params', @paramsView.setState()
-    @model.get('data_source').save [],
+    @model.save [],
       success: =>
         @model.fetchData()
       error: =>
@@ -124,6 +126,7 @@ class DataSettings extends BaseView
   updateValidSourceTools: =>
     @intSources = []
     @model.collection?.each (tool) =>
+      console.log tool.isReady()
       if tool.isReady() then @intSources.push { name: tool.get('name'), id: tool.id }
 
 module.exports = DataSettings

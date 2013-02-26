@@ -5,18 +5,22 @@ class DataSource extends Backbone.AssociatedModel
   extSubjects: require 'collections/external_subjects'
 
   nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
+ 
+  idAttribute: "tool_id"
 
   initialize: (opts) ->
     params = opts.params || []
     @set 'params', new Params params
 
   # Server methods
-  parse: (response) ->
+  parse: (response) =>
     response.params = new Params response.params
     return response
 
-  urlRoot: =>
-    "/dashboards/#{@manager.get('dashboardId')}/tools/#{@get('tool_id')}/data_sources"
+  toJSON: =>
+    json = new Object
+    json[key] = value for key, value of @attributes when key isnt 'data'
+    json
 
   # DS API
   fetchData: =>
