@@ -8,7 +8,7 @@ ouroborosSync = (method, model, options) ->
     "http://localhost:3000"
   else 
     "https://dev.zooniverse.org"
-  options.url = baseURL + "/project/#{Manager.get('project')}" + _.result(model, 'url')
+  options.url = baseURL + "/projects/#{Manager.get('project')}" + _.result(model, 'url')
   options.crossDomain = true
   options.beforeSend = (xhr) ->
     xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{User.current.name}:#{User.current.apiToken}")}"
