@@ -38,8 +38,6 @@ class DataSettings extends BaseView
       extSources: Manager.get('sources').getSources()
       intSources: @intSources or []
 
-    console.log @intSources
-
     if @model.get('data_source').get('source_type')?
       opts.sourceType = @model.get('data_source').get('source_type')
 

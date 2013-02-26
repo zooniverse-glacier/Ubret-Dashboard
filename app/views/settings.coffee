@@ -14,25 +14,17 @@ class Settings extends BaseView
 
   initialize: ->
     @listenTo @model, 'change:settings_active', @render
-
-    unless @model?
-      return
-
-    @dataSettings = new DataSettings { model: @model } if @model?
-
     @toolSettings = new Array
-    for setting in ToolSettingsConfig[@model.get('tool_type')]
+    for setting in ToolSettingsConfig[@model.get('tool_type')].settings
       @toolSettings.push new setting { model: @model }
     
   render: =>
     @$el.html @template(@model.toJSON())
     if @model.get 'settings_active'
       @$el.addClass 'active'
-      @assign '.data-settings', @dataSettings
       @$('.settings-group').append setting.render().el for setting in @toolSettings
     else
       @$el.removeClass 'active'
-      @dataSettings.$el.detach()
       setting.$el.detach() for setting in @toolSettings
     @
 
@@ -41,10 +33,10 @@ class Settings extends BaseView
     @model.save('settings_active', !@model.get('settings_active'))
 
   next: =>
-    @toolSettings[0].next()
+    @model.tool.trigger 'next'
 
   prev: =>
-    @toolSettings[0].prev()
+    @model.tool.trigger 'prev'
 
   hideSetting: (e) =>
     @$(e.currentTarget).siblings().slideToggle()

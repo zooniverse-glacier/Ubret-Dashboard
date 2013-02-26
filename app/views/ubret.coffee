@@ -58,7 +58,6 @@ class UbretTool extends BaseView
       @model.save 'selected_keys', key
 
   assignSetting: (setting) =>
-    console.log setting
     @model.get('settings').set setting, {silent: true}
     @model.save()
 

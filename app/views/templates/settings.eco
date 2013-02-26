@@ -1,4 +1,4 @@
-<% if @tool_type in require('config/tool_settings_config')['TitleBarControls']: %>
+<% if require('config/tool_settings_config')[@tool_type].titleBarControls: %>
   <div class="prev title-bar-icon"><%- '<' %> </div>
   <div class="next title-bar-icon"> <%- '>' %></div>
 <% end %>
