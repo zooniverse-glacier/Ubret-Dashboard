@@ -10,11 +10,16 @@ class SpacewarpViewerSettings extends BaseView
     'change input[name="Q"]'        : 'onQChange'
     'change input.scale'            : 'onScaleChange'
     'change input[name="stretch"]'  : 'onStretchChange'
-  
+
+
+  initialize: =>
+    @model.once 'started', =>
+      @model.tool.on 'swviewer:loaded', =>
+        @$el.find('#gri').click()
   
   render: =>
     @$el.html @template()
-    @ 
+    @
   
   onBandChange: (e) =>
     band = e.currentTarget.id
