@@ -21,7 +21,7 @@ class SearchType extends BaseView
 
   # Events
   onSelectType: (e) =>
-    @model.set 'search_type', e.currentTarget.value()
+    @model.set 'search_type', e.currentTarget.value
     @trigger 'change'
 
 module.exports = SearchType

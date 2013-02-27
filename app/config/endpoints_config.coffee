@@ -11,7 +11,7 @@ module.exports = [
         validation: ""
   ,
     name: "Recents"
-    url: (userId) -> "/user/#{userId}/recents"
+    url: (userId) -> "/users/#{userId}/recents"
     params:
       limit:
         type: "Input"
@@ -19,7 +19,7 @@ module.exports = [
         validation: ""
   ,
     name: 'Favorites' 
-    url: (userId) -> "/user/#{userId}/favorites"
+    url: (userId) -> "/users/#{userId}/favorites"
     params:
       limit:
         type: "Input"

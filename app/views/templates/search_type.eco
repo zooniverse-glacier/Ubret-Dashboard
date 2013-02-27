@@ -1,7 +1,7 @@
 <% if @types.length: %>
 <select>
   <% for type, index in @types: %>
-    <option value="<%- index %>" <% if @selectedType is index: %>selected<% end %>>
+    <option value="<%- index %>" <% if parseInt(@selectedType) is index: %>selected<% end %>>
       <button><%- type.name %></button>
     </option>
   <% end %>
