@@ -1,7 +1,7 @@
 <% if @types.length: %>
 <select>
-  <% for type in @types: %>
-    <option value="<%- type.name %>" <% if @selectedType is type.name: %>selected<% end %>>
+  <% for type, index in @types: %>
+    <option value="<%- index %>" <% if @selectedType is index: %>selected<% end %>>
       <button><%- type.name %></button>
     </option>
   <% end %>

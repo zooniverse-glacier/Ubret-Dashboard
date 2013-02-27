@@ -3,6 +3,7 @@ Params = require 'collections/params'
 class DataSource extends Backbone.AssociatedModel
   manager: require 'modules/manager'
   extSubjects: require 'collections/external_subjects'
+  zooSubjects: require 'collections/zooniverse_subjects'
 
   nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
  
@@ -24,12 +25,21 @@ class DataSource extends Backbone.AssociatedModel
 
   # DS API
   fetchData: =>
-    if @isExternal()
+    if @isZooniverse()
+      console.log @get('search_type')
+      url = @manager.get('sources')
+        .get(@get('source'))
+        .get('search_types')[@get('search_type')].url
+      console.log url
+      @data = new @zooSubjects([], 
+        params: @get('params')
+        search_type: @get('search_type')
+        url: url)
+      @data.fetch()
+    else if @isExternal()
       url = @manager.get('sources').get(@get('source')).get('url')
       @data = new @extSubjects([], {params: @get('params'), url: url })
       @data.fetch()
-    else if @isZooniverse()
-      console.log 'here'
     else
       throw new Error('unknown source type')
 
@@ -37,7 +47,7 @@ class DataSource extends Backbone.AssociatedModel
     (@get('source_type') is 'external')
 
   isZooniverse: =>
-    (@get('source_type') is 'zoooniverse')
+    (@get('source') is '1')
 
   isInternal: =>
     (@get('source_type') is 'internal')

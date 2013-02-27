@@ -1,5 +1,33 @@
 module.exports = [
   id: 1
+  name: 'Zooniverse'
+  search_types: [
+    name: "Id"
+    url: (id) -> "/subjects/#{id}"
+    params:
+      id:
+        type: "Input"
+        require: true
+        validation: ""
+  ,
+    name: "Recents"
+    url: (userId) -> "/user/#{userId}/recents"
+    params:
+      limit:
+        type: "Input"
+        require: true
+        validation: ""
+  ,
+    name: 'Favorites' 
+    url: (userId) -> "/user/#{userId}/favorites"
+    params:
+      limit:
+        type: "Input"
+        require: true
+        validation: ""
+  ]
+,
+  id: 2
   name: 'Sky Server'
   url: '/sky_server'
   search_types: [

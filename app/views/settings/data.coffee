@@ -78,7 +78,7 @@ class DataSettings extends BaseView
   onSelectExternalSource: (e) =>
     unless $(e.currentTarget).val() then return
     @model.get('data_source').set 'source', $(e.currentTarget).val()
-    @model.get('data_source').set 'search_type', @getSearchTypes(@model.get('data_source').get('source'))[0].name
+    @model.get('data_source').set 'search_type', 0
 
     @setParams()
     @render()
@@ -105,10 +105,7 @@ class DataSettings extends BaseView
     @getExternalSource(externalSource).get('search_types')
 
   getExternalSourceParams: (externalSource) ->
-    for searchType in @getSearchTypes(externalSource)
-      if searchType.name is @model.get('data_source').get('search_type')
-        return searchType.params
-
+    @getSearchTypes(externalSource)[@model.get('data_source').get('search_type')].params
 
   # Internal path
   showInternal: =>
