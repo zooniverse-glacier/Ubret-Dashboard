@@ -4,7 +4,7 @@ DashboardView = require 'views/dashboard'
 SavedList = require 'views/saved_list'
 MyData = require 'views/my_data'
 DashboardDialog = require 'views/dashboard_dialog'
-User = require 'user'
+User = require 'lib/user'
 
 Manager = require 'modules/manager'
 ToolLoader = require 'modules/tool_loader'
@@ -71,7 +71,7 @@ class AppView extends BaseView
     dataSource = 
       source: 2
       search_type: 1
-      source_type: 'external'
+      source_type: 'zooniverse'
       params: params
 
     tools = []
@@ -141,8 +141,6 @@ class AppView extends BaseView
       @savedListView.collection = User.current.dashboards
       @appFocusView = @savedListView
       @render()
-
-    User.current.syncToSpelunker()
 
   showMyData: =>
     unless @myDataView? then @myDataView = new MyData

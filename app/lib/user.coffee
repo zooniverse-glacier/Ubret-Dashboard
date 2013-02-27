@@ -2,21 +2,22 @@ class User extends Backbone.Events
   @current: null
 
   @apiUrl: =>
-    # if location.port > 1024 then "http://localhost:3000" else "https://spelunker.herokuapp.com"
-    "https://spelunker.herokuapp.com"
-
-  @zooniverseUrl: =>
-    if location.port > 4000 then "dev" else "api"
+    if parseInt(location.port) < 1024
+      "https://api.zooniverse.org"
+    else if parseInt(location.port) is 3333
+      "http://localhost:3000"
+    else
+      "https://dev.zooniverse.org"
 
   @login: ({username, password}) =>
-    url = "https://#{@zooniverseUrl()}.zooniverse.org/login?username=#{username}&password=#{password}&callback=?"
+    url = "#{@apiUrl()}/login?username=#{username}&password=#{password}&callback=?"
     login = $.getJSON(url)
     login.always @createUser
     login.success => User.trigger 'sign-in'
     login
 
   @logout: =>
-    url = "https://#{@zooniverseUrl()}.zooniverse.org/logout?callback=?"
+    url = "#{@apiUrl()}/logout?callback=?"
     logout = $.getJSON(url)
     logout.success =>
       User.current = null
@@ -29,7 +30,7 @@ class User extends Backbone.Events
     logout
 
   @currentUser: =>
-    url = "https://#{@zooniverseUrl()}.zooniverse.org/current_user?callback=?"
+    url = "#{@apiUrl()}/current_user?callback=?"
     current = $.getJSON(url)
     current.always @createUser
     current.always (response) =>
@@ -37,7 +38,7 @@ class User extends Backbone.Events
     current
 
   @signup: ({username, password, email}) =>
-    url = "https://#{@zooniverseUrl()}.zooniverse.org/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
+    url = "#{@apiUrl}/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
     signup = $.getJSON(url)
     signup.always @createUser
     signup.success => User.trigger 'sign-in'
@@ -59,16 +60,15 @@ class User extends Backbone.Events
     @syncToSpelunker()
 
   syncToSpelunker: =>
-    url = "#{User.apiUrl()}/users?zooniverse_id=#{@id}&name=#{@name}&api_token=#{@apiToken}"
+    url = "#{User.apiUrl()}/dashboards"
     $.ajax 
       url: url
       type: 'GET'
       crossDomain: true
       contentType: 'application/json'
       dataType: 'json'
-      cache: false
-      xhrFields:
-        withCredentials: true
+      beforeSend: (xhr) =>
+        xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{@name}:#{@apiToken}")}"
       success: (response) =>
         @dashboards = new Backbone.Collection response.dashboards
         @trigger 'loaded-dashboards'
@@ -80,8 +80,8 @@ class User extends Backbone.Events
       type: 'DELETE'
       crossDomain: true
       cache: false
-      xhrFields:
-        withCredentials: true
+      beforeSend: (xhr) =>
+        xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{@name}:#{@apiToken}")}"
       success: (response) => cb response
 
 module.exports = User

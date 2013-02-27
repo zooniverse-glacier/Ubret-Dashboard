@@ -1,8 +1,8 @@
 Manager = require 'modules/manager'
 
-class SubjectCollection extends Backbone.Collection
+class ExternalSubjectCollection extends Backbone.Collection
   model: require 'models/subject' 
-  sync: require 'sync'
+  sync: require 'lib/endpoints_sync'
 
   initialize: (models=[], options={}) ->
     throw new Error('must provide a url') unless options.url
@@ -44,4 +44,4 @@ class SubjectCollection extends Backbone.Collection
       subject.get('uid') is uid
     @curIndex = @indexOf(curSubject[0])
 
-module.exports = SubjectCollection
+module.exports = ExternalSubjectCollection

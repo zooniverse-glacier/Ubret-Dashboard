@@ -1,7 +1,7 @@
 BaseView = require 'views/base_view'
 Favorites = require 'views/favorites'
 Recents = require 'views/recents'
-User = require 'user'
+User = require 'lib/user'
 
 class MyData extends BaseView
 

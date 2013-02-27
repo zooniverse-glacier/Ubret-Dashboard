@@ -1,5 +1,5 @@
 BaseView = require 'views/base_view'
-User = require 'user'
+User = require 'lib/user'
 
 Sharing = require 'views/sharing'
 

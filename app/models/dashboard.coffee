@@ -1,9 +1,8 @@
 Manager = require 'modules/manager'
 Sources = require 'collections/sources'
-User = require 'user'
 
 class Dashboard extends Backbone.AssociatedModel
-  sync: require 'sync'
+  sync: require 'lib/ouroboros_sync'
   urlRoot: '/dashboards'
 
   relations: [

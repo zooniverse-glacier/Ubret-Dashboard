@@ -1,5 +1,5 @@
 class Tool extends Backbone.AssociatedModel
-  sync: require 'sync' 
+  sync: require 'lib/ouroboros_sync' 
   manager: require 'modules/manager'
 
   relations: [
@@ -25,6 +25,8 @@ class Tool extends Backbone.AssociatedModel
     if @isNew()
       @generatePosition()
       @collection.focus @, false
+      @on 'sync', =>
+        @get('data_source').set 'tool_id', @id
     else
       @get('data_source').set 'tool_id', @id
 
@@ -62,7 +64,7 @@ class Tool extends Backbone.AssociatedModel
     else
       return false unless @get('data_source').get('source')?
       source = @sourceTool()
-      source.isReady()
+      if source? then source.isReady() else false
 
   sourceTool: =>
     @collection.get(@get('data_source').get('source'))
@@ -71,7 +73,7 @@ class Tool extends Backbone.AssociatedModel
     if @get('data_source').isExternal()
       name = @manager.get('sources').get(@get('data_source').get('source')).get('name')
     else if @get('data_source').isInternal()
-      name = @sourceTool().get('name')
+      name = @sourceTool()?.get('name')
     else
       name = ''
     return name

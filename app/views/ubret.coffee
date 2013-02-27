@@ -8,7 +8,7 @@ class UbretTool extends BaseView
     @model.on 'render', @render
 
     @model.once 'started', =>
-      @listenTo @model, 'change:selected_ids', @toolSelectElements
+      @listenTo @model, 'change:selected_uids', @toolSelectElements
       @listenTo @model, 'change:selected_keys', @toolSelectKey
       @listenTo @model, 'change:height, change:width', @render
 
@@ -41,7 +41,7 @@ class UbretTool extends BaseView
       @model.tool.data(@model.get('data_source').data.toJSON())
         .keys(@model.get('data_source').dataKeys())
 
-    @model.tool.selectIds(@model.get('selected_ids'))
+    @model.tool.selectIds(@model.get('selected_uids'))
       .selectKeys(@model.get('selected_keys'))
       .settings(@model.get('settings').toJSON())
       .start()
@@ -50,15 +50,14 @@ class UbretTool extends BaseView
 
   # From Ubret tool to @model
   selectElements: (ids) =>
-    if _.difference(ids, @model.get('selected_ids')).length
-      @model.save 'selected_ids', ids
+    if _.difference(ids, @model.get('selected_uids')).length
+      @model.save 'selected_uids', ids
 
   selectKeys: (key) =>
     if _.difference(key, @model.get('selected_keys')).length
       @model.save 'selected_keys', key
 
   assignSetting: (setting) =>
-    console.log setting
     @model.get('settings').set setting, {silent: true}
     @model.save()
 

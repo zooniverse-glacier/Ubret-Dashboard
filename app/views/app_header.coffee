@@ -1,6 +1,6 @@
 BaseView = require 'views/base_view'
 Manager = require 'modules/manager'
-User = require 'user'
+User = require 'lib/user'
 Login = require 'views/login'
 
 class AppHeader extends BaseView

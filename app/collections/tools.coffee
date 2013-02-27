@@ -2,7 +2,7 @@ Manager = require 'modules/manager'
 
 class Tools extends Backbone.Collection
   model: require('models/tool')
-  sync: require('sync') 
+  sync: require('lib/ouroboros_sync') 
 
   url: =>
     "/dashboards/#{Manager.get('dashboardId')}/tools"
@@ -26,7 +26,7 @@ class Tools extends Backbone.Collection
     _(internalTools).each (tool) =>
       source = tool.sourceTool()
 
-      source.once 'started', ->
+      source?.once 'started', ->
         tool.fetchData()
 
     _(externalTools).each (tool) ->
