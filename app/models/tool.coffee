@@ -2,6 +2,12 @@ class Tool extends Backbone.AssociatedModel
   sync: require 'lib/ouroboros_sync' 
   manager: require 'modules/manager'
 
+  updateFunc:(args...) =>
+    if @id?
+      @save(args...)
+    else
+      @set(args...)
+
   relations: [
     type: Backbone.One
     key: 'data_source'
@@ -30,13 +36,6 @@ class Tool extends Backbone.AssociatedModel
     else
       @get('data_source').set 'tool_id', @id
 
-  fetchData: =>
-    if @get('data_source').isExternal()
-      @get('data_source').fetchData().done => @trigger 'render'
-    else
-      @sourceTool().on 'destroy', => @destroy()
-      @trigger 'render'
-
   generatePosition: ->
     doc_width = $(document).width()
     doc_height = $(document).height()
@@ -54,20 +53,18 @@ class Tool extends Backbone.AssociatedModel
     x = Math.random() * (x_max - x_min) + x_min
     y = Math.random() * (y_max - y_min) + y_min
 
-    @set
+    @updateFunc
       top: y
       left: x
 
-  isReady: =>
-    if @get('data_source').isExternal()
-      @get('data_source').data? and not @get('data_source').data.isEmpty()
-    else
-      return false unless @get('data_source').get('source')?
-      source = @sourceTool()
-      if source? then source.isReady() else false
-
   sourceTool: =>
     @collection.get(@get('data_source').get('source'))
+
+  destroy: =>
+    children = @collection.filter (tool) =>
+      @id is tool.get('data_source').get('source')
+    child.destroy() for child in children
+    super
 
   sourceName: =>
     if @get('data_source').isExternal()

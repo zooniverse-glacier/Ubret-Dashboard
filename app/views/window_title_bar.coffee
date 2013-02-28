@@ -14,14 +14,7 @@ class WindowTitleBar extends BaseView
     'mousedown' : 'startDrag'
 
   initialize: ->
-    unless @model then throw 'must pass a model'
-
-    @model.on
-      'render': @render 
-      'change:name': @render
-
-    if @model.get('data_source').isInternal()
-      @model.sourceTool()?.on 'change:name', @render
+    @model.on 'change:data_source change:name', @render
 
   render: =>
     opts =
@@ -54,7 +47,7 @@ class WindowTitleBar extends BaseView
         @$('.window-title').show()
         @$('input').hide()
       else
-        @model.save 'name', newTitle
+        @model.updateFunc 'name', newTitle
 
 
 module.exports = WindowTitleBar

@@ -33,21 +33,22 @@ class DataSettings extends BaseView
     @paramsView = new ParamsView {collection: @model.get('data_source').get('params')}
 
   render: =>
+    opts = {}
     @paramsView.collection = @model.get('data_source').get('params')
-    opts =
-      extSources: Manager.get('sources').getSources()
-      intSources: @intSources or []
 
     if @model.get('data_source').get('source_type')?
       opts.sourceType = @model.get('data_source').get('source_type')
 
       switch @model.get('data_source').get('source_type')
         when 'external'
+          opts.extSources = Manager.get('sources').getSources()
           if @model.get('data_source').get('source')?
             opts.source = @getExternalSource @model.get('data_source').get('source')
             opts.search_types = opts.source.get('search_types')
             @searchTypeView.set opts.search_types
         when 'internal'
+          @updateValidSourceTools()
+          opts.intSources = @intSources
           if @model.get('data_source').get('source')?
             opts.source = @model.get('data_source').get('source')
 
@@ -60,12 +61,7 @@ class DataSettings extends BaseView
   # Fetch the data.
   updateModel: =>
     @model.get('data_source').set 'params', @paramsView.setState()
-    @model.save [],
-      success: =>
-        @model.fetchData()
-      error: =>
-        console.log 'an error'
-
+    @model.updateFunc()
 
   # External path
   showExternal: =>
@@ -73,19 +69,20 @@ class DataSettings extends BaseView
       'source_type': 'external'
       'source': null
       'search_type': null
+    , {silent: true}
     @render()
 
   onSelectExternalSource: (e) =>
     unless $(e.currentTarget).val() then return
-    @model.get('data_source').set 'source', $(e.currentTarget).val()
-    @model.get('data_source').set 'search_type', 0
+    @model.get('data_source').set 'source', $(e.currentTarget).val(), {silent: true}
+    @model.get('data_source').set 'search_type', 0, {silent: true}
 
     @setParams()
     @render()
 
   onSelectSearchType: (e) =>
     unless e.currentTarget.value? then return
-    @model.get('data_source').set 'search_type', e.currentTarget.value
+    @model.get('data_source').set 'search_type', e.currentTarget.value, {silent: true}
     @setParams()
     @render()
 
@@ -96,7 +93,7 @@ class DataSettings extends BaseView
   setParams: =>
     if @model.get('data_source').get('search_type')?
       @model.get('data_source').get('params').reset()
-      @model.get('data_source').get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @model.get('data_source').get('source')
+      @model.get('data_source').get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @model.get('data_source').get('source'), {silent: true}
 
   getExternalSource: (sourceId) ->
     Manager.get('sources').get(sourceId)
@@ -109,7 +106,7 @@ class DataSettings extends BaseView
 
   # Internal path
   showInternal: =>
-    @model.get('data_source').set 'source_type', 'internal'
+    @model.get('data_source').set 'source_type', 'internal', {silent: true}
     @updateValidSourceTools()
     @render()
 
@@ -117,10 +114,11 @@ class DataSettings extends BaseView
     @model.get('data_source').set
       'source': $(e.currentTarget).val()
       'search_type': null
+    , {silent: true}
 
   updateValidSourceTools: =>
     @intSources = []
-    @model.collection?.each (tool) =>
-      if tool.isReady() then @intSources.push { name: tool.get('name'), id: tool.id }
+    @model.collection.each (tool) =>
+      unless @model is tool then  @intSources.push { name: tool.get('name'), id: tool.id }
 
 module.exports = DataSettings

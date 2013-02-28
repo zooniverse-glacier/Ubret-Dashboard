@@ -129,7 +129,6 @@ class AppView extends BaseView
     @appFocusView = @dashboardView
     @render()
     Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: false}
-    @dashboardModel.get('tools').loadTools()
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   showSaved: =>

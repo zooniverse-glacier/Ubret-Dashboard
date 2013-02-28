@@ -25,49 +25,49 @@ Snapping =
     @snap = true
 
   snapLeft: ->
-    @model.save
+    @model.updateFunc
       top: @dashTop
       left: 0
       height: @dashHeight 
       width: @dashWidth / 2
 
   snapRight: ->
-    @model.save
+    @model.updateFunc
       top: @dashTop
       left: @dashWidth / 2
       height: @dashHeight
       width: @dashWidth / 2
 
   snapFull: ->
-    @model.save
+    @model.updateFunc
       top: @dashTop
       left: 0
       height: @dashHeight
       width: @dashWidth
 
   snapBottomLeft: ->
-    @model.save
+    @model.updateFunc
       top: @dashBottom - (@dashHeight / 2)
       left: 0
       height: @dashHeight / 2
       width: @dashWidth / 2
   
   snapBottomRight: ->
-    @model.save
+    @model.updateFunc
       top: @dashBottom - (@dashHeight / 2)
       left: @dashWidth / 2
       height: @dashHeight / 2
       width: @dashWidth / 2
 
   snapTopLeft: ->
-    @model.save
+    @model.updateFunc
       top: @dashTop
       left: 0
       height: @dashHeight / 2
       width: @dashWidth / 2
 
   snapTopRight: ->
-    @model.save
+    @model.updateFunc
       top: @dashTop
       left: @dashWidth / 2
       height: @dashHeight / 2

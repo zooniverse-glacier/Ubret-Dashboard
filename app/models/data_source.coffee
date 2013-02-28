@@ -1,22 +1,19 @@
-Params = require 'collections/params'
-
 class DataSource extends Backbone.AssociatedModel
   manager: require 'modules/manager'
   extSubjects: require 'collections/external_subjects'
   zooSubjects: require 'collections/zooniverse_subjects'
 
-  nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
- 
+  relations: [
+    type: Backbone.Many
+    key: 'params'
+    relatedModel: require 'models/param'
+    collectionType: require 'collections/params'
+  ]
+
+  defaults:
+    params: []
+
   idAttribute: "tool_id"
-
-  initialize: (opts) ->
-    params = opts.params || []
-    @set 'params', new Params params
-
-  # Server methods
-  parse: (response) =>
-    response.params = new Params response.params
-    return response
 
   toJSON: =>
     json = new Object
@@ -24,20 +21,18 @@ class DataSource extends Backbone.AssociatedModel
     json
 
   # DS API
-  fetchData: =>
+  data: =>
     if @isZooniverse()
       url = @manager.get('sources')
         .get(@get('source'))
         .get('search_types')[@get('search_type')].url
-      @data = new @zooSubjects([], 
+      new @zooSubjects([], 
         params: @get('params')
         search_type: @get('search_type')
         url: url)
-      @data.fetch()
     else if @isExternal()
       url = @manager.get('sources').get(@get('source')).get('url')
-      @data = new @extSubjects([], {params: @get('params'), url: url })
-      @data.fetch()
+      new @extSubjects([], {params: @get('params'), url: url })
     else
       throw new Error('unknown source type')
 
@@ -49,14 +44,5 @@ class DataSource extends Backbone.AssociatedModel
 
   isInternal: =>
     (@get('source_type') is 'internal')
-
-  dataKeys: =>
-    unless @data?
-      return []
-
-    keys = new Array
-    for key, value of @data.toJSON()[0]
-      keys.push key unless key in @nonDisplayKeys
-    return keys
 
 module.exports = DataSource

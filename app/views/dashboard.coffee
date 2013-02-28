@@ -38,7 +38,6 @@ class DashboardView extends BaseView
     toolWindow = new ToolWindow
       model: tool
     @$el.append toolWindow.render().el
-    toolWindow.postDashboardAppend()
 
   removeTools: =>
     while @model.get('tools').length
