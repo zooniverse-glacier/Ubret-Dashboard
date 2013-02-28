@@ -57,9 +57,8 @@ class User extends Backbone.Events
     @name = options.name
     @id = options.id
     @apiToken = options.api_key
-    @syncToSpelunker()
 
-  syncToSpelunker: =>
+  getDashboards: =>
     url = "#{User.apiUrl()}/dashboards"
     $.ajax 
       url: url
@@ -70,7 +69,7 @@ class User extends Backbone.Events
       beforeSend: (xhr) =>
         xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{@name}:#{@apiToken}")}"
       success: (response) =>
-        @dashboards = new Backbone.Collection response.dashboards
+        @dashboards = new Backbone.Collection response
         @trigger 'loaded-dashboards'
 
   removeDashboard: (id, cb) =>

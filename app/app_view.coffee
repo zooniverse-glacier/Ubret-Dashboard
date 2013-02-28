@@ -64,13 +64,11 @@ class AppView extends BaseView
     return @dashboardModel
 
   createDashboardFromZooid: (name, zooid, settings) ->
-    params = [ {key: 'project', val: Manager.get('project')},
-               {key: 'id', val: zooid},
-               {key: 'api', val: if location.port < 1024 then 'api' else 'dev'} ]
+    params = [ {key: 'id', val: zooid} ]
 
     dataSource = 
-      source: 2
-      search_type: 1
+      source: 1
+      search_type: 0
       source_type: 'zooniverse'
       params: params
 
@@ -136,11 +134,11 @@ class AppView extends BaseView
 
   showSaved: =>
     unless @savedListView? then @savedListView = new SavedList
-
     User.current.once 'loaded-dashboards', =>
       @savedListView.collection = User.current.dashboards
       @appFocusView = @savedListView
       @render()
+    User.current.getDashboards()
 
   showMyData: =>
     unless @myDataView? then @myDataView = new MyData
