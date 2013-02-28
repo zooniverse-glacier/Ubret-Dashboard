@@ -67,9 +67,9 @@ class AppView extends BaseView
     params = [ {key: 'id', val: zooid} ]
 
     dataSource = 
-      source: 1
+      source: '1'
       search_type: 0
-      source_type: 'zooniverse'
+      source_type: 'external'
       params: params
 
     tools = []
