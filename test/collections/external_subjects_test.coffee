@@ -1,6 +1,6 @@
-Subjects = require 'collections/subjects'
+Subjects = require 'collections/external_subjects'
 Params = require 'collections/params'
-describe 'Subjects', ->
+describe 'External Subjects', ->
   beforeEach ->
     @params = new Params [
       {key: 'ra', val: 177.7}

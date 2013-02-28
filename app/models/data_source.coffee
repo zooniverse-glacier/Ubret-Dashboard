@@ -31,6 +31,7 @@ class DataSource extends Backbone.AssociatedModel
         search_type: @get('search_type')
         url: url)
     else if @isExternal()
+      console.log 'here'
       url = @manager.get('sources').get(@get('source')).get('url')
       new @extSubjects([], {params: @get('params'), url: url })
     else
