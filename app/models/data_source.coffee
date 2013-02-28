@@ -26,11 +26,9 @@ class DataSource extends Backbone.AssociatedModel
   # DS API
   fetchData: =>
     if @isZooniverse()
-      console.log @get('search_type')
       url = @manager.get('sources')
         .get(@get('source'))
         .get('search_types')[@get('search_type')].url
-      console.log url
       @data = new @zooSubjects([], 
         params: @get('params')
         search_type: @get('search_type')

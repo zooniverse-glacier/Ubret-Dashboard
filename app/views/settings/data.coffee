@@ -121,7 +121,6 @@ class DataSettings extends BaseView
   updateValidSourceTools: =>
     @intSources = []
     @model.collection?.each (tool) =>
-      console.log tool.isReady()
       if tool.isReady() then @intSources.push { name: tool.get('name'), id: tool.id }
 
 module.exports = DataSettings

@@ -20,8 +20,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     unless User.current?
       throw new Error('must be logged in to retrieve subjecst from Zooniverse') 
 
-    console.log options
-
     @base = options.url
     @type = options.search_type
     @params = new Object
@@ -54,7 +52,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     model.ra = subject.coords[0]
     model.dec = subject.coords[1]
     model.absolute_size = subject.metadata.absolute_size
-    console.log subject.metadata.mag?
     if subject.metadata.mag?
       model[key] = value for key, value of subject.metadata.mag
     model.petrorad_50_r = subject.metadata.petrorad_50_r

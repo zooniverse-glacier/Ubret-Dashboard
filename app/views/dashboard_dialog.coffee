@@ -10,7 +10,6 @@ class DashboardDialog extends BaseView
   template: require './templates/dashboard_dialog'
 
   initialize: (options) ->
-    console.log 'here'
     @parent = options.parent
     @selected = Manager.get('project')
 
