@@ -1,9 +1,9 @@
 BaseView = require 'views/base_view'
-Manager = require 'modules/manager'
-User = require 'lib/user'
-Login = require 'views/login'
 
 class AppHeader extends BaseView
+  user: require 'lib/user'
+  loginBar: require 'views/login'
+
   template: require './templates/layout/header'
 
   events:
@@ -18,16 +18,16 @@ class AppHeader extends BaseView
     'router:myData' : 'onViewMyData'
 
   initialize: ->
-    User.on 
+    @user.on 
       'sign-in': @render
       'sign-out': @render
-    @login = new Login
+    @login = new @loginBar
 
   render: =>
     @$el.html @template()
-    if @id then @$('.current').attr 'href', '/#/dashboards/' + @id
+    if @dashId then @$('.current').attr 'href', '/#/dashboards/' + @dashId
 
-    if User.current? 
+    if @user.current? 
       @$('.create-dashboard').removeAttr 'disabled'
       @$('.fork-dashboard').show() if @isForkable()
     else
@@ -65,7 +65,7 @@ class AppHeader extends BaseView
     Backbone.Mediator.publish 'dashboard:fork'
 
   updateLink: (model) =>
-    @id = model.id
+    @dashId = model.id
     @render()
 
   # Helpers
