@@ -62,12 +62,8 @@ class ToolWindow extends BaseView
     @assign
       '.title-bar': @titleBar
       '.settings': @settings
+      '.tool-container': @ubretView
     @
-
-
-  # Events
-  postDashboardAppend: =>
-    @assign '.tool-container', @ubretView
 
   removeWindow: =>
     @settings.remove()
@@ -150,7 +146,7 @@ class ToolWindow extends BaseView
     @resizing = false
     $(document).off 'mousemove mouseup'
 
-    @model.save
+    @model.updateFunc
       left: @$el.css('left')
       top: @$el.css('top')
       width: @$el.css('width')
@@ -186,7 +182,7 @@ class ToolWindow extends BaseView
       @setSnap e.pageX, e.pageY
       @ubretView.render()
     else
-      @model.save
+      @model.updateFunc
         left: e.pageX - @relX
         top: e.pageY - @relY
 

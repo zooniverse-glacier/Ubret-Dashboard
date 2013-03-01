@@ -1,5 +1,5 @@
 DataSource = require 'models/data_source'
-Subjects = require 'collections/subjects'
+Subjects = require 'collections/external_subjects'
 Backbone = window.Backbone
 
 describe 'DataSource', ->

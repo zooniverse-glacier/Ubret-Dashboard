@@ -30,7 +30,7 @@ class Settings extends BaseView
 
   # Events
   toggleState: =>
-    @model.save('settings_active', !@model.get('settings_active'))
+    @model.updateFunc('settings_active', !@model.get('settings_active'))
 
   next: =>
     @model.tool.trigger 'next'
