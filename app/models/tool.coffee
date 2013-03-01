@@ -65,7 +65,8 @@ class Tool extends Backbone.AssociatedModel
 
   destroy: =>
     children = @collection.filter (tool) =>
-      @id is tool.get('data_source').get('source')
+      @id is tool.get('data_source').get('source') and 
+        tool.get('data_source').isInternal()
     child.destroy() for child in children
     super
 

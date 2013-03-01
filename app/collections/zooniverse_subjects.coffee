@@ -1,40 +1,38 @@
-Manager = require 'modules/manager'
-User = require 'lib/user'
-
 class ZooniverseSubjectCollection extends Backbone.Collection
+  manager: require 'modules/manager'
+  user: require('lib/user').current
   model: require 'models/subject'
   sync: require 'lib/ouroboros_sync'
 
-  parse: (response) ->
-    if _.isFunction(@[Manager.get('project')])
-      if _.isArray(response)
-        _(response).chain()
-          .map((sub) -> sub.subjects[0])
-          .map(@[Manager.get('project')]).value()
-      else
-        _([response]).map(@[Manager.get('project')])
-    else
-      response
-
   initialize: (models=[], options={}) ->
-    unless User.current?
-      throw new Error('must be logged in to retrieve subjecst from Zooniverse') 
-
     @base = options.url
     @type = options.search_type
-    @params = new Object
 
     if @type is 0
       @id = options.params.find((param) => param.get('key') is 'id').get('val')
     else if options.params? and options.params.length
+      @params = new Object
       options.params.each (param) =>
         @params[param.get('key')] = param.get('val')
+
+  parse: (response) ->
+    if _.isFunction(@[@manager.get('project')])
+      if _.isArray(response)
+        _(response).chain()
+          .map((sub) -> sub.subjects[0])
+          .map(@[@manager.get('project')]).value()
+      else
+        _([response]).map(@[@manager.get('project')])
+    else
+      response
 
   url: =>
     if @type is 0
       @base(@id)
     else
-      @base(User.current.id) + '?' + @processParams()
+      unless @user?
+        throw new Error('Must be logged in to retrieve your recents or favorites')
+      @base(@user.id) + '?' + @processParams()
 
   processParams: =>
     params = new Array
@@ -60,5 +58,3 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     model
 
 module.exports = ZooniverseSubjectCollection
-
-

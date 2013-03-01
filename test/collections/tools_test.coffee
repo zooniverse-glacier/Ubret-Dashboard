@@ -20,43 +20,18 @@ describe 'Tools', ->
     beforeEach ->
       @tool = @tools.at(0)
       @highestTool = @tools.at(2)
-      @saveSpy = sinon.spy(@tool, 'save')
-      @setSpy = sinon.spy(@tool, 'set')
+      @updateSpy = sinon.spy(@tool, "updateFunc")
 
     it 'should set the tool\'s zindex if the tool does not have the highest zindex ', ->
       @tools.focus(@tool)
       expect(@tool.attributes).to.have.property('zindex')
         .that.is.a('number')
         .and.is.equal(4)
+      expect(@updateSpy).to.have.been.called
 
     it 'should not set the tool\'s zindex if the tool already has the highest zindex', ->
       @tools.focus(@highestTool)
       expect(@highestTool.attributes).to.have.property('zindex')
         .that.is.a('number')
         .and.is.equal(3)
-      expect(@saveSpy).to.not.have.been.called
-      expect(@setSpy).to.not.have.been.called
-
-    it 'should save the tool', ->
-      @tools.focus(@tool)
-      expect(@saveSpy).to.have.been.called
-
-    it 'should not save when false is passed', ->
-      @tools.focus(@tool, false)
-      expect(@saveSpy).to.not.have.been.called
-
-  describe '#loadTools', ->
-    # I actually have no idea how to even start testing this
-
-  # describe '#setDataSource', ->
-  #   beforeEach ->
-  #     @tool = @tools.at(0)
-  #     @tool.get('dataSource').set { type: 'internal', source: 'table-3' }, {silent: true}
-
-  #   it 'should set the source tool for an internal tool', ->
-  #     @tools.setDataSource(@tool)
-  #     expect(@tool.get('dataSource')).to.have.property('source', @tools.at(3))
-
-
-
-
+      expect(@updateSpy).to.not.have.been.called

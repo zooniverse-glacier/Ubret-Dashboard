@@ -12,6 +12,7 @@ describe 'Tool', ->
         source_type: "external"
         source: 1
     ,
+      id: 2
       tool_type: 'Table'
       data_source:
         source: 1
@@ -52,7 +53,7 @@ describe 'Tool', ->
 
   describe "#destroy", ->
     it 'should call destory on any child tools', ->
-      destorySpy = sinon.spy(@tool2, "destroy")
+      destroySpy = sinon.spy(@tool2, "destroy")
       @tool.destroy()
       expect(destroySpy).to.have.been.called
 
@@ -67,4 +68,3 @@ describe 'Tool', ->
       saveSpy = sinon.spy(@tool, "save")
       @tool.updateFunc "test", 1
       expect(saveSpy).to.have.been.called
-

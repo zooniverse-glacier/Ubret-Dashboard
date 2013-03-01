@@ -7,7 +7,7 @@ class Tools extends Backbone.Collection
   url: =>
     "/dashboards/#{Manager.get('dashboardId')}/tools"
 
-  focus: (tool, save = true) ->
+  focus: (tool) ->
     if @length is 0
       tool.updateFunc {zindex: 1}
       return
