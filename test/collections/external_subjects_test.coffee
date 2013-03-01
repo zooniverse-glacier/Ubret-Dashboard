@@ -15,6 +15,10 @@ describe 'External Subjects', ->
     fn = -> new Subjects
     expect(fn).to.throw()
 
+  describe "#processParams", =>
+    it 'should create a query string from params', ->
+      expect(@subjects.processParams()).to.be("ra=177.7&dec=0.0")
+
   describe '#url', ->
     beforeEach ->
       @url = @subjects.url()

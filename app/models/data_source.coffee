@@ -15,16 +15,10 @@ class DataSource extends Backbone.AssociatedModel
 
   idAttribute: "tool_id"
 
-  toJSON: =>
-    json = new Object
-    json[key] = value for key, value of @attributes when key isnt 'data'
-    json
-
   # DS API
   data: =>
     if @isZooniverse()
-      url = @manager.get('sources')
-        .get(@get('source'))
+      url = @manager.get('sources').get('1')
         .get('search_types')[@get('search_type')].url
       new @zooSubjects([], 
         params: @get('params')
