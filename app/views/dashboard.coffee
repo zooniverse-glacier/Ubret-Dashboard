@@ -1,9 +1,8 @@
 BaseView = require 'views/base_view'
-Tools = require 'collections/tools'
-Toolbox = require 'views/toolbox'
-ToolWindow = require 'views/tool_window'
 
 class DashboardView extends BaseView
+  toolbox: require 'views/toolbox'
+  toolWindow: require 'views/tool_window'
   template: require './templates/layout/dashboard'
 
   subscriptions:
@@ -15,7 +14,7 @@ class DashboardView extends BaseView
     'mousedown .tool-window': 'focusWindow'
 
   initialize: ->
-    @toolboxView = new Toolbox
+    @toolboxView = new @toolbox
     @toolboxView.on
       'create': @addToolModel
       'remove-tools': @removeTools
@@ -35,7 +34,7 @@ class DashboardView extends BaseView
     @model.createTool type
 
   addTool: (tool) =>
-    toolWindow = new ToolWindow
+    toolWindow = new @toolWindow
       model: tool
     @$el.append toolWindow.render().el
 
