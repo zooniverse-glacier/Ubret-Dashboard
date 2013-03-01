@@ -60,7 +60,8 @@ describe 'Zooniverse Subjects', ->
     context 'when search for favorites or recents', ->
       context 'when a user is logged in', ->
         beforeEach ->
-          @favsSubjects.user = {id: 1, apiToken: 2}
+          @favsSubjects.user = 
+            current: {id: 1, apiToken: 2}
           @processSpy = sinon.spy(@favsSubjects, 'processParams')
           @baseSpy = sinon.spy(@favsSubjects, 'base')
           @url = @favsSubjects.url()

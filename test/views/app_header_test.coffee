@@ -72,10 +72,16 @@ describe "App Header", ->
       expect(templateSpy).to.have.been.called
       expect(htmlSpy).to.have.been.called
 
-    it 'should call removeActive' , ->
-      rmaSpy = sinon.spy(@appHeader, 'removeActive')
+    it 'should set the active view', ->
+      @appHeader.active = 'current'
       @appHeader.render()
-      expect(rmaSpy).to.have.been.called
+      expect(@appHeader.$('li a.current')).to.have.class 'active'
+      @appHeader.active = 'saved'
+      @appHeader.render()
+      expect(@appHeader.$('li a.my-dashboards')).to.have.class 'active'
+      @appHeader.active = 'mydata'
+      @appHeader.render()
+      expect(@appHeader.$('li a.my-data')).to.have.class 'active'
 
     context "when a dashId is defined", ->
       it 'should set the href of .current to dashId', ->
@@ -105,7 +111,6 @@ describe "App Header", ->
         expect(@appHeader.$('.fork-dashboard')).to.not.have.css('display', 'none')
         location.hash = ""
 
-      it 'should hide fork dashbaord when not forkable', ->
-        console.log @appHeader.$('.fork-dashboard')
-        expect(@appHeader.$('.fork-dashboard')).to.have.css('display', 'none')
-
+      it 'should hide fork dashboord when not forkable', ->
+        @appHeader.render()
+        expect(@appHeader.$('.fork-dashboard')).to.be.hidden
