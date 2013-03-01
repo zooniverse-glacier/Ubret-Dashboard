@@ -19,16 +19,6 @@ class DataSettings extends BaseView
 
   initialize: ->
     # An allowance for not having the UI block on tool creation.
-    if @model.isNew()
-      @model.once 'sync', =>
-        Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", =>
-          @updateValidSourceTools()
-          @render()
-    else
-      Backbone.Mediator.subscribe "#{@model.get('id')}:dataFetched", =>
-        @updateValidSourceTools()
-        @render()
-
     @searchTypeView = new SearchTypeView({model: @model.get('data_source')})
     @paramsView = new ParamsView {collection: @model.get('data_source').get('params')}
 
@@ -60,8 +50,7 @@ class DataSettings extends BaseView
 
   # Fetch the data.
   updateModel: =>
-    @model.get('data_source').set 'params', @paramsView.setState()
-    @model.updateFunc()
+    @model.updateFunc 'data_source:params', @paramsView.setState()
 
   # External path
   showExternal: =>

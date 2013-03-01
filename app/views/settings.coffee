@@ -16,7 +16,6 @@ class Settings extends BaseView
     @listenTo @model, 'change:settings_active', @render
     @toolSettings = new Array
     for setting in ToolSettingsConfig[@model.get('tool_type')].settings
-      console.log setting
       @toolSettings.push new setting { model: @model }
     
   render: =>
