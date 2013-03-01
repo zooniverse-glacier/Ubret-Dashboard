@@ -11,20 +11,20 @@ class UbretTool extends BaseView
     @model.tool.on 'selection', @selectElements
     @model.tool.on 'keys-selection', @selectKeys
     @model.tool.on 'update-setting', @assignSetting
+    @model.tool.on 'data-received', @render
     @drawTool()
 
     @model.get('data_source').on 'change', @drawTool
-    @model.get('data_source').on 'change', @render
     @model.on 'change:height change:width', @render
 
   render: =>
     @$el.addClass @model.get('tool_type')
     @$el.attr 'id', "#{@model.get('tool_type')}-#{@model.cid}"
-    try 
+    unless _.isEmpty(@model.tool.opts.data)
       @$('.no-data').remove()
-      @setHeight()
+      @model.tool.opts.height = parseInt(@model.get('height'))
       @model.tool.start()
-    catch e
+    else
       @$el.append @noDataTemplate()
     @
 
@@ -35,8 +35,8 @@ class UbretTool extends BaseView
       @model.tool.removeParentTool()
       data = @model.get('data_source').data()
       data.fetch().done =>
-        @model.tool.data(data.toJSON())
-          .keys(@dataKeys(data)).start()
+        @model.tool.keys(@dataKeys(data))
+          .data(data.toJSON())
 
     @model.tool.selectIds(@model.get('selected_uids'))
       .selectKeys(@model.get('selected_keys'))
@@ -56,9 +56,6 @@ class UbretTool extends BaseView
   assignSetting: (setting) =>
     @model.get('settings').set setting, {silent: true}
     @model.updateFunc() if @model.get('settings').hasChanged()
-
-  setHeight: =>
-    @model.tool.opts.height = parseInt(@model.get('height'))
 
   # Helper
   dataKeys: (data) =>
