@@ -13,7 +13,9 @@
   },
   "scripts": {
 	  "start": "brunch watch --server",
-	  "test": "brunch test"
+    "pretest" : "brunch watch --server --port 3010 & echo $! > ./brunch.pid",
+    "test" : "sleep 6; mocha-phantomjs http://localhost:3010/test",
+    "posttest" : "kill `cat brunch.pid`; rm brunch.pid"
   },
   "dependencies": {
 	  "javascript-brunch": ">= 1.0 < 1.5",
@@ -35,6 +37,7 @@
     "sinon" : "1.4.2",
     "jsdom" : "0.2.18",
     "chai-jquery": "1.1.0",
-    "xmlhttprequest" : "1.5.0"
+    "xmlhttprequest" : "1.5.0",
+    "mocha-phantomjs" : "2.0.0"
   }
 }
