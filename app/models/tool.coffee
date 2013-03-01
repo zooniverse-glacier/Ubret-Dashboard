@@ -58,7 +58,10 @@ class Tool extends Backbone.AssociatedModel
       left: x
 
   sourceTool: =>
-    @collection.get(@get('data_source').get('source'))
+    if @get('data_source').isInternal()
+      @collection.get(@get('data_source').get('source'))
+    else
+      false
 
   destroy: =>
     children = @collection.filter (tool) =>

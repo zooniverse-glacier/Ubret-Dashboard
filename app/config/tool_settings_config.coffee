@@ -10,7 +10,7 @@ settings =
 
 module.exports = 
   "Histogram" : 
-    settings: [settings.data, settings.graph, settings.bin]
+    settings: [settings.data, settings.graph, settings.bins]
   "Scatterplot" : 
     settings: [settings.data, settings.graph]
   "Statistics" : 

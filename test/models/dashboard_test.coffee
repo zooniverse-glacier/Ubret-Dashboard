@@ -19,4 +19,23 @@ describe 'Dashboard', ->
       expect(spy).to.have.been.calledWith({tool_type: 'table'})
 
   describe '#fork', ->
-    # Don't know yet.
+    beforeEach ->
+      @xhr = sinon.useFakeXMLHttpRequest()
+      @requests = []
+      @xhr.onCreate = (xhr) =>
+        @requests.push xhr
+      @dashboard.id = 1
+      @dashboard.user.current = new Object
+      @dashboard.user.current.id = 1
+      @dashboard.user.current.apiToken = 2
+      @dashboard.fork()
+
+    it 'should have made a request to the server', ->
+      expect(@requests).to.have.length(1)
+      expect(@requests[0].method).to.be("POST")
+      expect(@requests[0].url)
+        .to.be("https://dev.zooniverse.org/dashboards/1/fork")
+
+
+
+    

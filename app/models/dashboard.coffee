@@ -1,9 +1,9 @@
 Manager = require 'modules/manager'
-Sources = require 'collections/sources'
 
 class Dashboard extends Backbone.AssociatedModel
   sync: require 'lib/ouroboros_sync'
   urlRoot: '/dashboards'
+  user: require 'lib/user'
 
   relations: [
     type: Backbone.Many
@@ -28,13 +28,19 @@ class Dashboard extends Backbone.AssociatedModel
       tool_type: type
 
   fork: =>
-    url = if location.port < 1024 then "https://spelunker.herokuapp.com" else "http://localhost:3000"
+    url = if parseInt(location.port) < 1024 
+      "https://api.zooniverse.org" 
+    else if parseInt(location.port) is 3333 
+      "http://localhost:3000"
+    else
+      "https://dev.zooniverse.org"
     url = "#{url}#{@urlRoot}/#{@id}/fork"
     $.ajax url,
       type: 'POST'
       crossDomain: true
       dataType: 'json'
-      xhrFields:
-        withCredentials: true
+      beforeSend: (xhr) =>
+        xhr.setRequestHeader 'Authorization', 
+          "Basic #{btoa("#{@user.current.name}:#{@user.current.apiToken}")}"
 
 module.exports = Dashboard
