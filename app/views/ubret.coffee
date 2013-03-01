@@ -14,7 +14,7 @@ class UbretTool extends BaseView
     @model.tool.on 'data-received', @render
     @drawTool()
 
-    @model.get('data_source').on 'change', @drawTool
+    @model.on 'data-source-ready', @drawTool
     @model.on 'change:height change:width', @render
 
   render: =>

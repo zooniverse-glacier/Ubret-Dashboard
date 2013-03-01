@@ -1,6 +1,6 @@
 class ZooniverseSubjectCollection extends Backbone.Collection
   manager: require 'modules/manager'
-  user: require('lib/user').current
+  user: require('lib/user')
   model: require 'models/subject'
   sync: require 'lib/ouroboros_sync'
 
@@ -30,7 +30,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     if @type is 0
       @base(@id)
     else
-      unless @user?
+      unless @user.current?
         throw new Error('Must be logged in to retrieve your recents or favorites')
       @base(@user.id) + '?' + @processParams()
 
