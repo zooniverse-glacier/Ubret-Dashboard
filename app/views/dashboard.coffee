@@ -39,9 +39,7 @@ class DashboardView extends BaseView
     @$el.append toolWindow.render().el
 
   removeTools: =>
-    while @model.get('tools').length
-      @model.get('tools').first().destroy()
-    @model.save()
+    @model.get('tools').each (tool) -> tool.destroy()
 
   onDashboardInit: (@model) =>
     @toolboxView.model = @model

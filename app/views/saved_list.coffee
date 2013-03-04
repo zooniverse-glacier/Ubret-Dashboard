@@ -1,11 +1,10 @@
 BaseView = require 'views/base_view'
-User = require 'lib/user'
-
-Sharing = require 'views/sharing'
 
 class SavedList extends BaseView
   itemTemplate: require './templates/saved_dashboards/item'
   listTemplate: require './templates/saved_dashboards/list'
+  user: require 'lib/user'
+  sharing: require 'views/sharing'
 
   events:
     'click a.delete': 'deleteDashboard'
@@ -23,7 +22,7 @@ class SavedList extends BaseView
         name: dashboard.get('name')
         lastModified: new Date(dashboard.get('updated_at')).toLocaleString()
       if typeof @sharers[dashboard.id] is 'undefined'
-        @sharers[dashboard.id] = new Sharing {model: dashboard}
+        @sharers[dashboard.id] = new @sharing {model: dashboard}
       @$el.find('.dashboards').append @itemTemplate(item)
     @
 
@@ -42,7 +41,7 @@ class SavedList extends BaseView
     id = e.currentTarget.dataset.id
     @collection.remove id
     delete @sharers[id]
-    User.current.removeDashboard id, ->
+    @user.current.removeDashboard id, ->
       $(e.currentTarget).parents().eq(3).remove()
 
 module.exports = SavedList

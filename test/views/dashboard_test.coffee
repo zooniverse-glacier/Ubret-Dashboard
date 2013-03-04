@@ -52,12 +52,20 @@ describe 'Dashboard View', ->
 
   describe '#addTool', ->
     it 'create a tool window and render it', ->
-      toolWindow = sinon.mock({render: -> console.log "this shouldn't be called"})
-        .expects("render").returns { el: 'something' }
+      toolWindow = new Backbone.View
+      sinon.mock(toolWindow).expects("render").returns { el: "something" }
       toolWindowConstructor = sinon.stub(@dashboardView, 'toolWindow').returns(toolWindow)
       appendSpy = sinon.spy(@dashboardView.$el, 'append')
       @dashboardView.addTool {an: 'OBJECT!'}
-      expect(appendSpy).to.have.been.calledWith({el: 'something'})
+      expect(appendSpy).to.have.been.calledWith('something')
 
-    
-    
+  describe '#removeTools', ->
+    it 'should remove all tools', ->
+      tool = @dashboardView.model.get('tools').at(0)
+      destroyStub = sinon.stub(tool, 'destroy')
+      tool2 = @dashboardView.model.get('tools').at(1)
+      destroyStub2 = sinon.stub(tool2, 'destroy')
+
+      @dashboardView.removeTools()
+      expect(destroyStub).to.have.been.called
+      expect(destroyStub2).to.have.been.called
