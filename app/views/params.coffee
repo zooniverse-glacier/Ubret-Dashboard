@@ -6,6 +6,7 @@ SelectView = require 'views/params/select'
 EmptyView = require 'views/params/empty'
 HiddenView = require 'views/params/hidden'
 CheckboxView = require 'views/params/checkbox'
+TextboxView = require 'views/params/textbox'
 
 class Params extends BaseView
   initialize: ->
@@ -20,6 +21,7 @@ class Params extends BaseView
         when 'Select' then paramView = new SelectView({model: param})
         when 'Hidden' then paramView = new HiddenView({model: param})
         when 'Checkbox' then paramView = new CheckboxView({model: param})
+        when 'Textbox' then paramView = new TextboxView({model: param})
         else
           paramView = new EmptyView({model: param}) # Sort of temporary
 

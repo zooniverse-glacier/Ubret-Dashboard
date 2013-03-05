@@ -43,7 +43,9 @@ class DashboardView extends BaseView
 
   onDashboardInit: (@model) =>
     @toolboxView.model = @model
+    @model.get('tools').each (tool) -> tool.createUbretTool()
     @render()
+    @model.get('tools').each (tool) -> tool.setupUbretTool()
     @model.on
       'add:tools': @addTool
       'reset:tools': @removeTools

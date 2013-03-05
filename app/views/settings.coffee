@@ -17,6 +17,7 @@ class Settings extends BaseView
     @toolSettings = new Array
     for setting in ToolSettingsConfig[@model.get('tool_type')].settings
       @toolSettings.push new setting { model: @model }
+
     
   render: =>
     @$el.html @template(@model.toJSON())
@@ -25,7 +26,7 @@ class Settings extends BaseView
       @$('.settings-group').append setting.render().el for setting in @toolSettings
     else
       @$el.removeClass 'active'
-      setting.$el.detach() for setting in @toolSettings
+      setting.remove() for setting in @toolSettings
     @
 
   # Events
