@@ -1,7 +1,6 @@
 class Tool extends Backbone.AssociatedModel
   sync: require 'lib/ouroboros_sync' 
   manager: require 'modules/manager'
-  nonDisplayKeys: ['id', 'uid', 'image', 'thumb']
 
   updateFunc:(args...) =>
     if @id?
@@ -41,14 +40,17 @@ class Tool extends Backbone.AssociatedModel
     @tool = (new Ubret[@get('tool_type')])
       .selector("#" + @get('tool_type') + "-" + @cid)
       .height(parseInt(@get('height')) - 25)
+      .width(parseInt(@get('width')))
 
     @tool.on 
-      'keys-received': @publishKeys
+      'keys': @publishKeys
       'selection': @selectElements
       'keys-selection': @selectKeys
-      'update-setting': @assignSetting
+      'settings': @assignSetting
 
-    @on 'change:height', => @tool.height(parseInt(@get('height')) - 25)
+    @on 
+      'change:height' : => @tool.height(parseInt(@get('height')) - 25)
+      'change:width' : => @tool.width(parseInt(@get('width')))
     @trigger 'ubret-created', @tool
 
   generatePosition: ->
@@ -120,17 +122,10 @@ class Tool extends Backbone.AssociatedModel
       @tool.removeParentTool()
       data = @get('data_source').data()
       data.fetch().done =>
-        @tool.keys(@dataKeys(data))
-          .data(data.toJSON())
+        @tool.data(data.toJSON())
 
     @tool.selectIds(@get('selected_uids'))
       .selectKeys(@get('selected_keys'))
       .settings(@get('settings').toJSON())
-
-  dataKeys: (data) =>
-    keys = new Array
-    for key, value of data.toJSON()[0]
-      keys.push key unless key in @nonDisplayKeys
-    return keys
 
 module.exports = Tool

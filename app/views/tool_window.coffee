@@ -57,6 +57,7 @@ class ToolWindow extends BaseView
     active = if @model.get('active') then 'active' else ''
     @$el.html @template({active: active})
     @$el.attr 'data-id', @model.id
+    @$('.tool-container').height(parseInt(@model.get('height')) - 25 )
     @$('.tool-container').addClass(@model.get('tool_type'))
       .html @model.tool.opts.el
     @assign
@@ -84,6 +85,7 @@ class ToolWindow extends BaseView
       left: @model.get('left')
 
   setSize: =>
+    @$('.tool-container').height(parseInt(@model.get('height')) - 25)
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
