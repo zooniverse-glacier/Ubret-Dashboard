@@ -53,10 +53,15 @@ describe 'Dashboard View', ->
   describe '#addTool', ->
     it 'create a tool window and render it', ->
       toolWindow = new Backbone.View
+      tool = {an: 'OBJECT!', createUbretTool: (-> 'hi'), setupUbretTool: (-> 'hey')}
+
       sinon.mock(toolWindow).expects("render").returns { el: "something" }
+      sinon.stub(tool, "createUbretTool")
+      sinon.stub(tool, "setupUbretTool")
+
       toolWindowConstructor = sinon.stub(@dashboardView, 'toolWindow').returns(toolWindow)
       appendSpy = sinon.spy(@dashboardView.$el, 'append')
-      @dashboardView.addTool {an: 'OBJECT!'}
+      @dashboardView.addTool tool
       expect(appendSpy).to.have.been.calledWith('something')
 
   describe '#removeTools', ->

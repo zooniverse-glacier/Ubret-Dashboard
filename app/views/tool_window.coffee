@@ -58,8 +58,8 @@ class ToolWindow extends BaseView
     @$el.html @template({active: active})
     @$el.attr 'data-id', @model.id
     @$('.tool-container').height(parseInt(@model.get('height')) - 25 )
-    @$('.tool-container').addClass(@model.get('tool_type'))
-      .html @model.tool.opts.el
+      .addClass(@model.get('tool_type'))
+      .html @model.tool.el
     @assign
       '.title-bar': @titleBar
       '.settings': @settings

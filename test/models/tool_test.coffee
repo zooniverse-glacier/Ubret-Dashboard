@@ -68,3 +68,65 @@ describe 'Tool', ->
       saveSpy = sinon.spy(@tool, "save")
       @tool.updateFunc "test", 1
       expect(saveSpy).to.have.been.called
+
+  describe 'event handlers', ->
+    beforeEach ->
+      @updateSpy = sinon.spy(@tool, 'updateFunc')
+
+    describe "#selectElements", ->
+      beforeEach ->
+        @tool.set 'selected_uids', ['1', '2', '3']
+
+      context "when selected elements are the same", ->
+        it 'should do nothing', ->
+          @tool.selectElements ['1', '2', '3']
+          expect(@updateSpy).to.not.have.been.called
+
+      context "when selected elements are different", ->
+        it 'should update the model', ->
+          @tool.selectElements ['4', '5', '6']
+          expect(@updateSpy).to.have.been.called
+          expect(@tool.get('selected_uids')).to.eql ['4', '5', '6']
+
+    describe "#selectKeys", ->
+      beforeEach ->
+        @tool.set 'selected_keys', ['id', 'uid']
+
+      context "when selected keys are the same", ->
+        it 'should do nothing', ->
+          @tool.selectKeys ['id', 'uid']
+          expect(@updateSpy).to.not.have.been.called
+
+      context "when selected keys are different", ->
+        it 'should update the model', ->
+          @tool.selectKeys ['ra', 'dec']
+          expect(@updateSpy).to.have.been.called
+          expect(@tool.get('selected_keys')).to.eql ['ra', 'dec']
+
+
+    describe "#assignSetting", ->
+      beforeEach ->
+        @tool.get('settings').set {axis1: 'crap'}
+
+      context "when settings are the same", ->
+        it 'should do nothing', ->
+          @tool.assignSetting {axis1: 'crap'}
+          expect(@updateSpy).to.not.have.been.called
+
+      context "when settings changes", ->
+        it "should update the model", ->
+          @tool.assignSetting {axis2: 'more'}
+          expect(@updateSpy).to.have.been.called
+          expect(@tool.get('settings').attributes).to.have.property('axis2').and.eq('more')
+
+  describe '#publishKeys', ->
+    it 'should send keys through Mediator', ->
+      pubSpy = sinon.spy(Backbone.Mediator, 'publish')
+      @tool.publishKeys ["key", "more key"]
+      expect(pubSpy).to.have.been.calledWith("1:keys", ["key", "more key"])
+      pubSpy.restore()
+
+
+
+      
+
