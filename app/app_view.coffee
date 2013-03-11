@@ -132,9 +132,8 @@ class AppView extends BaseView
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   showSaved: =>
-    unless @savedListView? then @savedListView = new SavedList
     User.current.once 'loaded-dashboards', =>
-      @savedListView.collection = User.current.dashboards
+      unless @savedListView? then @savedListView = new SavedList {collection: User.current.dashboards}
       @appFocusView = @savedListView
       @render()
     User.current.getDashboards()

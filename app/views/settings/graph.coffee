@@ -10,7 +10,7 @@ class GraphSettings extends BaseView
 
   initialize: ->
     @keys = []
-    Backbone.Mediator.subscribe("#{@model.id}:keys", @setKeys)
+    @model.tool.on 'keys', @setKeys
 
   render: =>
     @$el.html @template
