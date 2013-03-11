@@ -22,7 +22,7 @@ class ExternalSubjectCollection extends Backbone.Collection
 
   processParams: =>
     params = new Array
-    params.push "#{key}=#{value}" for key, value of @params
-    "#{params.join('&')}&format=json"
+    params.push "#{key}=#{value}" for key, value of @params when value isnt ''
+    params.join("&")
 
 module.exports = ExternalSubjectCollection

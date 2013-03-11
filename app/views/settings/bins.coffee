@@ -18,6 +18,6 @@ class BinSettings extends BaseView
     bins = bins[0] if bins.length is 1
     bins = null if bins is '0' or bins is '1' or bins is ''
 
-    @model.tool.settings({bins: bins}).start() unless bins is ''
+    @model.tool.settings({bins: bins}) unless bins is ''
  
 module.exports = BinSettings

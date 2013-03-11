@@ -1,10 +1,9 @@
 BaseView = require 'views/base_view'
-DataSettings = require 'views/settings/data'
-ToolSettingsConfig = require 'config/tool_settings_config'
 
 class Settings extends BaseView
   className: 'settings'
   template: require './templates/settings'
+  config: require 'config/tool_settings_config'
 
   events:
     'click .toggle': 'toggleState'
@@ -15,17 +14,19 @@ class Settings extends BaseView
   initialize: ->
     @listenTo @model, 'change:settings_active', @render
     @toolSettings = new Array
-    for setting in ToolSettingsConfig[@model.get('tool_type')].settings
+    for setting in @config[@model.get('tool_type')].settings
       @toolSettings.push new setting { model: @model }
     
   render: =>
     @$el.html @template(@model.toJSON())
     if @model.get 'settings_active'
       @$el.addClass 'active'
-      @$('.settings-group').append setting.render().el for setting in @toolSettings
+      for setting in @toolSettings
+        @$('.settings-group').append setting.render().el 
+        setting.delegateEvents()
     else
       @$el.removeClass 'active'
-      setting.$el.detach() for setting in @toolSettings
+      setting.remove() for setting in @toolSettings
     @
 
   # Events

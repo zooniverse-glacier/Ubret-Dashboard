@@ -1,0 +1,9 @@
+<% label = require('./label')(@) %>
+
+<div class="columns">
+  <div class="column one-half"><%- label %></div>
+  <div class="column one-half">
+    <input type="checkbox" data-cid="<%- @cid %>" value="spec" 
+      <% if @get('val') isnt '': %>checked<% end %> />
+  </div>
+</div>

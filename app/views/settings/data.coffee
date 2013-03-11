@@ -51,7 +51,7 @@ class DataSettings extends BaseView
   # Fetch the data.
   updateModel: =>
     @model.updateFunc 'data_source:params', @paramsView.setState()
-    @model.trigger 'data-source-ready'
+    @model.setupUbretTool()
 
   # External path
   showExternal: =>

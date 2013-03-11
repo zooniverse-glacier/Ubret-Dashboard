@@ -3,7 +3,7 @@ class User extends Backbone.Events
 
   @apiUrl: =>
     if parseInt(location.port) < 1024
-      "https://api.zooniverse.org"
+      "https://dev.zooniverse.org"
     else if parseInt(location.port) is 3333
       "http://localhost:3000"
     else

@@ -51,6 +51,10 @@ module.exports = [
         type: "Input"
         required: false
         validation: ""
+      spec:
+        type: "Checkbox"
+        required: false
+        validation: ""
    ,
      name: 'bands'
      params: 
@@ -87,5 +91,15 @@ module.exports = [
          type: "Input"
          required: false
          validation: ""
+       spec:
+         type: "Checkbox"
+         required: false
+         validation: ""
+  ,
+    name: 'sql'
+    params:
+      query:
+        type: "Textbox"
+        placeholder: "Enter SQL query"
   ]
 ]

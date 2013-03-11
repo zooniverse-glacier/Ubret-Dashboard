@@ -28,6 +28,6 @@ class GraphSettings extends BaseView
     axis = "axis#{e.target.dataset.axis}"
     set = {}
     set[axis] = e.target.value
-    @model.tool.settings(set).start()
+    @model.tool.settings(set)
 
 module.exports = GraphSettings

@@ -3,6 +3,9 @@
   <meta charset="utf-8">
   <title>Mocha Tests</title>
   <link rel="stylesheet" href="stylesheets/test.css" />
+</head>
+<body>
+  <div id="mocha"></div>
 
   <script>
     window.brunch = window.brunch || {}
@@ -18,12 +21,11 @@
   </script>
   <script src="javascripts/test.js"></script>
   <script>
-    $(function() {
-      mocha.run().globals(['getInterface', 'console'])
-    });
+    if (window.mochaPhantomJS) { 
+      mochaPhantomJS.run();
+    } else { 
+      mocha.run().globals([ 'Ubret', 'jQuery*', 'XMLHttpRequest' ]);
+    }
   </script>
-</head>
-<body>
-  <div id="mocha"></div>
 </body>
 </html>

@@ -1,9 +1,8 @@
-User = require 'lib/user'
-
 class Login extends Backbone.View
   tagName: 'div'
   className: 'login'
   template: require './templates/login_bar'
+  user: require 'lib/user'
 
   events:
     'click button.login' : 'login'
@@ -11,14 +10,14 @@ class Login extends Backbone.View
     'keypress': 'onKeyPress'
 
   initialize: ->
-    User.on
+    @user.on
       'sign-in': @render
       'sign-out': @render
       'sign-in-error': @showError
 
   render: =>
-    @$el.html @template(User.current)
-    if User.current isnt null
+    @$el.html @template(@user.current)
+    if @user.current isnt null
       @$el.addClass 'logged-in'
     else
       @$el.removeClass 'logged-in'
@@ -26,7 +25,7 @@ class Login extends Backbone.View
 
   logout: (e) =>
     e.preventDefault()
-    User.logout()
+    @user.logout()
 
   showError: (error) =>
     @$('.error').text(error).show()
@@ -39,8 +38,8 @@ class Login extends Backbone.View
     username = @$('input[name="username"]').val()
     password = @$('input[name="password"]').val()
 
-    User.login
-      username: username
+    @user.login
       password: password
+      username: username
 
 module.exports = Login

@@ -31,10 +31,9 @@ class AppHeader extends BaseView
       @$('.create-dashboard').removeAttr 'disabled'
       @$('.fork-dashboard').show() if @isForkable()
     else
-      @$('.fork-dashboard').addClass 'active'
+      @$('.fork-dashboard').hide()
       @$('.create-dashboard').attr 'disabled', 'disabled'
 
-    @removeActive()
     switch @active
       when 'current' then @$('li a.current').addClass 'active'
       when 'saved' then @$('li a.my-dashboards').addClass 'active'
@@ -68,10 +67,4 @@ class AppHeader extends BaseView
     @dashId = model.id
     @render()
 
-  # Helpers
-  removeActive: =>
-    $('nav.main-nav').find('.active').each (i) ->
-      $(@).removeClass('active')
-
-    
 module.exports = AppHeader

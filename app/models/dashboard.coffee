@@ -29,7 +29,7 @@ class Dashboard extends Backbone.AssociatedModel
 
   fork: =>
     url = if parseInt(location.port) < 1024 
-      "https://api.zooniverse.org" 
+      "https://dev.zooniverse.org" 
     else if parseInt(location.port) is 3333 
       "http://localhost:3000"
     else

@@ -1,7 +1,6 @@
 BaseView = require 'views/base_view'
 Settings = require 'views/settings'
 Snapping = require 'views/snapping'
-UbretView = require 'views/ubret'
 WindowTitleBar = require 'views/window_title_bar'
 
 class ToolWindow extends BaseView
@@ -28,7 +27,6 @@ class ToolWindow extends BaseView
       @$el.css @initialSizeAndPosition()
 
     @settings = new Settings {model: @model}
-    @ubretView = new UbretView {model: @model, el: @$('.tool-container')}
     @titleBar = new WindowTitleBar {model: @model}
 
     @titleBar.on
@@ -59,15 +57,16 @@ class ToolWindow extends BaseView
     active = if @model.get('active') then 'active' else ''
     @$el.html @template({active: active})
     @$el.attr 'data-id', @model.id
+    @$('.tool-container').height(parseInt(@model.get('height')) - 25 )
+      .addClass(@model.get('tool_type'))
+      .html @model.tool.el
     @assign
       '.title-bar': @titleBar
       '.settings': @settings
-      '.tool-container': @ubretView
     @
 
   removeWindow: =>
     @settings.remove()
-    @ubretView.remove()
     @titleBar.remove()
     @remove()
 
@@ -86,6 +85,7 @@ class ToolWindow extends BaseView
       left: @model.get('left')
 
   setSize: =>
+    @$('.tool-container').height(parseInt(@model.get('height')) - 25)
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
@@ -180,7 +180,6 @@ class ToolWindow extends BaseView
 
     if @snap
       @setSnap e.pageX, e.pageY
-      @ubretView.render()
     else
       @model.updateFunc
         left: e.pageX - @relX
