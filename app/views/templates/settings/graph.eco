@@ -5,7 +5,7 @@
       <option value="">X-Axis Variable</option>
       <% if @keys.length isnt 0: %>
         <% for key, i in @keys: %>
-          <% if key is @currentKey: %>
+          <% if key is @axis1: %>
             <option value="<%- key %>" selected><%- key %></option>
           <% else: %>
             <option value="<%- key %>"><%- key %></option>
@@ -21,7 +21,7 @@
       <option value="">Y-Axis Variable</option>
       <% if @keys.length isnt 0: %>
         <% for key, i in @keys: %>
-          <% if key is @currentKey: %>
+          <% if key is @axis2: %>
             <option value="<%- key %>" selected><%- key %></option>
           <% else: %>
             <option value="<%- key %>"><%- key %></option>

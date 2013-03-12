@@ -15,8 +15,9 @@ class GraphSettings extends BaseView
   render: =>
     @$el.html @template
       keys: @keys 
-      currentKey: @model.get('selected_key') 
       type: @model.get('tool_type')
+      axis1: @model.get('settings').get('axis1')
+      axis2: @model.get('settings').get('axis2')
     @
 
   setKeys: (keys) =>

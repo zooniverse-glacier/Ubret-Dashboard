@@ -118,10 +118,3 @@ describe 'Tool', ->
           @tool.assignSetting {axis2: 'more'}
           expect(@updateSpy).to.have.been.called
           expect(@tool.get('settings').attributes).to.have.property('axis2').and.eq('more')
-
-  describe '#publishKeys', ->
-    it 'should send keys through Mediator', ->
-      pubSpy = sinon.spy(Backbone.Mediator, 'publish')
-      @tool.publishKeys ["key", "more key"]
-      expect(pubSpy).to.have.been.calledWith("1:keys", ["key", "more key"])
-      pubSpy.restore()

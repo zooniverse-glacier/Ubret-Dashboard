@@ -43,7 +43,6 @@ class Tool extends Backbone.AssociatedModel
       .width(parseInt(@get('width')))
 
     @tool.on 
-      'keys': @publishKeys
       'selection': @selectElements
       'keys-selection': @selectKeys
       'settings': @assignSetting
@@ -76,6 +75,7 @@ class Tool extends Backbone.AssociatedModel
 
   sourceTool: =>
     if @get('data_source').isInternal()
+      console.log @collection
       @collection.get(@get('data_source').get('source'))
     else
       false
@@ -107,9 +107,6 @@ class Tool extends Backbone.AssociatedModel
   assignSetting: (setting) =>
     @get('settings').set setting, {silent: true}
     @updateFunc() if @get('settings').hasChanged()
-
-  publishKeys: (keys) =>
-    Backbone.Mediator.publish("#{@id}:keys", keys)
 
   setupUbretTool: =>
     if @get('data_source').isInternal()
