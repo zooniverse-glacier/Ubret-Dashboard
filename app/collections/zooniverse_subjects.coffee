@@ -5,6 +5,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
+    console.log options
     @base = options.url
     @type = options.search_type
 
@@ -32,7 +33,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     else
       unless @user.current?
         throw new Error('Must be logged in to retrieve your recents or favorites')
-      @base(@user.id) + '?' + @processParams()
+      @base(@user.current.id) + '?' + @processParams()
 
   processParams: =>
     params = new Array

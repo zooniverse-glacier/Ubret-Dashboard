@@ -4,6 +4,7 @@ class Recents extends MyDataLists
   className: 'my-data recents'
   template: require './templates/recent_list'
   templateItem: require './templates/recent'
-  type: 'recents'
+  type: 1
+  name: 'recents'
   
 module.exports = Recents

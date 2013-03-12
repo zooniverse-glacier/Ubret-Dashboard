@@ -96,7 +96,7 @@ class AppView extends BaseView
       paramsFormatted.push {key: key, val: value.join('_')}
 
     dataSource =
-      source: parseInt(collection[0])
+      source: collection[0]
       search_type: parseInt(collection[1])
       source_type: 'external'
       params: paramsFormatted

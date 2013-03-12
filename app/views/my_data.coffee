@@ -4,6 +4,12 @@ Recents = require 'views/recents'
 User = require 'lib/user'
 
 class MyData extends BaseView
+  template: require './templates/my_data'
+  manager: require 'modules/manager'
+  projects: require 'config/projects_config'
+
+  events: 
+    'change #project-select' : 'updateManager'
 
   initialize: ->
     @recents = new Recents
@@ -18,10 +24,17 @@ class MyData extends BaseView
     @recents.resst()
     @favorites.reset()
 
+  updateManager: (e) =>
+    @manager.set 'project', e.currentTarget.value
+    @render()
+
   render: =>
-    @$el.empty()
+    @selected = @manager.get('project')
+    @$el.html @template(@)
     @$el.append @recents.render().el
     @$el.append @favorites.render().el
+    @loadCollections()
+    @
 
 
 module.exports = MyData

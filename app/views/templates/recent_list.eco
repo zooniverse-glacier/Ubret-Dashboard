@@ -1,4 +1,4 @@
-<a href="#/project/<%- @project %>/Dashboard-from-<%- @type %>/Table-SubjectViewer/2-0/type_<%- @type %>-limit_20-project_<%- @project %>" class="new-dashboard-recent">New Dashboard from Recents</a>
+<a href="#/project/<%- @project %>/Dashboard-from-<%- @name %>/Table-SubjectViewer/1-<%- @type %>/limit_20-project_<%- @project %>" class="new-dashboard-recent">New Dashboard from Recents</a>
 <h3> Recents </h3>
 <div class="recents my-data-list">
 </div>
