@@ -11,8 +11,7 @@ class Settings extends BaseView
     'click .next.title-bar-icon' : 'next'
     'click h4' : 'hideSetting'
 
-  initialize: (options) ->
-    @config = options.config or @config
+  initialize: ->
     @listenTo @model, 'change:settings_active', @render
     @toolSettings = new Array
     for setting in @config[@model.get('tool_type')].settings

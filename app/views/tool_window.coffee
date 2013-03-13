@@ -1,13 +1,13 @@
 BaseView = require 'views/base_view'
-Settings = require 'views/settings'
 Snapping = require 'views/snapping'
-WindowTitleBar = require 'views/window_title_bar'
 
 class ToolWindow extends BaseView
   _.extend @prototype, Snapping
 
   className: 'tool-window'
   template: require './templates/window'
+  settingsView: require 'views/settings'
+  windowTitleBarView: require 'views/window_title_bar'
 
   windowMinWidth: 300
   windowMinHeight: 150
@@ -16,18 +16,17 @@ class ToolWindow extends BaseView
     'mousedown .resize': 'resizeWindowStart'
 
   initialize: ->
-    if @model?
-      @model.on
-        'change:id' : @updateWindowId
-        'destroy': @removeWindow
-        'change:zindex': @setZindex
-        'change:left change:top': @setPosition
-        'change:width change:height': @setSize
+    @settings = new @settingsView {model: @model}
+    @titleBar = new @windowTitleBarView {model: @model}
 
-      @$el.css @initialSizeAndPosition()
+    @model.on
+      'change:id' : @updateWindowId
+      'destroy': @removeWindow
+      'change:zindex': @setZindex
+      'change:left change:top': @setPosition
+      'change:width change:height': @setSize
 
-    @settings = new Settings {model: @model}
-    @titleBar = new WindowTitleBar {model: @model}
+    @$el.css @initialSizeAndPosition()
 
     @titleBar.on
       'close': @close
@@ -54,9 +53,9 @@ class ToolWindow extends BaseView
     @$el.attr 'data-id', @model.id
 
   render: =>
-    active = if @model.get('active') then 'active' else ''
-    @$el.html @template({active: active})
+    @$el.html @template()
     @$el.attr 'data-id', @model.id
+
     @$('.tool-container').height(parseInt(@model.get('height')) - 25 )
       .addClass(@model.get('tool_type'))
       .html @model.tool.el

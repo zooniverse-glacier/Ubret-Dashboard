@@ -2,12 +2,11 @@ Settings = require 'views/settings'
 
 describe 'Settings', ->
   beforeEach ->
+    Settings::config =
+      'Table': 
+        settings: [Backbone.View]
     @setting = new Settings 
       model: new Backbone.Model {tool_type: 'Table', id: 1}
-      config: 
-        'Table': 
-          settings: [Backbone.View]
-                  
 
   it 'should be instantiable', ->
     expect(@setting).to.be.ok
