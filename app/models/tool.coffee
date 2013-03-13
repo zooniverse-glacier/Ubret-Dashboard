@@ -75,7 +75,6 @@ class Tool extends Backbone.AssociatedModel
 
   sourceTool: =>
     if @get('data_source').isInternal()
-      console.log @collection
       @collection.get(@get('data_source').get('source'))
     else
       false

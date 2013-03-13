@@ -11,6 +11,10 @@ class MyDataLists extends BaseView
     @manager.get('sources').get('1')
       .get('search_types')[@type].url
 
+  reset: =>
+    return unless @collection
+    @collection.reset()
+
   loadCollection: =>
     return if !@manager.get('project') or @manager.get('project') is 'default'
     unless @collection?

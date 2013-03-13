@@ -68,7 +68,7 @@ describe 'Zooniverse Subjects', ->
           @url = @favsSubjects.url()
 
         it 'should call base with user id', ->
-          expect(@baseSpy).to.have.been.calledWith(@favsSubjects.user.id)
+          expect(@baseSpy).to.have.been.calledWith(@favsSubjects.user.current.id)
 
         it 'should call process params', ->
           expect(@processSpy).to.have.been.called

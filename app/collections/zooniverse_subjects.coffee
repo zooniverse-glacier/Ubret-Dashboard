@@ -5,7 +5,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
-    console.log options
     @base = options.url
     @type = options.search_type
 

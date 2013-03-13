@@ -34,7 +34,7 @@ class Dashboard extends Backbone.AssociatedModel
       "http://localhost:3000"
     else
       "https://dev.zooniverse.org"
-    url = "#{url}#{@urlRoot}/#{@id}/fork"
+    url = "#{url}/projects/#{Manager.get('project')}/dashboards/#{@id}/fork"
     $.ajax url,
       type: 'POST'
       crossDomain: true

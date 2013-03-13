@@ -1,6 +1,6 @@
 <select id="project-select">
     <option value="">Select A Project</option>
   <% for key, value of @projects: %>
-    <option value="<%- key %>" <% if key is @selected: %> selected <% end %>><%- value %></option>
+    <option value="<%- key %>" <% if key is @selected: %> selected <% end %>><%- value.name %></option>
   <% end %>
 </select>
