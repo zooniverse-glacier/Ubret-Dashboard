@@ -22,7 +22,8 @@
   <script src="javascripts/test.js"></script>
   <script>
     if (window.mochaPhantomJS) { 
-      mochaPhantomJS.run();
+      mocha.globals([ 'Ubret', 'jQuery*', 'XMLHttpRequest' ]);
+      mochaPhantomJS.run()
     } else { 
       mocha.run().globals([ 'Ubret', 'jQuery*', 'XMLHttpRequest' ]);
     }
