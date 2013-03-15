@@ -15,6 +15,9 @@ ToolLoader = (dashboard, cb) ->
   else
     Manager.set 'tools', tools.projects[project]
 
-  Ubret.Loader Manager.get('tools'), cb
+  if location.port > 3333 
+    Ubret.Loader Manager.get('tools'), cb
+  else
+    Ubret.ToolsetLoader Manager.get('project'), cb
 
 module.exports = ToolLoader
