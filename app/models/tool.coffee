@@ -1,6 +1,7 @@
 class Tool extends Backbone.AssociatedModel
   sync: require 'lib/ouroboros_sync' 
   manager: require 'modules/manager'
+  config: require 'config/tool_config'
 
   updateFunc:(args...) =>
     if @id?
@@ -30,6 +31,7 @@ class Tool extends Backbone.AssociatedModel
 
     if @isNew()
       @generatePosition()
+      @get('settings').set @config[@get("tool_type")].defaults
       @collection.focus @, false
       @on 'sync', =>
         @get('data_source').set 'tool_id', @id
@@ -37,14 +39,13 @@ class Tool extends Backbone.AssociatedModel
       @get('data_source').set 'tool_id', @id
 
   createUbretTool: =>
-    @tool = (new Ubret[@get('tool_type')])
-      .selector("#" + @get('tool_type') + "-" + @cid)
-      .height(parseInt(@get('height')) - 25)
-      .width(parseInt(@get('width')))
+    @tool = new Ubret[@get('tool_type')]
+      selector: (@get('tool_type') + "-" + @cid)
+      height: parseInt(@get('height') - 25)
+      width: parseInt(@get('width'))
 
     @tool.on 
       'selection': @selectElements
-      'keys-selection': @selectKeys
       'settings': @assignSetting
 
     @on 
@@ -73,6 +74,22 @@ class Tool extends Backbone.AssociatedModel
       top: y
       left: x
 
+  setupUbretTool: =>
+    if @get('data_source').isInternal()
+      if @sourceTool().tool?
+        @tool.parentTool(@sourceTool().tool) 
+      else
+        @sourceTool().once 'ubret-created', (tool) =>
+          @tool.parentTool tool
+    else if @get('data_source').isExternal()
+      @tool.removeParentTool()
+      data = @get('data_source').data()
+      data.fetch().done =>
+        @tool.data(data.toJSON())
+
+    @tool.selectIds(@get('selected_uids'))
+      .settings(@get('settings').toJSON())
+
   sourceTool: =>
     if @get('data_source').isInternal()
       @collection.get(@get('data_source').get('source'))
@@ -99,29 +116,8 @@ class Tool extends Backbone.AssociatedModel
     if _.difference(ids, @get('selected_uids')).length
       @updateFunc 'selected_uids', ids
 
-  selectKeys: (key) =>
-    if _.difference(key, @get('selected_keys')).length
-      @updateFunc 'selected_keys', key
-
   assignSetting: (setting) =>
     @get('settings').set setting, {silent: true}
     @updateFunc() if @get('settings').hasChanged()
-
-  setupUbretTool: =>
-    if @get('data_source').isInternal()
-      if @sourceTool().tool?
-        @tool.parentTool(@sourceTool().tool) 
-      else
-        @sourceTool().once 'ubret-created', (tool) =>
-          @tool.parentTool tool
-    else if @get('data_source').isExternal()
-      @tool.removeParentTool()
-      data = @get('data_source').data()
-      data.fetch().done =>
-        @tool.data(data.toJSON())
-
-    @tool.selectIds(@get('selected_uids'))
-      .selectKeys(@get('selected_keys'))
-      .settings(@get('settings').toJSON())
 
 module.exports = Tool

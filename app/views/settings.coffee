@@ -3,7 +3,7 @@ BaseView = require 'views/base_view'
 class Settings extends BaseView
   className: 'settings'
   template: require './templates/settings'
-  config: require 'config/tool_settings_config'
+  config: require 'config/tool_config'
 
   events:
     'click .toggle': 'toggleState'

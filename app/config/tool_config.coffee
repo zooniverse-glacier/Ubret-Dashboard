@@ -11,6 +11,7 @@ settings =
 module.exports = 
   "Histogram" : 
     settings: [settings.data, settings.graph, settings.bins]
+    defaults: {axis2: 'Count'}
   "Scatterplot" : 
     settings: [settings.data, settings.graph]
   "Statistics" : 
@@ -20,11 +21,13 @@ module.exports =
     titleBarControls: true
   "SubjectViewer" : 
     settings: [settings.data, settings.subject]
+    defaults: {currentPage: 0}
     titleBarControls: true
   "Mapper" : 
     settings: [settings.data, settings.map]
   "Table" : 
     settings: [settings.data, settings.subject]
+    defaults: {sortOrder: 'top', currentPage: 0, sortColumn: 'uid'}
     titleBarControls: true
   "SpacewarpViewer" : 
     settings: [settings.data, settings.spacewarp_viewer]
