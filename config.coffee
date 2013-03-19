@@ -9,7 +9,7 @@ exports.config =
       order:
         before: [
           'vendor/scripts/jquery-1.8.2.js',
-          'vendor/scripts/underscore-1.4.2.js',
+          'vendor/scripts/underscore-1.4.4.js',
           'vendor/scripts/backbone-0.9.10.js',
           'vendor/scripts/backbone-mediator.js',
           'vendor/scripts/backbone-associations.js',

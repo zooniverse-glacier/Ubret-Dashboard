@@ -11,14 +11,27 @@ settings =
 module.exports = 
   "Histogram" : 
     settings: [settings.data, settings.graph, settings.bins]
-    defaults: {axis2: 'Count'}
+    defaults: 
+      axis2: 'Count'
+      color: '#0172E6'
+      selectionColor: '#CD3E20'
   "Scatterplot" : 
     settings: [settings.data, settings.graph]
+    defaults:
+      color: '#0172E6'
+      selectionColor: '#CD3E20'
   "Statistics" : 
     settings: [settings.data, settings.key]
   "Spectra" : 
     settings: [settings.data, settings.subject, settings.spectra_legend]
     titleBarControls: true
+    defaults: 
+      bestFitLine: 'show'
+      fluxLine: 'show'
+      emissionLines: 'show'
+      axis1: 'Wavelengths (angstroms)'
+      axis2: 'Flux (1E-17 erg/cm^2/s/Ang)'
+      currentPage: 0
   "SubjectViewer" : 
     settings: [settings.data, settings.subject]
     defaults: {currentPage: 0}

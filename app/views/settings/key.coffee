@@ -23,6 +23,6 @@ class KeySettings extends BaseView
 
   #Events
   onSelectKey: (e) =>
-    @model.tool.selectKeys([e.currentTarget.value]).start()
+    @model.tool.settings({statKey: e.currentTarget.value})
 
 module.exports = KeySettings
