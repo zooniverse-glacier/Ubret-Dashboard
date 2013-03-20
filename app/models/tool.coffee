@@ -31,8 +31,14 @@ class Tool extends Backbone.AssociatedModel
 
     if @isNew()
       @generatePosition()
-      @get('settings').set @config[@get("tool_type")].defaults
       @collection.focus @, false
+     
+      config = @config[@get('tool_type')]
+      @set 'height', config.height if config.height?
+      @set 'width', config.width if config.width?
+      @set 'locked_size', config.locked if config.locked?
+      @get('settings').set config.defaults if config.defaults?
+
       @on 'sync', =>
         @get('data_source').set 'tool_id', @id
     else

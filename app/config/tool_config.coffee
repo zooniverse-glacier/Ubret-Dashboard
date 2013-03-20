@@ -22,6 +22,9 @@ module.exports =
       selectionColor: '#CD3E20'
   "Statistics" : 
     settings: [settings.data, settings.key]
+    height: 284
+    width: 304
+    locked: 'perma'
   "Spectra" : 
     settings: [settings.data, settings.subject, settings.spectra_legend]
     titleBarControls: true

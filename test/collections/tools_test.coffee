@@ -6,9 +6,9 @@ describe 'Tools', ->
     # collection.length between models. Since we depend upon collection.length to be
     # up-to-date, we have to add the tools individually.
     @tools = new Tools
-    @tools.add {tool_type: 'table'}
-    @tools.add {tool_type: 'table'}
-    @tools.add {tool_type: 'table'}
+    @tools.add {tool_type: 'Table'}
+    @tools.add {tool_type: 'Table'}
+    @tools.add {tool_type: 'Table'}
 
   it 'should be instantiable', ->
     expect(@tools).to.be.defined

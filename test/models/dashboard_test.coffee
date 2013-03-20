@@ -15,8 +15,8 @@ describe 'Dashboard', ->
   describe '#createTool', ->
     it 'should create a new tool with the given tool type', ->
       spy = sinon.spy(@dashboard.get('tools'), 'add')
-      @dashboard.createTool 'table'
-      expect(spy).to.have.been.calledWith({tool_type: 'table'})
+      @dashboard.createTool 'Table'
+      expect(spy).to.have.been.calledWith({tool_type: 'Table'})
 
   describe '#fork', ->
     beforeEach ->

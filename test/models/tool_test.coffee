@@ -5,7 +5,7 @@ describe 'Tool', ->
   beforeEach ->
     @tools = new Tools
     @tools.add [
-      tool_type: 'Table'
+      tool_type: "Table"
       name: "Table-1"
       id: 1
       data_source:
@@ -13,7 +13,7 @@ describe 'Tool', ->
         source: 1
     ,
       id: 2
-      tool_type: 'Table'
+      tool_type: "Table"
       data_source:
         source: 1
         source_type: 'internal'
@@ -87,22 +87,6 @@ describe 'Tool', ->
           @tool.selectElements ['4', '5', '6']
           expect(@updateSpy).to.have.been.called
           expect(@tool.get('selected_uids')).to.eql ['4', '5', '6']
-
-    describe "#selectKeys", ->
-      beforeEach ->
-        @tool.set 'selected_keys', ['id', 'uid']
-
-      context "when selected keys are the same", ->
-        it 'should do nothing', ->
-          @tool.selectKeys ['id', 'uid']
-          expect(@updateSpy).to.not.have.been.called
-
-      context "when selected keys are different", ->
-        it 'should update the model', ->
-          @tool.selectKeys ['ra', 'dec']
-          expect(@updateSpy).to.have.been.called
-          expect(@tool.get('selected_keys')).to.eql ['ra', 'dec']
-
 
     describe "#assignSetting", ->
       beforeEach ->
