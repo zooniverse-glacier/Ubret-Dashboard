@@ -41,6 +41,7 @@ module.exports =
     titleBarControls: true
   "Mapper" : 
     settings: [settings.data, settings.map]
+    defaults: {spectrum: 'visible'}
   "Table" : 
     settings: [settings.data, settings.subject]
     defaults: {sortOrder: 'top', currentPage: 0, sortColumn: 'uid'}
