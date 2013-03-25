@@ -1,5 +1,6 @@
 corsSync = (method, model, options) ->
   baseUrl = 'http://spelunker.herokuapp.com'
+  #baseUrl = 'http://localhost:9292'
   options.url = baseUrl + _.result(model, 'url')
   options.crossDomain = true
 

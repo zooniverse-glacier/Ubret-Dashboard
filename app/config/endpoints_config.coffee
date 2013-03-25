@@ -102,4 +102,26 @@ module.exports = [
         type: "Textbox"
         placeholder: "Enter SQL query"
   ]
+,
+  id : 3
+  name: 'NED'
+  url: '/ned'
+  search_types: [
+    name: 'area'
+    params:
+      ra:
+        type: 'Range'
+        required: true
+        validation: [0, 360]
+        label: 'RA'
+      dec:
+        type: 'Range'
+        required: true
+        validation: [-90, 90]
+      radius:
+        type: 'Input'
+        required: true
+        validation: ""
+        placeholder: 'arcmin'
+  ]
 ]

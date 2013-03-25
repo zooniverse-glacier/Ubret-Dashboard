@@ -47,7 +47,7 @@ class Tool extends Backbone.AssociatedModel
   createUbretTool: =>
     @tool = new Ubret[@get('tool_type')]
       selector: (@get('tool_type') + "-" + @cid)
-      height: parseInt(@get('height') - 25)
+      height: parseInt(@get('height')) - 25
       width: parseInt(@get('width'))
 
     @tool.on 
