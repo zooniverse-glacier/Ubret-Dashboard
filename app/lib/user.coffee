@@ -13,12 +13,15 @@ class User extends Backbone.Events
     url = "#{@apiUrl()}/login?username=#{username}&password=#{password}&callback=?"
     login = $.getJSON(url)
     login.always @createUser
-    login.success => User.trigger 'sign-in'
+    login.done => User.trigger 'sign-in'
     login
 
   @logout: =>
     url = "#{@apiUrl()}/logout?callback=?"
     logout = $.getJSON(url)
+    logout.done => 
+      User.current = null
+      User.trigger 'sign-out'
     logout
 
   @currentUser: =>
@@ -33,7 +36,7 @@ class User extends Backbone.Events
     url = "#{@apiUrl}/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
     signup = $.getJSON(url)
     signup.always @createUser
-    signup.success => User.trigger 'sign-in'
+    signup.done => User.trigger 'sign-in'
     signup
 
   @createUser: (response) =>

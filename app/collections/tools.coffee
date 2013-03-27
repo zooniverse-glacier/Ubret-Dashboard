@@ -12,6 +12,7 @@ class Tools extends Backbone.Collection
       tool.updateFunc {zindex: 1}
       return
     maxZindexTool = @max((tool) -> tool.get('zindex'))
-    unless tool.cid is maxZindexTool.cid then tool.updateFunc({zindex: maxZindexTool.get('zindex') + 1})
+    unless tool.cid is maxZindexTool.cid
+      tool.updateFunc({zindex: maxZindexTool.get('zindex') + 1})
 
 module.exports = Tools

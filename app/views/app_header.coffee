@@ -21,6 +21,7 @@ class AppHeader extends BaseView
     @user.on 
       'sign-in': @render
       'sign-out': @render
+    @user.on 'sign-out', -> console.log 'sign-out'
     @login = new @loginBar
 
   render: =>

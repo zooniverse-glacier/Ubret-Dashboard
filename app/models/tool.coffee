@@ -2,9 +2,10 @@ class Tool extends Backbone.AssociatedModel
   sync: require 'lib/ouroboros_sync' 
   manager: require 'modules/manager'
   config: require 'config/tool_config'
+  user: require 'lib/user'
 
   updateFunc:(args...) =>
-    if @id?
+    if @id? and @user.current?
       @save(args...)
     else
       @set(args...)
