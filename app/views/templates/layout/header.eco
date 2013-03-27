@@ -5,8 +5,8 @@
   <div class="group">
     <nav class="main-nav">
       <ul>
-        <li><a class="current" href="/#/dashboards/<%- @id %>">Current Dashboard</a></li>
         <% if require('lib/user').current?: %>
+          <li><a class="current" href="/#/dashboards/<%- @id %>">Current Dashboard</a></li>
           <li><a class="my-dashboards" href="/#/my_dashboards">Dashboards</a></li>
           <li><a class="my-data" href="/#/my_data">Data</a></li>
         <% end %>
