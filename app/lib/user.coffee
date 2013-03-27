@@ -1,5 +1,6 @@
 class User extends Backbone.Events
   @current: null
+  @incomingLocation: "#/my_dashboards"
 
   @apiUrl: =>
     if parseInt(location.port) < 1024

@@ -11,7 +11,19 @@ class Router extends Backbone.Router
     'project/:project': 'loadProject'
     'project/:project/:object(/:setting_keys/:setting_values)' : 'loadObject'
     'project/:project/:name/:tools/:collection/:params': 'loadObjects'
+  
+  initialize: ->
+    User.on 'sign-in', => 
+      @navigate(User.incomingLocation, {trigger: true})
+    User.on 'sign-out', => @navigate("#/", {trigger: true})
 
+  checkUser: ->
+    if User.current
+      true
+    else
+      User.incomingLocation = location.hash
+      @navigate("#/", {trigger: true})
+      false
 
   index: ->
     unless User.current?
@@ -23,22 +35,22 @@ class Router extends Backbone.Router
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
   myData: ->
-    return @navigate("#/", {trigger: true}) unless User.current?
+    return unless @checkUser()
     Backbone.Mediator.publish 'router:myData'
 
   savedDashboards: =>
-    return @navigate("#/", {trigger: true}) unless User.current?
+    return unless @checkUser()
     if User.current is null
       @navigate('', {trigger: true})
     else
       Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->
-    return @navigate("#/", {trigger: true}) unless User.current?
+    return unless @checkUser()
     Backbone.Mediator.publish 'router:dashboardCreate', 'My Great Dashboard', project
 
   loadObject: (project, object, settingKeys, settingValues) =>
-    return @navigate("#/", {trigger: true}) unless User.current?
+    return unless @checkUser()
     Manager.set 'project', project
     name = "Dashboard with #{object}"
     settings = {}
@@ -49,7 +61,7 @@ class Router extends Backbone.Router
     Backbone.Mediator.publish 'router:dashboardCreateFromZooid', name, object, settings
 
   loadObjects: (project, name, tools, collection, params) =>
-    return @navigate("#/", {trigger: true}) unless User.current?
+    return unless @checkUser()
     Manager.set 'project', project
     name = name.split('-')
     tools = tools.split('-')

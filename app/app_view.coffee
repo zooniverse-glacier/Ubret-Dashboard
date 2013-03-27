@@ -20,7 +20,7 @@ class AppView extends BaseView
   subscriptions:
     'dashboard:create'                  : 'createDashboardFromDialog'
     'dashboard:fork'                    : 'forkDashboard'
-    'router:index'                      : 'render'
+    'router:index'                      : 'index'
     'router:dashboardCreate'            : 'createDashboard'
     'router:dashboardCreateFromParams'  : 'createDashboardFromParams'
     'router:dashboardCreateFromZooid'   : 'createDashboardFromZooid'
@@ -30,7 +30,6 @@ class AppView extends BaseView
 
   initialize: ->
     @$el.html @template()
-
     @appHeader = new AppHeader({el: @$('.app-header')})
     @dashboardView = new DashboardView
 
@@ -46,6 +45,11 @@ class AppView extends BaseView
         '.app-header': @appHeader
         '.main-focus': @appFocusView
     @
+
+  index: =>
+    @$('.main-focus').empty()
+    @appFocusView = null
+    @render()
 
   forkDashboard: =>
     @dashboardModel.fork().done (response) =>
