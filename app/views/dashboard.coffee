@@ -24,7 +24,7 @@ class DashboardView extends BaseView
     @$el.html @template()
     @assign '.toolbox', @toolboxView
     @model?.get('tools').each @addTool
-    @fqlboxView = new @fqlbox if Ubret.Fql? and !@fqlboxView?
+    @fqlboxView = new @fqlbox if Ubret?.Fql? and !@fqlboxView?
     @assign '.fql-box', @fqlboxView if @fqlboxView?
     @
 
