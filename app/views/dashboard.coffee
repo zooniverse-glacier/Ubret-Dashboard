@@ -2,6 +2,7 @@ BaseView = require 'views/base_view'
 
 class DashboardView extends BaseView
   toolbox: require 'views/toolbox'
+  fqlbox: require 'views/fql_box'
   toolWindow: require 'views/tool_window'
   template: require './templates/layout/dashboard'
 
@@ -23,6 +24,8 @@ class DashboardView extends BaseView
     @$el.html @template()
     @assign '.toolbox', @toolboxView
     @model?.get('tools').each @addTool
+    @fqlboxView = new @fqlbox if Ubret.Fql? and !@fqlboxView?
+    @assign '.fql-box', @fqlboxView if @fqlboxView?
     @
 
   focusWindow: (e) =>

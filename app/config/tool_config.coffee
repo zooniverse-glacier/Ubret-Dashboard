@@ -1,4 +1,5 @@
 settings = 
+  fql: require 'views/settings/fql'
   data: require 'views/settings/data'
   graph: require 'views/settings/graph'
   bins: require 'views/settings/bins'
@@ -43,7 +44,7 @@ module.exports =
     settings: [settings.data, settings.map]
     defaults: {spectrum: 'visible'}
   "Table" : 
-    settings: [settings.data, settings.subject]
+    settings: [settings.data, settings.subject, settings.fql]
     defaults: {sortOrder: 'top', currentPage: 0, sortColumn: 'uid'}
     titleBarControls: true
   "SpacewarpViewer" : 
