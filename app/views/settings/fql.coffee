@@ -6,15 +6,15 @@ class Fql extends BaseView
 
   events:
     'click button.fql-submit' : 'parse'
+    'keypress .fql-box' : 'parse'
 
   parse: (e) =>
-    console.log @$('textarea.fql-box').val()
-    fql = Ubret.Fql.Parser.parse(@$('textarea.fql-box').val())
-    for statement in fql
-      @model.tool.filters statement.eval().func
+    return if e.type is 'keypress' and e.which isnt 13
+    @model.get('fql_statements').add {string: @$('input.fql-box').val()}
+    @$('input.fql-box').val('')
 
   render: =>
-    @$el.html @template(@model.toJSON())
+    @$el.html @template(@model.get('filters')?.toJSON())
     @
 
 module.exports = Fql

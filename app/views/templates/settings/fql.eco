@@ -1,5 +1,5 @@
 <h4>FQL Prompt</h4>
 <div class="nav columns">
-  <textarea class="fql-box"></textarea>
-  <button class="action column one-half fql-submit">Execute</button>
+  <input type="text" class="full fql-box" />
+  <button class="action fql-submit">Execute</button>
 </div>
