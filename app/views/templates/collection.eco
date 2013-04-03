@@ -1,0 +1,7 @@
+<% manager = require('modules/manager') %>
+<% url = "#/projects/#{manager.get('project')}/Dashboard-From-#{@name}/1-3/id_#{@id}" %>
+
+<div class="collection my-data-subject">
+  <img src="<%- @images[0] %>" />
+  <label><a href="<%- url %>"><%- @name %></a></label>
+</div>

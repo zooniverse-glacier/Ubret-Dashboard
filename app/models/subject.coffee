@@ -1,5 +1,3 @@
-BaseModel = require 'models/base_model'
-
-class Subject extends BaseModel
+class Subject extends Backbone.AssociatedModel
 
 module.exports = Subject

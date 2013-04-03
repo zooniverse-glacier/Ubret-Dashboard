@@ -25,6 +25,14 @@ module.exports = [
         type: "Input"
         require: true
         validation: ""
+  ,
+    name: 'Talk Collections'
+    url: (id) -> "/talk/collections/#{id}"
+    params:
+      id:
+        type: "Input"
+        require: true
+        validation: ""
   ]
 ,
   id: 2

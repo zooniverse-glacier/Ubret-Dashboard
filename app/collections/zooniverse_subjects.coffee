@@ -1,6 +1,6 @@
 class ZooniverseSubjectCollection extends Backbone.Collection
   manager: require 'modules/manager'
-  user: require('lib/user')
+  user: require 'lib/user'
   model: require 'models/subject'
   sync: require 'lib/ouroboros_sync'
 

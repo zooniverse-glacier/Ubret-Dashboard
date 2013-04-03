@@ -6,6 +6,7 @@ class MyData extends BaseView
   projects: require 'config/projects_config'
   favoritesView: require 'views/favorites'
   recentsView: require 'views/recents'
+  collectionsView: require 'views/collections'
   user: require 'lib/user'
 
   events: 
@@ -14,15 +15,18 @@ class MyData extends BaseView
   initialize: ->
     @recents = new @recentsView
     @favorites = new @favoritesView 
+    @collections = new @collectionsView
     @user.on 'sign-out', @resetCollections
 
   loadCollections: =>
     @recents.loadCollection()
     @favorites.loadCollection()
+    @collections.loadCollection()
 
   resetCollections: =>
     @recents.reset()
     @favorites.reset()
+    @collections.reset()
 
   updateManager: (e) =>
     @manager.set 'project', e.currentTarget.value
@@ -33,6 +37,7 @@ class MyData extends BaseView
     @$el.html @template(@)
     @$el.append @recents.render().el
     @$el.append @favorites.render().el
+    @$el.append @collections.render().el
     @loadCollections()
     @
 
