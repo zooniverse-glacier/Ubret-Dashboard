@@ -111,20 +111,20 @@ class Tool extends Backbone.AssociatedModel
 
   sourceTool: =>
     if @get('data_source').isInternal()
-      @collection.get(@get('data_source').get('source'))
+      @collection.get(@get('data_source').get('source_id'))
     else
       false
 
   destroy: =>
     children = @collection.filter (tool) =>
-      @id is tool.get('data_source').get('source') and 
+      @id is tool.get('data_source').get('source_id') and 
         tool.get('data_source').isInternal()
     child.destroy() for child in children
     super
 
   sourceName: =>
     if @get('data_source').isExternal()
-      name = @manager.get('sources').get(@get('data_source').get('source')).get('name')
+      name = @manager.get('sources').get(@get('data_source').get('source_id')).get('name')
     else if @get('data_source').isInternal()
       name = @sourceTool()?.get('name')
     else

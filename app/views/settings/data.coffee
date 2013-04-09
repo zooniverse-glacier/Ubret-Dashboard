@@ -32,15 +32,15 @@ class DataSettings extends BaseView
       switch @model.get('data_source').get('source_type')
         when 'external'
           opts.extSources = Manager.get('sources').getSources()
-          if @model.get('data_source').get('source')?
-            opts.source = @getExternalSource @model.get('data_source').get('source')
+          if @model.get('data_source').get('source_id')?
+            opts.source = @getExternalSource @model.get('data_source').get('source_id')
             opts.search_types = opts.source.get('search_types')
             @searchTypeView.set opts.search_types
         when 'internal'
           @updateValidSourceTools()
           opts.intSources = @intSources
-          if @model.get('data_source').get('source')?
-            opts.source = @model.get('data_source').get('source')
+          if @model.get('data_source').get('source_id')?
+            opts.source = @model.get('data_source').get('source_id')
 
     @$el.html @template opts
     @assign
@@ -57,14 +57,14 @@ class DataSettings extends BaseView
   showExternal: =>
     @model.get('data_source').set
       'source_type': 'external'
-      'source': null
+      'source_id': null
       'search_type': null
     , {silent: true}
     @render()
 
   onSelectExternalSource: (e) =>
     unless $(e.currentTarget).val() then return
-    @model.get('data_source').set 'source', $(e.currentTarget).val(), {silent: true}
+    @model.get('data_source').set 'source_id', $(e.currentTarget).val(), {silent: true}
     @model.get('data_source').set 'search_type', 0, {silent: true}
 
     @setParams()
@@ -83,7 +83,7 @@ class DataSettings extends BaseView
   setParams: =>
     if @model.get('data_source').get('search_type')?
       @model.get('data_source').get('params').reset()
-      @model.get('data_source').get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @model.get('data_source').get('source'), {silent: true}
+      @model.get('data_source').get('params').add _.extend({key: key}, value) for key, value of @getExternalSourceParams @model.get('data_source').get('source_id'), {silent: true}
 
   getExternalSource: (sourceId) ->
     Manager.get('sources').get(sourceId)
@@ -102,7 +102,7 @@ class DataSettings extends BaseView
 
   onSelectInternalSource: (e) =>
     @model.get('data_source').set
-      'source': $(e.currentTarget).val()
+      'source_id': $(e.currentTarget).val()
       'search_type': null
     , {silent: true}
 

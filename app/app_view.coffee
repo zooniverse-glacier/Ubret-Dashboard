@@ -71,7 +71,7 @@ class AppView extends BaseView
     params = [ {key: 'id', val: zooid} ]
 
     dataSource = 
-      source: '1'
+      source_id: '1'
       search_type: 0
       source_type: 'external'
       params: params
@@ -100,7 +100,7 @@ class AppView extends BaseView
       paramsFormatted.push {key: key, val: value.join('_')}
 
     dataSource =
-      source: collection[0]
+      source_id: collection[0]
       search_type: parseInt(collection[1])
       source_type: 'external'
       params: paramsFormatted
