@@ -1,6 +1,7 @@
 <div class="main">
   <div class="group">
     <a href="/#/"><img class="logo" src="/images/logo.png"></a>
+    <div class="switch"></div>
   </div>
   <div class="group">
     <nav class="main-nav">

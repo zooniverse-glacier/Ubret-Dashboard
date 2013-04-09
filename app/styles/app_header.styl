@@ -23,7 +23,46 @@
       text-align: right;
       width: 300px
     }
+    .switch {
+      display: inline-block
+      cursor: pointer
+
+      h4 {
+        border: none
+        margin: 0
+        line-height: 10px
+      }
+
+      ul.dropdown {
+        display: none
+        position: absolute
+        width: 150px
+        background: $gray-dark
+        zindex: 999
+        padding-left: 0
+        border: 1px solid $gray-light
+        border-top: none
+        line-height: 0
+        list-style-type: none
+        top: 42px
+
+        li {
+          border-bottom: 1px solid $gray-light
+          padding: 15px
+          
+
+          &:last-child {
+            border-bottom: none
+          }
+        }
+      
+        &.active{
+          display: block
+        }
+      }
+    }
   }
+
 
   button {
     @extends #bold-button

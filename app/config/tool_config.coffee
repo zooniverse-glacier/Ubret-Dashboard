@@ -25,7 +25,7 @@ module.exports =
     settings: [settings.data, settings.key]
     height: 284
     width: 304
-    locked: 'perma'
+    locked: true
   "Spectra" : 
     settings: [settings.data, settings.subject, settings.spectra_legend]
     titleBarControls: true
@@ -49,5 +49,5 @@ module.exports =
     titleBarControls: true
   "SpacewarpViewer" : 
     settings: [settings.data, settings.spacewarp_viewer]
-    locked: 'perma'
+    locked: true
 

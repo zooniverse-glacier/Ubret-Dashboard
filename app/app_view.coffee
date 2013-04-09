@@ -32,6 +32,7 @@ class AppView extends BaseView
     @$el.html @template()
     @appHeader = new AppHeader({el: @$('.app-header')})
     @dashboardView = new DashboardView
+    @appHeader.switch.on 'project-change', @projectChange
 
     # Main area views. Switched out when appropriate.
     @appFocusView = null
@@ -50,6 +51,13 @@ class AppView extends BaseView
     @$('.main-focus').empty()
     @appFocusView = null
     @render()
+
+  projectChange: =>
+    User.current.getDashboards()
+    if location.hash.match(/\/dashboards\//)
+      Manager.get('router').navigate("#/my_dashboards", {trigger: true})
+    else
+      @render()
 
   forkDashboard: =>
     @dashboardModel.fork().done (response) =>

@@ -1,0 +1,6 @@
+<div class="active-project"><h4> - <%- @current %> &#x25be;</h4></div>
+<ul class="dropdown">
+  <% for name, details of @projects: %>
+  <li class="project" data-project="<%- name %>"><%- details.name %></li>
+  <% end %>
+</ul>

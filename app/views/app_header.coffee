@@ -3,6 +3,7 @@ BaseView = require 'views/base_view'
 class AppHeader extends BaseView
   user: require 'lib/user'
   loginBar: require 'views/login'
+  projectSwitch: require 'views/project_switch'
 
   template: require './templates/layout/header'
 
@@ -23,6 +24,7 @@ class AppHeader extends BaseView
       'sign-out': @render
     @user.on 'sign-out', -> console.log 'sign-out'
     @login = new @loginBar
+    @switch = new @projectSwitch()
 
   render: =>
     @$el.html @template()
@@ -40,7 +42,9 @@ class AppHeader extends BaseView
       when 'saved' then @$('li a.my-dashboards').addClass 'active'
       when 'mydata' then @$('li a.my-data').addClass 'active'
 
-    @assign '.login', @login
+    @assign 
+      '.login': @login
+      '.switch' : @switch
     @
 
   isForkable: =>
