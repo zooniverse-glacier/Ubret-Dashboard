@@ -10,6 +10,7 @@ class SpacewarpViewerSettings extends BaseView
     'change input[name="Q"]'        : 'onQChange'
     'change input.scale'            : 'onScaleChange'
     'change input[name="stretch"]'  : 'onStretchChange'
+    'change input.extent'           : 'onExtentChange'
 
 
   initialize: =>
@@ -54,6 +55,11 @@ class SpacewarpViewerSettings extends BaseView
   onStretchChange: (e) =>
     value = e.currentTarget.dataset.function
     @model.tool.updateStretch(value)
+  
+  onExtentChange: (e) =>
+    min = @$el.find('[name="min"]').attr('value')
+    max = @$el.find('[name="max"]').attr('value')
+    @model.tool.updateExtent(min, max)
 
 
 module.exports = SpacewarpViewerSettings
