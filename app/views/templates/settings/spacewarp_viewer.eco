@@ -48,20 +48,20 @@
     <p>Stretch Function</p>
   </div>
   <div class='stretchfn'>
-    <input type='radio' name='stretch' id='linear-<%- @cid %>' />
-    <label for='linear-<%- @cid %>' data-function='linear'>Linear</label>
+    <input type='radio' name='stretch' data-function='linear' id='linear-<%- @cid %>' />
+    <label for='linear-<%- @cid %>'>Linear</label>
     
-    <input type='radio' name='stretch' id='logarithm-<%- @cid %>' />
-    <label for='logarithm-<%- @cid %>' data-function='logarithm'>Logarithm</label>
+    <input type='radio' name='stretch' data-function= 'logarithm' id='logarithm-<%- @cid %>' />
+    <label for='logarithm-<%- @cid %>'>Logarithm</label>
     
-    <input type='radio' name='stretch' id='sqrt-<%- @cid %>' />
-    <label for='sqrt-<%- @cid %>' data-function='sqrt'>Square Root</label>
+    <input type='radio' name='stretch' data-function='sqrt' id='sqrt-<%- @cid %>' />
+    <label for='sqrt-<%- @cid %>'>Square Root</label>
     
-    <input type='radio' name='stretch' id='arcsinh-<%- @cid %>' />
-    <label for='arcsinh-<%- @cid %>' data-function='arcsinh'>Arcsinh</label>
+    <input type='radio' name='stretch' data-function='arcsinh' id='arcsinh-<%- @cid %>' />
+    <label for='arcsinh-<%- @cid %>'>Arcsinh</label>
     
-    <input type='radio' name='stretch' id='power-<%- @cid %>' />
-    <label for='power-<%- @cid %>' data-function='power'>Power</label>
+    <input type='radio' name='stretch' data-function='power' id='power-<%- @cid %>' />
+    <label for='power-<%- @cid %>'>Power</label>
   </div>
   
   <div class='subtitle'>

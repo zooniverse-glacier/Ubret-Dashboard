@@ -52,7 +52,7 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.updateScale(band, value)
   
   onStretchChange: (e) =>
-    value = e.currentTarget.id
+    value = e.currentTarget.dataset.function
     @model.tool.updateStretch(value)
 
 
