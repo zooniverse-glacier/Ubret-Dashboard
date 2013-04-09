@@ -1,6 +1,6 @@
 class UbretManager
   constructor: ->
-    @data = {}
+    @data = { project: 'galaxy_zoo' }
 
   save: (key, data) =>
     @data[key] = data

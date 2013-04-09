@@ -48,6 +48,8 @@ class User extends Backbone.Events
       User.trigger 'sign-in-error', response.message
       null
 
+  manager: require 'modules/manager'
+
   constructor: (options) ->
     _.extend @, Backbone.Events
     @name = options.name
@@ -55,7 +57,7 @@ class User extends Backbone.Events
     @apiToken = options.api_key
 
   getDashboards: =>
-    url = "#{User.apiUrl()}/dashboards"
+    url = "#{User.apiUrl()}/projects/#{@manager.get('project')}/dashboards"
     $.ajax 
       url: url
       type: 'GET'

@@ -49,4 +49,5 @@ module.exports =
     titleBarControls: true
   "SpacewarpViewer" : 
     settings: [settings.data, settings.spacewarp_viewer]
+    locked: 'perma'
 
