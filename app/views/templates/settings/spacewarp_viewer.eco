@@ -1,25 +1,25 @@
 <h4>Controls</h4>
 
 <div class='bands'>
-  <input type='radio' name='band' id='gri-<%- @cid %>' />
+  <input type='radio' name='band' data-band='gri' id='gri-<%- @cid %>' />
   <label for='gri-<%- @cid %>' data-band='gri'>color</label>
   
   <br/><br/>
   
-  <input type='radio' name='band' id='u-<%- @cid %>' />
-  <label for='u-<%- @cid %>' data-band='u'>u</label>
+  <input type='radio' name='band' data-band='u' id='u-<%- @cid %>' />
+  <label for='u-<%- @cid %>'>u</label>
   
-  <input type='radio' name='band' id='g-<%- @cid %>' />
-  <label for='g-<%- @cid %>' data-band='g'>g</label>
+  <input type='radio' name='band' data-band='g' id='g-<%- @cid %>' />
+  <label for='g-<%- @cid %>'>g</label>
   
-  <input type='radio' name='band' id='r-<%- @cid %>' />
-  <label for='r-<%- @cid %>' data-band='r'>r</label>
+  <input type='radio' name='band' data-band='r' id='r-<%- @cid %>' />
+  <label for='r-<%- @cid %>'>r</label>
   
-  <input type='radio' name='band' id='i-<%- @cid %>' />
-  <label for='i-<%- @cid %>' data-band='i'>i</label>
+  <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
+  <label for='i-<%- @cid %>'>i</label>
   
-  <input type='radio' name='band' id='z-<%- @cid %>' />
-  <label for='z-<%- @cid %>' data-band='z'>z</label>
+  <input type='radio' name='band' data-band='z' id='z-<%- @cid %>' />
+  <label for='z-<%- @cid %>'>z</label>
 </div>
 
 <div class='parameters color'>

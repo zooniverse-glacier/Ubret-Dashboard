@@ -11,24 +11,32 @@
 
   WebFITS = {};
 
-  WebFITS.version = '0.1.0';
+  WebFITS.version = '0.2.2';
 
   this.astro.WebFITS = WebFITS;
 
   BaseApi = (function() {
 
     function BaseApi(el, dimension) {
+      var parentStyle;
+      this.el = el;
       this.wheelHandler = __bind(this.wheelHandler, this);
+
       this.width = this.height = dimension;
       this.canvas = document.createElement('canvas');
       this.canvas.setAttribute('width', this.width);
       this.canvas.setAttribute('height', this.height);
-      el.appendChild(this.canvas);
-      this.id = 0;
+      this.el.appendChild(this.canvas);
+      this.nImages = 0;
       this.lookup = {};
-      if (!this._getContext()) {
+      if (!this.getContext()) {
         return null;
       }
+      parentStyle = this.canvas.parentElement.style;
+      parentStyle.width = "" + this.canvas.width + "px";
+      parentStyle.height = "" + this.canvas.height + "px";
+      parentStyle.overflow = 'hidden';
+      parentStyle.backgroundColor = '#151515';
       this.xOffset = -this.width / 2;
       this.yOffset = -this.height / 2;
       this.xOldOffset = this.xOffset;
@@ -41,16 +49,23 @@
       this.zoomY = this.zoom;
     }
 
-    BaseApi.prototype.setupControls = function() {
-      var _this = this;
-      this.canvas.onmousedown = function(e) {
+    BaseApi.prototype.setupControls = function(callbacks, opts) {
+      var _onmousedown, _onmousemove, _onmouseout, _onmouseover, _onmouseup,
+        _this = this;
+      if (callbacks == null) {
+        callbacks = null;
+      }
+      if (opts == null) {
+        opts = null;
+      }
+      _onmousedown = function(e) {
         _this.drag = true;
         _this.xOldOffset = _this.xOffset;
         _this.yOldOffset = _this.yOffset;
         _this.xMouseDown = e.clientX;
         return _this.yMouseDown = e.clientY;
       };
-      this.canvas.onmouseup = function(e) {
+      _onmouseup = function(e) {
         var xDelta, yDelta;
         _this.drag = false;
         if (_this.xMouseDown == null) {
@@ -62,7 +77,7 @@
         _this.yOffset = _this.yOldOffset - (yDelta / _this.height / _this.zoom * 2.0);
         return _this.draw();
       };
-      this.canvas.onmousemove = function(e) {
+      _onmousemove = function(e) {
         var xDelta, yDelta;
         if (!_this.drag) {
           return;
@@ -73,12 +88,70 @@
         _this.yOffset = _this.yOldOffset - (yDelta / _this.height / _this.zoom * 2.0);
         return _this.draw();
       };
-      this.canvas.onmouseout = function(e) {
+      _onmouseout = function(e) {
         return _this.drag = false;
       };
-      this.canvas.onmouseover = function(e) {
+      _onmouseover = function(e) {
         return _this.drag = false;
       };
+      if ((callbacks != null ? callbacks.onzoom : void 0) != null) {
+        this.zoomCallback = callbacks.onzoom;
+      }
+      if ((callbacks != null ? callbacks.onmousedown : void 0) != null) {
+        this.canvas.onmousedown = function(e) {
+          _onmousedown(e);
+          return callbacks.onmousedown.call(_this, opts, e);
+        };
+      } else {
+        this.canvas.onmousedown = function(e) {
+          return _onmousedown(e);
+        };
+      }
+      if ((callbacks != null ? callbacks.onmouseup : void 0) != null) {
+        this.canvas.onmouseup = function(e) {
+          _onmouseup(e);
+          return callbacks.onmouseup.call(_this, opts, e);
+        };
+      } else {
+        this.canvas.onmouseup = function(e) {
+          return _onmouseup(e);
+        };
+      }
+      if ((callbacks != null ? callbacks.onmousemove : void 0) != null) {
+        this.canvas.onmousemove = function(e) {
+          var x, xDelta, y, yDelta;
+          _onmousemove(e);
+          xDelta = -1 * (_this.width / 2 - e.offsetX) / _this.width / _this.zoom * 2.0;
+          yDelta = (_this.height / 2 - e.offsetY) / _this.height / _this.zoom * 2.0;
+          x = ((-1 * (_this.xOffset + 0.5)) + xDelta) + 1.5 << 0;
+          y = ((-1 * (_this.yOffset + 0.5)) + yDelta) + 1.5 << 0;
+          return callbacks.onmousemove.call(_this, x, y, opts, e);
+        };
+      } else {
+        this.canvas.onmousemove = function(e) {
+          return _onmousemove(e);
+        };
+      }
+      if ((callbacks != null ? callbacks.onmouseout : void 0) != null) {
+        this.canvas.onmouseout = function(e) {
+          _onmouseout(e);
+          return callbacks.onmouseout.call(_this, opts, e);
+        };
+      } else {
+        this.canvas.onmouseout = function(e) {
+          return _onmouseout(e);
+        };
+      }
+      if ((callbacks != null ? callbacks.onmouseover : void 0) != null) {
+        this.canvas.onmouseover = function(e) {
+          _onmouseover(e);
+          return callbacks.onmouseover.call(_this, opts, e);
+        };
+      } else {
+        this.canvas.onmouseover = function(e) {
+          return _onmouseover(e);
+        };
+      }
       this.canvas.addEventListener('mousewheel', this.wheelHandler, false);
       return this.canvas.addEventListener('DOMMouseScroll', this.wheelHandler, false);
     };
@@ -87,9 +160,10 @@
       var factor;
       e.preventDefault();
       factor = e.shiftKey ? 1.01 : 1.1;
-      this.zoom *= (e.detail || e.wheelDelta) < 0 ? factor : 1 / factor;
+      this.zoom *= (e.detail || e.wheelDelta) < 0 ? 1 / factor : factor;
       this.zoom = this.zoom > this.maxZoom ? this.maxZoom : this.zoom;
-      return this.zoom = this.zoom < this.minZoom ? this.minZoom : this.zoom;
+      this.zoom = this.zoom < this.minZoom ? this.minZoom : this.zoom;
+      return typeof this.zoomCallback === "function" ? this.zoomCallback() : void 0;
     };
 
     return BaseApi;
@@ -108,27 +182,14 @@
       this.scaledArcsinh = __bind(this.scaledArcsinh, this);
 
       this.wheelHandler = __bind(this.wheelHandler, this);
-      return Api.__super__.constructor.apply(this, arguments);
+      this._reset();
+      Api.__super__.constructor.apply(this, arguments);
     }
 
-    Api.prototype.nImages = 0;
-
-    Api.prototype.images = {};
-
-    Api.prototype.scales = {};
-
-    Api.prototype._getContext = function() {
-      var parentStyle;
-      parentStyle = this.canvas.parentElement.style;
-      parentStyle.width = this.canvas.width;
-      parentStyle.height = this.canvas.height;
-      parentStyle.overflow = 'hidden';
-      this.canvas.style.transform = 'scaleY(-1)';
-      this.canvas.style.webkitTransform = 'scaleY(-1)';
-      this.canvas.style.MozTransform = 'scaleY(-1)';
-      this.ctx = this.canvas.getContext('2d');
-      this.draw = this.drawLinear;
-      return this.ctx;
+    Api.prototype._reset = function() {
+      this.images = {};
+      this.scales = {};
+      return this.calibrations = {};
     };
 
     Api.prototype._applyTransforms = function() {
@@ -137,6 +198,15 @@
       this.canvas.style.transform = transforms;
       this.canvas.style.webkitTransform = transforms;
       return this.canvas.style.MozTransform = transforms;
+    };
+
+    Api.prototype.getContext = function() {
+      this.canvas.style.transform = 'scaleY(-1)';
+      this.canvas.style.webkitTransform = 'scaleY(-1)';
+      this.canvas.style.MozTransform = 'scaleY(-1)';
+      this.ctx = this.canvas.getContext('2d');
+      this.draw = this.drawLinear;
+      return this.ctx;
     };
 
     Api.prototype.setupControls = function() {
@@ -174,9 +244,8 @@
 
     Api.prototype.loadImage = function(identifier, arr, width, height) {
       var index;
-      index = this.id;
-      this.lookup[identifier] = this.id;
-      this.id += 1;
+      index = this.nImages;
+      this.lookup[identifier] = this.nImages;
       this.images[identifier] = {
         arr: new Float32Array(arr),
         width: width,
@@ -225,6 +294,13 @@
       return this.draw();
     };
 
+    Api.prototype.setCalibrations = function(r, g, b) {
+      this.calibrations.r = r;
+      this.calibrations.g = g;
+      this.calibrations.b = b;
+      return this.draw();
+    };
+
     Api.prototype.setAlpha = function(value) {
       this.alpha = value;
       return this.draw();
@@ -236,9 +312,11 @@
     };
 
     Api.prototype.drawLinear = function() {
-      var arr, data, imgData, length, max, min, range, value;
+      var arr, data, height, imgData, length, max, min, range, value, width;
       data = this.images[this.currentImage].arr;
-      imgData = this.ctx.getImageData(0, 0, this.width, this.height);
+      width = this.images[this.currentImage].width;
+      height = this.images[this.currentImage].height;
+      imgData = this.ctx.getImageData(0, 0, width, height);
       arr = imgData.data;
       min = this.minimum;
       max = this.maximum;
@@ -257,9 +335,11 @@
     };
 
     Api.prototype.drawLog = function() {
-      var arr, data, imgData, length, max, min, minimum, pixel, range, value;
+      var arr, data, height, imgData, length, max, min, minimum, pixel, range, value, width;
       data = this.images[this.currentImage].arr;
-      imgData = this.ctx.getImageData(0, 0, this.width, this.height);
+      width = this.images[this.currentImage].width;
+      height = this.images[this.currentImage].height;
+      imgData = this.ctx.getImageData(0, 0, width, height);
       arr = imgData.data;
       minimum = this.minimum;
       min = 0;
@@ -280,9 +360,11 @@
     };
 
     Api.prototype.drawSqrt = function() {
-      var arr, data, imgData, length, max, minimum, pixel, value;
+      var arr, data, height, imgData, length, max, minimum, pixel, value, width;
       data = this.images[this.currentImage].arr;
-      imgData = this.ctx.getImageData(0, 0, this.width, this.height);
+      width = this.images[this.currentImage].width;
+      height = this.images[this.currentImage].height;
+      imgData = this.ctx.getImageData(0, 0, width, height);
       arr = imgData.data;
       minimum = this.minimum;
       max = this.maximum - minimum;
@@ -301,9 +383,11 @@
     };
 
     Api.prototype.drawAsinh = function() {
-      var arr, data, imgData, length, max, min, pixel, range, value;
+      var arr, data, height, imgData, length, max, min, pixel, range, value, width;
       data = this.images[this.currentImage].arr;
-      imgData = this.ctx.getImageData(0, 0, this.width, this.height);
+      width = this.images[this.currentImage].width;
+      height = this.images[this.currentImage].height;
+      imgData = this.ctx.getImageData(0, 0, width, height);
       arr = imgData.data;
       min = this.scaledArcsinh(this.minimum);
       max = this.scaledArcsinh(this.maximum);
@@ -323,9 +407,11 @@
     };
 
     Api.prototype.drawPower = function() {
-      var arr, data, imgData, length, max, min, pixel, value;
+      var arr, data, height, imgData, length, max, min, pixel, value, width;
       data = this.images[this.currentImage].arr;
-      imgData = this.ctx.getImageData(0, 0, this.width, this.height);
+      width = this.images[this.currentImage].width;
+      height = this.images[this.currentImage].height;
+      imgData = this.ctx.getImageData(0, 0, width, height);
       arr = imgData.data;
       min = this.minimum;
       max = this.maximum - min;
@@ -344,27 +430,31 @@
     };
 
     Api.prototype.drawLupton = function() {
-      var I, arr, b, bImage, bScale, canvas, ctx, factor, g, gImage, gScale, imgData, index, length, r, rImage, rScale;
+      var I, Q, alpha, arr, b, bFactor, bImage, canvas, ctx, factor, g, gFactor, gImage, height, imgData, index, length, r, rFactor, rImage, width;
       rImage = this.images[this.r].arr;
       gImage = this.images[this.g].arr;
       bImage = this.images[this.b].arr;
-      rScale = this.scales.r;
-      gScale = this.scales.g;
-      bScale = this.scales.b;
+      rFactor = this.scales.r * this.calibrations.r;
+      gFactor = this.scales.g * this.calibrations.g;
+      bFactor = this.scales.b * this.calibrations.b;
+      alpha = this.alpha;
+      Q = this.Q;
+      width = this.images[this.r].width;
+      height = this.images[this.r].height;
       canvas = document.createElement('canvas');
-      canvas.width = this.width;
-      canvas.height = this.height;
+      canvas.width = width;
+      canvas.height = height;
       ctx = canvas.getContext('2d');
-      imgData = ctx.getImageData(0, 0, this.width, this.height);
+      imgData = ctx.getImageData(0, 0, width, height);
       arr = imgData.data;
       length = arr.length;
       while (length -= 4) {
         index = length / 4;
-        r = rImage[index] * rScale;
-        g = gImage[index] * gScale;
-        b = bImage[index] * bScale;
+        r = rImage[index] * rFactor;
+        g = gImage[index] * gFactor;
+        b = bImage[index] * bFactor;
         I = r + g + b + 1e-10;
-        factor = this.arcsinh(this.alpha * this.Q * I) / (this.Q * I);
+        factor = this.arcsinh(alpha * Q * I) / (Q * I);
         arr[length + 0] = 255 * r * factor;
         arr[length + 1] = 255 * g * factor;
         arr[length + 2] = 255 * b * factor;
@@ -387,6 +477,24 @@
     Api.prototype.wheelHandler = function(e) {
       Api.__super__.wheelHandler.apply(this, arguments);
       return this.draw();
+    };
+
+    Api.prototype.getZoom = function() {
+      return this.zoom * 2 / this.width;
+    };
+
+    Api.prototype.getXOffset = function() {
+      return this.xOffset - this.width / 2;
+    };
+
+    Api.prototype.getYOffset = function() {
+      return this.yOffset - this.height / 2;
+    };
+
+    Api.prototype.teardown = function() {
+      this.el.removeChild(this.canvas);
+      this.ctx = void 0;
+      return this._reset();
     };
 
     Api.prototype.logarithm = function(value) {

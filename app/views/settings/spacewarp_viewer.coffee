@@ -22,7 +22,7 @@ class SpacewarpViewerSettings extends BaseView
     @
   
   onBandChange: (e) =>
-    band = e.currentTarget.id
+    band = e.currentTarget.dataset.band
     
     color = @$el.find('.parameters.color')
     gray  = @$el.find('.parameters.grayscale')
