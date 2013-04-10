@@ -6,7 +6,7 @@
   <div class="group">
     <nav class="main-nav">
       <ul>
-        <% if require('lib/user').current?: %>
+        <% if @user.current?: %>
           <li><a class="current" href="<%- @dashURL %>">Current Dashboard</a></li>
           <li><a class="my-dashboards" href="/#/my_dashboards">Dashboards</a></li>
           <li><a class="my-data" href="/#/my_data">Data</a></li>

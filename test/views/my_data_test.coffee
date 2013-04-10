@@ -17,23 +17,18 @@ describe 'MyData', ->
     it 'should call loadCollection on favorites and recents', ->
       recentSpy = sinon.stub(@myData.recents, 'loadCollection')
       favSpy = sinon.stub(@myData.favorites, 'loadCollection')
+      colSpy = sinon.stub(@myData.collections, 'loadCollection')
       @myData.loadCollections()
       expect(recentSpy).to.have.been.called
       expect(favSpy).to.have.been.called
+      expect(colSpy).to.have.been.called
 
   describe '#resetCollection', ->
     it 'should call reset on favorites and recents', ->
       recentSpy = sinon.stub(@myData.recents, 'reset')
       favSpy = sinon.stub(@myData.favorites, 'reset')
+      colSpy = sinon.stub(@myData.collections, 'reset')
       @myData.resetCollections()
       expect(recentSpy).to.have.been.called
       expect(favSpy).to.have.been.called
-
-  describe '#updateManager', ->
-    beforeEach ->
-      @renderStub = sinon.stub(@myData, 'render')
-      @event = {currentTarget: {value: 'galaxy_zoo'}}
-
-    it 'should set the project to the new value', ->
-      @myData.updateManager(@event)
-      expect(@myData.manager.get('project')).to.eq 'galaxy_zoo'
+      expect(colSpy).to.have.been.caleed

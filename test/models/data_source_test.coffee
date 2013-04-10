@@ -7,16 +7,16 @@ describe 'DataSource', ->
 
     @extDataSource = new DataSource
       source_type: 'external'
-      source: '2'
+      source_id: '2'
 
     @zooDataSource = new DataSource
       source_type: 'external'
       search_type: 1
-      source: '1'
+      source_id: '1'
 
     # Broken sources
-    @invalidDataSource = new DataSource {source_type: null, source: '1'}
-    @invalidDataSource2 = new DataSource {source_type: 'cheers', source: '1'}
+    @invalidDataSource = new DataSource {source_type: null, source_id: '1'}
+    @invalidDataSource2 = new DataSource {source_type: 'cheers', source_id: '1'}
 
   describe '#data', ->
     it 'should return a new zooSubject for zoo data sources', ->

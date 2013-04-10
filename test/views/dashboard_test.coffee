@@ -5,7 +5,7 @@ ToolWindow = require 'views/tool_window'
 describe 'Dashboard View', ->
   beforeEach ->
     @dashboardView = new Dashboard
-      model: new DashboardModel {tools: [{id: 1, tool_type: "Table"}, {tool_type: "Histogram"}]}
+      model: new DashboardModel {tools: [{_id: 1, tool_type: "Table"}, {tool_type: "Histogram"}]}
 
   it 'should be instantiable', ->
     expect(@dashboardView).to.be.defined

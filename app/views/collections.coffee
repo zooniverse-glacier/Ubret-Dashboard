@@ -11,7 +11,7 @@ class Collections extends Backbone.View
   loadCollection: =>
     @collection.fetch() if @manager.get('project')
 
-  resetCollection: =>
+  reset: =>
     @collection.reset()
 
   render: =>

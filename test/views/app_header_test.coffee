@@ -49,9 +49,9 @@ describe "App Header", ->
 
     describe '#updateLink', ->
       it 'should set the dashId to the dashboard\'s id', ->
-        @appHeader.updateLink({id: 1})
-        expect(@appHeader).to.have.property('dashId')
-          .and.equal(1)
+        @appHeader.updateLink({id: 1, get: -> 'galaxy_zoo'})
+        expect(@appHeader).to.have.property('dashURL')
+          .and.equal("/#/dashboards/galaxy_zoo/1")
         expect(@renderSpy).to.have.been.called
 
     describe '#onCreateDashboard', ->
@@ -65,6 +65,9 @@ describe "App Header", ->
         expect(@pubSpy).to.have.been.calledWith('dashboard:fork')
 
   describe '#render', ->
+    beforeEach ->
+      @assignStub = sinon.stub(@appHeader, 'assign')
+
     it 'should render the template', ->
       templateSpy = sinon.spy(@appHeader, 'template')
       htmlSpy = sinon.spy(@appHeader.$el, 'html')
@@ -73,6 +76,7 @@ describe "App Header", ->
       expect(htmlSpy).to.have.been.called
 
     it 'should set the active view', ->
+      @appHeader.user.current = true
       @appHeader.active = 'current'
       @appHeader.render()
       expect(@appHeader.$('li a.current')).to.have.class 'active'
@@ -85,9 +89,10 @@ describe "App Header", ->
 
     context "when a dashId is defined", ->
       it 'should set the href of .current to dashId', ->
-        @appHeader.dashId = 1
+        @appHeader.user.current = true
+        @appHeader.dashURL = "/#/dashboards/galaxy_zoo/1"
         @appHeader.render()
-        expect(@appHeader.$('.current')).to.have.attr('href', "/#/dashboards/1")
+        expect(@appHeader.$('.current')).to.have.attr('href', "/#/dashboards/galaxy_zoo/1")
 
     context "when a user is not logged in", ->
       beforeEach ->

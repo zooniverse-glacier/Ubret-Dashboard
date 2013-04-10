@@ -7,15 +7,15 @@ describe 'Tool', ->
     @tools.add [
       tool_type: "Table"
       name: "Table-1"
-      id: 1
+      _id: 1
       data_source:
         source_type: "external"
-        source: 1
+        source_id: '1'
     ,
-      id: 2
+      _id: 2
       tool_type: "Table"
       data_source:
-        source: 1
+        source_id: 1
         source_type: 'internal'
     ]
 
