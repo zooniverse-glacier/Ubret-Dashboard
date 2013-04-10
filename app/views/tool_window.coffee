@@ -20,7 +20,7 @@ class ToolWindow extends BaseView
     @titleBar = new @windowTitleBarView {model: @model}
 
     @model.on
-      'change:id' : @updateWindowId
+      'change:_id' : @updateWindowId
       'destroy': @removeWindow
       'change:zindex': @setZindex
       'change:left change:top': @setPosition
