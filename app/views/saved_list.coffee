@@ -11,13 +11,18 @@ class SavedList extends BaseView
     'click a.share': 'shareDashboard'
 
   initialize: ->
-    @collection.on 'add reset remove', @render
-    @sharers = new Object
+    @collection.on 'reset remove', @reset
+    @collection.on 'reset remove', @render
+    @reset()
+
+  reset: =>
+    @sharers = {}
     @collection.each (dashboard) =>    
       @sharers[dashboard.id] = new @sharing {model: dashboard}
 
   render: =>
     @$el.html @listTemplate()
+
     @collection.each (dashboard) =>
       item =
         id: dashboard.id
