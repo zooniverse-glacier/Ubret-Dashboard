@@ -57,7 +57,6 @@ class AppView extends BaseView
     if @appFocusView is @dashboardView
       Manager.get('router').navigate("#/my_dashboards", {trigger: true})
     else
-      console.log 'here'
       @appFocusView.render()
 
   forkDashboard: =>
@@ -145,11 +144,12 @@ class AppView extends BaseView
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   showSaved: =>
-    User.current.once 'loaded-dashboards', =>
-      unless @savedListView? then @savedListView = new SavedList {collection: User.current.dashboards}
+    User.current.getDashboards().done =>
+      unless @savedListView? 
+        @savedListView = new SavedList 
+          collection: User.current.dashboards
       @appFocusView = @savedListView
       @render()
-    User.current.getDashboards()
 
   showMyData: =>
     unless @myDataView? then @myDataView = new MyData
@@ -158,6 +158,7 @@ class AppView extends BaseView
     @render()
 
   navigateToDashboard: (trigger=true) =>
-    Manager.get('router').navigate "#/dashboards/#{Manager.get('project')}/#{@dashboardModel.id}", {trigger: trigger}
+    url = "#/dashboards/#{Manager.get('project')}/#{@dashboardModel.id}"
+    Manager.get('router').navigate url, {trigger: trigger}
 
 module.exports = AppView

@@ -14,11 +14,9 @@ class ProjectSwitch extends BaseView
     'click .active-project' : 'activateDropdown'
 
   activateDropdown: (e) =>
-    console.log e
     @$('ul.dropdown').toggleClass 'active'
 
   updateManager: (e) =>
-    console.log e.currentTarget.dataset.project
     @manager.set('project', e.currentTarget.dataset.project)
     @$('ul.dropdown').removeClass 'active'
     @trigger 'project-change'

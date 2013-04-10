@@ -44,7 +44,6 @@ class Tool extends Backbone.AssociatedModel
       @collection.focus @, false
      
       config = @config[@get('tool_type')]
-      console.log @attributes
       @set 'height', config.height if config.height?
       @set 'width', config.width if config.width?
       @set 'locked_size', config.locked if config.locked?
@@ -143,7 +142,6 @@ class Tool extends Backbone.AssociatedModel
     @updateFunc() if @get('settings').hasChanged()
 
   sendStatement: (statement) =>
-    console.log statement
     if statement.isFilter()
       @tool.filters(statement.get('func'))
     else

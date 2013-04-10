@@ -18,7 +18,6 @@ class SavedList extends BaseView
 
   render: =>
     @$el.html @listTemplate()
-    console.log @collection
     @collection.each (dashboard) =>
       item =
         id: dashboard.id
