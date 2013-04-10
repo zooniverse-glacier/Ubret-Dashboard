@@ -7,7 +7,7 @@
     <nav class="main-nav">
       <ul>
         <% if require('lib/user').current?: %>
-          <li><a class="current" href="/#/dashboards/<%- @id %>">Current Dashboard</a></li>
+          <li><a class="current" href="<%- @dashURL %>">Current Dashboard</a></li>
           <li><a class="my-dashboards" href="/#/my_dashboards">Dashboards</a></li>
           <li><a class="my-data" href="/#/my_data">Data</a></li>
         <% end %>

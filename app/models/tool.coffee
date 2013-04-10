@@ -4,6 +4,8 @@ class Tool extends Backbone.AssociatedModel
   config: require 'config/tool_config'
   user: require 'lib/user'
 
+  idAttribute: '_id'
+
   updateFunc:(args...) =>
     if @id? and @user.current?
       @save(args...)
@@ -42,6 +44,7 @@ class Tool extends Backbone.AssociatedModel
       @collection.focus @, false
      
       config = @config[@get('tool_type')]
+      console.log @attributes
       @set 'height', config.height if config.height?
       @set 'width', config.width if config.width?
       @set 'locked_size', config.locked if config.locked?

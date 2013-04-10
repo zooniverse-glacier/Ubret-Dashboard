@@ -27,8 +27,9 @@ class AppHeader extends BaseView
     @switch = new @projectSwitch()
 
   render: =>
-    @$el.html @template()
-    if @dashId then @$('.current').attr 'href', '/#/dashboards/' + @dashId
+    @$el.html @template(@)
+    if @dashURL
+      @$('.current').attr 'href', @dashUrl
 
     if @user.current? 
       @$('.create-dashboard').removeAttr 'disabled'
@@ -69,7 +70,7 @@ class AppHeader extends BaseView
     Backbone.Mediator.publish 'dashboard:fork'
 
   updateLink: (model) =>
-    @dashId = model.id
+    @dashURL = "/#/dashboards/#{model.get('project')}/#{model.id}"
     @render()
 
 module.exports = AppHeader

@@ -8,7 +8,7 @@ class Sharing extends BaseView
     'click a.url' : 'showUrl'
 
   dashboardHref: ->
-    "http://tools.zooniverse.org/#/dashboards/#{@model.id}"
+    "http://tools.zooniverse.org/#/dashboards/#{@model.project}/#{@model.id}"
 
   facebookHref: ->
     title = @model.get('name')

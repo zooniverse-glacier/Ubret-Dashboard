@@ -6,7 +6,7 @@ class Router extends Backbone.Router
   routes:
     '': 'index'
     'my_dashboards': 'savedDashboards'
-    'dashboards/:id': 'retrieveDashboard'
+    'dashboards/:project/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
     'project/:project/:object(/:setting_keys/:setting_values)' : 'loadObject'
@@ -31,7 +31,8 @@ class Router extends Backbone.Router
     else
       @navigate("#/my_dashboards", {trigger: true})
 
-  retrieveDashboard: (id) =>
+  retrieveDashboard: (project, id) =>
+    Manager.set('project', project)
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
   myData: ->

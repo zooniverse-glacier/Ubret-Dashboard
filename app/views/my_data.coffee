@@ -23,7 +23,6 @@ class MyData extends BaseView
     @collections.reset()
 
   render: =>
-    @selected = @manager.get('project')
     @$el.append @recents.render().el
     @$el.append @favorites.render().el
     @$el.append @collections.render().el

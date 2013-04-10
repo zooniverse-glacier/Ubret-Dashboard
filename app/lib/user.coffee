@@ -71,7 +71,7 @@ class User extends Backbone.Events
         @trigger 'loaded-dashboards'
 
   removeDashboard: (id, cb) =>
-    url = "#{User.apiUrl()}/dashboards/#{id}"
+    url = "#{User.apiUrl()}/projects/#{@manager.get('project')}/dashboards/#{id}"
     $.ajax 
       url: url
       type: 'DELETE'

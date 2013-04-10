@@ -11,7 +11,7 @@ class SavedList extends BaseView
     'click a.share': 'shareDashboard'
 
   initialize: ->
-    @collection.on 'remove', @render
+    @collection.on 'add reset remove', @render
     @sharers = new Object
     @collection.each (dashboard) =>    
       @sharers[dashboard.id] = new @sharing {model: dashboard}
@@ -22,6 +22,7 @@ class SavedList extends BaseView
       item =
         id: dashboard.id
         name: dashboard.get('name')
+        project: dashboard.get('project')
         lastModified: new Date(dashboard.get('updated_at')).toLocaleString()
       @$('.dashboards').append @itemTemplate(item)
     @

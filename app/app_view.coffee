@@ -54,10 +54,11 @@ class AppView extends BaseView
 
   projectChange: =>
     User.current.getDashboards()
-    if location.hash.match(/\/dashboards\//)
+    if @appFocusView is @dashboardView
       Manager.get('router').navigate("#/my_dashboards", {trigger: true})
     else
-      @render()
+      console.log 'here'
+      @appFocusView.render()
 
   forkDashboard: =>
     @dashboardModel.fork().done (response) =>
@@ -99,7 +100,7 @@ class AppView extends BaseView
       tools: tools
     
     @dashboardModel.save().done =>
-      Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
+      @navigateToDashboard()
 
   createDashboardFromParams: (name, tools, collection, params) =>
     paramsFormatted = new Array
@@ -127,7 +128,7 @@ class AppView extends BaseView
       tools: toolsFormatted
 
     @dashboardModel.save().done =>
-      Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: true}
+      @navigateToDashboard()
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
@@ -139,8 +140,8 @@ class AppView extends BaseView
 
   createDashboardView: =>
     @appFocusView = @dashboardView
+    @navigateToDashboard(false)
     @render()
-    Manager.get('router').navigate "#/dashboards/#{@dashboardModel.id}", {trigger: false}
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   showSaved: =>
@@ -155,5 +156,8 @@ class AppView extends BaseView
     @myDataView.loadCollections()
     @appFocusView = @myDataView
     @render()
+
+  navigateToDashboard: (trigger=true) =>
+    Manager.get('router').navigate "#/dashboards/#{Manager.get('project')}/#{@dashboardModel.id}", {trigger: trigger}
 
 module.exports = AppView

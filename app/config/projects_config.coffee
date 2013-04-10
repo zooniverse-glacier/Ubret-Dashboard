@@ -3,8 +3,8 @@ Projects =
     name: 'Galaxy Zoo'
     talk: false
 
-  space_warp: 
-    name: 'Space Warp'
+  spacewarp: 
+    name: 'Space Warps'
     talk: true
 
   serengeti: 

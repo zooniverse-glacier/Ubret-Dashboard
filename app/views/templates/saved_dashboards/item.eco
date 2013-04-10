@@ -1,10 +1,10 @@
 <ul>
-  <li><a href="/#/dashboards/<%- @id %>"><img src="/images/dashboard-preview.png"></a></li>
-  <li class="title"><a href="/#/dashboards/<%- @id %>"><b><%- @name %></b></a></li>
+  <li><a href="/#/dashboards/<%- @project %>/<%- @id %>"><img src="/images/dashboard-preview.png"></a></li>
+  <li class="title"><a href="/#/dashboards/<%- @project %>/<%- @id %>"><b><%- @name %></b></a></li>
   <li class="meta"><%- @lastModified %></li>
   <li class="actions">
     <ul>
-      <li><a href="/#/dashboards/<%- @id %>">View</a></li>
+      <li><a href="/#/dashboards/<%- @project %>/<%- @id %>">View</a></li>
       <li><a data-id="<%- @id %>" href="#" class="share">Share</a></li>
       <li><a data-id="<%- @id %>" href="#" class="delete">Delete</a></li>
     </ul>
