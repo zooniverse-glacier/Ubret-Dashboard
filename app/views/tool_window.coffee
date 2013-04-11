@@ -53,7 +53,8 @@ class ToolWindow extends BaseView
     @$el.attr 'data-id', @model.id
 
   render: =>
-    @$el.html @template()
+    locked = require('config/tool_config')[@model.get('tool_type')].locked
+    @$el.html @template({locked: (locked or false)})
     @$el.attr 'data-id', @model.id
 
     @$('.tool-container').height(parseInt(@model.get('height')) - 25 )

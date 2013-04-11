@@ -4,9 +4,11 @@
   <div class="tool-container"></div>
 </div>
 
+<% unless @locked: %>
 <% for klass in ['top left', 'top right', 'bottom right', 'bottom left']: %>
   <span class="resize corner <%- klass %>"></span>
 <% end %>
 <% for klass in ['top', 'right', 'bottom', 'left']: %>
   <span class="resize bar <%- klass %>"></span>
+<% end %>
 <% end %>
