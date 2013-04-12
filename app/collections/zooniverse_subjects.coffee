@@ -8,7 +8,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     @base = options.url
     @type = options.search_type
 
-    if @type is 0
+    if @type is 0 or @type is 3
       @id = options.params.find((param) => param.get('key') is 'id').get('val')
     else if options.params? and options.params.length
       @params = new Object
@@ -16,6 +16,8 @@ class ZooniverseSubjectCollection extends Backbone.Collection
         @params[param.get('key')] = param.get('val')
 
   parse: (response) ->
+    if response.type = "SubjectSet"
+      response = response.subjects
     if _.isFunction(@[@manager.get('project')])
       if _.isArray(response)
         _(response).chain()
@@ -27,7 +29,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       response
 
   url: =>
-    if @type is 0
+    if @type is 0 or @type is 3
       @base(@id)
     else
       unless @user.current?

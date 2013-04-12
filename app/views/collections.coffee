@@ -17,7 +17,7 @@ class Collections extends Backbone.View
   render: =>
     @$el.html @template()
     for model in @collection.formatModels()
-      @$('.collections').append @itemTemplate(model.toJSON()) 
+      @$('.my-data-list').append @itemTemplate(model.toJSON()) 
     @
 
 module.exports = Collections

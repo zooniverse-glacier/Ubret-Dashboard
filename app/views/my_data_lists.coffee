@@ -26,7 +26,11 @@ class MyDataLists extends BaseView
 
   render: =>
     if not _.isUndefined @collection
-      @$el.html @template({type: @type, name: @name, project: @manager.get('project')})
+      @$el.html @template
+        type: @type
+        name: @name
+        project: @manager.get('project')
+        tools: require('config/toolset_config').projects[@manager.get('project')].defaults.join('-')
       @collection.each (model) =>
         @$('.my-data-list').append @templateItem(model.toJSON())
     else

@@ -1,6 +1,5 @@
-<select id="project-select">
-    <option value="">Select A Project</option>
-  <% for key, value of @projects: %>
-    <option value="<%- key %>" <% if key is @selected: %> selected <% end %>><%- value.name %></option>
-  <% end %>
-</select>
+<div class="my-data-page">
+  <div class="favorites"></div>
+  <div class="recents"></div>
+  <div class="collections"></div>
+</div>

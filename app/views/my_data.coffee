@@ -5,6 +5,7 @@ class MyData extends BaseView
   recentsView: require 'views/recents'
   collectionsView: require 'views/collections'
   user: require 'lib/user'
+  template: require './templates/my_data'
 
   initialize: ->
     @recents = new @recentsView
@@ -23,9 +24,11 @@ class MyData extends BaseView
     @collections.reset()
 
   render: =>
-    @$el.append @recents.render().el
-    @$el.append @favorites.render().el
-    @$el.append @collections.render().el
+    @$el.html @template()
+    @assign
+      ".recents": @recents
+      ".favorites": @favorites
+      ".collections": @collections
     @loadCollections()
     @
 

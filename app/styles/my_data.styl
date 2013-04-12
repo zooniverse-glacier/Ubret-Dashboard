@@ -1,13 +1,24 @@
-.my-data
-  a 
-    float: right
-    @extends #standard-button
+.my-data-page
+  overflow-y: scroll
+  max-height: 600px
+  padding: 30px
 
-  .my-data-list
-    display: inline-block
-    
+  .favorites, .recents
+    a 
+      float: right
+      @extends #standard-button
+
+  .favorites, .recents, .collections
+    .my-data-list
+      display: inline-block
+
     .my-data-subject
       float: left
       padding-right: 30px
-      padding-top: 30px
+      padding-bottom: 30px
+
+      a 
+        display: block
+        margin-top: 5px
+        @extends #standard-button
 

@@ -1,4 +1,6 @@
-<a href="#/project/<%- @project %>/Dashboard-from-<%- @name%>/Table-SubjectViewer/1-<%- @type %>/limit_20-project_<%- @project %>" class="new-dashboard-recent">New Dashboard from Favorites</a>
+<% url = "#/project/#{@project}/Dashboard-from-#{@name}/#{@tools}/1-#{@type}/limit_20-project_#{@project}" %>
+
+<a href="<%- url %>" class="new-dashboard-favorite">New Dashboard from favorites</a>
 <h3> Favorites </h3>
-<div class="favorites my-data-list">
+<div class="my-data-list">
 </div>

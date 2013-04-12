@@ -24,8 +24,6 @@ class TalkCollections extends Backbone.Collection
 
   formatModels: ->
     @map (i) -> 
-      i[images] = _.map i.subjects, (s) -> s.location.standard[0]
-      delete i.subjects
-      i
+      i.set('images', _.map i.get('subjects'), (s) -> s.location.thumbnail)
 
 module.exports = TalkCollections
