@@ -50,7 +50,7 @@ class DataSettings extends BaseView
 
   # Fetch the data.
   updateModel: =>
-    @model.updateFunc 'data_source:params', @paramsView.setState()
+    @model.updateFunc 'data_source.params', @paramsView.setState()
     @model.setupUbretTool()
 
   # External path
@@ -64,15 +64,15 @@ class DataSettings extends BaseView
 
   onSelectExternalSource: (e) =>
     unless $(e.currentTarget).val() then return
-    @model.get('data_source').set 'source_id', $(e.currentTarget).val(), {silent: true}
-    @model.get('data_source').set 'search_type', 0, {silent: true}
+    @model.set('data_source.source_id', $(e.currentTarget).val(), {silent: true})
+    @model.set('data_source.search_type', 0, {silent: true})
 
     @setParams()
     @render()
 
   onSelectSearchType: (e) =>
     unless e.currentTarget.value? then return
-    @model.get('data_source').set 'search_type', e.currentTarget.value, {silent: true}
+    @model.set('data_source.search_type', e.currentTarget.value, {silent: true})
     @setParams()
     @render()
 
@@ -96,7 +96,7 @@ class DataSettings extends BaseView
 
   # Internal path
   showInternal: =>
-    @model.get('data_source').set 'source_type', 'internal', {silent: true}
+    @model.set('data_source.source_type', 'internal', {silent: true})
     @updateValidSourceTools()
     @render()
 

@@ -3,7 +3,6 @@ class User extends Backbone.Events
   @incomingLocation: "#/my_dashboards"
 
   @apiUrl: =>
-    console.log parseInt(location.port)
     if isNaN(parseInt(location.port))
       "https://api.zooniverse.org"
     else if parseInt(location.port) is 3333
