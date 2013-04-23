@@ -5,7 +5,7 @@ ouroborosSync = (method, model, options) ->
   baseURL = if parseInt(location.port) < 1024 
     "https://dev.zooniverse.org" 
   else if parseInt(location.port) is 3333
-    "http://localhost:3000"
+    "http://192.168.33.10"
   else 
     "https://dev.zooniverse.org"
   options.url = baseURL + "/projects/#{Manager.get('project')}" + _.result(model, 'url')
