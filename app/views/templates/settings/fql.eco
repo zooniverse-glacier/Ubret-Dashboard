@@ -1,5 +1,18 @@
-<h4>FQL Prompt</h4>
+<h4>Prompt</h4>
 <div class="nav columns">
   <input type="text" class="full fql-box" />
-  <button class="action fql-submit">Execute</button>
+  <button class="action column one-half fql-submit">Execute</button>
+  <button class="action column one-half fql-cheatsheet-toggle">Guide</button>
+  <div class="fql-cheatsheet">
+    <p>The Prompt lets you create new Filters and Fields on Dashboard Tools. Basic Usages looks like:
+      <ul>
+        <li><label>Filter: </label> New Filter .u &gt; 15</li>
+        <li><label>Field: </label> New Field Color, .u + .g
+      </ul>
+    </p>
+    <p>To refer to a field in a dataset use its name in all lowercase letters, preceeded by a dot with spaces replaced by underscores. For example 'PetroR90 U' becomes .petror90_u.</p>
+    <p>Allowed Math operations are +, -(subtract), -(negate), *,/,^,and log. Allowed comparisons are &gt;,&lt;,=,!=, &gt;=, &lt;=, although since most values are floating point, directly equality comparisons are probably meaningless. You can nest operations and comparisons, use parenthesis to group. Prompt respects the standard order of operations.</p>
+    <p>For more info see <a href="https://github.com/edpaget/fql">Prompt's Github Page</a></p>
+  </div>
+
 </div>

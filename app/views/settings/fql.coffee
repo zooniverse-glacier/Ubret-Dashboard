@@ -7,6 +7,7 @@ class Fql extends BaseView
   events:
     'click button.fql-submit' : 'parse'
     'keypress .fql-box' : 'parse'
+    'click button.fql-cheatsheet-toggle' : 'toggleCheat'
 
   parse: (e) =>
     return if e.type is 'keypress' and e.which isnt 13
@@ -16,5 +17,9 @@ class Fql extends BaseView
   render: =>
     @$el.html @template(@model.get('filters')?.toJSON())
     @
+
+  toggleCheat: (e) => 
+    e.preventDefault()
+    @$('.fql-cheatsheet').toggleClass('active')
 
 module.exports = Fql
