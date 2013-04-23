@@ -8,7 +8,7 @@ class User extends Backbone.Events
     else if parseInt(location.port) is 3333
       "http://192.168.33.10"
     else
-      "https://dev.zooniverse.org"
+      "https://api.zooniverse.org"
 
   @login: ({username, password}) =>
     url = "#{@apiUrl()}/login?username=#{username}&password=#{password}&callback=?"

@@ -33,7 +33,7 @@ class Dashboard extends Backbone.AssociatedModel
     else if parseInt(location.port) is 3333 
       "http://192.168.33.10"
     else
-      "https://dev.zooniverse.org"
+      "https://api.zooniverse.org"
     url = "#{url}/projects/#{Manager.get('project')}/dashboards/#{@id}/fork"
     $.ajax url,
       type: 'POST'

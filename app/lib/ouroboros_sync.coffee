@@ -7,7 +7,7 @@ ouroborosSync = (method, model, options) ->
   else if parseInt(location.port) is 3333
     "http://192.168.33.10"
   else 
-    "https://dev.zooniverse.org"
+    "https://api.zooniverse.org"
   options.url = baseURL + "/projects/#{Manager.get('project')}" + _.result(model, 'url')
   options.crossDomain = true
   if User.current?
