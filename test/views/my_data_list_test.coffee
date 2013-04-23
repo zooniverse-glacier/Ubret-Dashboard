@@ -27,6 +27,9 @@ shouldBehaveLikeAMyDataList = ->
         expect(@list).to.have.property('collection')
 
   describe '#render', ->
+    beforeEach ->
+      @list.manager.set('project', 'galaxy_zoo')
+
     context 'when there is no collection', ->
       it 'should render the noProjectTemplate', ->
         @list.collection = undefined

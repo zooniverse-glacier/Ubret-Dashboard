@@ -3,12 +3,13 @@ class User extends Backbone.Events
   @incomingLocation: "#/my_dashboards"
 
   @apiUrl: =>
-    if parseInt(location.port) < 1024
-      "https://dev.zooniverse.org"
+    console.log parseInt(location.port)
+    if isNaN(parseInt(location.port))
+      "https://api.zooniverse.org"
     else if parseInt(location.port) is 3333
       "http://192.168.33.10"
     else
-      "https://api.zooniverse.org"
+      "https://dev.zooniverse.org"
 
   @login: ({username, password}) =>
     url = "#{@apiUrl()}/login?username=#{username}&password=#{password}&callback=?"

@@ -28,12 +28,12 @@ class Dashboard extends Backbone.AssociatedModel
       tool_type: type
 
   fork: =>
-    url = if parseInt(location.port) < 1024 
-      "https://dev.zooniverse.org" 
+    url = if isNaN(parseInt(location.port))
+      "https://api.zooniverse.org" 
     else if parseInt(location.port) is 3333 
       "http://192.168.33.10"
     else
-      "https://api.zooniverse.org"
+      "https://dev.zooniverse.org"
     url = "#{url}/projects/#{Manager.get('project')}/dashboards/#{@id}/fork"
     $.ajax url,
       type: 'POST'
