@@ -15,7 +15,7 @@ class ToolWindow extends BaseView
 
   events:
     'mousedown .resize': 'resizeWindowStart'
-    'mousedown .tool-window' : 'focus'
+    'mousedown' : 'focus'
 
   initialize: ->
     @settings = new @settingsView {model: @model}

@@ -8,9 +8,7 @@ ouroborosSync = (method, model, options) ->
     "http://192.168.33.10"
   else 
     "https://dev.zooniverse.org"
-  options.url = _.result(model, 'url')
-  if options.url.slice(0, 5) isnt 'https' 
-    options.url = baseURL + "/projects/#{Manager.get('project')}" + options.url
+  options.url = baseURL + "/projects/#{Manager.get('project')}" + _.result(model, 'url') 
   options.crossDomain = true
   if User.current?
     options.beforeSend = (xhr) ->
