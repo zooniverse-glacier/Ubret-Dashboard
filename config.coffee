@@ -8,9 +8,9 @@ exports.config =
         'test/javascripts/test-vendor.js': /^test(\/|\\)(?=vendor)/
       order:
         before: [
-          'vendor/scripts/jquery-1.8.2.js',
+          'vendor/scripts/jquery-2.0.0.js',
           'vendor/scripts/underscore-1.4.4.js',
-          'vendor/scripts/backbone-0.9.10.js',
+          'vendor/scripts/backbone-1.0.0.js',
           'vendor/scripts/backbone-mediator.js',
           'vendor/scripts/backbone-associations.js',
           'test/vendor/scripts/mocha-1.4.2.js',

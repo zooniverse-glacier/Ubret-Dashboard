@@ -28,6 +28,7 @@ class Login extends Backbone.View
     @user.logout()
 
   showError: (error) =>
+    console.log error 
     @$('.error').text(error).show()
 
   onKeyPress: (e) =>

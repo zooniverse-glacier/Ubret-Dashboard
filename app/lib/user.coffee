@@ -11,16 +11,15 @@ class User extends Backbone.Events
       "https://dev.zooniverse.org"
 
   @login: ({username, password}) =>
-    url = "#{@apiUrl()}/login?username=#{username}&password=#{password}&callback=?"
+    url = "#{@apiUrl()}/login?username=#{encodeURIComponent(username)}&password=#{encodeURIComponent(password)}&callback=?"
     login = $.getJSON(url)
-    login.always @createUser
-    login.done => User.trigger 'sign-in'
+    login.then @createUser, @networkError
     login
 
   @logout: =>
     url = "#{@apiUrl()}/logout?callback=?"
     logout = $.getJSON(url)
-    logout.done => 
+    logout.then => 
       User.current = null
       User.trigger 'sign-out'
     logout
@@ -28,25 +27,26 @@ class User extends Backbone.Events
   @currentUser: =>
     url = "#{@apiUrl()}/current_user?callback=?"
     current = $.getJSON(url)
-    current.always @createUser
-    current.always (response) =>
-      User.trigger 'sign-in' if User.current isnt null
+    current.then @createUser, @networkError
     current
 
   @signup: ({username, password, email}) =>
     url = "#{@apiUrl}/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
     signup = $.getJSON(url)
-    signup.always @createUser
-    signup.done => User.trigger 'sign-in'
+    signup.then @createUser, @networkError
     signup
 
   @createUser: (response) =>
-    User.current = if response.success
+    if response.success
       delete response.success
-      new User response
+      User.current = new User response
+      User.trigger 'sign-in'
     else
+      User.current = null
       User.trigger 'sign-in-error', response.message
-      null
+
+  @networkError: =>
+    User.trigger 'sign-in-error', "Network Error"
 
   manager: require 'modules/manager'
 
