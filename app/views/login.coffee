@@ -36,6 +36,7 @@ class Login extends Backbone.View
       @login()
 
   login: =>
+    @$('.loading').show()
     username = @$('input[name="username"]').val()
     password = @$('input[name="password"]').val()
 

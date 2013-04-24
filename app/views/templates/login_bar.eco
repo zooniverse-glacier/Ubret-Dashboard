@@ -1,4 +1,6 @@
+<div class="container">
 <% if not @name?: %>
+  <div class="loading"></div>
   <header>Sign in to Participate</header>
   <input type="text" placeholder="username" name="username" />
   <input type="password" placeholder="password" name="password" />
@@ -9,4 +11,4 @@
   <header>Hello <%- @name %>!</header>
   <a class="signout" href="#">Sign out</a>
 <% end %>
-  
+</div>
