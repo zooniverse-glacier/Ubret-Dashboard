@@ -44,12 +44,12 @@ module.exports = [
       ra:
         type: "Range"
         required: true
-        validation: [0, 360]
+        validation: [130, 260]
         label: 'RA'
       dec: 
         type: "Range"
         required: true
-        validation: [-11, 40]
+        validation: [-2, 60]
       radius: 
         type: "Input"
         required: true

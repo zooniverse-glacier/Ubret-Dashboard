@@ -8,6 +8,7 @@ class ToolWindow extends BaseView
   template: require './templates/window'
   settingsView: require 'views/settings'
   windowTitleBarView: require 'views/window_title_bar'
+  toolConfig: require('config/tool_config')
 
   windowMinWidth: 300
   windowMinHeight: 150
@@ -18,8 +19,9 @@ class ToolWindow extends BaseView
   initialize: ->
     @settings = new @settingsView {model: @model}
     @titleBar = new @windowTitleBarView {model: @model}
+    @locked = @toolConfig[@model.get('tool_type')].locked
 
-    @model.on
+    @listenTo @model, 
       'change:_id' : @updateWindowId
       'destroy': @removeWindow
       'change:zindex': @setZindex
@@ -28,7 +30,7 @@ class ToolWindow extends BaseView
 
     @$el.css @initialSizeAndPosition()
 
-    @titleBar.on
+    @listenTo @titleBar,
       'close': @close
       'minimize': @minimize
       'startDrag': @startDrag
@@ -53,8 +55,8 @@ class ToolWindow extends BaseView
     @$el.attr 'data-id', @model.id
 
   render: =>
-    locked = require('config/tool_config')[@model.get('tool_type')].locked
-    @$el.html @template({locked: (locked or false)})
+    @$el.html @template
+      locked: (@locked or false)
     @$el.attr 'data-id', @model.id
 
     @$('.tool-container').height(parseInt(@model.get('height')) - 25 )

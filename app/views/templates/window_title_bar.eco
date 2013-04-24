@@ -1,9 +1,13 @@
 <span class="window-min"></span>
 <span class="window-close"></span>
-<span class="window-title"><%- @name %></span>
+<span class="window-title">
+  <%- @name %>
+</span>
 
 <% if @link: %>
-  <span class="link"><%- @link %></span>
+  <span class="link"><% if @loading: %> Loading <% end %><%- @link %></span>
 <% end %>
+
+<% if @loading: %><span class="window-loading"></span><% end %>
 
 <input type="text" name="window-title" value="<%- @name %>">
