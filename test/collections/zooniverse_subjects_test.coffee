@@ -9,12 +9,12 @@ describe 'Zooniverse Subjects', ->
     @idSubjects = new Subjects [],
       params: @paramsId
       search_type: 0
-      url: -> '/funtimes'
+      base: -> '/funtimes'
 
     @favsSubjects = new Subjects [],
       params: @paramsFavs
       search_type: 2
-      url: -> '/favtimes'
+      base: -> '/favtimes'
 
     @favsSubjects.manager.set 'project', 'galaxy_zoo'
     @idSubjects.manager.set 'project', 'galaxy_zoo'

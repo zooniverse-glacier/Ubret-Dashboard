@@ -6,7 +6,7 @@ describe 'External Subjects', ->
       {key: 'ra', val: 177.7}
       {key: 'dec', val: 0.0}
     ]
-    @subjects = new Subjects [], {url: '/testing', params: @params}
+    @subjects = new Subjects [], {base: '/testing', params: @params}
 
   it 'should be instantiable', ->
     expect(@subjects).to.be.defined
