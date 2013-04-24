@@ -14,19 +14,24 @@ class WindowTitleBar extends BaseView
     'mousedown' : 'startDrag'
 
   initialize: ->
-    @listenTo @model, 'change:data_source change:name', @render
-    @listenTo @model, 'loading', @loading
+    @loading = false
+    @loadingError = false
+    @listenTo @model, 
+      'change:data_source change:name': @render
+      'loading': @showLoading
+      'loading-error': @showLoadingError
 
-  loading: (e) =>
-    @loading = e
-    @render()
+  showLoading: =>
+    @$('.loading').show()
+
+  showLoadingError: =>
+    @$('.loading-error').show()
 
   render: =>
     return @ unless @model.collection?
     @$el.html @template
       link: @model.sourceName()
       name: @model.get('name')
-      loading: @loading
     @
 
   minimize: =>

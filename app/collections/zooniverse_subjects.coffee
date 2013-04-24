@@ -5,7 +5,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
-    @base = options.url
+    @base = options.base
     @type = options.search_type
 
     if @type is 0 or @type is 3

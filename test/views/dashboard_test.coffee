@@ -37,13 +37,6 @@ describe 'Dashboard View', ->
       @dashboardView.render()
       expect(@addToolSpy).to.have.been.calledTwice
 
-  describe '#focusWindow', ->
-    it 'should call focus with the tool that was clicked on', ->
-      focusSpy = sinon.spy(@dashboardView.model.get('tools'), 'focus')
-      @dashboardView.focusWindow({currentTarget: {dataset: {id: 1}}})
-      expect(focusSpy).to.have.been
-        .calledWith(@dashboardView.model.get('tools').get(1))
-
   describe '#addToolModel', ->
     it 'should call createTool', ->
       createSpy = sinon.spy(@dashboardView.model, 'createTool')

@@ -15,6 +15,7 @@ class ToolWindow extends BaseView
 
   events:
     'mousedown .resize': 'resizeWindowStart'
+    'mousedown .tool-window' : 'focus'
 
   initialize: ->
     @settings = new @settingsView {model: @model}
@@ -44,6 +45,9 @@ class ToolWindow extends BaseView
       @dashWidth = window.innerWidth
       @dashBottom = window.innerHeight - 70
       @dashHeight = @dashBottom - @dashTop
+
+  focus: =>
+    @model.collection?.focus(@model)
 
   initialSizeAndPosition: =>
     sizeAndPos = new Object

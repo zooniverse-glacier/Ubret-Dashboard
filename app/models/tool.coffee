@@ -96,17 +96,17 @@ class Tool extends Backbone.AssociatedModel
       if @sourceTool().tool?
         @tool.parentTool(@sourceTool().tool) 
       else
-        @trigger 'loading', true
+        @trigger 'loading'
         @sourceTool().once 'ubret-created', (tool) =>
           @tool.parentTool tool
-          @trigger 'loading', false
+
     else if @get('data_source').isExternal()
       @tool.removeParentTool()
       data = @get('data_source').data()
-      @trigger 'loading', true
-      data.fetch().done =>
-        @tool.data(data.toJSON())
-        @trigger 'loading', false
+      @trigger 'loading'
+      data.fetch()
+        .done(=> @tool.data(data.toJSON()))
+        .fail(=> @trigger 'loading-error')
 
     @tool.selectIds(@get('selected_uids'))
       .settings(@get('settings').toJSON())

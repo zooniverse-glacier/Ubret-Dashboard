@@ -11,9 +11,6 @@ class DashboardView extends BaseView
     'show-snap': 'drawSnap'
     'stop-snap': 'stopSnap'
 
-  events: 
-    'mousedown .tool-window': 'focusWindow'
-
   initialize: ->
     @toolboxView = new @toolbox
     @toolboxView.on
@@ -27,11 +24,6 @@ class DashboardView extends BaseView
     @fqlboxView = new @fqlbox if Ubret?.Fql? and !@fqlboxView?
     @assign '.fql-box', @fqlboxView if @fqlboxView?
     @
-
-  focusWindow: (e) =>
-    id = e.currentTarget.dataset.id
-    tool = @model.get('tools').get id
-    @model.get('tools').focus tool
 
   addToolModel: (type) =>
     @model.createTool type

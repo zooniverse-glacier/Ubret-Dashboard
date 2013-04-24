@@ -5,9 +5,9 @@ class ExternalSubjectCollection extends Backbone.Collection
   sync: require 'lib/endpoints_sync'
 
   initialize: (models=[], options={}) ->
-    throw new Error('must provide a url') unless options.url
+    throw new Error('must provide a url') unless options.base
 
-    @base = options.url
+    @base = options.base
     @params = new Object
 
     if options.params? and options.params.length

@@ -5,9 +5,13 @@
 </span>
 
 <% if @link: %>
-  <span class="link"><% if @loading: %> Loading <% end %><%- @link %></span>
+  <span class="link">
+    <span class="loading"> Loading </span>
+    <%- @link %>
+  </span>
 <% end %>
 
-<% if @loading: %><span class="window-loading"></span><% end %>
+<span class="loading"></span>
+<span class="loading-error">Error Loading Tool Data</span>
 
 <input type="text" name="window-title" value="<%- @name %>">
