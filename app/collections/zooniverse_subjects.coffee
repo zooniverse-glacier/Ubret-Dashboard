@@ -19,11 +19,9 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     if response.type is "SubjectSet"
       response = response.subjects
     if _.isFunction(@[@manager.get('project')])
-      console.log 'herea'
       if _.isArray(response)
-        console.log 'here'
         _(response).chain()
-          .map((sub) -> console.log sub; sub.subjects[0])
+          .map((sub) -> sub.subjects[0])
           .map(@[@manager.get('project')]).value()
       else
         _([response]).map(@[@manager.get('project')])
@@ -48,7 +46,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   galaxy_zoo: (subject) =>
     model = new Object
-    console.log subject
     model.uid = subject.zooniverse_id
     model.image = subject.location.standard
     model.thumb = subject.location.thumbnail

@@ -28,7 +28,9 @@ class DashboardDialog extends BaseView
   newDashboard: =>
     name = @$('input#name').val()
     project = @$('select#project_type').val()
-    @parent.createDashboard(name, project)
+    dashboard = @parent.createDashboard(name, [], project)
+    dashboard.save().done =>
+      @parent.loadDashboard(dashboard.id)
     @close()
 
 module.exports = DashboardDialog

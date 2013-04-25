@@ -15,7 +15,8 @@ Params = require 'collections/params'
 Toolsets  = require 'config/toolset_config'
 
 class AppView extends BaseView
-  template: require './views/templates/layout/app'
+  template: require 'views/templates/layout/app'
+  loadingTemplate: require 'views/templates/loading'
 
   subscriptions:
     'dashboard:create'                  : 'createDashboardFromDialog'
@@ -82,7 +83,7 @@ class AppView extends BaseView
     toolsFormat
 
   createDashboard: (name, tools=[], project=null) ->
-    Manger.set 'project', project if project
+    Manager.set 'project', project if project
     new DashboardModel
       name: name
       project: (project or Manager.get('project'))
@@ -119,12 +120,13 @@ class AppView extends BaseView
 
     toolsFormat = @createTools(tools, dataSource)
 
-    @dashboardModel = @createDashboard(name, toolsFormat)
+    @dashboardModel = @createDashboard(name.join(' '), toolsFormat)
 
     @dashboardModel.save().done =>
       @navigateToDashboard()
 
   loadDashboard: (id) =>
+    @$('.main-focus').html @loadingTemplate()
     @dashboardModel = new DashboardModel {id: id}
     @dashboardModel.fetch().then @loadUbretTools, =>
       delete @dashboardModel

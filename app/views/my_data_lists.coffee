@@ -3,9 +3,12 @@ Params = require 'collections/params'
 
 class MyDataLists extends BaseView
   noProjectTemplate: require './templates/no_project_template'
+  loadingTemplate: require './templates/loading'
   zooniverse: require 'collections/zooniverse_subjects'
-  params: new Params [{key: 'limit', val: 10}]
   manager: require 'modules/manager'
+  toolset: require 'config/toolset_config'
+
+  params: new Params [{key: 'limit', val: 10}]
 
   url: =>
     @manager.get('sources').get('1')
@@ -22,15 +25,19 @@ class MyDataLists extends BaseView
         params: @params
         type: @type
         base: @url()
-    @collection.fetch().done @render
+    @render()
+    @$('.my-data-list').html @loadingTemplate()
+    @collection.fetch().then @render
 
   render: =>
     if not _.isUndefined @collection
+      tools = @toolset.projects[@manager.get('project')]
+        .defaults.join('-')
       @$el.html @template
         type: @type
         name: @name
         project: @manager.get('project')
-        tools: require('config/toolset_config').projects[@manager.get('project')].defaults.join('-')
+        tools: tools
       @collection.each (model) =>
         @$('.my-data-list').append @templateItem(model.toJSON())
     else
