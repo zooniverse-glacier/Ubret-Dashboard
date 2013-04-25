@@ -22,6 +22,8 @@ class WindowTitleBar extends BaseView
       'loading-error': @showLoadingError
 
   showLoading: =>
+    console.log 'here'
+    console.log @$('.loading')
     @$('.loading').show()
 
   showLoadingError: =>

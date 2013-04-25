@@ -105,7 +105,7 @@ class Tool extends Backbone.AssociatedModel
       data = @get('data_source').data()
       @trigger 'loading'
       data.fetch()
-        .done(=> console.log data.toJSON(); @tool.data(data.toJSON()))
+        .done(=> @tool.data(data.toJSON()))
         .fail(=> @trigger 'loading-error')
 
     @tool.selectIds(@get('selected_uids'))

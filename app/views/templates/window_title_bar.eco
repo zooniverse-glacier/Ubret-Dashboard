@@ -5,13 +5,12 @@
 </span>
 
 <% if @link: %>
-  <span class="link">
-    <span class="loading"> Loading </span>
-    <%- @link %>
-  </span>
+<span class="link">
+  <%- @link %>
+</span>
 <% end %>
 
-<span class="loading window-loading"></span>
+<span class="loading">Loading <span class="window-loading"></span></span>
 <span class="loading-error">Error Loading Tool Data</span>
 
 <input type="text" name="window-title" value="<%- @name %>">

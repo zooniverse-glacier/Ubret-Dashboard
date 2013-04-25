@@ -24,8 +24,6 @@
 
     "eco-brunch": "> 1.0 < 1.6",
 
-    "auto-reload-brunch": "> 1.0 < 1.6",
-
     "uglify-js-brunch": ">= 1.0 < 1.6",
     "clean-css-brunch": ">= 1.0 < 1.6"
   },
