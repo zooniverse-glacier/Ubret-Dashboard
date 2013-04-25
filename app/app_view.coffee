@@ -75,6 +75,20 @@ class AppView extends BaseView
       ToolLoader @dashboardModel, @createDashboardView
     return @dashboardModel
 
+  createTools: (tools, dataSource, settings=null) ->
+    _.each(tools, (toolType, index) ->
+      tool = 
+        tool_type: toolType
+        name: "#{toolType}-#{index}"
+        data_source: dataSource
+      tool.settings = settings if settings?)
+
+  createDashboard: (name, tools, project=null) ->
+    new DashboardModel
+      name: name
+      project: (project or Manager.get('project'))
+      tools: tools
+
   createDashboardFromZooid: (name, zooid, settings) ->
     params = [ {key: 'id', val: zooid} ]
 
@@ -84,19 +98,10 @@ class AppView extends BaseView
       source_type: 'external'
       params: params
 
-    tools = []
-    for toolType, index in Toolsets.projects[Manager.get('project')].defaults
-      tool =
-        tool_type: toolType
-        name: "#{toolType}-#{index}"
-        data_source: dataSource
-      tool.settings = settings unless _.isUndefined(settings)
-      tools.push tool
+    toolset = Toolsets.projects[Manager.get('project')].defaults
+    tools = @createTools(toolset, dataSource, settings)
 
-    @dashboardModel = new DashboardModel
-      name: name
-      project: Manager.get('project')
-      tools: tools
+    @dashboardModel = @createDashboard(name, tools)
     
     @dashboardModel.save().done =>
       @navigateToDashboard()
@@ -113,26 +118,17 @@ class AppView extends BaseView
       source_type: 'external'
       params: paramsFormatted
 
-    toolsFormatted = new Array
-    for toolType, index in tools
-      toolFormatted = 
-        tool_type: toolType
-        name: "#{toolType}-#{index}"
-        data_source: dataSource
-      toolsFormatted.push toolFormatted
+    toolsFormat = @createTools(tools, dataSource)
 
-    @dashboardModel = new DashboardModel
-      name: name.join(' ')
-      project: Manager.get('project')
-      tools: toolsFormatted
+    @dashboardModel = @createDashboard(name, toolsFormat)
 
     @dashboardModel.save().done =>
       @navigateToDashboard()
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
-    @dashboardModel.fetch
-      success: => ToolLoader @dashboardModel, @createDashboardView
+    @dashboardModel.fetch().then
+      => ToolLoader @dashboardModel, @createDashboardView
       error: =>
         delete @dashboardModel
         Manager.get('router').navigate '', {trigger: true}
@@ -147,14 +143,14 @@ class AppView extends BaseView
     unless @savedListView? 
       @savedListView = new SavedList 
         collection: User.current.dashboards
-    @appFocusView = @savedListView
+    @switchView(@savedListView)
     @render()
     User.current.getDashboards()
 
   showMyData: =>
     unless @myDataView? then @myDataView = new MyData
     @myDataView.loadCollections()
-    @appFocusView = @myDataView
+    @switchView(@myDataView)
     @render()
 
   navigateToDashboard: (trigger=true) =>
