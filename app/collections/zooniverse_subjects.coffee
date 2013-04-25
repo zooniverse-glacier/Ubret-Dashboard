@@ -21,7 +21,11 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     if _.isFunction(@[@manager.get('project')])
       if _.isArray(response)
         _(response).chain()
-          .map((sub) -> sub.subjects[0])
+          .map((sub) -> 
+            if sub.zooniverse_id
+              sub
+            else
+              sub.subjects[0])
           .map(@[@manager.get('project')]).value()
       else
         _([response]).map(@[@manager.get('project')])
@@ -36,6 +40,34 @@ class ZooniverseSubjectCollection extends Backbone.Collection
         throw new Error('Must be logged in to retrieve your recents or favorites')
       @base(@user.current.id) + '?' + @processParams()
 
+  fetch: =>
+    return super unless (@type is 1) or (@type is 3)
+    collection = $.ajax @manager.api() + @url(),
+      type: "GET"
+      crossDomain: true
+      dataType: 'json'
+      beforeSend: (xhr) =>
+        xhr.setRequestHeader 'Authorization', @user.current.basicAuth()
+    collection.then @fetchSubjects
+
+  fetchSubjects: (response) =>
+    zooIDs = if _.isArray(response)
+      _.map(response, (sub) -> sub.subjects[0].zooniverse_id)
+    else
+      _.map(response.subjects, (sub) -> sub.zooniverse_id)
+    options = 
+      url: @manager.api() + "/subjects/batch",
+      type: "POST"
+      crossDomain: true
+      dataType: 'json'
+      contentType: "application/json; charset=utf-8"
+      data: JSON.stringify({subject_ids: zooIDs})
+      success: (resp) =>
+        @set(@parse(resp), options)
+        @trigger 'sync', @, resp, options
+
+    @sync('read', @, options)
+
   processParams: =>
     params = new Array
     for key, value of @params
@@ -45,18 +77,17 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     params.join('&')
 
   galaxy_zoo: (subject) =>
-    model = new Object
-    model.uid = subject.zooniverse_id
-    model.image = subject.location.standard
-    model.thumb = subject.location.thumbnail
-    model.ra = subject.coords[0]
-    model.dec = subject.coords[1]
-    model.absolute_size = subject.metadata.absolute_size
-    if subject.metadata.mag?
-      model[key] = value for key, value of subject.metadata.mag
-    model.petrorad_50_r = subject.metadata.petrorad_50_r
-    model.redshift = subject.metadata.redshift
-    model.sdss_id = subject.metadata.sdss_id
+    model = 
+      uid: subject.zooniverse_id
+      image: subject.location.standard
+      thumb: subject.location.thumbnail
+      ra: subject.coords[0]
+      dec: subject.coords[1]
+      absolute_size: subject.metadata.absolute_size
+      petrorad_50_r: subject.metadata.petrorad_50_r
+      redshift: subject.metadata.redshift
+      sdss_id: subject.metadata.sdss_id
+    model[key] = subject.metadata.mag?[key] for key in ['u', 'g', 'r', 'i', 'z', 'abs_r']
     model
 
 module.exports = ZooniverseSubjectCollection

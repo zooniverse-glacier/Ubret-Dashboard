@@ -1,23 +1,16 @@
 class User extends Backbone.Events
   @current: null
   @incomingLocation: "#/my_dashboards"
-
-  @apiUrl: =>
-    if isNaN(parseInt(location.port))
-      "https://api.zooniverse.org"
-    else if parseInt(location.port) is 3333
-      "http://192.168.33.10"
-    else
-      "https://dev.zooniverse.org"
+  @manager: require('modules/manager')
 
   @login: ({username, password}) =>
-    url = "#{@apiUrl()}/login?username=#{encodeURIComponent(username)}&password=#{encodeURIComponent(password)}&callback=?"
+    url = "#{@manager.api()}/login?username=#{encodeURIComponent(username)}&password=#{encodeURIComponent(password)}&callback=?"
     login = $.getJSON(url)
     login.then @createUser, @networkError
     login
 
   @logout: =>
-    url = "#{@apiUrl()}/logout?callback=?"
+    url = "#{@manager.api()}/logout?callback=?"
     logout = $.getJSON(url)
     logout.then => 
       User.current = null
@@ -25,13 +18,13 @@ class User extends Backbone.Events
     logout
 
   @currentUser: =>
-    url = "#{@apiUrl()}/current_user?callback=?"
+    url = "#{@manager.api()}/current_user?callback=?"
     current = $.getJSON(url)
     current.then @createUser, @networkError
     current
 
   @signup: ({username, password, email}) =>
-    url = "#{@apiUrl}/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
+    url = "#{@manager.api}/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
     signup = $.getJSON(url)
     signup.then @createUser, @networkError
     signup
@@ -58,7 +51,7 @@ class User extends Backbone.Events
     @dashboards = new Backbone.Collection
 
   getDashboards: =>
-    url = "#{User.apiUrl()}/projects/#{@manager.get('project')}/dashboards"
+    url = "#{User.manager.api()}/dashboards"
     $.ajax 
       url: url
       type: 'GET'
@@ -72,7 +65,7 @@ class User extends Backbone.Events
         @trigger 'loaded-dashboards'
 
   removeDashboard: (id, cb) =>
-    url = "#{User.apiUrl()}/projects/#{@manager.get('project')}/dashboards/#{id}"
+    url = "#{User.manager.api()}/dashboards/#{id}"
     $.ajax 
       url: url
       type: 'DELETE'
@@ -81,5 +74,8 @@ class User extends Backbone.Events
       beforeSend: (xhr) =>
         xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{@name}:#{@apiToken}")}"
       success: (response) => cb response
+
+  basicAuth: =>
+    "Basic #{btoa("#{@name}:#{@apiToken}")}"
 
 module.exports = User

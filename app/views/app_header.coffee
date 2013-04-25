@@ -19,6 +19,7 @@ class AppHeader extends BaseView
     'router:myData' : 'onViewMyData'
 
   initialize: ->
+    @dashURL = "#/"
     @user.on 
       'sign-in': @render
       'sign-out': @render
@@ -27,8 +28,6 @@ class AppHeader extends BaseView
 
   render: =>
     @$el.html @template(@)
-    if @dashURL
-      @$('.current').attr 'href', @dashUrl
 
     if @user.current? 
       @$('.create-dashboard').removeAttr 'disabled'

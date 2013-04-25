@@ -14,4 +14,13 @@ class UbretManager
   delete: (key) =>
     delete @data[key]
 
+  api: =>    
+    base = if isNaN(parseInt(location.port))
+      "https://api.zooniverse.org"
+    else if parseInt(location.port) is 3333
+      "http://192.168.33.10"
+    else
+      "https://dev.zooniverse.org"
+    base + "/projects/#{@get('project')}"
+
 module.exports = new UbretManager()

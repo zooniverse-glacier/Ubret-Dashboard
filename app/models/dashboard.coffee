@@ -28,19 +28,13 @@ class Dashboard extends Backbone.AssociatedModel
       tool_type: type
 
   fork: =>
-    url = if isNaN(parseInt(location.port))
-      "https://api.zooniverse.org" 
-    else if parseInt(location.port) is 3333 
-      "http://192.168.33.10"
-    else
-      "https://dev.zooniverse.org"
-    url = "#{url}/projects/#{Manager.get('project')}/dashboards/#{@id}/fork"
+    url = Manager.api() 
+    url = "#{url}/dashboards/#{@id}/fork"
     $.ajax url,
       type: 'POST'
       crossDomain: true
       dataType: 'json'
       beforeSend: (xhr) =>
-        xhr.setRequestHeader 'Authorization', 
-          "Basic #{btoa("#{@user.current.name}:#{@user.current.apiToken}")}"
+        xhr.setRequestHeader 'Authorization', @user.current.basicAuth()
 
 module.exports = Dashboard

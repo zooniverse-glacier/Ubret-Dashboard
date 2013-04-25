@@ -1,4 +1,4 @@
-<% url = "#/project/#{@project}/Dashboard-from-#{@name}/#{@tools}/1-#{@type}/limit_20-project_#{@project}" %>
+<% url = "#/project/#{@project}/Dashboard-from-#{@name}/#{@tools}/1-#{@type}/limit_20" %>
 
 <a href="<%- url %>" class="new-dashboard-recent">New Dashboard from Recents</a>
 <h3> Recents </h3>

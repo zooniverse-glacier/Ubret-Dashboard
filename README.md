@@ -8,4 +8,4 @@ To build:
 
 To use with dev.zooniverse.api
 
-    brunch w -s -p ANY PORT BUT 3333
+    npm start
