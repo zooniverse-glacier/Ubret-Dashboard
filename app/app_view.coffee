@@ -21,7 +21,6 @@ class AppView extends BaseView
     'dashboard:create'                  : 'createDashboardFromDialog'
     'dashboard:fork'                    : 'forkDashboard'
     'router:index'                      : 'index'
-    'router:dashboardCreate'            : 'createDashboard'
     'router:dashboardCreateFromParams'  : 'createDashboardFromParams'
     'router:dashboardCreateFromZooid'   : 'createDashboardFromZooid'
     'router:dashboardRetrieve'          : 'loadDashboard'
@@ -59,31 +58,31 @@ class AppView extends BaseView
     else
       @appFocusView.render()
 
+  loadUbretTools: =>
+    ToolLoader @dashboardModel, @createDashboardView
+
   forkDashboard: =>
     @dashboardModel.fork().done (response) =>
       @dashboardModel = new DashboardModel response
-      ToolLoader @dashboardModel, @createDashboardView
+      @loadUbretTools()
 
   createDashboardFromDialog: =>
     dashboardDialog = new DashboardDialog { parent: @ }
     $('body').append dashboardDialog.render().el
 
-  createDashboard: (name, project) ->
-    Manager.set 'project', project
-    @dashboardModel = new DashboardModel {name: name, project: project}
-    @dashboardModel.save().done =>
-      ToolLoader @dashboardModel, @createDashboardView
-    return @dashboardModel
-
   createTools: (tools, dataSource, settings=null) ->
+    toolsFormat = []
     _.each(tools, (toolType, index) ->
       tool = 
         tool_type: toolType
         name: "#{toolType}-#{index}"
         data_source: dataSource
-      tool.settings = settings if settings?)
+      tool.settings = settings if settings?
+      toolsFormat.push tool)
+    toolsFormat
 
-  createDashboard: (name, tools, project=null) ->
+  createDashboard: (name, tools=[], project=null) ->
+    Manger.set 'project', project if project
     new DashboardModel
       name: name
       project: (project or Manager.get('project'))
@@ -127,16 +126,17 @@ class AppView extends BaseView
 
   loadDashboard: (id) =>
     @dashboardModel = new DashboardModel {id: id}
-    @dashboardModel.fetch().then
-      => ToolLoader @dashboardModel, @createDashboardView
-      error: =>
-        delete @dashboardModel
-        Manager.get('router').navigate '', {trigger: true}
+    @dashboardModel.fetch().then @loadUbretTools, =>
+      delete @dashboardModel
+      Manager.get('router').navigate '', {trigger: true}
+
+  switchView: (view) =>
+    @appFocusView?.$el.empty()
+    @appFocusView = view
+    @render()
 
   createDashboardView: =>
-    @appFocusView = @dashboardView
-    @navigateToDashboard(false)
-    @render()
+    @switchView(@dashboardView)
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
   showSaved: =>
@@ -144,14 +144,12 @@ class AppView extends BaseView
       @savedListView = new SavedList 
         collection: User.current.dashboards
     @switchView(@savedListView)
-    @render()
     User.current.getDashboards()
 
   showMyData: =>
     unless @myDataView? then @myDataView = new MyData
     @myDataView.loadCollections()
     @switchView(@myDataView)
-    @render()
 
   navigateToDashboard: (trigger=true) =>
     url = "#/dashboards/#{Manager.get('project')}/#{@dashboardModel.id}"

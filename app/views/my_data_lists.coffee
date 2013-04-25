@@ -21,7 +21,7 @@ class MyDataLists extends BaseView
       @collection = new @zooniverse [],
         params: @params
         type: @type
-        url: @url()
+        base: @url()
     @collection.fetch().done @render
 
   render: =>

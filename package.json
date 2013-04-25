@@ -1,43 +1,36 @@
 {
   "author": "The Zooniverse",
-  "name": "zooniverse-build-board",
-  "description": "Tracks the status of various zooniverse projects",
-  "version": "0.0.1",
+  "name": "ZooTools",
+  "description": "An Ubret Implementation",
+  "version": "0.9.0",
   "homepage": "",
   "repository": {
-	  "type": "git",
-	  "url": ""
+    "type": "git",
+    "url": "https://github.com/zooniverse/Ubret-Dashboard"
   },
-    "engines": {
-	  "node": "~0.6.10 || 0.8 || 0.9"
+  "engines": {
+    "node": "~0.6.10 || 0.8 || 0.9 || 0.10"
   },
   "scripts": {
-	  "start": "brunch watch --server",
+    "start": "brunch watch --server --port 3334",
     "test" : "./scripts/test.sh"
   },
   "dependencies": {
-	  "javascript-brunch": ">= 1.0 < 1.5",
-    "coffee-script-brunch": "1.3.0",
+    "javascript-brunch": ">= 1.0 < 1.6",
+    "coffee-script-brunch": ">= 1.0 < 1.6",
 
-	  "css-brunch": ">= 1.0 < 1.5",
-    "stylus-brunch": "1.4.1",
+    "css-brunch": ">= 1.0 < 1.6",
+    "stylus-brunch": ">= 1.0 < 1.6",
 
-    "eco-brunch": "> 1.0 < 1.5",
+    "eco-brunch": "> 1.0 < 1.6",
 
-    "auto-reload-brunch": "> 1.0 < 1.5",
+    "auto-reload-brunch": "> 1.0 < 1.6",
 
-	  "uglify-js-brunch": ">= 1.0 < 1.5",
-	  "clean-css-brunch": ">= 1.0 < 1.5"
+    "uglify-js-brunch": ">= 1.0 < 1.6",
+    "clean-css-brunch": ">= 1.0 < 1.6"
   },
   "devDependencies": {
-    "chai" : "1.2.0",
-    "sinon-chai" : "2.1.2",
-    "sinon" : "1.4.2",
-    "jsdom" : "0.2.18",
-    "chai-jquery": "1.1.0",
-    "xmlhttprequest" : "1.5.0",
     "mocha-phantomjs" : "2.0.1",
-    "brunch" : "1.5.3",
-    "pegjs" : "0.7.0"
+    "brunch" : "1.6.3"
   }
 }

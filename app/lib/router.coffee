@@ -1,6 +1,5 @@
-AppView = require 'app_view'
-Manager = require 'modules/manager'
-User = require 'lib/user'
+User = require('lib/user')
+Manager = require('modules/manager')
 
 class Router extends Backbone.Router
   routes:
@@ -41,14 +40,12 @@ class Router extends Backbone.Router
 
   savedDashboards: =>
     return unless @checkUser()
-    if User.current is null
-      @navigate('', {trigger: true})
-    else
-      Backbone.Mediator.publish 'router:viewSavedDashboards'
+    Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->
     return unless @checkUser()
-    Backbone.Mediator.publish 'router:dashboardCreate', 'My Great Dashboard', project
+    Manger.set 'project', project
+    @navigate('#/my_dashboards', {trigger: true})
 
   loadObject: (project, object, settingKeys, settingValues) =>
     return unless @checkUser()
