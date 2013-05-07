@@ -24,7 +24,7 @@ class AppHeader extends BaseView
       'sign-in': @render
       'sign-out': @render
     @login = new @loginBar
-    @switch = new @projectSwitch()
+    @switch = new @projectSwitch
 
   render: =>
     @$el.html @template(@)

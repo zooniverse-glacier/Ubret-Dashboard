@@ -34,7 +34,7 @@ class DataSettings extends BaseView
           opts.extSources = Manager.get('sources').getSources()
           if @model.get('data_source').get('source_id')?
             opts.source = @getExternalSource @model.get('data_source').get('source_id')
-            opts.search_types = opts.source.get('search_types')
+            opts.search_types = opts.source.search_types
             @searchTypeView.set opts.search_types
         when 'internal'
           @updateValidSourceTools()

@@ -1,5 +1,5 @@
 <% manager = require('modules/manager') %>
-<% tools = require('config/toolset_config').projects[manager.get('project')]['defaults'].join('-') %>
+<% tools = require('config/projects_config')[manager.get('project')]['defaults'].join('-') %>
 <% url = "#/project/#{manager.get('project')}/Dashboard-from-#{@title}/#{tools}/1-3/id_#{@zooniverse_id}" %>
 
 <div class="collection my-data-subject">

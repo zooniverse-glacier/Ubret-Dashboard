@@ -12,7 +12,7 @@ ToolLoader = require 'modules/tool_loader'
 DashboardModel = require 'models/dashboard'
 Params = require 'collections/params'
 
-Toolsets  = require 'config/toolset_config'
+Projects = require 'config/projects_config'
 
 class AppView extends BaseView
   template: require 'views/templates/layout/app'
@@ -98,7 +98,7 @@ class AppView extends BaseView
       source_type: 'external'
       params: params
 
-    toolset = Toolsets.projects[Manager.get('project')].defaults
+    toolset = Projects[Manager.get('project')].defaults
     tools = @createTools(toolset, dataSource, settings)
 
     @dashboardModel = @createDashboard(name, tools)

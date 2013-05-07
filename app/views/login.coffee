@@ -29,12 +29,14 @@ class Login extends Backbone.View
 
   showError: (error) =>
     @$('.error').text(error).show()
+    @$('.loading').hide()
 
   onKeyPress: (e) =>
     if e.keyCode is 13
       @login()
 
   login: =>
+    @$('.error').hide()
     @$('.loading').show()
     username = @$('input[name="username"]').val()
     password = @$('input[name="password"]').val()

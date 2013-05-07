@@ -130,7 +130,7 @@ class Tool extends Backbone.AssociatedModel
 
   sourceName: =>
     if @get('data_source').isExternal()
-      name = @manager.get('sources').get(@get('data_source').get('source_id')).get('name')
+      name = @manager.get('sources').get(@get('data_source.source_id')).name
     else if @get('data_source').isInternal()
       name = @sourceTool()?.get('name')
     else

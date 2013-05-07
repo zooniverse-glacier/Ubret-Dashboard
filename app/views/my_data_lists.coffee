@@ -6,20 +6,19 @@ class MyDataLists extends BaseView
   loadingTemplate: require './templates/loading'
   zooniverse: require 'collections/zooniverse_subjects'
   manager: require 'modules/manager'
-  toolset: require 'config/toolset_config'
+  projects: require 'config/projects_config'
 
   params: new Params [{key: 'limit', val: 10}]
 
   url: =>
     @manager.get('sources').get('1')
-      .get('search_types')[@type].url
+      .search_types[@type].url
 
   reset: =>
     return unless @collection
     @collection.reset()
 
   loadCollection: =>
-    return if !@manager.get('project') or @manager.get('project') is 'default'
     unless @collection?
       @collection = new @zooniverse [],
         params: @params
@@ -31,7 +30,7 @@ class MyDataLists extends BaseView
 
   render: =>
     if not _.isUndefined @collection
-      tools = @toolset.projects[@manager.get('project')]
+      tools = @projects[@manager.get('project')]
         .defaults.join('-')
       @$el.html @template
         type: @type
