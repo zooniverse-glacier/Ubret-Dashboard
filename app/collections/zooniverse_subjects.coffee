@@ -90,4 +90,21 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     model[key] = subject.metadata.mag?[key] for key in ['u', 'g', 'r', 'i', 'z', 'abs_r']
     model
 
+  snapshotAnimals: (counters) ->
+    _(counters).chain().pairs()
+      .filter((p) -> _.last(p) > 7.5)
+      .map(_.first)
+      .value()
+
+  serengeti: (subject) =>
+    {
+      uid: subject.zooniverse_id
+      image: subject.location.standard
+      thumb: subject.location.standard[0]
+      latitude: subject.coords[0]
+      longitutde: subject.coords[1]
+      timestamps: subject.metadata.timestamps
+      animals: @snapshotAnimals(subject.metadata.counters)
+    }
+
 module.exports = ZooniverseSubjectCollection

@@ -89,7 +89,7 @@ class DataSettings extends BaseView
     Manager.get('sources').get(sourceId)
 
   getSearchTypes: (externalSource) ->
-    @getExternalSource(externalSource).get('search_types')
+    @getExternalSource(externalSource).search_types
 
   getExternalSourceParams: (externalSource) ->
     @getSearchTypes(externalSource)[@model.get('data_source').get('search_type')].params
