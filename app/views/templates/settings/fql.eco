@@ -12,7 +12,7 @@
     </p>
     <p>To refer to a field in a dataset use its name in all lowercase letters, preceeded by a dot with spaces replaced by underscores. For example 'PetroR90 U' becomes .petror90_u.</p>
     <p>Allowed Math operations are +, -(subtract), -(negate), *,/,^,and log. Allowed comparisons are &gt;,&lt;,=,!=, &gt;=, &lt;=, although since most values are floating point, directly equality comparisons are probably meaningless. You can nest operations and comparisons, use parenthesis to group. Prompt respects the standard order of operations.</p>
-    <p>For more info see <a href="https://github.com/edpaget/fql">Prompt's Github Page</a></p>
+    <p>For more info see <a href="https://github.com/edpaget/uPrompt">Prompt's Github Page</a></p>
   </div>
 
 </div>
