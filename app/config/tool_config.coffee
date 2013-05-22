@@ -10,6 +10,10 @@ settings =
   spacewarp_viewer: require 'views/settings/spacewarp_viewer'
 
 module.exports = 
+  "ImageGallery":
+    settings: [settings.data, settings.subject]
+    defaults: {currentPage: 0}
+    titleBarControls: true
   "Histogram" : 
     settings: [settings.data, settings.graph, settings.bins]
     defaults: 

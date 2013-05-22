@@ -6,7 +6,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   initialize: (models=[], options={}) ->
     @base = options.base
-    @type = options.search_type
+    @type = parseInt(options.search_type)
 
     if @type is 0 or @type is 3
       @id = options.params.find((param) => param.get('key') is 'id').get('val')
@@ -34,6 +34,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   url: =>
     if @type is 0 or @type is 3
+      console.log 'here'
       @base(@id)
     else
       unless @user.current?
@@ -46,8 +47,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       type: "GET"
       crossDomain: true
       dataType: 'json'
-      beforeSend: (xhr) =>
-        xhr.setRequestHeader 'Authorization', @user.current.basicAuth()
     collection.then @fetchSubjects
 
   fetchSubjects: (response) =>
@@ -99,11 +98,11 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   serengeti: (subject) =>
     {
       uid: subject.zooniverse_id
-      image: subject.location.standard
+      image: subject.location.standard[0]
       thumb: subject.location.standard[0]
       latitude: subject.coords[0]
       longitutde: subject.coords[1]
-      timestamps: subject.metadata.timestamps
+      timestamp: subject.metadata.timestamps[0]
       animals: @snapshotAnimals(subject.metadata.counters)
     }
 

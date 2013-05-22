@@ -12,6 +12,7 @@ module.exports = [
   ,
     name: "Recents"
     url: (userId) -> "/users/#{userId}/recents"
+    auth: true
     params:
       limit:
         type: "Input"
@@ -20,6 +21,7 @@ module.exports = [
   ,
     name: 'Favorites' 
     url: (userId) -> "/users/#{userId}/favorites"
+    auth: true
     params:
       limit:
         type: "Input"
