@@ -34,7 +34,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   url: =>
     if @type is 0 or @type is 3
-      console.log 'here'
       @base(@id)
     else
       unless @user.current?
@@ -98,7 +97,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   serengeti: (subject) =>
     {
       uid: subject.zooniverse_id
-      image: subject.location.standard[0]
+      image: subject.location.standard
       thumb: subject.location.standard[0]
       latitude: subject.coords[0]
       longitutde: subject.coords[1]
