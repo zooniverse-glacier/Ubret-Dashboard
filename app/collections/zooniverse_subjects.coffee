@@ -92,6 +92,8 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     _(counters).chain().pairs()
       .filter((p) -> _.last(p) > 7.5)
       .map(_.first)
+      .map((d) -> d.split('-'))
+      .flatten()
       .value()
 
   serengeti: (subject) =>
