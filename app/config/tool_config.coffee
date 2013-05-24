@@ -10,6 +10,11 @@ settings =
   spacewarp_viewer: require 'views/settings/spacewarp_viewer'
 
 module.exports = 
+  "BarGraph":
+    settings: [settings.data, settings.graph]
+    defaults:
+      axis2: 'Count'
+      color: '#0172E6'
   "ImageGallery":
     settings: [settings.data, settings.subject]
     defaults: {currentPage: 0}

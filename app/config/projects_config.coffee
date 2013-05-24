@@ -17,7 +17,7 @@ Projects =
     name: 'Snapshot Serengeti'
     talk: true
     sources: ["Zooniverse"]
-    tools: ["Mapper", "Statistics", "SubjectViewer", "Table", "Histogram", "ImageGallery"]
+    tools: ["Mapper", "Statistics", "SubjectViewer", "Table", "BarGraph", "ImageGallery"]
     defaults: ["SubjectViewer"]
 
 module.exports = Projects
