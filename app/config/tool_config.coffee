@@ -57,6 +57,8 @@ module.exports =
     defaults: {sortOrder: 'top', currentPage: 0, sortColumn: 'uid'}
     titleBarControls: true
   "SpacewarpViewer" : 
-    settings: [settings.data, settings.spacewarp_viewer]
+    settings: [settings.data, settings.spacewarp_viewer, settings.subject]
     locked: true
+    defaults: {currentPage: 0}
+    titleBarControls: true
 

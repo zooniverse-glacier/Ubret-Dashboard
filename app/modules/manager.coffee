@@ -19,6 +19,8 @@ class UbretManager
       "https://api.zooniverse.org"
     else if parseInt(location.port) is 3333
       "http://192.168.33.10"
+    else if parseInt(location.port) is 3335
+      "https://api.zooniverse.org"
     else
       "https://dev.zooniverse.org"
     base + "/projects/#{@get('project')}"
