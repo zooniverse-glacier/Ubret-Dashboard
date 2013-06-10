@@ -58,7 +58,7 @@ module.exports =
     titleBarControls: true
   "SpacewarpViewer" : 
     settings: [settings.data, settings.spacewarp_viewer, settings.subject]
-    locked: true
     defaults: {currentPage: 0}
     titleBarControls: true
+    width: 680
 

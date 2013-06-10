@@ -16,12 +16,12 @@ class Router extends Backbone.Router
       @navigate(User.incomingLocation, {trigger: true})
     User.on 'sign-out', => @navigate("#/", {trigger: true})
 
-  checkUser: ->
+  checkUser: (navigate=true) ->
     if User.current
       true
     else
       User.incomingLocation = location.hash
-      @navigate("#/", {trigger: true})
+      @navigate("#/", {trigger: true}) if navigate
       false
 
   index: ->
@@ -31,6 +31,7 @@ class Router extends Backbone.Router
       @navigate("#/my_dashboards", {trigger: true})
 
   retrieveDashboard: (project, id) =>
+    @checkUser(false)
     Manager.set('project', project)
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 

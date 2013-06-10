@@ -170,8 +170,8 @@ class ToolWindow extends BaseView
     @relY = e.pageY - startTop
 
     $(document).on 'mousemove', (d_e) =>
-      if @dragging
-        @showSnap d_e.pageX, d_e.pageY
+      if @dragging 
+        @showSnap d_e.pageX, d_e.pageY unless @locked
         top = -(startTop - (d_e.pageY - @relY))
         left = -(startLeft - (d_e.pageX - @relX))
         @$el.css
@@ -184,7 +184,7 @@ class ToolWindow extends BaseView
     @dragging = false
     $(document).off 'mousemove mouseup'
 
-    if @snap
+    if @snap and (not @locked)
       @setSnap e.pageX, e.pageY
     else
       @model.updateFunc

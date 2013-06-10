@@ -1,4 +1,4 @@
-<h4><%- @tool_type %> Settings</h4>
+<h4>Subject Selection</h4>
 <div class="nav columns">
   <button class="action column one-half prev">Previous</button>
   <button class="action column one-half next">Next</button>
