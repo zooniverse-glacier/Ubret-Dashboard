@@ -35,31 +35,38 @@ class SpacewarpViewerSettings extends BaseView
     else
       color.hide()
       gray.show()
-    
-    @model.tool.setBand(band)
+   
+    setting = {band: band}
+    @model.tool.settings(setting)
   
   onAlphaChange: (e) =>
-    value = e.currentTarget.value
-    @model.tool.updateAlpha(value)
+    console.log "alpha", e
+    alpha = {alpha: e.currentTarget.value}
+    @model.tool.settings(alpha)
     
   onQChange: (e) =>
-    value = e.currentTarget.value
-    @model.tool.updateQ(value)
+    console.log "q", e
+    q = {q: e.currentTarget.value}
+    @model.tool.settings(q)
   
   onScaleChange: (e) =>
+    console.log "scale", e
     target = e.currentTarget
-    band = target.name
-    value = target.value
-    @model.tool.updateScale(band, value)
+    scale = {scale: {band: traget.name, value: taget.value}}
+    @model.tool.settings(scale)
   
   onStretchChange: (e) =>
-    value = e.currentTarget.dataset.function
-    @model.tool.updateStretch(value)
+    console.log "stretch", e
+    stretch = {stretch: e.currentTarget.dataset.function}
+    @model.tool.settings(stretch)
   
   onExtentChange: (e) =>
-    min = @$el.find('[name="min"]').attr('value')
-    max = @$el.find('[name="max"]').attr('value')
-    @model.tool.updateExtent(min, max)
+    console.log "extent", e
+    extent =
+      extent:
+        min: @$el.find('[name="min"]').attr('value')
+        max: @$el.find('[name="max"]').attr('value')
+    @model.tool.settings(extent)
 
 
 module.exports = SpacewarpViewerSettings
