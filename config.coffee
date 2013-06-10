@@ -13,6 +13,7 @@ exports.config =
           'vendor/scripts/backbone-1.0.0.js',
           'vendor/scripts/backbone-mediator.js',
           'vendor/scripts/backbone-associations-0.4.2.js',
+          'vendor/scripts/html5slider.js',
           'test/vendor/scripts/mocha-1.4.2.js',
           'test/vendor/scripts/chai.js',
           'test/vendor/scripts/sinon-1.5.2.js',
