@@ -10,7 +10,6 @@ class Toolbox extends BaseView
   events: 
     'click a.tool' : 'createTool'
     'click a.remove-tools' : 'removeTools' 
-    'click a.saved-dashboards' : 'toggleSaved'
     'dblclick .dashboard-name' : 'editName'
     'keypress input' : 'updateName'
     'blur input' : 'updateName'
@@ -19,12 +18,26 @@ class Toolbox extends BaseView
     'dashboard:initialized': 'render'
 
   render: =>
+    @getTools()
+    @getSources()
+
+    console.log "sources:", @sources
+
+    @$el.html @template 
+      available_tools: @tools 
+      available_sources: @sources
+      name: @model?.get('name') or 'Untitled'
+    @
+
+  getTools: =>
     @tools = []
     for tool in Manager.get 'tools'
-      @tools.push {name: Ubret[tool]::name, class_name: tool} if Ubret[tool]::name
+      @tools.push {name: Ubret[tool]::name, class_name: tool} 
 
-    @$el.html @template {available_tools: @tools, name: @model?.get('name') or 'Untitled'}
-    @
+  getSources: =>
+    @sources = []
+    for source in Manager.get('sources').config[Manager.get('project')].sources
+      @sources.push {name: source}
 
   createTool: (e) =>
     e.preventDefault()
@@ -34,10 +47,6 @@ class Toolbox extends BaseView
   removeTools: (e) =>
     e.preventDefault()
     @trigger 'remove-tools'
-
-  toggleSaved: (e) =>
-    e.preventDefault()
-    @savedList.$el.toggleClass 'active'
 
   editName: (e) =>
     name = @$('.dashboard-name')

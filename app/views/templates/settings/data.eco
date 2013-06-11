@@ -1,54 +1,13 @@
 <h4>Data Source</h4>
-<ul class="type-select columns">
-  <li class="external column one-half">
-    <% if @sourceType is 'external': %>
-      <% buttonClass = 'full on' %>
-    <% else: %>
-      <% buttonClass = 'full' %>
+<div class="internal">
+  <select class="sources">
+    <option value="">Select Tool</option>
+    <% for source in @intSources: %>
+      <% if source.id is @source: %>
+        <option value="<%- source.id%>" selected><%- source.name %></option>
+      <% else: %>
+        <option value="<%- source.id%>"><%- source.name %></option>
+      <% end %>
     <% end %>
-    <button class="<%- buttonClass %>">External API</button>
-  </li>
-  <li class="internal column one-half">
-    <% if @sourceType is 'internal': %>
-      <% buttonClass = 'full on' %>
-    <% else: %>
-      <% buttonClass = 'full' %>
-    <% end %>
-    <button class="<%- buttonClass %>">Other Tool</button>
-  </li>
-</ul>
-
-<% if @sourceType: %>
-  <% if @sourceType is 'external': %>
-    <div class="external">
-      <select class="sources">
-        <option value="">Select External API</option>
-        <% for source in @extSources: %>
-          <% if @source and source.id is @source.id: %>
-            <option value="<%- source.id %>" selected><%- source.name %></option>
-          <% else: %>
-            <option value="<%- source.id %>"><%- source.name %></option>
-          <% end %>
-        <% end %>
-      </select>
-      <div class="search-type"></div>
-      <div class="params"></div>
-    </div>
-  <% else if @sourceType is 'internal': %>
-    <div class="internal">
-      <select class="sources">
-        <option value="">Select Tool</option>
-        <% for source in @intSources: %>
-          <% if source.id is @source: %>
-            <option value="<%- source.id%>" selected><%- source.name %></option>
-          <% else: %>
-            <option value="<%- source.id%>"><%- source.name %></option>
-          <% end %>
-        <% end %>
-      </select>
-    </div>
-  <% else: %>
-    <p>Invalid source type.</p>
-  <% end %>
-  <button type="button" class="action" name="fetch">Fetch Data</button>
-<% end %>
+  </select>
+</div>

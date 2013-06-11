@@ -8,8 +8,6 @@ class DashboardView extends BaseView
 
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
-    'show-snap': 'drawSnap'
-    'stop-snap': 'stopSnap'
 
   initialize: ->
     @toolboxView = new @toolbox
@@ -44,17 +42,5 @@ class DashboardView extends BaseView
     @model.on
       'add:tools': @addTool
       'reset:tools': @removeTools
-
-  stopSnap: =>
-    @snap.remove() if @snap
-
-  drawSnap: (direction, dashHeight) =>
-    @snap.remove() if @snap
-    @$el.append("""<div class="snap #{direction}"></div>""")
-    @snap = @$('.snap')
-    @snap.css 
-      height: if direction in ['top-left', 'top-right', 'bottom-right', 'bottom-left'] then ((dashHeight / 2) - 20) else (dashHeight - 20)
-      width: if direction in ['right', 'left', 'top-left', 'top-right', 'bottom-left', 'bottom-right']  then ((window.innerWidth / 2) - 20) else (window.innerWidth - 20)
-
 
 module.exports = DashboardView

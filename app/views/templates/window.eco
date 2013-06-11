@@ -1,7 +1,7 @@
 <div class="window">
   <div class="title-bar"></div>
   <div class="settings"></div>
-  <div class="tool-container"></div>
+  <div class="container"></div>
 </div>
 
 <% unless @locked: %>

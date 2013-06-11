@@ -1,19 +1,38 @@
 <div class="container">
   <p>
     <b>
-      <span class="dashboard-action">Select the tools you need: </span>
       <span class="dashboard-name"><%- @name %></span>
     </b>
     <input value="<%- @name %>" type="text" />
   </p>
-  
-  <ul class="tools">
-  <% for tool in @available_tools: %>
-    <li><a href="#" class="tool" name="<%- tool.class_name %>"><%- tool.name %></a></li>
-  <% end %>
-  </ul>
+
+  <div class="tool-drawer">
+    <ul class="tools">
+    <% for tool in @available_tools: %>
+      <li>
+        <a href="#" class="tool" name="<%- tool.class_name %>">
+          <%- tool.name %>
+        </a>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="data-drawer">
+    <ul class="sources">
+    <% for source in @available_sources: %>
+      <li>
+        <a href="#" class="tool" name="<%- source.name %>">
+          <%- source.name %>
+        </a>
+      </li>
+    <% end %>
+    </ul>
+  </div>
 
   <ul class="interactions">
+    <li><a class="tool-drawer" href="#">Tools</a></li>
+    <li><a class="data-drawer" href="#">Data</a></li>
     <li><a class="remove-tools" href="#">Clear Tools</a></li>
   </ul>
 </div>
