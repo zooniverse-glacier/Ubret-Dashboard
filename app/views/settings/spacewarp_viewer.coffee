@@ -19,7 +19,10 @@ class SpacewarpViewerSettings extends BaseView
         @$el.find('#gri').click()
   
   render: =>
-    @$el.html @template({cid: @cid})
+    @$el.html @template 
+      cid: @cid 
+      alpha: @model.get('settings.alpha')
+      q: @model.get('settings.q')
     @
   
   onBandChange: (e) =>
