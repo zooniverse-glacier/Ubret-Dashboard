@@ -11,8 +11,8 @@ class SpacewarpViewerSettings extends BaseView
     'change input.scale'            : 'onScaleChange'
     'change input[name="stretch"]'  : 'onStretchChange'
     'change input.extent'           : 'onExtentChange'
-
-
+  
+  
   initialize: =>
     @model.once 'started', =>
       @model.tool.on 'swviewer:loaded', =>
@@ -23,6 +23,11 @@ class SpacewarpViewerSettings extends BaseView
       cid: @cid 
       alpha: @model.get('settings.alpha')
       q: @model.get('settings.q')
+      
+    @iScale = @$('.scale[name="i"]')
+    @rScale = @$('.scale[name="r"]')
+    @gScale = @$('.scale[name="g"]')
+    
     @
   
   onBandChange: (e) =>
@@ -43,28 +48,22 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.settings(setting)
   
   onAlphaChange: (e) =>
-    console.log "alpha", e
     alpha = {alpha: e.currentTarget.value}
     @model.tool.settings(alpha)
     
   onQChange: (e) =>
-    console.log "q", e
     q = {q: e.currentTarget.value}
     @model.tool.settings(q)
   
   onScaleChange: (e) =>
-    console.log "scale", e
-    target = e.currentTarget
-    scale = {scale: {band: traget.name, value: taget.value}}
-    @model.tool.settings(scale)
+    scales = { scales: [@iScale.val(), @rScale.val(), @gScale.val()] }
+    @model.tool.settings(scales)
   
   onStretchChange: (e) =>
-    console.log "stretch", e
     stretch = {stretch: e.currentTarget.dataset.function}
     @model.tool.settings(stretch)
   
   onExtentChange: (e) =>
-    console.log "extent", e
     extent =
       extent:
         min: @$el.find('[name="min"]').attr('value')
