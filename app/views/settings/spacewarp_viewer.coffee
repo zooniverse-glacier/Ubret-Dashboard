@@ -56,6 +56,11 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.settings(q)
   
   onScaleChange: (e) =>
+    scales =
+      scales:
+        i: @iScale.val()
+        r: @rScale.val()
+        g: @gScale.val()
     scales = { scales: [@iScale.val(), @rScale.val(), @gScale.val()] }
     @model.tool.settings(scales)
   
