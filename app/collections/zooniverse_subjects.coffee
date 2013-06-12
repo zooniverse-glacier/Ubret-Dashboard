@@ -6,6 +6,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   initialize: (models=[], options={}) ->
     @base = options.base
+    @zooIDs = options.zoo_ids
     @type = parseInt(options.search_type)
 
     if @type is 0 or @type is 3
@@ -41,25 +42,17 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       @base(@user.current.id) + '?' + @processParams()
 
   fetch: =>
-    return super unless (@type is 1) or (@type is 3)
-    collection = $.ajax @manager.api() + @url(),
-      type: "GET"
-      crossDomain: true
-      dataType: 'json'
-    collection.then @fetchSubjects
+    return super unless @zooIDs?
+    @fetchSubjects()
 
-  fetchSubjects: (response) =>
-    zooIDs = if _.isArray(response)
-      _.map(response, (sub) -> sub.subjects[0].zooniverse_id)
-    else
-      _.map(response.subjects, (sub) -> sub.zooniverse_id)
+  fetchSubjects: =>
     options = 
       url: @manager.api() + "/subjects/batch",
       type: "POST"
       crossDomain: true
       dataType: 'json'
       contentType: "application/json; charset=utf-8"
-      data: JSON.stringify({subject_ids: zooIDs})
+      data: JSON.stringify({subject_ids: @zooIDs})
       success: (resp) =>
         @set(@parse(resp), options)
         @trigger 'sync', @, resp, options

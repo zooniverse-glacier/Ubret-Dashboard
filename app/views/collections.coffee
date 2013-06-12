@@ -1,11 +1,11 @@
 class Collections extends Backbone.View
-  talkCollection: require 'collections/talk_collections'
+  user: require 'lib/user'
   template: require './templates/collections'
   itemTemplate: require './templates/collection'
   manager: require 'modules/manager'
 
   initialize: ->
-    @collection = new @talkCollection
+    @collection = @user.current.collections
     @collection.on 'add reset', @render
 
   loadCollection: =>

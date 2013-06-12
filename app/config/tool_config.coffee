@@ -61,4 +61,6 @@ module.exports =
     defaults: {currentPage: 0, alpha: 0.3, q: 1.0}
     titleBarControls: true
     width: 680
-
+  "Zooniverse" :
+    settings: []
+    data_source: {source_type: "zooniverse", zoo_ids: []}

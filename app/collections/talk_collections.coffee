@@ -1,10 +1,10 @@
 class TalkCollections extends Backbone.Collection
   manager: require 'modules/manager'
-  user: require 'lib/user'
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
-    @targetUser = options.user
+    @user = options.user
+    @targetUser = options.target_user
     @page = options.page
 
   getPage: (page) =>
@@ -15,7 +15,7 @@ class TalkCollections extends Backbone.Collection
     if @targetUser?
       url = "/talk/users/#{@targetuser}?type=my_collections"
     else
-      url = "/talk/users/#{@user.current.name}?type=my_collections"
+      url = "/talk/users/#{@user}?type=my_collections"
     url = url + "&page=#{@page}" if @page?
     url
 
