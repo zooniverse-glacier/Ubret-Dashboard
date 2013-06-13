@@ -1,0 +1,51 @@
+.zooniverse-window
+  .container
+    height: inherit 
+
+    .id-list
+      width: 30%
+      float: left
+      height: inherit
+      overflow-y: scroll
+
+      ul
+        list-style: none
+        margin: 0
+        padding: 0
+
+        li
+          width: 100%
+          padding: 5px
+          border-bottom: 1px solid black
+          margin: 0
+
+          &.selected
+            background-color: $blue
+
+        &:last-child
+          border-bottom: none
+
+          .remove
+            float: right 
+            padding-right: 10px
+
+    .sources
+      width: 65%
+      padding-left: 10px
+      float: right
+
+      ul
+        @extends #button-row
+
+      button
+        border-radius: 3px 
+        margin-top: 5px
+        display: block
+        @extends #bold-button
+
+      div
+        display: none
+
+      .active
+        display: block
+

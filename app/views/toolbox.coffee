@@ -21,8 +21,6 @@ class Toolbox extends BaseView
     @getTools()
     @getSources()
 
-    console.log "sources:", @sources
-
     @$el.html @template 
       available_tools: @tools 
       available_sources: @sources

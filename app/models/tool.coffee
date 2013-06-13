@@ -57,16 +57,24 @@ class Tool extends Backbone.AssociatedModel
       @get('data_source').set 'tool_id', @id
 
   createUbretTool: =>
-    @tool = new Ubret[@get('tool_type')]
-      selector: (@get('tool_type') + "-" + @cid)
-      height: parseInt(@get('height')) - 25
-      width: parseInt(@get('width'))
+    sources = @manager.get('sources')
+      .config[@manager.get('project')].sources
+
+    if @get('tool_type') in sources
+      @tool = new Ubret.BaseTool
+      @updateData()
+    else
+      @tool = new Ubret[@get('tool_type')]
+        selector: (@get('tool_type') + "-" + @cid)
+        height: parseInt(@get('height')) - 25
+        width: parseInt(@get('width'))
 
     @tool.on 
       'selection': @selectElements
       'settings': @assignSetting
 
     @on 
+      'change:data_source' : @updateData
       'change:height' : => @tool.height(parseInt(@get('height')) - 25)
       'change:width' : => @tool.width(parseInt(@get('width')))
       'add:fql_statements' : @sendStatement
@@ -119,7 +127,7 @@ class Tool extends Backbone.AssociatedModel
 
   sourceTool: =>
     if @get('data_source').isInternal()
-      @collection.get(@get('data_source').get('source_id'))
+      @collection.get(@get('data_source.source_id'))
     else
       false
 
@@ -132,14 +140,14 @@ class Tool extends Backbone.AssociatedModel
 
   sourceName: =>
     if @get('data_source').isExternal()
-      name = @manager.get('sources').get(@get('data_source.source_id')).name
+      @manager.get('sources').get(@get('data_source.source_id')).name
     else if @get('data_source').isInternal()
-      name = @sourceTool()?.get('name')
+      @sourceTool()?.get('name')
     else
-      name = ''
-    return name
+      ''
 
   selectElements: (ids) =>
+    console.log ids, @get('selected_uids')
     if _.difference(ids, @get('selected_uids')).length
       @updateFunc 'selected_uids', ids
 
@@ -152,5 +160,12 @@ class Tool extends Backbone.AssociatedModel
       @tool.filters(statement.get('func'))
     else
       @tool.fields(statement.attributes)
+
+  updateData: =>
+    return if @get('data_source').isInternal()
+    data = @get('data_source').data()
+    data.fetch()
+      .done(=> @tool.data(data.toJSON()))
+      .error(=> @trigger 'loading-error')
 
 module.exports = Tool

@@ -63,4 +63,4 @@ module.exports =
     width: 680
   "Zooniverse" :
     settings: []
-    data_source: {source_type: "zooniverse", zoo_ids: []}
+    data_source: {source_type: "zooniverse", params: [{key: 'zoo_ids', val: []}]}

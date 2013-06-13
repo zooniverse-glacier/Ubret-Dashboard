@@ -5,11 +5,16 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
-    @base = options.base
-    @zooIDs = options.zoo_ids
-    @type = parseInt(options.search_type)
 
-    if @type is 0 or @type is 3
+    @zooIDs = options.zoo_ids
+    @type = options.type
+    @id = options.id
+
+    if @type
+      @base = @manager.get('sources')
+        .endpoints.zooniverse.search_types[@type].url
+
+    if @type is 'collection' and options.params?
       @id = options.params.find((param) => param.get('key') is 'id').get('val')
     else if options.params? and options.params.length
       @params = new Object
@@ -34,7 +39,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       response
 
   url: =>
-    if @type is 0 or @type is 3
+    if @type is 'collection'
       @base(@id)
     else
       unless @user.current?

@@ -1,0 +1,44 @@
+<div class="id-list">
+</div>
+<div class="sources">
+  <ul>
+    <li><a href="#" data-target="collections">Collections</a></li>
+    <li><a href="#" data-target="recents">Recents</a></li>
+    <li><a href="#" data-target="favorites">Favorites</a></li>
+    <li><a href="#" data-target="ids">Ids</a></li>
+  </ul>
+
+  <div class="collections">
+    <h4> Import Talk Collection </h4>
+    <% unless _.isEmpty(@collections): %>
+    <select class="user-collection">
+      <option value="">User Collections</option>
+      <% for collection in @collections: %>
+        <option value="<%- collection.id %>"><%- collection.name %></option>
+      <% end %>
+    </select>
+    <% end %>
+    <label>Collection by Id: 
+      <input type="text" name="collection-id"></input>
+    </label>
+  </div>
+  <div class="recents">
+    <h4> Import Recents </h4>
+    <label> How Many? <label class="recent-count">10</label>
+      <input name="recent-count" type="range" value="10" min="0" max="20" />
+    </label>
+  </div>
+  <div class="favorites">
+    <h4> Import Favorites </h4>
+    <label> How Many? <label class="favorite-count">10</label>
+      <input name="favorite-count" type="range" value="10" min="0" max="20" />
+    </label>
+  </div>
+  <div class="ids">
+    <h4> Import Subjects by Id </h4>
+    <label>Zooniverse Ids
+      <textarea class="zoo-ids" placeholder="Enter Subject Ids Separted by a comma"></textarea>
+    </label>
+  </div>
+  <button data-selected="" type="button" class="import">Import Data</button>
+</div>

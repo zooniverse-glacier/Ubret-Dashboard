@@ -49,7 +49,8 @@ class User extends Backbone.Events
     @id = options.id
     @apiToken = options.api_key
     @dashboards = new Backbone.Collection
-    @collections = new require('collections/talk_collections')([], {user: @name})
+    TalkCollection = require('collections/talk_collections')
+    @collections = new TalkCollection([], {user: @name})
 
   getDashboards: =>
     url = "#{User.manager.api()}/dashboards"

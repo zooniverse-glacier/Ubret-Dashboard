@@ -1,7 +1,9 @@
 BaseView = require 'views/base_view'
 
 class Window extends BaseView
-  template: require './templates/window'
+  className: 'tool-window'
+
+  windowTemplate: require './templates/window'
   windowTitleBarView: require 'views/window_title_bar'
 
   windowMinWidth: 300
@@ -12,7 +14,6 @@ class Window extends BaseView
     'click' : 'focus'
 
   initialize: ->
-    @settings = new @settingsView {model: @model}
     @titleBar = new @windowTitleBarView {model: @model}
     @$el.css @initialSizeAndPosition()
 
@@ -42,12 +43,11 @@ class Window extends BaseView
     @$el.attr 'data-id', @model.id
 
   render: =>
-    @$el.html @template
+    @$el.html @windowTemplate
       locked: (@locked or false)
     @$el.attr 'data-id', @model.id
     @assign
       '.title-bar': @titleBar
-      '.settings': @settings
     @
 
   removeWindow: =>

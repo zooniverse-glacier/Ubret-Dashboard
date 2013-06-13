@@ -14,16 +14,16 @@ class DataSettings extends BaseView
     opts.intSources = @intSources
     if @model.get('data_source').get('source_id')?
       opts.source = @model.get('data_source').get('source_id')
-
     @$el.html @template opts
     @
 
   # Fetch the data.
   onSelectInternalSource: (e) =>
-    @model.get('data_source').save
+    @model.get('data_source').set
       'source_id': $(e.currentTarget).val()
-      'search_type': null
-    @model.updateUbretTool()
+      'source_type': "internal"
+    @model.updateFunc()
+    @model.setupUbretTool()
 
   updateValidSourceTools: =>
     @intSources = []

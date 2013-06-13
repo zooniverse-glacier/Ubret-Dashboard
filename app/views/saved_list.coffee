@@ -23,8 +23,6 @@ class SavedList extends BaseView
   render: =>
     @$el.html @listTemplate()
     @$('.dashboards').height window.innerHeight - 200
-    console.log @$('.dashboards').height()
-
     @collection.each (dashboard) =>
       item =
         id: dashboard.id
