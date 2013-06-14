@@ -1,12 +1,14 @@
 .zooniverse-window
   .container
     height: inherit 
+    overflow: hidden 
 
     .id-list
       width: 40%
       float: left
       height: inherit
       overflow-y: scroll
+      display: inline-block
 
       ul
         list-style: none
@@ -34,21 +36,43 @@
             padding-right: 10px
 
     .sources
-      width: 55%
-      padding-left: 10px
-      float: right
+      width: 280px
+      height: inherit
+      background: rgba(51, 51, 51, 0.8) 
+      padding: 10px
+      display: inline-block
 
       ul
+        margin: 0
         @extends #button-row
+
+      h4
+        margin-top: 0
+
+      h5
+        margin: 5px 0 5px 0
 
       button
         border-radius: 3px 
         margin-top: 5px
-        display: block
         @extends #bold-button
+
+      .controls
+        display: block
 
       div
         display: none
+
+      label
+        display: block 
+        margin-bottom: 5px
+
+        label
+          display: inline
+          float: right
+
+      input[type="text"]
+        width: 150px
 
       .active
         display: block

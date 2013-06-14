@@ -1,22 +1,24 @@
 <div class="main">
-  <div class="group">
-    <a href="/#/"><img class="logo" src="/images/logo.png"></a>
-    <div class="switch"></div>
-  </div>
-  <div class="group">
-    <nav class="main-nav">
-      <ul>
-        <% if @user.current?: %>
-          <li><a class="current" href="<%- @dashURL %>">Current Dashboard</a></li>
-          <li><a class="my-dashboards" href="/#/my_dashboards">Dashboards</a></li>
-          <li><a class="my-data" href="/#/my_data">Data</a></li>
-        <% end %>
-      </ul>
-    </nav>
-  </div>
-  <div class="group">
-    <button class="fork-dashboard">Copy Dashboard</button>
-    <button class="create-dashboard">Create Dashboard</button>
+  <div class="container">
+    <div class="group">
+      <a href="/#/"><img class="logo" src="/images/logo.png"></a>
+      <div class="switch"></div>
+    </div>
+    <div class="group">
+      <nav class="main-nav">
+        <ul>
+          <% if @user.current?: %>
+            <li><a class="current" href="<%- @dashURL %>">Current Dashboard</a></li>
+            <li><a class="my-dashboards" href="/#/my_dashboards">Dashboards</a></li>
+            <li><a class="my-data" href="/#/my_data">Data</a></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+    <div class="group">
+      <button class="fork-dashboard">Copy Dashboard</button>
+      <button class="create-dashboard">Create Dashboard</button>
+    </div>
   </div>
 </div>
 <div class="login"></div>

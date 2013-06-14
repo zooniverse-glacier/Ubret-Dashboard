@@ -50,7 +50,6 @@ class Window extends BaseView
     @
 
   removeWindow: =>
-    @settings.remove()
     @titleBar.remove()
     @remove()
 

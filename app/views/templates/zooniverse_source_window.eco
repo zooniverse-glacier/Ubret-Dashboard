@@ -11,14 +11,17 @@
   <div class="collections">
     <h4> Import Talk Collection </h4>
     <% unless _.isEmpty(@collections): %>
-    <select class="user-collection">
-      <option value="">User Collections</option>
-      <% for collection in @collections: %>
-        <option value="<%- collection.id %>"><%- collection.name %></option>
-      <% end %>
-    </select>
+    <label> Select a Collection:
+      <select class="user-collection">
+        <option value="">Your Collections</option>
+        <% for collection in @collections: %>
+          <option value="<%- collection.zooniverse_id %>"><%- collection.title %></option>
+        <% end %>
+      </select>
+    </label>
+    <h5> or </h5>
     <% end %>
-    <label>Collection by Id: 
+    <label> Enter Collection Id:
       <input type="text" name="collection-id"></input>
     </label>
   </div>
@@ -40,5 +43,8 @@
       <textarea class="zoo-ids" placeholder="Enter Subject Ids Separted by a comma"></textarea>
     </label>
   </div>
-  <button data-selected="" type="button" class="import">Import Data</button>
+  <div class="controls">
+    <button data-selected="" type="button" class="import">Import Data</button>
+    <button type="button" class="clear-all">Clear Data</button>
+  </div>
 </div>

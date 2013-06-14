@@ -10,6 +10,7 @@ class Toolbox extends BaseView
   events: 
     'click a.tool' : 'createTool'
     'click a.remove-tools' : 'removeTools' 
+    'click a.drawer-toggle' : 'showDrawer'
     'dblclick .dashboard-name' : 'editName'
     'keypress input' : 'updateName'
     'blur input' : 'updateName'
@@ -65,5 +66,11 @@ class Toolbox extends BaseView
         @model.save 'name', newTitle
         name.show()
         input.hide()
+
+  showDrawer: (e) =>
+    e.preventDefault()
+    targetDrawer = ".#{e.target.dataset.drawer}-drawer"
+    @$(e.target).parent().toggleClass 'active'
+    @$(targetDrawer).toggleClass 'active'
 
 module.exports = Toolbox

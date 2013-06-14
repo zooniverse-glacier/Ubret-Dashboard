@@ -34,7 +34,7 @@ class ZooniverseSourceWindow extends Window
   renderList: =>
     @$('.id-list').html @listTemplate
       zoo_ids: @model.get('data_source.params[0].val')
-      selected: @model.get('selected_uids')
+      selected: @model.get('selected_uids') or []
 
   displaySource: (e) =>
     e.preventDefault()
@@ -59,7 +59,7 @@ class ZooniverseSourceWindow extends Window
       @$('.loading').hide()
 
   importCollection: =>
-    collection = @$('.user-colleciton option:selected').val()
+    collection = @$('.user-collection option:selected').val()
     if collection is '' or not collection?
       collection = @$('input[name="collection-id"]').val() 
 
@@ -93,7 +93,7 @@ class ZooniverseSourceWindow extends Window
   removeId: (e) =>
     e.preventDefault()
     id = e.target.dataset.id
-    if id in @model.get('selected_uids')
+    if id in (@model.get('selected_uids') or [])
       @model.tool.selectIds id
     @model.updateFunc('data_source.params[0].val',
       _.without(@model.get('data_source.params[0].val'), id))

@@ -1,12 +1,5 @@
 <div class="container">
-  <p>
-    <b>
-      <span class="dashboard-name"><%- @name %></span>
-    </b>
-    <input value="<%- @name %>" type="text" />
-  </p>
-
-  <div class="tool-drawer">
+  <div class="drawer tool-drawer">
     <ul class="tools">
     <% for tool in @available_tools: %>
       <li>
@@ -18,7 +11,7 @@
     </ul>
   </div>
 
-  <div class="data-drawer">
+  <div class="drawer data-drawer">
     <ul class="sources">
     <% for source in @available_sources: %>
       <li>
@@ -31,8 +24,8 @@
   </div>
 
   <ul class="interactions">
-    <li><a class="tool-drawer" href="#">Tools</a></li>
-    <li><a class="data-drawer" href="#">Data</a></li>
+    <li><a data-drawer="tool" class="drawer-toggle" href="#">Tools</a></li>
+    <li><a data-drawer="data" class="drawer-toggle" href="#">Data</a></li>
     <li><a class="remove-tools" href="#">Clear Tools</a></li>
   </ul>
 </div>

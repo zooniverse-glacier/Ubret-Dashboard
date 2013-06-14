@@ -10,7 +10,6 @@ class WindowTitleBar extends BaseView
     'click .window-close' : 'close'
     'dblclick .window-title' : 'editTitle'
     'keypress input[name="window-title"]' : 'updateModel'
-    'blur input[name="window-title"]' : 'updateModel'
     'mousedown' : 'startDrag'
 
   initialize: ->
@@ -48,7 +47,8 @@ class WindowTitleBar extends BaseView
   endDrag: (e) =>
     @trigger 'endDrag', e
 
-  editTitle: =>
+  editTitle: (e) =>
+    e.preventDefault() 
     @$('.window-title').hide()
     @$('input').show().focus().select()
 

@@ -18,7 +18,7 @@ class DataSource extends Backbone.AssociatedModel
   # DS API
   data: =>
     if @isZooniverse()
-      new @zooSubjects([], {zoo_ids: @get('params[0].val')})
+      new @zooSubjects([], {zoo_ids: @get('params[0].val') or []})
     else if @isExternal()
       url = @manager.get('sources').get(@get('source_id')).url
       new @extSubjects([], {params: @get('params'), base: url })

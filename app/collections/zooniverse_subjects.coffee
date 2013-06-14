@@ -5,7 +5,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
-
     @zooIDs = options.zoo_ids
     @type = options.type
     @id = options.id
@@ -23,8 +22,8 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   parse: (response) ->
     if response.type is "SubjectSet"
-      response = response.subjects
-    if _.isFunction(@[@manager.get('project')])
+      response.subjects
+    else if _.isFunction(@[@manager.get('project')])
       if _.isArray(response)
         _(response).chain()
           .map((sub) -> 

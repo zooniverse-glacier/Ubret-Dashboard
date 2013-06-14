@@ -19,5 +19,9 @@ class ToolWindow extends Window
       .addClass(@model.get('tool_type'))
       .html @model.tool.el
     @
+
+  removeWindow: =>
+    @settings.remove()
+    super
   
 module.exports = ToolWindow

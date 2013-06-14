@@ -1,12 +1,16 @@
 .app-header {
-  background: $gray-dark;
   color: $gray-light;
   font-size: 12px;
 
   .main {
+    background: $gray-dark;
+    position: relative;
+    z-index: 999;
     box-sizing: border-box;
-    display: table;
-    @extends .container
+
+    .container {
+      display: table;
+    }
   }
 
   .group {
