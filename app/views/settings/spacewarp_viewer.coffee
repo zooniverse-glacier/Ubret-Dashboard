@@ -16,9 +16,18 @@ class SpacewarpViewerSettings extends BaseView
   
   initialize: =>
     @model.tool.on 'swviewer:loaded', =>
-      @$el.find('#gri').click()
+      
       opts = @model.tool.opts
-      console.log opts
+      if opts.band?
+        @$el.find("##{opts.band}-#{@cid}").click()
+      else
+        @$el.find("#gri-#{@cid}").click()
+        
+      if opts.stretch?
+        @$el.find("##{opts.stretch}-#{@cid}").click()
+      else
+        @$el.find("#linear-#{@cid}").click()
+      
       # Update UI elements
       inputs = @$el.find('input[type="range"]')
       inputs.filter("[name='alpha']").val(opts.alpha) if opts.alpha?
@@ -27,6 +36,9 @@ class SpacewarpViewerSettings extends BaseView
         inputs.filter("[name='i']").val(opts.scales[0])
         inputs.filter("[name='r']").val(opts.scales[1])
         inputs.filter("[name='g']").val(opts.scales[2])
+      
+      inputs.filter("[name='min']").val(opts.sliderMin or 0)
+      inputs.filter("[name='max']").val(opts.sliderMax or 1000)
   
   render: =>
     @$el.html @template 
@@ -81,6 +93,8 @@ class SpacewarpViewerSettings extends BaseView
   onExtentChange: (e) =>
     min = @$el.find('[name="min"]').val()
     max = @$el.find('[name="max"]').val()
+    
+    @model.tool.settings({sliderMin: min, sliderMax: max})
     
     # Scale to gMin and gMax
     opts = @model.tool.opts
