@@ -9,13 +9,12 @@ class Window extends BaseView
   windowMinWidth: 300
   windowMinHeight: 150
 
-  events:
-    'mousedown .resize': 'resizeWindowStart'
-    'click' : 'focus'
-
   initialize: ->
     @titleBar = new @windowTitleBarView {model: @model}
     @$el.css @initialSizeAndPosition()
+
+    @$el.on 'mousedown', '.resize', @resizeWindowStart
+    @$el.on 'click', @focus
 
     @listenTo @titleBar,
       'close': @close

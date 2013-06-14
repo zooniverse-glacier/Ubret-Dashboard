@@ -62,7 +62,8 @@ class Tool extends Backbone.AssociatedModel
 
     if @get('tool_type') in sources
       @tool = new Ubret.BaseTool
-      @updateData()
+        selectIds: @get('selected_uids')
+      @updateData(true)
     else
       @tool = new Ubret[@get('tool_type')]
         selector: (@get('tool_type') + "-" + @cid)
@@ -147,8 +148,7 @@ class Tool extends Backbone.AssociatedModel
       ''
 
   selectElements: (ids) =>
-    console.log ids, @get('selected_uids')
-    if _.difference(ids, @get('selected_uids')).length
+    if _.difference(@get('selected_uids'), ids).length
       @updateFunc 'selected_uids', ids
 
   assignSetting: (setting) =>
@@ -161,8 +161,9 @@ class Tool extends Backbone.AssociatedModel
     else
       @tool.fields(statement.attributes)
 
-  updateData: =>
-    return if @get('data_source').isInternal()
+  updateData: (force=false) =>
+    force = not(typeof force is 'object')
+    return unless (not @get('data_source').isInternal() or @get('data_source').hasChanged()) and force
     data = @get('data_source').data()
     data.fetch()
       .done(=> @tool.data(data.toJSON()))
