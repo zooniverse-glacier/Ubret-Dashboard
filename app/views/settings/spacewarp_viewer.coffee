@@ -18,15 +18,16 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.on 'swviewer:loaded', =>
       
       opts = @model.tool.opts
-      if opts.band?
-        @$el.find("##{opts.band}-#{@cid}").click()
-      else
-        @$el.find("#gri-#{@cid}").click()
-        
+      
       if opts.stretch?
         @$el.find("##{opts.stretch}-#{@cid}").click()
       else
         @$el.find("#linear-#{@cid}").click()
+      
+      if opts.band?
+        @$el.find("##{opts.band}-#{@cid}").click()
+      else
+        @$el.find("#gri-#{@cid}").click()
       
       # Update UI elements
       inputs = @$el.find('input[type="range"]')
