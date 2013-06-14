@@ -1,5 +1,6 @@
 BaseView = require 'views/base_view'
 
+
 class SpacewarpViewerSettings extends BaseView
   className: 'spacewarp-viewer-settings'
   template: require 'views/templates/settings/spacewarp_viewer'
@@ -14,9 +15,18 @@ class SpacewarpViewerSettings extends BaseView
   
   
   initialize: =>
-    @model.once 'started', =>
-      @model.tool.on 'swviewer:loaded', =>
-        @$el.find('#gri').click()
+    @model.tool.on 'swviewer:loaded', =>
+      @$el.find('#gri').click()
+      opts = @model.tool.opts
+      console.log opts
+      # Update UI elements
+      inputs = @$el.find('input[type="range"]')
+      inputs.filter("[name='alpha']").val(opts.alpha) if opts.alpha?
+      inputs.filter("[name='q']").val(opts.q) if opts.q?
+      if opts.scales?
+        inputs.filter("[name='i']").val(opts.scales[0])
+        inputs.filter("[name='r']").val(opts.scales[1])
+        inputs.filter("[name='g']").val(opts.scales[2])
   
   render: =>
     @$el.html @template 
@@ -69,10 +79,23 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.settings(stretch)
   
   onExtentChange: (e) =>
+    min = @$el.find('[name="min"]').val()
+    max = @$el.find('[name="max"]').val()
+    
+    # Scale to gMin and gMax
+    opts = @model.tool.opts
+    gMin = opts.gMin
+    gMax = opts.gMax
+    
+    gRange = gMax - gMin
+    
+    min = gRange * min / 1000 + gMin
+    max = gRange * max / 1000 + gMin
+    
     extent =
       extent:
-        min: @$el.find('[name="min"]').attr('value')
-        max: @$el.find('[name="max"]').attr('value')
+        min: min
+        max: max
     @model.tool.settings(extent)
 
 

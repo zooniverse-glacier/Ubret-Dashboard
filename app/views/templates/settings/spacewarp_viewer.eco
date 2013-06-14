@@ -1,6 +1,5 @@
 <h4>Controls</h4>
 
-<!--
 <div class='bands'>
   <input type='radio' name='band' data-band='gri' id='gri-<%- @cid %>' />
   <label for='gri-<%- @cid %>' data-band='gri'>color</label>
@@ -22,7 +21,6 @@
   <input type='radio' name='band' data-band='z' id='z-<%- @cid %>' />
   <label for='z-<%- @cid %>'>z</label>
 </div>
--->
 
 <div class='parameters color'>
   <div class='subtitle'>
