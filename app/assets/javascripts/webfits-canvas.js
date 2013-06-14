@@ -11,7 +11,7 @@
 
   WebFITS = {};
 
-  WebFITS.version = '0.2.2';
+  WebFITS.version = '0.2.6';
 
   this.astro.WebFITS = WebFITS;
 
@@ -22,6 +22,7 @@
       this.el = el;
       this.wheelHandler = __bind(this.wheelHandler, this);
 
+      this._reset();
       this.width = this.height = dimension;
       this.canvas = document.createElement('canvas');
       this.canvas.setAttribute('width', this.width);
@@ -32,6 +33,8 @@
       if (!this.getContext()) {
         return null;
       }
+      this.offsetLeft = this.canvas.offsetLeft;
+      this.offsetTop = this.canvas.offsetTop;
       parentStyle = this.canvas.parentElement.style;
       parentStyle.width = "" + this.canvas.width + "px";
       parentStyle.height = "" + this.canvas.height + "px";
@@ -43,7 +46,7 @@
       this.yOldOffset = this.yOffset;
       this.drag = false;
       this.zoom = 2 / this.width;
-      this.minZoom = this.zoom;
+      this.minZoom = this.zoom / 8;
       this.maxZoom = 12 * this.zoom;
       this.zoomX = this.zoom;
       this.zoomY = this.zoom;
@@ -119,10 +122,12 @@
       }
       if ((callbacks != null ? callbacks.onmousemove : void 0) != null) {
         this.canvas.onmousemove = function(e) {
-          var x, xDelta, y, yDelta;
+          var offsetX, offsetY, x, xDelta, y, yDelta;
           _onmousemove(e);
-          xDelta = -1 * (_this.width / 2 - e.offsetX) / _this.width / _this.zoom * 2.0;
-          yDelta = (_this.height / 2 - e.offsetY) / _this.height / _this.zoom * 2.0;
+          offsetX = e.clientX - _this.offsetLeft;
+          offsetY = e.clientY - _this.offsetTop;
+          xDelta = -1 * (_this.width / 2 - offsetX) / _this.width / _this.zoom * 2.0;
+          yDelta = (_this.height / 2 - offsetY) / _this.height / _this.zoom * 2.0;
           x = ((-1 * (_this.xOffset + 0.5)) + xDelta) + 1.5 << 0;
           y = ((-1 * (_this.yOffset + 0.5)) + yDelta) + 1.5 << 0;
           return callbacks.onmousemove.call(_this, x, y, opts, e);
@@ -153,14 +158,14 @@
         };
       }
       this.canvas.addEventListener('mousewheel', this.wheelHandler, false);
-      return this.canvas.addEventListener('DOMMouseScroll', this.wheelHandler, false);
+      return this.canvas.addEventListener('wheel', this.wheelHandler, false);
     };
 
     BaseApi.prototype.wheelHandler = function(e) {
       var factor;
       e.preventDefault();
       factor = e.shiftKey ? 1.01 : 1.1;
-      this.zoom *= (e.detail || e.wheelDelta) < 0 ? 1 / factor : factor;
+      this.zoom *= (e.wheelDelta || e.deltaY) < 0 ? 1 / factor : factor;
       this.zoom = this.zoom > this.maxZoom ? this.maxZoom : this.zoom;
       this.zoom = this.zoom < this.minZoom ? this.minZoom : this.zoom;
       return typeof this.zoomCallback === "function" ? this.zoomCallback() : void 0;
@@ -182,8 +187,7 @@
       this.scaledArcsinh = __bind(this.scaledArcsinh, this);
 
       this.wheelHandler = __bind(this.wheelHandler, this);
-      this._reset();
-      Api.__super__.constructor.apply(this, arguments);
+      return Api.__super__.constructor.apply(this, arguments);
     }
 
     Api.prototype._reset = function() {

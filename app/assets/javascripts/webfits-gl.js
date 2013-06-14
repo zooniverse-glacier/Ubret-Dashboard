@@ -11,7 +11,7 @@
 
   WebFITS = {};
 
-  WebFITS.version = '0.2.2';
+  WebFITS.version = '0.2.6';
 
   this.astro.WebFITS = WebFITS;
 
@@ -22,6 +22,7 @@
       this.el = el;
       this.wheelHandler = __bind(this.wheelHandler, this);
 
+      this._reset();
       this.width = this.height = dimension;
       this.canvas = document.createElement('canvas');
       this.canvas.setAttribute('width', this.width);
@@ -32,6 +33,8 @@
       if (!this.getContext()) {
         return null;
       }
+      this.offsetLeft = this.canvas.offsetLeft;
+      this.offsetTop = this.canvas.offsetTop;
       parentStyle = this.canvas.parentElement.style;
       parentStyle.width = "" + this.canvas.width + "px";
       parentStyle.height = "" + this.canvas.height + "px";
@@ -43,7 +46,7 @@
       this.yOldOffset = this.yOffset;
       this.drag = false;
       this.zoom = 2 / this.width;
-      this.minZoom = this.zoom;
+      this.minZoom = this.zoom / 8;
       this.maxZoom = 12 * this.zoom;
       this.zoomX = this.zoom;
       this.zoomY = this.zoom;
@@ -119,10 +122,12 @@
       }
       if ((callbacks != null ? callbacks.onmousemove : void 0) != null) {
         this.canvas.onmousemove = function(e) {
-          var x, xDelta, y, yDelta;
+          var offsetX, offsetY, x, xDelta, y, yDelta;
           _onmousemove(e);
-          xDelta = -1 * (_this.width / 2 - e.offsetX) / _this.width / _this.zoom * 2.0;
-          yDelta = (_this.height / 2 - e.offsetY) / _this.height / _this.zoom * 2.0;
+          offsetX = e.clientX - _this.offsetLeft;
+          offsetY = e.clientY - _this.offsetTop;
+          xDelta = -1 * (_this.width / 2 - offsetX) / _this.width / _this.zoom * 2.0;
+          yDelta = (_this.height / 2 - offsetY) / _this.height / _this.zoom * 2.0;
           x = ((-1 * (_this.xOffset + 0.5)) + xDelta) + 1.5 << 0;
           y = ((-1 * (_this.yOffset + 0.5)) + yDelta) + 1.5 << 0;
           return callbacks.onmousemove.call(_this, x, y, opts, e);
@@ -153,14 +158,14 @@
         };
       }
       this.canvas.addEventListener('mousewheel', this.wheelHandler, false);
-      return this.canvas.addEventListener('DOMMouseScroll', this.wheelHandler, false);
+      return this.canvas.addEventListener('wheel', this.wheelHandler, false);
     };
 
     BaseApi.prototype.wheelHandler = function(e) {
       var factor;
       e.preventDefault();
       factor = e.shiftKey ? 1.01 : 1.1;
-      this.zoom *= (e.detail || e.wheelDelta) < 0 ? 1 / factor : factor;
+      this.zoom *= (e.wheelDelta || e.deltaY) < 0 ? 1 / factor : factor;
       this.zoom = this.zoom > this.maxZoom ? this.maxZoom : this.zoom;
       this.zoom = this.zoom < this.minZoom ? this.minZoom : this.zoom;
       return typeof this.zoomCallback === "function" ? this.zoomCallback() : void 0;
@@ -177,7 +182,7 @@
     linear: ["precision mediump float;", "uniform sampler2D u_tex;", "uniform vec2 u_extent;", "varying vec2 v_textureCoord;", "void main() {", "vec4 pixel_v = texture2D(u_tex, v_textureCoord);", "float min = u_extent[0];", "float max = u_extent[1];", "float pixel = (pixel_v[0] - min) / (max - min);", "gl_FragColor = vec4(pixel, pixel, pixel, 1.0);", "}"].join("\n"),
     logarithm: ["precision mediump float;", "uniform sampler2D u_tex;", "uniform vec2 u_extent;", "varying vec2 v_textureCoord;", "float logarithm(float value) {", "return log(value / 0.05 + 1.0) / log(1.0 / 0.05 + 1.0);", "}", "void main() {", "vec4 pixel_v = texture2D(u_tex, v_textureCoord);", "float min = u_extent[0];", "float max = u_extent[1];", "max = max - min;", "float minScaled = logarithm(0.0);", "max = logarithm(max);", "float pixel = pixel_v[0] - min;", "pixel = logarithm(pixel);", "pixel = (pixel - minScaled) / (max - minScaled);", "gl_FragColor = vec4(pixel, pixel, pixel, 1.0);", "}"].join("\n"),
     sqrt: ["precision mediump float;", "uniform sampler2D u_tex;", "uniform vec2 u_extent;", "varying vec2 v_textureCoord;", "void main() {", "vec4 pixel_v = texture2D(u_tex, v_textureCoord);", "float min = u_extent[0];", "float max = u_extent[1] - min;", "float pixel = pixel_v[0] - min;", "pixel = sqrt(pixel_v[0] / max);", "gl_FragColor = vec4(pixel, pixel, pixel, 1.0);", "}"].join("\n"),
-    arcsinh: ["precision mediump float;", "uniform sampler2D u_tex;", "uniform vec2 u_extent;", "varying vec2 v_textureCoord;", "float arcsinh(float value) {", "return log(value + sqrt(1.0 + value * value));", "}", "float scaledArcsinh(float value) {", "return arcsinh(value / -0.033) / arcsinh(1.0 / -0.033);", "}", "void main() {", "vec4 pixel_v = texture2D(u_tex, v_textureCoord);", "float min = scaledArcsinh(u_extent[0]);", "float max = scaledArcsinh(u_extent[1]);", "float value = scaledArcsinh(pixel_v[0]);", "float pixel = (value - min) / (max - min);", "gl_FragColor = vec4(pixel, pixel, pixel, 1.0);", "}"].join("\n"),
+    arcsinh: ["precision mediump float;", "uniform sampler2D u_tex;", "uniform vec2 u_extent;", "varying vec2 v_textureCoord;", "float arcsinh(float value) {", "return log(value + sqrt(1.0 + value * value));", "}", "void main() {", "vec4 pixel_v = texture2D(u_tex, v_textureCoord);", "float min = 0.0;", "float max = arcsinh( (u_extent[1] - u_extent[0]) );", "float value = arcsinh( (pixel_v[0] - u_extent[0]) );", "float pixel = value / max;", "gl_FragColor = vec4(pixel, pixel, pixel, 1.0);", "}"].join("\n"),
     power: ["precision mediump float;", "uniform sampler2D u_tex;", "uniform vec2 u_extent;", "varying vec2 v_textureCoord;", "void main() {", "vec4 pixel_v = texture2D(u_tex, v_textureCoord);", "float min = u_extent[0];", "float max = u_extent[1] - min;", "float pixel = pixel_v[0] - min;", "pixel = pow(pixel / max, 2.0);", "gl_FragColor = vec4(pixel, pixel, pixel, 1.0);", "}"].join("\n"),
     color: ["precision mediump float;", "uniform sampler2D u_tex0;", "uniform sampler2D u_tex1;", "uniform sampler2D u_tex2;", "uniform float u_r_scale;", "uniform float u_g_scale;", "uniform float u_b_scale;", "uniform float u_r_calibration;", "uniform float u_g_calibration;", "uniform float u_b_calibration;", "uniform float u_alpha;", "uniform float u_Q;", "varying vec2 v_textureCoord;", "float arcsinh(float value) {", "return log(value + sqrt(1.0 + value * value));", "}", "void main() {", "vec4 pixel_v_r = texture2D(u_tex0, v_textureCoord);", "vec4 pixel_v_g = texture2D(u_tex1, v_textureCoord);", "vec4 pixel_v_b = texture2D(u_tex2, v_textureCoord);", "float r = (pixel_v_r[0]) * u_r_calibration * u_r_scale;", "float g = (pixel_v_g[0]) * u_g_calibration * u_g_scale;", "float b = (pixel_v_b[0]) * u_b_calibration * u_b_scale;", "float I = r + g + b + 1e-10;", "float factor = arcsinh(u_alpha * u_Q * I) / (u_Q * I);", "float R = clamp(r * factor, 0.0, 1.0);", "float G = clamp(g * factor, 0.0, 1.0);", "float B = clamp(b * factor, 0.0, 1.0);", "gl_FragColor = vec4(R, G, B, 1.0);", "}"].join("\n")
   };
@@ -192,12 +197,11 @@
 
     __extends(Api, _super);
 
-    Api.prototype.fShaders = ['linear', 'logarithm', 'sqrt', 'arcsinh', 'power', 'color'];
-
     function Api() {
-      this._reset();
-      Api.__super__.constructor.apply(this, arguments);
+      return Api.__super__.constructor.apply(this, arguments);
     }
+
+    Api.prototype.fShaders = ['linear', 'logarithm', 'sqrt', 'arcsinh', 'power', 'color'];
 
     Api.prototype._reset = function() {
       this.programs = {};
