@@ -9,6 +9,12 @@ class ZooniverseDataSettings extends BaseView
   zooSubjects: require 'collections/zooniverse_subjects'
 
   initialize: ->
+    if @user.current?
+      @initializeCollection()
+    else
+      @user.on 'sign-in', @initializeCollection
+
+  initializeCollection: =>
     @talkCollections = @user.current.collections
     @talkCollections.on 'add reset', @render
     @talkCollections.fetch()
