@@ -22,8 +22,7 @@ class AppView extends BaseView
     'dashboard:create'                  : 'createDashboardFromDialog'
     'dashboard:fork'                    : 'forkDashboard'
     'router:index'                      : 'index'
-    'router:dashboardCreateFromParams'  : 'createDashboardFromParams'
-    'router:dashboardCreateFromZooid'   : 'createDashboardFromZooid'
+    'router:dashboardCreateFromZooids'  : 'createDashboardFromZooids'
     'router:dashboardRetrieve'          : 'loadDashboard'
     'router:viewSavedDashboards'        : 'showSaved'
     'router:myData'                     : 'showMyData'
@@ -71,14 +70,13 @@ class AppView extends BaseView
     dashboardDialog = new DashboardDialog { parent: @ }
     $('body').append dashboardDialog.render().el
 
-  createTools: (tools, dataSource, settings=null) ->
+  createTools: (tools, dataSource) ->
     toolsFormat = []
     _.each(tools, (toolType, index) ->
       tool = 
         tool_type: toolType
         name: "#{toolType}-#{index}"
         data_source: dataSource
-      tool.settings = settings if settings?
       toolsFormat.push tool)
     toolsFormat
 
@@ -89,41 +87,30 @@ class AppView extends BaseView
       project: (project or Manager.get('project'))
       tools: tools
 
-  createDashboardFromZooid: (name, zooid, settings) ->
-    params = [ {key: 'id', val: zooid} ]
+  createDashboardFromZooids: (name, zooids) ->
+    params = [ {key: 'zoo_ids', val: zooid} ]
 
     dataSource = 
-      source_id: '1'
-      search_type: 0
-      source_type: 'external'
+      source_type: 'zooniverse'
       params: params
 
-    toolset = Projects[Manager.get('project')].defaults
-    tools = @createTools(toolset, dataSource, settings)
+    dataTool = @createToools(['zooniverse'], dataSource)
 
-    @dashboardModel = @createDashboard(name, tools)
+    @dashboardModel = @createDashboard(name, dataTool)
     
-    @dashboardModel.save().done =>
-      @navigateToDashboard()
+    @dashboardModel.save().done (response) =>
+      console.log response
+      id = response.tools[0].id
 
-  createDashboardFromParams: (name, tools, collection, params) =>
-    paramsFormatted = new Array
-    for param in params
-      [key, value...] = param.split('_')
-      paramsFormatted.push {key: key, val: value.join('_')}
+      dataSource = 
+        source_type: 'internal'
+        source_id: id
 
-    dataSource =
-      source_id: collection[0]
-      search_type: parseInt(collection[1])
-      source_type: 'external'
-      params: paramsFormatted
-
-    toolsFormat = @createTools(tools, dataSource)
-
-    @dashboardModel = @createDashboard(name.join(' '), toolsFormat)
-
-    @dashboardModel.save().done =>
-      @navigateToDashboard()
+      toolset = Projects[Manager.get('project')].defaults
+      tools = @createTools(toolset, dataSource)
+      @dashboardModel.get('tools').set tools
+      @dashboardModel.save().done =>
+        @navigateToDashboard()
 
   loadDashboard: (id) =>
     @$('.main-focus').html @loadingTemplate()

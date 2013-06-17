@@ -56,6 +56,8 @@
           
 
 .toolbox
+  position: aboslute
+
   .drawer
     transition: transform 0.5s ease-in-out  
     background: $light-gray
@@ -66,6 +68,7 @@
     z-index: 998
     display: inline-block
     top: 14px
+    width: 850px
 
   .active
     transform: translateY(38px)
@@ -93,16 +96,14 @@
     z-index: 997
 
     li
-      background: $light-grey
+      padding-top: 3px
       border: 1px solid black
       border-top: none
       width: 75px
       display: inline-block
       text-align: center
+      background: $light-gray
       transition: transform 0.5s ease-in-out
-
-      &.active
-        z-index: 1000
 
       a
         color: black

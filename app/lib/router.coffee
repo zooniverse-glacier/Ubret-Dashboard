@@ -8,8 +8,7 @@ class Router extends Backbone.Router
     'dashboards/:project/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
-    'project/:project/:object(/:setting_keys/:setting_values)' : 'loadObject'
-    'project/:project/:name/:tools/:collection/:params': 'loadObjects'
+    'project/:project/:objects' : 'loadObjects'
   
   initialize: ->
     User.on 'sign-in', => 
@@ -48,24 +47,10 @@ class Router extends Backbone.Router
     Manger.set 'project', project
     @navigate('#/my_dashboards', {trigger: true})
 
-  loadObject: (project, object, settingKeys, settingValues) =>
+  loadObject: (project, objects, settingKeys, settingValues) =>
     return unless @checkUser()
     Manager.set 'project', project
-    name = "Dashboard with #{object}"
-    settings = {}
-    if settingKeys?
-      keys = settingKeys.split('-')
-      values = settingValues.split('-')
-      settings[key] = values[index] for key, index in keys
-    Backbone.Mediator.publish 'router:dashboardCreateFromZooid', name, object, settings
-
-  loadObjects: (project, name, tools, collection, params) =>
-    return unless @checkUser()
-    Manager.set 'project', project
-    name = name.split('-')
-    tools = tools.split('-')
-    collection = collection.split('-')
-    params = params.split('-')
-    Backbone.Mediator.publish 'router:dashboardCreateFromParams', name, tools, collection, params
+    name = "Dashboard with #{objects.slice(0,12)}"
+    Backbone.Mediator.publish 'router:dashboardCreateFromZooids', name, objects.split(',')
 
 module.exports = Router

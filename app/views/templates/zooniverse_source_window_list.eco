@@ -1,7 +1,9 @@
-<ul>
-  <% if @zoo_ids?: %>
-    <% for id in @zoo_ids: %>
-    <li data-id="<%- id %>" <% if id in @selected: %> class="selected" <% end %> ><%- id %> <a href="#" data-id="<%- id %>" class="remove">X</a></li>
+<div class="id-list">
+  <ul>
+    <% if @zoo_ids?: %>
+      <% for id in @zoo_ids: %>
+      <li data-id="<%- id %>" <% if id in @selected: %> class="selected" <% end %> ><%- id %> <a href="#" data-id="<%- id %>" class="remove">X</a></li>
+      <% end %>
     <% end %>
-  <% end %>
-<ul>
+  </ul>
+</div>

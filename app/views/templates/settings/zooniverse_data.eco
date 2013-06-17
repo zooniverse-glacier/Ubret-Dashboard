@@ -1,5 +1,3 @@
-<div class="id-list">
-</div>
 <div class="sources">
   <ul>
     <li><a href="#" data-target="collections">Collections</a></li>
@@ -44,7 +42,8 @@
     </label>
   </div>
   <div class="controls">
-    <button data-selected="" type="button" class="import">Import Data</button>
-    <button type="button" class="clear-all">Clear Data</button>
+    <button data-selected="" type="button" class="import">Import</button>
+    <button type="button" class="clear-all">Clear</button>
+    <button type="button" class="save">Save</button>
   </div>
 </div>

@@ -5,11 +5,13 @@ class Window extends BaseView
 
   windowTemplate: require './templates/window'
   windowTitleBarView: require 'views/window_title_bar'
+  settingsView: require 'views/settings'
 
   windowMinWidth: 300
   windowMinHeight: 150
 
   initialize: ->
+    @settings = new @settingsView {model: @model}
     @titleBar = new @windowTitleBarView {model: @model}
     @$el.css @initialSizeAndPosition()
 
@@ -47,9 +49,11 @@ class Window extends BaseView
     @$el.attr 'data-id', @model.id
     @assign
       '.title-bar': @titleBar
+      '.settings': @settings
     @
 
   removeWindow: =>
+    @settings.remove()
     @titleBar.remove()
     @remove()
 

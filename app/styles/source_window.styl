@@ -4,11 +4,10 @@
     overflow: hidden 
 
     .id-list
-      width: 40%
-      float: left
       height: inherit
       overflow-y: scroll
-      display: inline-block
+      display: block
+      width: 100%
 
       ul
         list-style: none
@@ -18,7 +17,7 @@
 
         li
           width: 100%
-          padding: 5px
+          padding: 5px 10px
           border-bottom: 1px solid black
           margin: 0
 
@@ -33,14 +32,22 @@
 
           .remove
             float: right 
-            padding-right: 10px
+            padding-right: 20px
+
+  .settings
+    width: 300px 
+    right: -300px
+
+    .settings-group
+      padding: 0
+
+    &.active
+      right: 0
 
     .sources
-      width: 280px
       height: inherit
-      background: rgba(51, 51, 51, 0.8) 
       padding: 10px
-      display: inline-block
+      color: $white
 
       ul
         margin: 0
@@ -48,6 +55,7 @@
 
       h4
         margin-top: 0
+        margin-bottom: 5px
 
       h5
         margin: 5px 0 5px 0
@@ -55,6 +63,7 @@
       button
         border-radius: 3px 
         margin-top: 5px
+        width: 85px
         @extends #bold-button
 
       .controls
@@ -73,6 +82,10 @@
 
       input[type="text"]
         width: 150px
+
+      input[type="range"]
+        display: block
+        width: 100%
 
       .active
         display: block

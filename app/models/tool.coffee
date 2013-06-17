@@ -163,7 +163,7 @@ class Tool extends Backbone.AssociatedModel
 
   updateData: (force=false) =>
     force = not(typeof force is 'object')
-    return unless (not @get('data_source').isInternal() or @get('data_source').hasChanged()) and force
+    return unless (not @get('data_source').isInternal() or @get('data_source').hasChanged()) or force
     data = @get('data_source').data()
     data.fetch()
       .done(=> @tool.data(data.toJSON()))

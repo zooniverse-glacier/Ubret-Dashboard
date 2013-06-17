@@ -8,6 +8,7 @@ settings =
   subject: require 'views/settings/subject'
   spectra_legend: require 'views/settings/spectra_legend'
   spacewarp_viewer: require 'views/settings/spacewarp_viewer'
+  zooniverse: require 'views/settings/zooniverse_data'
 
 module.exports = 
   "BarGraph":
@@ -62,5 +63,5 @@ module.exports =
     titleBarControls: true
     width: 680
   "Zooniverse" :
-    settings: []
+    settings: [settings.zooniverse]
     data_source: {source_type: "zooniverse", params: [{key: 'zoo_ids', val: []}]}
