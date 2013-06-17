@@ -12,7 +12,7 @@
     "node": "~0.6.10 || 0.8 || 0.9 || 0.10"
   },
   "scripts": {
-    "start": "brunch watch --server --port 3334",
+    "start": "brunch watch --server --port $PORT",
     "test" : "./scripts/test.sh"
   },
   "dependencies": {
