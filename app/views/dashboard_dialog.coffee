@@ -31,6 +31,7 @@ class DashboardDialog extends BaseView
     dashboard = @parent.createDashboard(name, [], project)
     dashboard.save().done =>
       @parent.loadDashboard(dashboard.id)
+      @parent.navigateToDashboard()
     @close()
 
 module.exports = DashboardDialog
