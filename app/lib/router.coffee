@@ -8,7 +8,7 @@ class Router extends Backbone.Router
     'dashboards/:project/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
-    'project/:project/:objects' : 'loadObjects'
+    'project/:project/:objects(/:name)' : 'loadObjects'
   
   initialize: ->
     User.on 'sign-in', => 
@@ -47,10 +47,10 @@ class Router extends Backbone.Router
     Manger.set 'project', project
     @navigate('#/my_dashboards', {trigger: true})
 
-  loadObjects: (project, objects) =>
+  loadObjects: (project, objects, name) =>
     return unless @checkUser()
     Manager.set 'project', project
-    name = "Dashboard with #{objects.slice(0,12)}"
-    Backbone.Mediator.publish 'router:dashboardCreateFromZooids', name, objects.split(',')
+    name = name or "Dashboard with #{objects.slice(0,12)}"
+    Backbone.Mediator.publish 'router:dashboardCreateFromZooids', name.replace('-', ' '), objects.split(',')
 
 module.exports = Router

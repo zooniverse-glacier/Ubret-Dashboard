@@ -4,7 +4,7 @@ class Favorites extends MyDataLists
   className: 'my-data favorites'
   template: require './templates/favorite_list'
   templateItem: require './templates/recent'
-  type: 2
+  type: 'favorite'
   name: 'favorites'
 
 module.exports = Favorites

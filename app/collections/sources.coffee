@@ -14,9 +14,7 @@ class Sources
       x.id is id 
 
   get: (id) =>
-    _(@endpoints).chain()
-      .filter(@inProject).find(@at(id))
-      .value()
+    @endpoints[id]
 
   getSources: =>
     _(@endpoints).chain().filter(@inProject)

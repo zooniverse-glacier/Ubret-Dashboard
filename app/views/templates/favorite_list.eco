@@ -1,6 +1,4 @@
-<% url = "#/project/#{@project}/Dashboard-from-#{@name}/#{@tools}/1-#{@type}/limit_20" %>
-
-<a href="<%- url %>" class="new-dashboard-favorite">New Dashboard from favorites</a>
+<a href="<%- @url %>" class="new-dashboard-favorite">New Dashboard from favorites</a>
 <h3> Favorites </h3>
 <div class="my-data-list">
 </div>

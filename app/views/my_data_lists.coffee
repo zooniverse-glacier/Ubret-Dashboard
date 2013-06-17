@@ -11,7 +11,7 @@ class MyDataLists extends BaseView
   params: new Params [{key: 'limit', val: 10}]
 
   url: =>
-    @manager.get('sources').get('1')
+    @manager.get('sources').get('zooniverse')
       .search_types[@type].url
 
   reset: =>
@@ -28,15 +28,16 @@ class MyDataLists extends BaseView
     @$('.my-data-list').html @loadingTemplate()
     @collection.fetch().then @render
 
+  dashboardUrl: (project, ids, name) =>
+    "#/project/#{project}/#{ids.join(',')}/Dashboard-from-#{name}"
+
   render: =>
     if not _.isUndefined @collection
+      ids = @collection.map (i) -> i.get('uid')
       tools = @projects[@manager.get('project')]
         .defaults.join('-')
       @$el.html @template
-        type: @type
-        name: @name
-        project: @manager.get('project')
-        tools: tools
+        url: @dashboardUrl(@manager.get('project'), ids, @name)
       @collection.each (model) =>
         @$('.my-data-list').append @templateItem(model.toJSON())
     else
