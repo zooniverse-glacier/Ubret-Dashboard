@@ -47,7 +47,7 @@ class Router extends Backbone.Router
     Manger.set 'project', project
     @navigate('#/my_dashboards', {trigger: true})
 
-  loadObject: (project, objects, settingKeys, settingValues) =>
+  loadObjects: (project, objects) =>
     return unless @checkUser()
     Manager.set 'project', project
     name = "Dashboard with #{objects.slice(0,12)}"

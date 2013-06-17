@@ -88,19 +88,17 @@ class AppView extends BaseView
       tools: tools
 
   createDashboardFromZooids: (name, zooids) ->
-    params = [ {key: 'zoo_ids', val: zooid} ]
+    params = [ {key: 'zoo_ids', val: []} ]
 
     dataSource = 
       source_type: 'zooniverse'
       params: params
 
-    dataTool = @createToools(['zooniverse'], dataSource)
-
+    dataTool = @createTools(['Zooniverse'], dataSource)
     @dashboardModel = @createDashboard(name, dataTool)
     
-    @dashboardModel.save().done (response) =>
-      console.log response
-      id = response.tools[0].id
+    @dashboardModel.save('tools[0].data_source.params[0].val', zooids).done (response) =>
+      id = response.tools[0]._id
 
       dataSource = 
         source_type: 'internal'
