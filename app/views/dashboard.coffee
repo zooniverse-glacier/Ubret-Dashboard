@@ -30,7 +30,6 @@ class DashboardView extends BaseView
     @model.createTool type
 
   addTool: (tool) =>
-    console.log tool
     tool.createUbretTool()
     sources =  @manager.get('sources').config[@model.get('project')].sources
     if tool.get('tool_type') in sources

@@ -9,9 +9,15 @@ class DataSettings extends BaseView
     'change .internal .sources': 'onSelectInternalSource'
 
   initialize: ->
-    @model.collection.on 'add remove reset', @render
+    @model.collection.on 'tool-initialize remove', @render
 
-  render: =>
+  waitForSync: (tool) ->
+    tool.on 'sync', @render
+    tool.on 'sync', -> console.log 'synced'
+
+  render: (tool=null) =>
+    console.log arguments
+    tool?.off 'sync', @render
     opts = {}
     @updateValidSourceTools()
     opts.intSources = @intSources
@@ -30,7 +36,7 @@ class DataSettings extends BaseView
 
   updateValidSourceTools: =>
     @intSources = []
-    @model.collection.each (tool) =>
+    @model.collection?.each (tool) =>
       unless @model is tool 
         @intSources.push { name: tool.get('name'), id: tool.id }
 

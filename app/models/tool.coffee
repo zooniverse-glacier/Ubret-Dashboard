@@ -51,10 +51,12 @@ class Tool extends Backbone.AssociatedModel
         @get('settings').set config.defaults if config.defaults?
         @get('data_source').set config.data_source if config.data_source?
 
-      @on 'sync', =>
+      @once 'sync', =>
         @get('data_source').set 'tool_id', @id
+        @trigger 'tool-initialize'
     else
       @get('data_source').set 'tool_id', @id
+      @trigger 'tool-initialize'
 
   createUbretTool: =>
     sources = @manager.get('sources')
