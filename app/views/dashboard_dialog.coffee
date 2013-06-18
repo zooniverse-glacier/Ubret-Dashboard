@@ -30,7 +30,7 @@ class DashboardDialog extends BaseView
     project = @$('select#project_type').val()
     dashboard = @parent.createDashboard(name, [], project)
     dashboard.save().done =>
-      @parent.loadDashboard(dashboard.id)
+      @parent.dashboardModel = dashboard
       @parent.navigateToDashboard()
     @close()
 

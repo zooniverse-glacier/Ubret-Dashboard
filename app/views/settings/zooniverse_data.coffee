@@ -22,6 +22,7 @@ class ZooniverseDataSettings extends BaseView
   events:
     'click .sources ul a' : 'displaySource'
     'click button.import' : 'importData'
+    'click button.clear' : 'clearData'
     'change input[name="recent-count"]' : 'updateRecentCount'
     'change input[name="favorite-count"]' : 'updateFavCount'
 
@@ -84,5 +85,11 @@ class ZooniverseDataSettings extends BaseView
 
   updateFavCount: (e) =>
     @$('.favorite-count').text e.target.value
+
+  clear: =>
+    @model.updateFunc('data_source.params[0].val', [])
+
+  save: =>
+    #not implemented
 
 module.exports = ZooniverseDataSettings

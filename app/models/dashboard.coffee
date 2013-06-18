@@ -21,6 +21,7 @@ class Dashboard extends Backbone.AssociatedModel
     if Manager.get 'project' then @set 'project', Manager.get 'project'
     @once 'sync', => Manager.set 'dashboardId', @id
     @on 'add:tools', (tool) => tool.save()
+    @on 'layout', (layout) => @get('tools').arrangeWindows layout
     super
 
   createTool: (type) =>

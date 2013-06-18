@@ -8,6 +8,9 @@ class DataSettings extends BaseView
   events:
     'change .internal .sources': 'onSelectInternalSource'
 
+  initialize: ->
+    @model.collection.on 'add remove reset', @render
+
   render: =>
     opts = {}
     @updateValidSourceTools()

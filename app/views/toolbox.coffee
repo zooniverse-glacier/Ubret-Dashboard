@@ -6,17 +6,16 @@ class Toolbox extends BaseView
   tagName: 'div'
   className: 'toolbox'
   template: require './templates/toolbox'
+  layoutTemplate: require './templates/layout_drawer'
 
   events: 
     'click a.tool' : 'createTool'
+    'click a.layout' : 'setLayout'
     'click a.remove-tools' : 'removeTools' 
     'click a.drawer-toggle' : 'showDrawer'
     'dblclick .dashboard-name' : 'editName'
     'keypress input' : 'updateName'
     'blur input' : 'updateName'
-
-  subscriptions:
-    'dashboard:initialized': 'render'
 
   render: =>
     @getTools()
@@ -26,7 +25,17 @@ class Toolbox extends BaseView
       available_tools: @tools 
       available_sources: @sources
       name: @model?.get('name') or 'Untitled'
+    @renderLayouts()
     @
+
+  setModel: (model) =>
+    @model = model
+    @model.on 'add:tools remove:tools', @renderLayouts
+    @render()
+
+  renderLayouts: =>
+    @$('.layouts').html @layoutTemplate
+      toolsCount: @model?.get('tools').length or 0
 
   getTools: =>
     @tools = []
@@ -40,15 +49,20 @@ class Toolbox extends BaseView
 
   createTool: (e) =>
     e.preventDefault()
-    toolType = $(e.currentTarget).attr('name')
+    toolType = e.target.dataset.tool
     @trigger 'create', toolType
+
+  setLayout: (e) =>
+    e.preventDefault()
+    layout = e.target.dataset.layout
+    @model.trigger 'layout', layout
 
   removeTools: (e) =>
     e.preventDefault()
     @trigger 'remove-tools'
 
   editName: (e) =>
-    name = @$('.dashboard-name')
+    name = @$('.name')
     input = @$('input')
     name.hide()
     input.show()

@@ -73,7 +73,7 @@
   .active
     transform: translateY(38px)
 
-  ul.sources, ul.tools
+  ul.sources, ul.tools, ul.layouts
     list-style: none
     margin: 0
     padding: 0
@@ -94,6 +94,7 @@
     position: absolute
     top: 53px
     z-index: 997
+    width: 850px
 
     li
       padding-top: 3px
@@ -104,17 +105,21 @@
       text-align: center
       background: $light-gray
       transition: transform 0.5s ease-in-out
+      font-weight: 700
+
+      &.dashboard-name
+        float: right
+        border: none
+        background: none
+        padding: 5px
+        width: 400px
+        text-align: right
 
       a
         color: black
-        font-weight: 700
-
-  .dashboard-name
-    float: right
-
   input
     display: none
-    width: 200px
+    width: 300px
     float: right
     
 .index
