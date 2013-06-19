@@ -7,6 +7,7 @@ class Toolbox extends BaseView
   className: 'toolbox'
   template: require './templates/toolbox'
   layoutTemplate: require './templates/layout_drawer'
+  user: require('lib/user')
 
   events: 
     'click a.tool' : 'createTool'
@@ -17,7 +18,9 @@ class Toolbox extends BaseView
     'keypress input' : 'updateName'
     'blur input' : 'updateName'
 
+
   render: =>
+    return @ unless @user.current
     @getTools()
     @getSources()
 
