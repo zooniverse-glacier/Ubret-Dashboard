@@ -62,8 +62,7 @@ class ZooniverseDataSettings extends BaseView
     new @zooSubjects([], {type: 'collection', id: collection})
       .fetch().then (collection) =>
         zooIDs = _.map collection.subjects, (s) -> s.zooniverse_id
-        @model.updateFunc('data_source.params[0].val', 
-          _.uniq(zooIDs.concat(@model.get('data_source.params[0].val'))))
+        @model.updateFunc('data_source.params[0].val', @formatArray(zooIDs))
 
   import: (type) =>
     limit = @$("input[name=\"#{type}-count\"]").val()
@@ -72,13 +71,11 @@ class ZooniverseDataSettings extends BaseView
     new @zooSubjects([], {type: type, params: params})
       .fetch().then (subjects) =>
         zooIDs = _.map subjects, (s) => s.subjects[0].zooniverse_id
-        @model.updateFunc('data_source.params[0].val',
-          _.uniq(zooIDs.concat(@model.get('data_source.params[0].val'))))
+        @model.updateFunc('data_source.params[0].val', @formatArray(zooIDs))
 
   importIds: =>
     ids = @$('.zoo-ids').val().replace(/\s*/g, '').split(',')
-    @model.updateFunc('data_source.params[0].val',
-      _.uniq(ids.concat(@model.get('data_source.params[0].val'))))
+    @model.updateFunc('data_source.params[0].val', @formatArray(ids))
 
   updateRecentCount: (e) =>
     @$('.recent-count').text e.target.value
@@ -91,5 +88,8 @@ class ZooniverseDataSettings extends BaseView
 
   save: =>
     #not implemented
+    #
+  formatArray: (ids) =>
+    _(ids.concat(@model.get('data_source.params[0].val'))).chain().uniq().clone().compact().value()
 
 module.exports = ZooniverseDataSettings

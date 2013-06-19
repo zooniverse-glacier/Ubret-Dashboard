@@ -10,7 +10,7 @@ class ZooniverseSourceWindow extends Window
 
   initialize: ->
     super
-    @model.on 'change:data_source', @render
+    @model.on 'change:data_source.params[0].val', @render
 
   render: =>
     super
@@ -25,7 +25,7 @@ class ZooniverseSourceWindow extends Window
     if id in (@model.get('selected_uids') or [])
       @model.tool.selectIds id
     @model.updateFunc('data_source.params[0].val',
-      _.without(@model.get('data_source.params[0].val'), id))
+      _.clone(_.without(@model.get('data_source.params[0].val'), id)))
 
   selectId: (e) =>
     return if e.target.className is 'remove'

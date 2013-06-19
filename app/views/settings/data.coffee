@@ -11,13 +11,7 @@ class DataSettings extends BaseView
   initialize: ->
     @model.collection.on 'tool-initialize remove', @render
 
-  waitForSync: (tool) ->
-    tool.on 'sync', @render
-    tool.on 'sync', -> console.log 'synced'
-
   render: (tool=null) =>
-    console.log arguments
-    tool?.off 'sync', @render
     opts = {}
     @updateValidSourceTools()
     opts.intSources = @intSources

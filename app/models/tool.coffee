@@ -77,7 +77,7 @@ class Tool extends Backbone.AssociatedModel
       'settings': @assignSetting
 
     @on 
-      'change:data_source' : @updateData
+      'change:data_source.params[0].val' : @updateData
       'change:height' : => @tool.height(parseInt(@get('height')) - 25)
       'change:width' : => @tool.width(parseInt(@get('width')))
       'add:fql_statements' : @sendStatement
@@ -164,7 +164,9 @@ class Tool extends Backbone.AssociatedModel
       @tool.fields(statement.attributes)
 
   updateData: (force=false) =>
+    console.log arguments
     force = not(typeof force is 'object')
+    console.log @get('name'), @get('data_source.params[0]'), @tool, (not @get('data_source').isInternal()), @get('data_source').hasChanged(), force
     return unless (not @get('data_source').isInternal() and @get('data_source').hasChanged()) or force
     data = @get('data_source').data()
     data.fetch()
