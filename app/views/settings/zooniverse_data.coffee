@@ -83,7 +83,8 @@ class ZooniverseDataSettings extends BaseView
   updateFavCount: (e) =>
     @$('.favorite-count').text e.target.value
 
-  clear: =>
+  clearData: =>
+    @model.tool.selectIds([])
     @model.updateFunc('data_source.params[0].val', [])
 
   save: =>

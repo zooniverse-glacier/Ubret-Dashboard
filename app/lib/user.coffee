@@ -3,29 +3,24 @@ class User extends Backbone.Events
   @incomingLocation: "#/my_dashboards"
   @manager: require('modules/manager')
 
-  @login: ({username, password}) =>
-    url = "#{@manager.api()}/login?username=#{encodeURIComponent(username)}&password=#{encodeURIComponent(password)}&callback=?"
-    login = $.getJSON(url)
-    login.then @createUser, @networkError
+  @login: (cred) =>
+    login = zooniverse.models.User.login(cred).then @createUser, @networkError
     login
 
   @logout: =>
-    url = "#{@manager.api()}/logout?callback=?"
-    logout = $.getJSON(url)
+    logout = zooniverse.models.User.logout()
     logout.then => 
       User.current = null
       User.trigger 'sign-out'
     logout
 
   @currentUser: =>
-    url = "#{@manager.api()}/current_user?callback=?"
-    current = $.getJSON(url)
+    current = zooniverse.models.User.fetch()
     current.then @createUser, @networkError
     current
 
-  @signup: ({username, password, email}) =>
-    url = "#{@manager.api}/signup?username=#{username}&password=#{password}&email=#{email}&callback=?"
-    signup = $.getJSON(url)
+  @signup: (user) =>
+    signup = zooniverse.models.User.signup(user)
     signup.then @createUser, @networkError
     signup
 

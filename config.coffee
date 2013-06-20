@@ -14,6 +14,8 @@ exports.config =
           'vendor/scripts/backbone-mediator.js',
           'vendor/scripts/backbone-associations-0.4.2.js',
           'vendor/scripts/html5slider.js',
+          'vendor/scripts/base64.js',
+          'vendor/scripts/zooniverse-2013-6-20-14-35-16',
           'test/vendor/scripts/mocha-1.4.2.js',
           'test/vendor/scripts/chai.js',
           'test/vendor/scripts/sinon-1.5.2.js',

@@ -7,6 +7,7 @@ User = require 'lib/user'
 $(document).on 'ready', ->
   sources = new Sources()
   Manager.set 'sources', sources
+  new zooniverse.Api host: Manager.baseApi()
 
   User.currentUser().always =>
     router = new Router
