@@ -8,7 +8,8 @@ class Router extends Backbone.Router
     'dashboards/:project/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
-    'project/:project/:objects(/:name)' : 'loadObjects'
+    'project/:project/object/:objects(/:name)' : 'loadObjects'
+    'project/:project/collection/:collection(/:name)' : 'loadCollection'
   
   initialize: ->
     User.on 'sign-in', => 
@@ -51,6 +52,12 @@ class Router extends Backbone.Router
     return unless @checkUser()
     Manager.set 'project', project
     name = name or "Dashboard with #{objects.slice(0,12)}"
-    Backbone.Mediator.publish 'router:dashboardCreateFromZooids', name.replace('-', ' '), objects.split(',')
+    Backbone.Mediator.publish 'router:dashboardCreateFromZooids', name.replace('-', ' ', 'g'), objects.split(',')
+
+  loadCollection: (project, collection, name) =>
+    return unless @checkUser()
+    Manager.set 'project', project
+    name = name or "Dashboard from #{collection}"
+    Backbone.Mediator.publish 'router:dashboardCreateFromCollection', name.replace('-', ' ', 'g'), collection
 
 module.exports = Router

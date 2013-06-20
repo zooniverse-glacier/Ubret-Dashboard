@@ -11,6 +11,7 @@ ToolLoader = require 'modules/tool_loader'
 
 DashboardModel = require 'models/dashboard'
 Params = require 'collections/params'
+ZooniverseSubjects = require 'collections/zooniverse_subjects'
 
 Projects = require 'config/projects_config'
 
@@ -19,13 +20,14 @@ class AppView extends BaseView
   loadingTemplate: require 'views/templates/loading'
 
   subscriptions:
-    'dashboard:create'                  : 'createDashboardFromDialog'
-    'dashboard:fork'                    : 'forkDashboard'
-    'router:index'                      : 'index'
-    'router:dashboardCreateFromZooids'  : 'createDashboardFromZooids'
-    'router:dashboardRetrieve'          : 'loadDashboard'
-    'router:viewSavedDashboards'        : 'showSaved'
-    'router:myData'                     : 'showMyData'
+    'dashboard:create' : 'createDashboardFromDialog'
+    'dashboard:fork' : 'forkDashboard'
+    'router:index' : 'index'
+    'router:dashboardCreateFromCollection' : 'createDashboardFromCollection'
+    'router:dashboardCreateFromZooids' : 'createDashboardFromZooids'
+    'router:dashboardRetrieve' : 'loadDashboard'
+    'router:viewSavedDashboards' : 'showSaved'
+    'router:myData' : 'showMyData'
 
   initialize: ->
     @$el.html @template()
@@ -109,6 +111,12 @@ class AppView extends BaseView
       @dashboardModel.get('tools').set tools
       @dashboardModel.save().done =>
         @navigateToDashboard()
+
+  createDashboardFromCollection: (name, collection) =>
+    new ZooniverseSubjects([], {type: 'collection', id: collection})
+      .fetch().then((collection) =>
+        zooIDs = _.map collection.subjects, (s) -> s.zooniverse_id
+        @createDashboardFromZooids(name, zooIDs))
 
   loadDashboard: (id) =>
     @$('.main-focus').html @loadingTemplate()
