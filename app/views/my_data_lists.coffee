@@ -29,7 +29,7 @@ class MyDataLists extends BaseView
     @collection.fetch().then @render
 
   dashboardUrl: (project, ids, name) =>
-    "#/project/#{project}/#{ids.join(',')}/Dashboard-from-#{name}"
+    "#/project/#{project}/objects/#{ids.join(',')}/Dashboard-from-#{name}"
 
   render: =>
     if not _.isUndefined @collection

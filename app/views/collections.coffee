@@ -14,17 +14,16 @@ class Collections extends Backbone.View
   reset: =>
     @collection.reset()
 
-  dashboardUrl: (ids, title) =>
-    "#/project/#{@manager.get('project')}/#{ids.join(',')}/Dashboard-from-#{title}"
+  dashboardUrl: (id, title) =>
+    "#/project/#{@manager.get('project')}/collection/#{id}/Dashboard-from-#{title}"
 
   render: =>
     @$el.html @template()
     for model in @collection.formatModels()
-      ids = _.map model.get('subjects'), (s) -> s.zooniverse_id
       @$('.my-data-list').append @itemTemplate
         image: model.get('images')[0]
         title: model.get('title')
-        url: @dashboardUrl(ids, model.get('title'))
+        url: @dashboardUrl(model.get('zooniverse_id'), model.get('title'))
     @
 
 module.exports = Collections
