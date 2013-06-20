@@ -34,6 +34,13 @@ class ZooniverseSubjectCollection extends Backbone.Collection
           .map(@[@manager.get('project')]).value()
       else
         _([response]).map(@[@manager.get('project')])
+    else if _.isArray(response)
+      _.map response, (s) -> 
+        if s.zooniverse_id
+          s.uid = s.zooniverse_id
+        else
+          s.uid = s.subjects[0].zooniverse_id
+        s
     else
       response
 

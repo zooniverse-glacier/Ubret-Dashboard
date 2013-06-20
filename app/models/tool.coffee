@@ -150,7 +150,8 @@ class Tool extends Backbone.AssociatedModel
       ''
 
   selectElements: (ids) =>
-    if _.difference(@get('selected_uids'), ids).length
+    if ((_.difference((@get('selected_uids') or []), ids).length) or 
+        (_.difference(ids, (@get('selected_uids') or [])).length))
       @updateFunc 'selected_uids', ids
 
   assignSetting: (setting) =>

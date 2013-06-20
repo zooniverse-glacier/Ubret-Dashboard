@@ -8,7 +8,7 @@ class Router extends Backbone.Router
     'dashboards/:project/:id': 'retrieveDashboard'
     'my_data' : 'myData'
     'project/:project': 'loadProject'
-    'project/:project/object/:objects(/:name)' : 'loadObjects'
+    'project/:project/objects/:objects(/:name)' : 'loadObjects'
     'project/:project/collection/:collection(/:name)' : 'loadCollection'
   
   initialize: ->
