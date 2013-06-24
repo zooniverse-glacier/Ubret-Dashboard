@@ -26,6 +26,7 @@ class DataSource extends Backbone.AssociatedModel
       throw new Error('unknown source type')
 
   isExternal: =>
+    console.log @get('source_type')
     @get('source_type') is 'external'
 
   isZooniverse: =>

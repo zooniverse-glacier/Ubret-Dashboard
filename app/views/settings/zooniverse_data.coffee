@@ -34,6 +34,7 @@ class ZooniverseDataSettings extends BaseView
 
   displaySource: (e) =>
     e.preventDefault()
+    @$('button.import').removeAttr 'disabled'
     @activeDiv.removeClass('active') if @activeDiv
     @activeTarget = e.target.dataset.target
     @activeDiv = @$(".#{@activeTarget}").addClass('active')

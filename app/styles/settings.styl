@@ -108,49 +108,6 @@
       padding: 5px 10px
       width: 100%
 
-    .range
-      $range-base = 10px
-      .value
-        position: absolute
-        bottom: $range-base + 6
-        width: 100%
-        font-size: 0.9em
-        text-align: center
-        text-shadow: 0 1px 1px $black
-
-      .track
-        position: relative
-        height: 30px
-        &:after
-          border-bottom: 1px solid $gray-less-dark
-          border-top: 1px solid $black
-          content: ''
-          bottom: $range-base
-          position: absolute
-          width: 175px
-        span
-          background: $blue
-          border: 1px solid $black
-          border-radius: 10px
-          bottom: $range-base - 4
-          box-shadow: 0 1px 2px darken($gray-dark, 20%)
-          cursor: pointer
-          height: 8px
-          width: 8px
-          position: absolute
-          z-index: 1
-        .min, .max
-          bottom: $range-base + 9
-          color: $black
-          font-size: 0.8em
-          position: absolute
-          text-shadow: 0 1px 1px $gray-less-dark
-          z-index: 1
-        .min
-          left: 0
-        .max
-          right: 0
-
   .fql-cheatsheet
     display: none
     font-weight: 400

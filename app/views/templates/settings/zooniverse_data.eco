@@ -42,8 +42,8 @@
     </label>
   </div>
   <div class="controls">
-    <button data-selected="" type="button" class="import">Import</button>
+    <button disabled="disabled" data-selected="" type="button" class="import">Import</button>
     <button type="button" class="clear">Clear</button>
-    <button type="button" class="save">Save</button>
+    <button disabled="disabled" type="button" class="save">Save</button>
   </div>
 </div>

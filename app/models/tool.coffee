@@ -144,6 +144,8 @@ class Tool extends Backbone.AssociatedModel
   sourceName: =>
     if @get('data_source').isExternal()
       @manager.get('sources').get(@get('data_source.source_id')).name
+    else if @get('data_source').isZooniverse()
+      "Zooniverse"
     else if @get('data_source').isInternal()
       @sourceTool()?.get('name')
     else
@@ -167,6 +169,7 @@ class Tool extends Backbone.AssociatedModel
   updateData: (force=false) =>
     force = not(typeof force is 'object')
     return unless (not @get('data_source').isInternal() and @get('data_source').hasChanged()) or force
+    return if @get('data_source.params').isEmpty()
     data = @get('data_source').data()
     data.fetch()
       .done(=> @tool.data(data.toJSON()))
