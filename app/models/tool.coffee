@@ -34,6 +34,13 @@ class Tool extends Backbone.AssociatedModel
     settings_active: true
     width: 640
 
+  parse: (response) ->
+    if response.fql_statements is null
+      response.fql_statements = []
+    if response.selected_uids is null
+      response.selected_uids = []
+    response
+
   initialize: ->
     unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
 
