@@ -33,6 +33,8 @@ class WindowTitleBar extends BaseView
     @$el.html @template
       link: @model.sourceName()
       name: @model.get('name')
+      editing: @editing
+    @$('input').focus().select() if @editing
     @
 
   minimize: =>
@@ -49,11 +51,13 @@ class WindowTitleBar extends BaseView
 
   editTitle: (e) =>
     e.preventDefault() 
-    @$('.window-title').hide()
-    @$('input').show().focus().select()
+    @editing = true
+    @$('.window-title').addClass('hidden')
+    @$('input').addClass('active').focus().select()
 
   updateModel: (e) =>
     if e.type is 'focusout' or e.which is 13
+      @editing = false
       input = @$('input')
       newTitle = input.val()
       if newTitle is @model.get('name')

@@ -1,6 +1,6 @@
 <span class="window-min"></span>
 <span class="window-close"></span>
-<span class="window-title">
+<span class="window-title <% if @editing: %> editing <% end %>">
   <%- @name %>
 </span>
 
@@ -13,4 +13,4 @@
 <span class="loading">Loading <span class="window-loading"></span></span>
 <span class="loading-error">Error Loading Tool Data</span>
 
-<input type="text" name="window-title" value="<%- @name %>">
+<input <%- if @editing: %>class="editing"<% end %> type="text" name="window-title" value="<%- @name %>">

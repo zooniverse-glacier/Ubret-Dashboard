@@ -21,7 +21,6 @@ class Tools extends Backbone.Collection
       tool.updateFunc({zindex: maxZindexTool.get('zindex') + 1})
 
   arrangeWindows: (layout) =>
-    console.log layout
     @width = window.innerWidth
     @height = window.innerHeight - (@footer + @header)
     switch layout

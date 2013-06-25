@@ -25,6 +25,7 @@ class MyData extends BaseView
 
   render: =>
     @$el.html @template()
+    @$('.my-data-page').height window.innerHeight - 200
     @assign
       ".recents": @recents
       ".favorites": @favorites

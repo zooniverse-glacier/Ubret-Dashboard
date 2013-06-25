@@ -55,6 +55,9 @@ $title-bar-height = 25px
         &.window-title
           padding: 0 5px
 
+          &.editing
+            display: none
+
         &.link
           background: url(../images/link.png) no-repeat 2px 
           color: $blue
@@ -76,6 +79,9 @@ $title-bar-height = 25px
 
       input
         display: none
+
+        &.editing
+          display: block
       
   .container
     position: absolute

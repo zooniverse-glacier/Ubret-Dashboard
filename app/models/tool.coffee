@@ -78,7 +78,7 @@ class Tool extends Backbone.AssociatedModel
 
     @on 
       'change:data_source.params[0].val' : @updateData
-      'change:height' : => @tool.height(parseInt(@get('height')) - 25)
+      'change:height' : => console.log "here"; @tool.height(parseInt(@get('height')) - 25)
       'change:width' : => @tool.width(parseInt(@get('width')))
       'add:fql_statements' : @sendStatement
     @trigger 'ubret-created', @tool
