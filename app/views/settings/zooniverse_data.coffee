@@ -90,7 +90,7 @@ class ZooniverseDataSettings extends BaseView
 
   save: =>
     #not implemented
-    #
+
   formatArray: (ids) =>
     _(ids.concat(@model.get('data_source.params[0].val'))).chain().uniq().clone().compact().value()
 

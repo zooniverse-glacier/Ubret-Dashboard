@@ -6,26 +6,31 @@ class DataSourceWindow extends Window
   manager: require 'modules/manager'
   sourceTemplate: require './templates/data_source_window'
 
+  events:
+    'change select.search_types' : 'setSearchType'
+    'click .load' : 'importData'
+
   initialize: ->
     super
-    @setParams()
     @paramsView = new ParamsView 
       collection: @model.get('data_source.params')
-    @model.on 'change:data_source.search_type', @setParams
-    @model.on 'change:data_source.search_type', @render()
+    @model.on 'change:data_source.search_type', @render
 
   setParams: =>
     if @model.get('data_source.search_type')?
       @model.get('data_source.params').reset()
       params = @searchTypes()[@model.get('data_source.search_type')].params
-      console.log @searchTypes()['area']
       for key, value of params
         @model.get('data_source.params').add _.extend({key: key}, value) 
+
+  setSearchType: =>
+    search = @$('select.search_types option:selected').val()
+    @model.updateFunc('data_source.search_type', search)
+    @setParams()
 
   render: =>
     super
     @paramsView.collection = @model.get('data_source.params')
-    console.log @model.get('data_source.params')
     @$('.container').html @sourceTemplate
       source: @model.get('tool_type')
       search_type: @model.get('data_source.search_type')
@@ -38,6 +43,10 @@ class DataSourceWindow extends Window
   searchTypes: =>
     @manager.get('sources')
       .get(@model.get('data_source.source_id')).search_types
+
+  importData: =>
+    @model.updateFunc 'data_source.params', @paramsView.setState()
+    @model.updateData(true)
 
 
 module.exports = DataSourceWindow

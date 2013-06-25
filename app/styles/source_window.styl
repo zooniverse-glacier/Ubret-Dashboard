@@ -1,4 +1,11 @@
-.zooniverse-window
+.zooniverse-window, .data-source-window
+
+  button
+    border-radius: 3px 
+    margin-top: 5px
+    width: 85px
+    @extends #bold-button
+
   .container
     height: inherit 
     overflow: hidden 
@@ -59,13 +66,6 @@
 
       h5
         margin: 5px 0 5px 0
-
-      button
-        border-radius: 3px 
-        margin-top: 5px
-        width: 85px
-        @extends #bold-button
-
       .controls
         display: block
 
@@ -90,3 +90,25 @@
       .active
         display: block
 
+.data-source-window
+  .options
+    padding: 10px
+    .params
+      > div
+        padding: 5px 0
+
+      .value
+        float: right
+
+    label
+      line-height: 2.2em
+
+    select
+      border: 0
+      width: 200px
+      background: $white
+      border-radius: 0
+      box-sizing: border-box
+      font-weight: 700
+      margin: 0
+      padding: 5px 10px

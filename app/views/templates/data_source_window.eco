@@ -1,11 +1,13 @@
 <h3><%- @source %></h3>
-<label>Search Types: 
-  <select class="search_types">
-    <% for search, options of @search_types: %>
-      <option value="<%- search %>" <% if search is @search_type: %> selected <% end %>><%- options.name %></option>
-    <% end %>
-  </select>
-</label>
-
-<div class="params"></div>
-<button type="botton" class="action load">Load Data</button>
+<div class="options">
+  <label>Search Types: 
+    <select class="search_types">
+        <option value="">Select Search Type</option>
+      <% for search, options of @search_types: %>
+        <option value="<%- search %>" <% if search is @search_type: %> selected <% end %>><%- options.name %></option>
+      <% end %>
+    </select>
+  </label>
+  <div class="params"></div>
+  <button type="button" class="action load">Load Data</button>
+</div>
