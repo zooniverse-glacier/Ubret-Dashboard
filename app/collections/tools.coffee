@@ -54,6 +54,7 @@ class Tools extends Backbone.Collection
     @fullWindow(@index, direction)
     @halfWindow(secondIndex, halfSide, 'top')
     @halfWindow(thirdIndex, halfSide, 'bottom')
+    @focus(@at(@index))
 
   fourUp: =>
     secondIndex = @incrementIndex(@index)
@@ -63,26 +64,25 @@ class Tools extends Backbone.Collection
     @halfWindow(@index, 'left', 'bottom')
     @halfWindow(@index, 'right', 'top')
     @halfWindow(@index, 'right', 'bottom')
+    @focus(@at(@index))
  
   fullWindow: (index, side) =>
     tool = @at(index)
     return unless tool?
-    tool.set
+    tool.updateFunc
       top: @header
       left: if side is 'left' then 0 else @width / 2
       height: @height
       width: @width / 2
-    @focus(tool)
    
   halfWindow: (index, side, vertical) =>
     tool = @at(index)
     return unless tool?
-    tool.set
+    tool.updateFunc
       top: if vertical is 'top' then @header else @header + (@height / 2)
       left: if side is 'left' then 0 else @width / 2
       height: @height / 2
       width: @width / 2
-    @focus(tool)
       
   incrementIndex: (index) =>
     index += 1

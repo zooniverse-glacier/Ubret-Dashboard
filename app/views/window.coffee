@@ -72,7 +72,7 @@ class Window extends BaseView
       left: @model.get('left')
 
   setSize: =>
-    @$('.tool-container').height(parseInt(@model.get('height')) - 25)
+    @$('.container').height(parseInt(@model.get('height')) - 25)
     @$el.css
       width: @model.get('width')
       height: @model.get('height')
