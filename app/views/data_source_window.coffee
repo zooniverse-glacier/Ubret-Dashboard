@@ -14,7 +14,7 @@ class DataSourceWindow extends Window
     super
     @paramsView = new ParamsView 
       collection: @model.get('data_source.params')
-    @model.on 'change:data_source.search_type', @render
+    @model.on 'add:data_source.params', @render
 
   setParams: =>
     if @model.get('data_source.search_type')?

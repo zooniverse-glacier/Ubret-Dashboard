@@ -68,4 +68,4 @@ module.exports =
     data_source: {source_type: "zooniverse", params: [{key: 'zoo_ids', val: []}]}
   "Sky Server" :
     settings: []
-    data_source: {source_type: "external", source_id: "sky_server", search_type: "area"}
+    data_source: {source_type: "external", source_id: "sky_server"}
