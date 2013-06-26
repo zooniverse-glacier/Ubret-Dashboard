@@ -112,7 +112,7 @@ class Tool extends Backbone.AssociatedModel
       left: x
 
   setupUbretTool: =>
-    if @get('data_source').isInternal()
+    if @get('data_source').isInternal() and @get('data_source.source_id')?
       if @sourceTool().tool?
         @tool.parentTool(@sourceTool().tool) 
       else
@@ -137,6 +137,8 @@ class Tool extends Backbone.AssociatedModel
 
   sourceTool: =>
     if @get('data_source').isInternal()
+      console.log @collection.get(@get('data_source.source_id'))
+      console.trace()
       @collection.get(@get('data_source.source_id'))
     else
       false
