@@ -4,6 +4,8 @@
   <input type='radio' name='band' data-band='gri' id='gri-<%- @cid %>' />
   <label for='gri-<%- @cid %>' data-band='gri'>color</label>
   
+  <span class='reset'>reset color</span>
+  
   <br/><br/>
   
   <input type='radio' name='band' data-band='u' id='u-<%- @cid %>' />
