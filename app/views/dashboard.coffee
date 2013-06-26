@@ -7,7 +7,9 @@ class DashboardView extends BaseView
   zooniverseWindow: require 'views/zooniverse_source_window'
   dataSourceWindow: require 'views/data_source_window'
   manager: require 'modules/manager'
+  user: require 'lib/user'
   template: require './templates/layout/dashboard'
+  tutorials: require 'tutorials'
 
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
@@ -52,9 +54,20 @@ class DashboardView extends BaseView
   removeTools: =>
     @model.get('tools').each (tool) -> tool.destroy()
 
+  endTutorial: =>
+    @user.current.finishTutorial()
+
+  startTutorial: =>
+    console.log @tutorials
+    tutorial = @tutorials[@manager.get('project')]
+    tutorial.el.bind('end-tutorial', @endTutorial)
+    tutorial.start()
+
   onDashboardInit: (@model) =>
     @toolboxView.setModel(@model)
     @render()
+    if @model.get('name') is 'Tutorial'
+      @startTutorial()
     @model.on
       'add:tools': @addTool
       'reset:tools': @removeTools

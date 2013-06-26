@@ -9,8 +9,8 @@
         <ul>
           <% if @user.current?: %>
             <li><a class="current" href="<%- @dashURL %>">Current Dashboard</a></li>
-            <li><a class="my-dashboards" href="/#/my_dashboards">Dashboards</a></li>
-            <li><a class="my-data" href="/#/my_data">Data</a></li>
+            <li><a class="my-dashboards" href="/#/dashboards/<%- @manager.get('project') %>">Dashboards</a></li>
+            <li><a class="my-data" href="/#/data/<%- @manager.get('project') %>">Data</a></li>
           <% end %>
         </ul>
       </nav>

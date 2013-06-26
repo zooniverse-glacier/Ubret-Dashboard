@@ -2,6 +2,7 @@ BaseView = require 'views/base_view'
 
 class AppHeader extends BaseView
   user: require 'lib/user'
+  manager: require 'modules/manager'
   loginBar: require 'views/login'
   projectSwitch: require 'views/project_switch'
 

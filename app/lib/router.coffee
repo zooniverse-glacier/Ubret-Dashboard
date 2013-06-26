@@ -4,9 +4,9 @@ Manager = require('modules/manager')
 class Router extends Backbone.Router
   routes:
     '': 'index'
-    'my_dashboards': 'savedDashboards'
+    'dashboards/:project': 'savedDashboards'
     'dashboards/:project/:id': 'retrieveDashboard'
-    'my_data' : 'myData'
+    'data/:project' : 'myData'
     'project/:project': 'loadProject'
     'project/:project/objects/:objects(/:name)' : 'loadObjects'
     'project/:project/collection/:collection(/:name)' : 'loadCollection'
@@ -35,12 +35,14 @@ class Router extends Backbone.Router
     Manager.set('project', project)
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
-  myData: ->
+  myData: (project) ->
     return unless @checkUser()
+    Manager.set('project', project)
     Backbone.Mediator.publish 'router:myData'
 
-  savedDashboards: =>
+  savedDashboards: (project) =>
     return unless @checkUser()
+    Manager.set('project', project)
     Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->

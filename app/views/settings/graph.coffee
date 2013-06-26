@@ -13,7 +13,6 @@ class GraphSettings extends BaseView
     @model.tool.on 'keys', @setKeys
 
   render: =>
-    console.trace()
     @$el.html @template
       keys: @keys 
       type: @model.get('tool_type')

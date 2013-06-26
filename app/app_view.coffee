@@ -131,6 +131,10 @@ class AppView extends BaseView
     @render()
 
   createDashboardView: =>
+    unless User.current.preferences(@dashboardModel.get('project_id'))?.tutorial and @dashboardModel.get('name') is 'Tutorial'
+      console.log User.current.preferences(@dashboardModel.get('project_id'))?.tutorial 
+      console.log @dashboardModel.get('name') is 'Tutorial'
+      @startTutorial()
     @switchView(@dashboardView)
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
 
@@ -149,5 +153,10 @@ class AppView extends BaseView
   navigateToDashboard: (trigger=true) =>
     url = "#/dashboards/#{Manager.get('project')}/#{@dashboardModel.id}"
     Manager.get('router').navigate url, {trigger: trigger}
+
+  startTutorial: =>
+    @dashboardModel = @createDashboard('Tutorial', [], null)
+    @dashboardModel.save().then =>
+      @navigateToDashboard()
 
 module.exports = AppView

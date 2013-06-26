@@ -37,42 +37,47 @@ class User extends Backbone.Events
     User.trigger 'sign-in-error', "Network Error"
 
   manager: require 'modules/manager'
-
   constructor: (options) ->
     _.extend @, Backbone.Events
     @name = options.name
+    @prefs = options.preferences
     @id = options.id
     @apiToken = options.api_key
     @dashboards = new Backbone.Collection
     TalkCollection = require('collections/talk_collections')
     @collections = new TalkCollection([], {user: @name})
+    @ajaxOpts = 
+      crossDomain: true
+      dataType: 'json'
+      contentType: 'application/json; charset=UTF-8'
+      beforeSend: (xhr) =>
+        xhr.setRequestHeader 'Authorization', @basicAuth()
 
   getDashboards: =>
     url = "#{User.manager.api()}/dashboards"
-    $.ajax 
-      url: url
-      type: 'GET'
-      crossDomain: true
-      contentType: 'application/json'
-      dataType: 'json'
-      beforeSend: (xhr) =>
-        xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{@name}:#{@apiToken}")}"
-      success: (response) =>
-        @dashboards.reset response
-        @trigger 'loaded-dashboards'
+    opts = _.extend {url: url, type: 'GET'}, @ajaxOpts
+    $.ajax(opts).then (response) =>
+      @dashboards.reset response
+      @trigger 'loaded-dashboards'
 
   removeDashboard: (id, cb) =>
     url = "#{User.manager.api()}/dashboards/#{id}"
-    $.ajax 
+    opts = _.extend {url: url, type: 'DELETE', cache: false}, @ajaxOpts
+    $.ajax(opts).then (response) => cb response
+
+  finishTutorial: =>
+    url = @manager.api() + "/users/preferences"
+    opts = 
       url: url
-      type: 'DELETE'
-      crossDomain: true
-      cache: false
-      beforeSend: (xhr) =>
-        xhr.setRequestHeader 'Authorization', "Basic #{btoa("#{@name}:#{@apiToken}")}"
-      success: (response) => cb response
+      type: 'PUT'
+      data: JSON.stringify({key: "dashboard.tutorial", value: true})
+    opts = _.extend(opts, @ajaxOpts)
+    $.ajax(opts).then (response) => console.log response
 
   basicAuth: =>
-    "Basic #{btoa("#{@name}:#{@apiToken}")}"
+    "Basic " + btoa(@name + ":" + @apiToken)
+
+  preferences: (projectID) =>
+    @prefs[projectID]?.dashboard
 
 module.exports = User
