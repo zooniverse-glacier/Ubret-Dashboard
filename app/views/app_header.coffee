@@ -4,6 +4,7 @@ class AppHeader extends BaseView
   user: require 'lib/user'
   loginBar: require 'views/login'
   projectSwitch: require 'views/project_switch'
+  manager: require 'modules/manager'
 
   template: require './templates/layout/header'
 

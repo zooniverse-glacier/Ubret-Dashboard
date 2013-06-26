@@ -4,9 +4,9 @@ Manager = require('modules/manager')
 class Router extends Backbone.Router
   routes:
     '': 'index'
-    'my_dashboards': 'savedDashboards'
+    'dashboards/:project': 'savedDashboards'
     'dashboards/:project/:id': 'retrieveDashboard'
-    'my_data' : 'myData'
+    'data/:project' : 'myData'
     'project/:project': 'loadProject'
     'project/:project/objects/:objects(/:name)' : 'loadObjects'
     'project/:project/collection/:collection(/:name)' : 'loadCollection'
@@ -28,25 +28,27 @@ class Router extends Backbone.Router
     unless User.current?
       Backbone.Mediator.publish 'router:index'
     else
-      @navigate("#/my_dashboards", {trigger: true})
+      @navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   retrieveDashboard: (project, id) =>
     @checkUser(false)
     Manager.set('project', project)
     Backbone.Mediator.publish 'router:dashboardRetrieve', id
 
-  myData: ->
+  myData: (project) ->
     return unless @checkUser()
+    Manager.set('project', project)
     Backbone.Mediator.publish 'router:myData'
 
-  savedDashboards: =>
+  savedDashboards: (project) =>
     return unless @checkUser()
+    Manager.set('project', project)
     Backbone.Mediator.publish 'router:viewSavedDashboards'
 
   loadProject: (project) ->
     return unless @checkUser()
     Manger.set 'project', project
-    @navigate('#/my_dashboards', {trigger: true})
+    @navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   loadObjects: (project, objects, name) =>
     return unless @checkUser()

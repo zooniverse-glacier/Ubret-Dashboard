@@ -56,7 +56,7 @@ class AppView extends BaseView
   projectChange: =>
     User.current.getDashboards()
     if @appFocusView is @dashboardView
-      Manager.get('router').navigate("#/my_dashboards", {trigger: true})
+      Manager.get('router').navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
     else
       @appFocusView.render()
 
