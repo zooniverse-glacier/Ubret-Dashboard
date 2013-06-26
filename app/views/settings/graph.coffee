@@ -13,16 +13,18 @@ class GraphSettings extends BaseView
     @model.tool.on 'keys', @setKeys
 
   render: =>
+    console.trace()
     @$el.html @template
       keys: @keys 
       type: @model.get('tool_type')
-      axis1: @model.get('settings').get('axis1')
-      axis2: @model.get('settings').get('axis2')
+      axis1: @model.get('settings.axis1')
+      axis2: @model.get('settings.axis2')
     @
 
   setKeys: (keys) =>
-    @keys = keys
-    @render()
+    if _.difference(keys, @keys).length or _.difference(@keys, keys).length
+      @keys = keys
+      @render()
 
   # Events
   onChangeAxis: (e) =>
