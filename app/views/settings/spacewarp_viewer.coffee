@@ -33,10 +33,15 @@ class SpacewarpViewerSettings extends BaseView
       inputs = @$el.find('input[type="range"]')
       inputs.filter("[name='alpha']").val(opts.alpha) if opts.alpha?
       inputs.filter("[name='q']").val(opts.q) if opts.q?
+      
       if opts.scales?
         inputs.filter("[name='i']").val(opts.scales[0])
         inputs.filter("[name='r']").val(opts.scales[1])
         inputs.filter("[name='g']").val(opts.scales[2])
+      else
+        inputs.filter("[name='i']").val(0.4)
+        inputs.filter("[name='r']").val(0.6)
+        inputs.filter("[name='g']").val(1.7)
       
       inputs.filter("[name='min']").val(opts.sliderMin or 0)
       inputs.filter("[name='max']").val(opts.sliderMax or 1000)
