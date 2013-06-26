@@ -35,9 +35,9 @@ class Tool extends Backbone.AssociatedModel
     width: 640
 
   parse: (response) ->
-    if response.fql_statements is null
+    if response?.fql_statements is null
       response.fql_statements = []
-    if response.selected_uids is null
+    if response?.selected_uids is null
       response.selected_uids = []
     response
 

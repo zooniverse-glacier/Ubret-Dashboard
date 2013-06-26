@@ -12,6 +12,7 @@ class DataSource extends Backbone.AssociatedModel
 
   defaults:
     params: []
+    source_type: 'internal'
 
   idAttribute: "tool_id"
 
