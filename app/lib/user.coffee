@@ -1,6 +1,6 @@
 class User extends Backbone.Events
   @current: null
-  @incomingLocation: "#/my_dashboards"
+  @incomingLocation: "#/dashboards/galaxy_zoo"
   @manager: require('modules/manager')
 
   @login: (cred) =>

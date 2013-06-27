@@ -28,7 +28,7 @@ class Router extends Backbone.Router
     unless User.current?
       Backbone.Mediator.publish 'router:index'
     else
-      @navigate("#/my_dashboards", {trigger: true})
+      @navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   retrieveDashboard: (project, id) =>
     @checkUser(false)
@@ -48,7 +48,7 @@ class Router extends Backbone.Router
   loadProject: (project) ->
     return unless @checkUser()
     Manger.set 'project', project
-    @navigate('#/my_dashboards', {trigger: true})
+    @navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   loadObjects: (project, objects, name) =>
     return unless @checkUser()
