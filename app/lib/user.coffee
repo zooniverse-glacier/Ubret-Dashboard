@@ -78,6 +78,9 @@ class User extends Backbone.Events
     "Basic " + btoa(@name + ":" + @apiToken)
 
   preferences: (projectID) =>
-    @prefs[projectID]?.dashboard
+    if @prefs?
+      @prefs[projectID]?.dashboard
+    else
+      undefined
 
 module.exports = User

@@ -129,8 +129,6 @@ class AppView extends BaseView
 
   createDashboardView: =>
     unless User.current.preferences(@dashboardModel.get('project_id'))?.tutorial? or @dashboardModel.get('name') is 'Tutorial'
-      console.log User.current.preferences(@dashboardModel.get('project_id'))?.tutorial?
-      console.log @dashboardModel.get('name') is 'Tutorial'
       @startTutorial()
     @switchView(@dashboardView)
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
