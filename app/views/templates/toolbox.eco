@@ -1,38 +1,40 @@
 <div class="container">
-  <div class="drawer tool-drawer">
-    <ul class="tools">
-    <% for tool in @available_tools: %>
-      <li>
-        <a href="#" class="tool" data-tool="<%- tool.class_name %>">
-          <%- tool.name %>
-        </a>
-      </li>
-    <% end %>
+  <div class="drawers">
+    <div class="drawer tool-drawer">
+      <ul class="tools">
+      <% for tool in @available_tools: %>
+        <li>
+          <a href="#" class="tool" data-tool="<%- tool.class_name %>">
+            <%- tool.name %>
+          </a>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="drawer data-drawer">
+      <ul class="sources">
+      <% for source in @available_sources: %>
+        <li>
+          <a href="#" class="tool" data-tool="<%- source.name %>">
+            <%- source.name %>
+          </a>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="drawer layout-drawer">
+      <ul class="layouts">
+      </ul>
+    </div>
+
+    <ul class="interactions">
+      <li><a data-drawer="tool" class="drawer-toggle" href="#">Tools</a></li>
+      <li><a data-drawer="data" class="drawer-toggle" href="#">Data</a></li>
+      <li><a data-drawer="layout" class="drawer-toggle" href="#">Layout</a></li>
+      <li><a class="remove-tools" href="#">Clear</a></li>
+      <li class="dashboard-name"><span class="name"><%- @name %></span><input type="text" value="<%- @name %>" /></li> 
     </ul>
   </div>
-
-  <div class="drawer data-drawer">
-    <ul class="sources">
-    <% for source in @available_sources: %>
-      <li>
-        <a href="#" class="tool" data-tool="<%- source.name %>">
-          <%- source.name %>
-        </a>
-      </li>
-    <% end %>
-    </ul>
-  </div>
-
-  <div class="drawer layout-drawer">
-    <ul class="layouts">
-    </ul>
-  </div>
-
-  <ul class="interactions">
-    <li><a data-drawer="tool" class="drawer-toggle" href="#">Tools</a></li>
-    <li><a data-drawer="data" class="drawer-toggle" href="#">Data</a></li>
-    <li><a data-drawer="layout" class="drawer-toggle" href="#">Layout</a></li>
-    <li><a class="remove-tools" href="#">Clear</a></li>
-    <li class="dashboard-name"><span class="name"><%- @name %></span><input type="text" value="<%- @name %>" /></li> 
-  </ul>
 </div>

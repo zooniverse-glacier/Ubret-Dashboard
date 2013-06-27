@@ -14,10 +14,10 @@ class Toolbox extends BaseView
     'click a.layout' : 'setLayout'
     'click a.remove-tools' : 'removeTools' 
     'click a.drawer-toggle' : 'showDrawer'
+    'click ul.interactions' : 'showDrawers'
     'dblclick .dashboard-name' : 'editName'
     'keypress input' : 'updateName'
     'blur input' : 'updateName'
-
 
   render: =>
     return @ unless @user.current
@@ -86,8 +86,20 @@ class Toolbox extends BaseView
 
   showDrawer: (e) =>
     e.preventDefault()
-    targetDrawer = ".#{e.target.dataset.drawer}-drawer"
-    @$(e.target).parent().toggleClass 'active'
-    @$(targetDrawer).toggleClass 'active'
+    targetDrawer = @$(".#{e.target.dataset.drawer}-drawer")
+    drawers = @$('.drawers')
+    target = @$(e.target).parent()
+    if target.hasClass 'active'
+      console.log 'here'
+      drawers.removeClass('active')
+        .children().removeClass('active')
+      target.removeClass('active')
+    else if drawers.hasClass 'active'
+      @$('.drawer').removeClass 'active'
+      targetDrawer.addClass 'active'
+      target.addClass('active')
+        .siblings().removeClass('active')
+    else
+      _.each [drawers, targetDrawer, target], (t) => t.addClass 'active'
 
 module.exports = Toolbox
