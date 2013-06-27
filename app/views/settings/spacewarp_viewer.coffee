@@ -52,7 +52,10 @@ class SpacewarpViewerSettings extends BaseView
       cid: @cid 
       alpha: @model.get('settings.alpha')
       q: @model.get('settings.q')
-      
+    
+    @qEl      = @$("input[name='q']")
+    @alphaEl  = @$("input[name='alpha']")
+    
     @iScale = @$('.scale[name="i"]')
     @rScale = @$('.scale[name="r"]')
     @gScale = @$('.scale[name="g"]')
@@ -124,6 +127,11 @@ class SpacewarpViewerSettings extends BaseView
     @rScale.val('0.6')
     @gScale.val('1.7')
     @onScaleChange()
+    
+    @qEl.val(1.0)
+    @alphaEl.val(0.09)
+    params = {q: 1.0, alpha: 0.09}
+    @model.tool.settings(params)
 
 
 module.exports = SpacewarpViewerSettings

@@ -59,8 +59,10 @@ module.exports = new zootorial.Tutorial
                 'click a[data-tool="SpacewarpViewer"]': 'swviewer2'
     swviewer2: new Step
               header: 'Space Warps Viewer'
-              details: 'This tool is used for viewing Space Warps images.  You can help us unveil gravitational lenses using this tool!'
+              details: 'This tool is used for viewing raw astronomical images from Space Warps.  You can help unveil gravitational lenses using this tool!  First connect a data source by selecting "Zooniverse" from "Select Tool".'
               attachment: 'center center .SpacewarpViewer center center'
+              next:
+                'change select.sources': true
               
     viewer: new Step
               header: "Space Warps Viewer"
