@@ -58,20 +58,27 @@
 .toolbox
   position: aboslute
 
-  .drawer
+  .drawers
     transition: transform 0.5s ease-in-out  
+    top: 14px
+    position: absolute 
+    z-index: 998
+
+    &.active
+      transform: translateY(38px)
+
+  .drawer
     background: $light-gray
     height: 28px
     padding: 5px
-    position: absolute 
     border: 1px solid black
-    z-index: 998
     display: inline-block
-    top: 14px
+    position: absolute
     width: 850px
+    z-index: 1
 
-  .active
-    transform: translateY(38px)
+    &.active
+      z-index: 2
 
   ul.sources, ul.tools, ul.layouts
     list-style: none
@@ -92,20 +99,24 @@
     margin: 0
     padding: 0
     position: absolute
-    top: 53px
-    z-index: 997
+    top: 39px
     width: 850px
+    transition: transform 0.5s ease-in-out
+    z-index: 2
 
     li
       padding-top: 3px
       border: 1px solid black
-      border-top: none
       width: 75px
       display: inline-block
       text-align: center
       background: $light-gray
-      transition: transform 0.5s ease-in-out
       font-weight: 700
+      z-index: 1
+
+      &.active
+       z-index: 3 
+       border-top: 1px solid $light-gray
 
       &.dashboard-name
         float: right
@@ -130,31 +141,3 @@
   padding: 30px
   top: 40%
   left: 35%
-
-
-.snap
-  position: absolute 
-  border: 10px solid rgba(255, 186, 0, 0.6)
-  background-color: rgba(255, 255, 255, 0.1)
-  z-index: 9999
-  &.right
-    top: 168px
-    right: 0
-  &.left
-    top: 168px
-    left: 0
-  &.top-left
-    top: 168px
-    left: 0
-  &.top-right
-    top: 168px
-    right: 0
-  &.full
-    top: 168px
-    left: 0
-  &.bottom-right
-    bottom: 50px
-    right: 0
-  &.bottom-left
-    left: 0
-    bottom: 50px
