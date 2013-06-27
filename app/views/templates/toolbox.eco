@@ -29,10 +29,10 @@
   </div>
 
   <ul class="interactions">
-    <li><a data-drawer="tool" class="drawer-toggle" href="#">Tools</a></li>
-    <li><a data-drawer="data" class="drawer-toggle" href="#">Data</a></li>
-    <li><a data-drawer="layout" class="drawer-toggle" href="#">Layout</a></li>
-    <li><a class="remove-tools" href="#">Clear</a></li>
+    <li name='tools'><a data-drawer="tool" class="drawer-toggle" href="#">Tools</a></li>
+    <li name='data'><a data-drawer="data" class="drawer-toggle" href="#">Data</a></li>
+    <li name='layout'><a data-drawer="layout" class="drawer-toggle" href="#">Layout</a></li>
+    <li name='clear'><a class="remove-tools" href="#">Clear</a></li>
     <li class="dashboard-name"><span class="name"><%- @name %></span><input type="text" value="<%- @name %>" /></li> 
   </ul>
 </div>
