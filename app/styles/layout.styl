@@ -1,123 +1,92 @@
-html {
+html 
   background: $gray-light;
   color: $gray-dark;
   font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
   height: 100%;
-}
 
-body {
+body 
   margin: 0;
   height: 100%;
   overflow: hidden
-}
 
-h2 {
-  @extends #rule-below;
-  color: $blue;
-  font-size: 14px;
-  margin: 20px 0 20px;
-  padding-bottom: 5px;
-}
-
-h3 {
-  border-bottom: 2px solid;
-  font-weight: normal;
-  font-size: 20px;
-  margin: 10px 0;
-  padding-bottom: 5px;
-}
-
-h2,
-h3 {
-  .aux {
-    float: right;
-    font-size: 12px;
-    margin-top: 5px;
-  }
-}
-
-h4 {
-  border-bottom: 1px solid rgba($white, 0.8)
-  margin: 14px 0 3px 0;
-  padding: 2px 0;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid rgba($black, 0.125);
-  border-bottom: 1px solid $white;
-  margin: 20px 0;
-}
-
-.none {
-  color: $gray;
-  font-style: italic;
-}
-
-button {
-  background: transparent;
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
-  margin: 0;
-  padding: 0;
-
-  &:disabled {
-    cursor: pointer;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-}
-
-input,
-textarea {
-  background: $white;
-  border: 1px solid $black;
-  border-radius: 3px;
-  box-sizing: border-box;
-  font: inherit;
-  padding: 3px 5px;
-  width: 100%;
-}
-
-img {
-  &.thin-frame {
-    border: 1px solid $white;
-    box-shadow: 0 1px 2px -1px $black;
-    box-sizing: border-box;
-  }
-  &.logo {
-    margin: 0 0 15px 5px;
-    vertical-align: bottom;
-  }
-}
-
-a {
-  color: $blue;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-section {
-  margin: 0 0 5px 0;
-}
-
-#app {
+.app    
   box-sizing: border-box;
   min-height: 100%;
   padding-bottom: 100px;
-}
 
-.container {
-  margin: 0 auto;
-  max-width: 1000px;
-}
+  h2 
+    @extends #rule-below;
+    color: $blue;
+    font-size: 14px;
+    margin: 20px 0 20px;
+    padding-bottom: 5px;
 
-body > footer {
+  h3 
+    border-bottom: 2px solid;
+    font-weight: normal;
+    font-size: 20px;
+    margin: 10px 0;
+    padding-bottom: 5px;
+
+  h2, h3 
+    .aux 
+      float: right;
+      font-size: 12px;
+      margin-top: 5px;
+
+  h4 
+    border-bottom: 1px solid rgba($white, 0.8)
+    margin: 14px 0 3px 0;
+    padding: 2px 0;
+
+  hr 
+    border: 0;
+    border-top: 1px solid rgba($black, 0.125);
+    border-bottom: 1px solid $white;
+    margin: 20px 0;
+
+  .none 
+    color: $gray;
+    font-style: italic;
+
+  button
+    &:disabled 
+      cursor: pointer;
+      opacity: 0.5;
+      pointer-events: none;
+
+  input,
+  textarea 
+    background: $white;
+    border: 1px solid $black;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font: inherit;
+    padding: 3px 5px;
+    width: 100%;
+
+  img 
+    &.thin-frame 
+      border: 1px solid $white;
+      box-shadow: 0 1px 2px -1px $black;
+      box-sizing: border-box;
+    
+    &.logo 
+      margin: 0 0 15px 5px;
+      vertical-align: bottom;
+
+  a 
+    color: $blue;
+    text-decoration: none;
+
+    &:hover 
+      text-decoration: underline;
+
+  .container 
+    margin: 0 auto;
+    max-width: 1000px;
+
+body > footer 
   background: $gray-less-light;
   clear: both;
   color: $gray-less-dark;
@@ -128,14 +97,13 @@ body > footer {
   text-align: center;
   text-shadow: 0 1px 0 $gray-less-light
 
-  p {
+  p 
     margin: 0;
-    }
-  .credit {
+    
+  .credit 
     line-height: 10px
     margin-top: -10px
     font-size: 10px
+    width: 1000px
     padding-right: 20px
     padding-left: 20px
-    }
-}

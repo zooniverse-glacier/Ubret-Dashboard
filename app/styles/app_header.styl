@@ -1,43 +1,40 @@
-.app-header {
+.app-header 
   color: $gray-light;
   font-size: 12px;
 
-  .main {
+  .main 
     background: $gray-dark;
     position: relative;
     z-index: 999;
     box-sizing: border-box;
 
-    .container {
+    .container 
       display: table;
-    }
-  }
 
-  .group {
+  .group 
     display: table-cell;
     text-align: center;
     vertical-align: middle;
     line-height: 50px;
 
-    &:first-child {
+    &:first-child 
       text-align: left;
-    }
+    
 
-    &:last-child {
+    &:last-child 
       text-align: right;
       width: 300px
-    }
-    .switch {
+    
+    .switch 
       display: inline-block
       cursor: pointer
 
-      h4 {
+      h4 
         border: none
         margin: 0
         line-height: 10px
-      }
 
-      ul.dropdown {
+      ul.dropdown 
         display: none
         position: absolute
         width: 150px
@@ -50,60 +47,49 @@
         list-style-type: none
         top: 42px
 
-        li {
+        li 
           border-bottom: 1px solid $gray-light
           padding: 15px
           
 
-          &:last-child {
+          &:last-child 
             border-bottom: none
-          }
-        }
       
-        &.active{
+        &.active
           display: block
-        }
-      }
-    }
-  }
 
-
-  button {
+  button 
     @extends #bold-button
-  }
 
-  button.fork-dashboard {
+  button.fork-dashboard 
     display: none
- }
 
-  h1 {
+  h1 
     display: inline-block;
     font-size: 18px;
     font-weight: normal;
     line-height: 1;
     margin: 0;
 
-    img {
+    img 
       margin-top: -5px;
       vertical-align: middle;
-    }
-  }
 
-  nav {
+  nav 
     display: inline-block;
     vertical-align: bottom;
 
-    > ul {
+    > ul 
       margin: 0;
       padding: 0;
 
-      > li {
+      > li 
         display: inline-block;
         list-style: none;
         position:relative;
 
         > a,
-        > .button {
+        > .button 
           border-bottom: 3px solid transparent;
           box-sizing: border-box;
           color: inherit;
@@ -116,17 +102,15 @@
           text-shadow: 0 1px 2px rgba($black, 0.67)
 
           &:hover,
-          &.active {
+          &.active 
             color: $blue;
             text-decoration: none;
-          }
+          
 
-          &.active {
+          &.active 
             border-bottom-color: $blue;
-          }
-        }
 
-        .dropdown {
+        .dropdown 
           background: $black;
           position: absolute;
           line-height: 1.4;
@@ -135,31 +119,22 @@
           padding: 0 10px;
           z-index: 1;
 
-          &.right {
+          &.right 
             right: 0;
-          }
+          
 
-          &.left {
+          &.left 
             left: 0;
-          }
+          
 
-          &.search {
+          &.search 
             width: 200px;
 
-            .action {
+            .action 
               text-align: center;
 
-              button {
+              button 
                 @extends #bold-button;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 
-  a.return {
+  a.return 
     @extends #bold-button;
-  }
-}

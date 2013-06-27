@@ -34,14 +34,12 @@ $gray-more-light = hsl(0, 0, 96%);
 $blue = rgba(0, 155, 253, 1);
 $red = rgba(253, 40, 40, 1);
 
-#block-header {
+#block-header 
   border-bottom: 2px solid $gray-dark;
   font-size: 20px;
-}
-
 
 // Button Styles
-#standard-button {
+#standard-button 
   background: $gray-more-light;
   border: 1px solid $gray-less-light;
   border-radius: 3px;
@@ -55,32 +53,26 @@ $red = rgba(253, 40, 40, 1);
   text-shadow: 0 1px 0 $white;
   text-decoration: none;
   
-  &:disabled {
+  &:disabled 
     background-color: $gray-less-light;
     color: $gray;
     cursor: auto;
-  }
   
-  &:hover {
+  &:hover 
     border-color: rgba($black, 0.67);
-  }
   
-  &:hover:disabled {
+  &:hover:disabled 
     border-color: rgba($black, 0.33);
-  }
   
   &:active,
-  &.selected {
+  &.selected 
     box-shadow: 0 100px 0 rgba($black, 0.1) inset, 0 1px 3px rgba($black, 0.25) inset;
-  }
   
   &:active:disabled,
-  &.selected:disabled {
+  &.selected:disabled 
     box-shadow: 0 1px 0 rgba($white, 0.75) inset;
-  }
-}
 
-#choice-button {
+#choice-button 
   background: $gray;
   border: 1px solid $black;
   border-radius: 3px;
@@ -92,17 +84,14 @@ $red = rgba(253, 40, 40, 1);
   padding: 3px 0;
   text-align: center;
 
-  &.on {
+  &.on 
     background: hsl(0, 0, 45%);
     box-shadow: 0 1px 1px rgba($black, 0.45) inset, 0 1px 1px rgba($white, 0.30);
-  }
 
-  &.full {
+  &.full 
     width: 100%;
-  }
-}
 
-#bold-button {
+#bold-button 
   background: $blue;
   border: 1px solid rgba($black, 0.67);
   border-radius: 15px;
@@ -115,17 +104,14 @@ $red = rgba(253, 40, 40, 1);
   padding: 3px 10px;
   text-shadow: 0 1px 0 rgba($black, 0.67);
 
-  &:hover {
+  &:hover 
     box-shadow: 0 100px 0 rgba($white, 0.125) inset, 0 1px 0 rgba($white, 0.33);
     text-decoration: none;
-  }
 
-  &:active {
+  &:active 
     box-shadow: 0 100px 0 rgba($black, 0.125) inset, 0 1px 3px rgba($black, 0.67) inset, 0 1px 0 rgba($white, 0.33);
-  }
-}
 
-#button-row {
+#button-row 
   background: linear-gradient(top, $gray-more-light, $gray-less-light);
   border: 1px solid $gray-less-light;
   border-radius: 5px;
@@ -134,7 +120,7 @@ $red = rgba(253, 40, 40, 1);
   padding: 0;
   text-align: center;
 
-  > * {
+  > * 
     border-right: 1px solid $gray-less-light;
     // box-shadow: 0 1px 0 rgba($white, 1) inset, 0 1px 3px rgba($black, 0.10);
     color: $gray-dark;
@@ -146,28 +132,22 @@ $red = rgba(253, 40, 40, 1);
     text-shadow: 0 1px 0 $white;
     text-decoration: none;
 
-    &:hover {
+    &:hover 
       background: linear-gradient(top, darken($gray-more-light, 10%), darken($gray-light, 10%));
       cursor: pointer;
-    }
 
-    a {
+    a 
       color: $gray-dark;
       text-decoration: none;
-    }
-  }
 
-  &:last-child {
+  &:last-child 
     border-right: 0
-  }
-}
-
 
 // Border Styles
-#rule-below {
+#rule-below 
   position: relative;
 
-  &:after {
+  &:after 
     border-bottom: 1px solid $white;
     border-top: 1px solid rgba($black, 0.125);
     content: "";
@@ -176,13 +156,11 @@ $red = rgba(253, 40, 40, 1);
     position: absolute;
     top: 100%;
     width: 100%;
-  }
-}
 
-#rule-left {
+#rule-left 
   position: relative;
 
-  &:before {
+  &:before 
     border-right: 1px solid $white;
     border-left: 1px solid rgba($black, 0.125);
     content: "";
@@ -191,47 +169,33 @@ $red = rgba(253, 40, 40, 1);
     position: absolute;
     top: 0;
     width: 0;
-  }
-}
-
 
 // "Grid"
-.columns {
+.columns 
   clearfix();
 
-  .column {
+  .column 
     box-sizing: border-box;
     float: left;
     padding-left: 2px;
-
-    &:first-child {
-      // padding-left: 0;
-    }
 
     &.one-quarter {width: 25%;}
     &.one-half {width: 50%;}
     &.three-quarters {width: 75%;}
     &.full {width: 50%}
-  }
-}
-
 
 // List Styles
-#semantic-list {
+#semantic-list 
   list-style: none;
   margin: 0;
   padding: 0;
-}
 
-.container {
+.container 
   margin: 0 auto;
   width: 1000px;
-}
 
-.pull-left {
+.pull-left
   float: left
-}
 
-.pull-right {
+.pull-right
   float: right
-}

@@ -12,5 +12,5 @@ $(document).on 'ready', ->
   User.currentUser().always =>
     router = new Router
     Manager.set 'router', router
-    appView = new AppView({el: $('#app')})
+    appView = new AppView({el: $('.app')})
     Backbone.history.start()
