@@ -100,7 +100,7 @@
     padding: 0
     position: absolute
     top: 39px
-    width: 850px
+    width: 400px
     transition: transform 0.5s ease-in-out
     z-index: 2
 
@@ -118,16 +118,19 @@
        z-index: 3 
        border-top: 1px solid $light-gray
 
-      &.dashboard-name
-        float: right
-        border: none
-        background: none
-        padding: 5px
-        width: 400px
-        text-align: right
-
       a
         color: black
+ 
+  .dashboard-name
+    background: none
+    padding: 5px
+    width: 400px
+    text-align: right
+    font-weight: 700
+    position: absolute
+    left: 600px
+    top: 54px
+
   input
     display: none
     width: 300px

@@ -164,9 +164,12 @@ class Window extends BaseView
     @dragging = false
     $(document).off 'mousemove mouseup'
 
+    top = e.pageY - @relY
+    left = e.pageX - @relX
+
     @model.updateFunc
-      left: e.pageX - @relX
-      top: e.pageY - @relY
+      left: if left < 0 then 0 else left
+      top: if top < 88 then 88 else top
 
     @$el.css
       transform: ''
