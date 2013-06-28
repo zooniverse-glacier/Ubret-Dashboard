@@ -45,8 +45,8 @@ class DataSourceWindow extends Window
       .get(@model.get('data_source.source_id')).search_types
 
   importData: =>
+    console.log @paramsView.setState()
     @model.updateFunc 'data_source.params', @paramsView.setState()
     @model.updateData(true)
-
 
 module.exports = DataSourceWindow

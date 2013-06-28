@@ -8,6 +8,7 @@ User = require 'lib/user'
 
 Manager = require 'modules/manager'
 ToolLoader = require 'modules/tool_loader'
+Tutorials = require 'tutorials'
 
 DashboardModel = require 'models/dashboard'
 Params = require 'collections/params'
@@ -128,7 +129,8 @@ class AppView extends BaseView
     @render()
 
   createDashboardView: =>
-    unless User.current.preferences(@dashboardModel.get('project_id'))?.tutorial? or @dashboardModel.get('name') is 'Tutorial'
+    tutorialEligiable = not (User.current.preferences(@dashboardModel.get('project_id'))?.tutorial? or @dashboardModel.get('name') is 'Tutorial')
+    if tutorialEligiable and Tutorials[Manager.get('project')]?
       @startTutorial()
     @switchView(@dashboardView)
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
