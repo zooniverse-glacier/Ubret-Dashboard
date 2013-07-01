@@ -1,4 +1,4 @@
 <h4>Bin Settings</h4>
-<label>Bins: 
-  <input value="<%- @bins %>" class="bins" type="text" placeholder="Numbers of Bins" />
+<label>Bins: <label class="value"><%- if parseInt(@bins) < 2 then 'Off' else @bins %></label>
+  <input value="<%- @bins %>" class="bins" type="range" min="1" max="10" />
 </label>
