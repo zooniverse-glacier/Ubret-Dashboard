@@ -28,6 +28,7 @@
   <div class='subtitle'>
     <p>Non-linearity Parameters</p>
   </div>
+  <% console.log @alpha %>
   <input type="range" name="alpha" min="0.01" max="1" step="0.01" value="<%- @alpha %>">
   <div class='parameter'>&alpha;: 0.03</div>
   

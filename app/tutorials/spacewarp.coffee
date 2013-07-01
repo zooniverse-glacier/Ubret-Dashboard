@@ -2,7 +2,7 @@ Step = zootorial.Step
 
 module.exports = new zootorial.Tutorial
   id: "spacewarp_dashboard_tutorial"
-  firstStep: 'swviewer2'
+  firstStep: 'welcome'
   steps:
     welcome: new Step
               header: 'Welcome'
@@ -66,12 +66,32 @@ module.exports = new zootorial.Tutorial
                   text = @details.replace("{{title}}", title)
                   details.html(text)
                 ), 0
-                
-                # console.log @details.replace("{{title}}", title)
               details: 'This tool is used for viewing raw astronomical images from Space Warps.  You can help unveil gravitational lenses using this tool!<p>First connect a data source by selecting "{{title}}" from "Select Tool".</p>'
               attachment: 'center center .SpacewarpViewer center center'
               next:
-                'change select.sources': true
+                'change select.sources': 'swviewer3'
+    
+    swviewer3: new Step
+              header: 'Space Warps Viewer'
+              details: 'This image may be adjusted to expose different features in the data.  Using a combination of the non-linearity and color parameters, you might uncover a rare gravitational lens!'
+              attachment: 'center center .SpacewarpViewer center center'
+              next: 'swviewer4'
+    swviewer4: new Step
+              header: 'Space Warps Viewer'
+              details: 'Examine the individual grayscale images in any of the ugriz bands.'
+              attachment: 'center center .SpacewarpViewer center center'
+              next: 'swviewer5'
+    swviewer5: new Step
+              header: 'Space Warps Viewer'
+              details: 'Cycle through all images in your Talk collection'
+              attachment: 'right center .subject-settings left center'
+              className: 'arrow-right'
+              next: 'adios'
+    adios: new Step
+              header: 'Space Warps Viewer'
+              details: "Good luck!  Don't forget, post to Talk if you have questions."
+              attachment: 'center center .SpacewarpViewer center center'
+              next: null
               
     viewer: new Step
               header: "Space Warps Viewer"
