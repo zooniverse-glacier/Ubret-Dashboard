@@ -69,6 +69,7 @@ class AppView extends BaseView
   createDashboardFromDialog: =>
     dashboardDialog = new DashboardDialog { parent: @ }
     $('body').append dashboardDialog.render().el
+    dashboardDialog.$el.find('input').first().focus()
 
   createTools: (tools, dataSource) ->
     toolsFormat = []
