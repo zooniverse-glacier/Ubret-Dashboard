@@ -113,6 +113,7 @@ class Tool extends Backbone.AssociatedModel
 
   setupUbretTool: =>
     if @get('data_source').isInternal() and @get('data_source.source_id')?
+      @sourceTool().on 'change:name', => @trigger 'update-name'
       if @sourceTool().tool?
         @tool.parentTool(@sourceTool().tool) 
       else

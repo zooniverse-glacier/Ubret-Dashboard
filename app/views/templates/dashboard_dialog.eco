@@ -7,7 +7,7 @@
     <form class="new-dashboard">
       <div>
         <label for="name" class="dialog-label">Dashboard Name
-          <input id="name" type="text" />
+          <input id="name" name="name" type="text" value=""/>
         </label>
       </div>
       <div>

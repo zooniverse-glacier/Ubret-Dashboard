@@ -13,10 +13,9 @@ class WindowTitleBar extends BaseView
     'mousedown' : 'startDrag'
 
   initialize: ->
-    @loading = false
-    @loadingError = false
+    @editing = false
     @listenTo @model, 
-      'change:name': @render
+      'update-name change:data_source.source_id change:name': @render
       'loading': @showLoading
       'loading-error': @showLoadingError
       'loaded': @showLoaded
@@ -55,10 +54,11 @@ class WindowTitleBar extends BaseView
     @trigger 'endDrag', e
 
   editTitle: (e) =>
+    console.log e
     e.preventDefault() 
     @editing = true
-    @$('.window-title').addClass('hidden')
-    @$('input').addClass('active').focus().select()
+    @$('.window-title').addClass('editing')
+    @$('input').addClass('editing').focus().select()
 
   updateModel: (e) =>
     if e.type is 'focusout' or e.which is 13
