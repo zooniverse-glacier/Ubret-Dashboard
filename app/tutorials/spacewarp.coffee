@@ -2,7 +2,7 @@ Step = zootorial.Step
 
 module.exports = new zootorial.Tutorial
   id: "spacewarp_dashboard_tutorial"
-  firstStep: 'welcome'
+  firstStep: 'swviewer2'
   steps:
     welcome: new Step
               header: 'Welcome'
@@ -10,43 +10,42 @@ module.exports = new zootorial.Tutorial
               nextButton: 'Start Tutorial'
               next: 'data1'
     data1: new Step
-              header: 'Import Data'
-              details: "Before Dashboard can be used we must import data.  Let's import a collection from Talk.  Click 'Data'."
+              header: 'Accessing Data'
+              details: "Before Dashboard can be used we must import data.  Let's access a collection from Talk.<br><br>Click 'Data'."
               attachment: 'left center a[data-drawer="data"] 2.0 .5'
               className: 'arrow-left'
               next:
                 'click li a[data-drawer="data"]': 'data2'
     data2: new Step
               header: 'Zooniverse Data'
-              details: 'Select "Zooniverse" as the data source.'
+              details: 'Specify "Zooniverse" as the data source.'
               attachment: 'left center a[data-tool="Zooniverse"] 1.0 1.5'
               className: 'arrow-left'
               next:
                 'click a[data-tool="Zooniverse"]': 'data3'
     data3: new Step
-              header: 'Recents, Favourites, and Talk Collections'
-              details: "You can import data from Recents, Favourites, or any Talk collection. Click 'Collections' to import from Talk."
-              attachment: 'center center .tool-window > .sources center 0.5'
-              className: 'arrow-top'
+              header: 'Recents, Favorites, and Talk Collections'
+              details: "You can access data from Recents, Favorites, or any Talk collection.<br><br>Click 'Collections' to import from Talk."
+              attachment: 'center center .tool-window center center'
               next:
                 'click a[data-target="collections"]': 'data4'
     data4: new Step
               header: 'Talk Collection'
-              details: 'Now select the "My Dashboard"" collection.'
+              details: 'Select the "My Candidates" collection.'
               attachment: 'right center .collections > label left center'
               className: 'arrow-right'
               next:
                 'change select.user-collection': 'data5'
     data5: new Step
               header: 'Import'
-              details: 'And select "Import".'
+              details: 'Click "Import".'
               attachment: 'right center button.import left center'
               className: 'arrow-right'
               next:
                 'click button.import': 'tool'
     tool: new Step
               header: 'Tool'
-              details: "Great! Now let's connect some tools.  Click 'Tools'."
+              details: "Great! We have just connected a Talk collection to Dashboard.  Now let's connect a tool.<br><br>Click 'Tools'."
               attachment: 'left center a[data-drawer="tool"] 2.0 .5'
               className: 'arrow-left'
               next:
@@ -54,12 +53,22 @@ module.exports = new zootorial.Tutorial
     swviewer1: new Step
               header: 'Space Warps Viewer'
               details: 'Click "SpacewarpViewer" to initialize a Space Warp Viewer.'
-              attachment: 'left center a[data-tool="SpacewarpViewer"] 1.0 1.6'
+              attachment: 'left center a[data-tool="SpacewarpViewer"] 1.0 0.5'
+              className: 'arrow-left'
               next:
                 'click a[data-tool="SpacewarpViewer"]': 'swviewer2'
     swviewer2: new Step
               header: 'Space Warps Viewer'
-              details: 'This tool is used for viewing raw astronomical images from Space Warps.  You can help unveil gravitational lenses using this tool!  First connect a data source by selecting "Zooniverse" from "Select Tool".'
+              onEnter: (t) ->
+                title = $('.window-title').first().text().trim()
+                setTimeout ( =>
+                  details = t.el.find('.details')
+                  text = @details.replace("{{title}}", title)
+                  details.html(text)
+                ), 0
+                
+                # console.log @details.replace("{{title}}", title)
+              details: 'This tool is used for viewing raw astronomical images from Space Warps.  You can help unveil gravitational lenses using this tool!<p>First connect a data source by selecting "{{title}}" from "Select Tool".</p>'
               attachment: 'center center .SpacewarpViewer center center'
               next:
                 'change select.sources': true
