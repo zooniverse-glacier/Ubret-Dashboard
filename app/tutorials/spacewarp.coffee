@@ -12,15 +12,15 @@ module.exports = new zootorial.Tutorial
     data1: new Step
               header: 'Import Data'
               details: "Before Dashboard can be used we must import data.  Let's import a collection from Talk.  Click 'Data'."
-              attachment: 'center top li[name="data"] 0.7 1.6'
-              className: 'arrow-top'
+              attachment: 'left center a[data-drawer="data"] 2.0 .5'
+              className: 'arrow-left'
               next:
-                'click li[name="data"] a': 'data2'
+                'click li a[data-drawer="data"]': 'data2'
     data2: new Step
               header: 'Zooniverse Data'
               details: 'Select "Zooniverse" as the data source.'
-              attachment: 'center top a[data-tool="Zooniverse"] 0.5 1.6'
-              className: 'arrow-top'
+              attachment: 'left center a[data-tool="Zooniverse"] 1.0 1.5'
+              className: 'arrow-left'
               next:
                 'click a[data-tool="Zooniverse"]': 'data3'
     data3: new Step
@@ -47,14 +47,14 @@ module.exports = new zootorial.Tutorial
     tool: new Step
               header: 'Tool'
               details: "Great! Now let's connect some tools.  Click 'Tools'."
-              attachment: 'center top li[name="tools"] 0.7 1.6'
-              className: 'arrow-top'
+              attachment: 'left center a[data-drawer="tool"] 2.0 .5'
+              className: 'arrow-left'
               next:
-                'click li[name="tools"] a': 'swviewer1'
+                'click li a[data-drawer="tool"]': 'swviewer1'
     swviewer1: new Step
               header: 'Space Warps Viewer'
               details: 'Click "SpacewarpViewer" to initialize a Space Warp Viewer.'
-              attachment: 'center top a[data-tool="SpacewarpViewer"] 0.5 1.6'
+              attachment: 'left center a[data-tool="SpacewarpViewer"] 1.0 1.6'
               next:
                 'click a[data-tool="SpacewarpViewer"]': 'swviewer2'
     swviewer2: new Step
