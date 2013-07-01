@@ -52,7 +52,9 @@ class DashboardView extends BaseView
     @$el.append sourceWindow.render().el
 
   removeTools: =>
-    @model.get('tools').each (tool) -> tool.destroy()
+    sources = @model.get('tools').filter((t) -> 
+      t.get('data_source.source_type') isnt 'internal' or _.isNull(t.get('data_source.source_id')))
+    _.each sources, (s) -> s.destroy()
 
   endTutorial: =>
     @user.current.finishTutorial()

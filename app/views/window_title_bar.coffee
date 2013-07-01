@@ -23,12 +23,15 @@ class WindowTitleBar extends BaseView
   showLoading: =>
     @$('.loaded').hide()
     @$('.loading').show()
+    @$('.loading-error').hide()
 
   showLoadingError: =>
     @$('.loading').hide()
+    @$('.loaded').hide()
     @$('.loading-error').show()
 
   showLoaded: =>
+    @$('.loading-error').hide()
     @$('.loading').hide()
     @$('.loaded').show()
 
