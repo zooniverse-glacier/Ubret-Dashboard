@@ -103,12 +103,12 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   serengeti: (subject) =>
     {
       uid: subject.zooniverse_id
-      image: subject.location.standard
-      thumb: subject.location.standard[0]
-      latitude: subject.coords[0]
-      longitutde: subject.coords[1]
-      timestamp: subject.metadata.timestamps[0]
-      animals: @snapshotAnimals(subject.metadata.counters)
+      image: subject.location?.standard
+      thumb: subject.location?.standard?[0]
+      latitude: subject.coords?[0]
+      longitutde: subject.coords?[1]
+      timestamp: subject.metadata?.timestamps?[0]
+      animals: @snapshotAnimals(subject.metadata.counters) if subject.metadata?.counters?
     }
 
 module.exports = ZooniverseSubjectCollection
