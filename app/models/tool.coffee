@@ -84,6 +84,7 @@ class Tool extends Backbone.AssociatedModel
       'settings': @assignSetting
 
     @on 
+      'change:data_source.source_id': @setupUbretTool
       'change:data_source.params[0].val' : @updateData
       'change:height' : => @tool.height(parseInt(@get('height')) - 25)
       'change:width' : => @tool.width(parseInt(@get('width')))
@@ -112,6 +113,7 @@ class Tool extends Backbone.AssociatedModel
       left: x
 
   setupUbretTool: =>
+    console.log 'here'
     if @get('data_source').isInternal() and @get('data_source.source_id')?
       @sourceTool().on 'change:name', => @trigger 'update-name'
       if @sourceTool().tool?

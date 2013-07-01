@@ -26,7 +26,6 @@ class DataSettings extends BaseView
       'source_id': $(e.currentTarget).val()
       'source_type': "internal"
     @model.updateFunc()
-    @model.setupUbretTool()
 
   updateValidSourceTools: =>
     @intSources = []
