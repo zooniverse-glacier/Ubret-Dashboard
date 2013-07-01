@@ -19,6 +19,8 @@ class Tools extends Backbone.Collection
     maxZindexTool = @max((tool) -> tool.get('zindex'))
     unless tool.cid is maxZindexTool.cid
       tool.updateFunc({zindex: maxZindexTool.get('zindex') + 1})
+    else
+      tool.updateFunc()
 
   arrangeWindows: (layout) =>
     @width = window.innerWidth

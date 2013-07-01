@@ -167,7 +167,7 @@ class Window extends BaseView
     top = e.pageY - @relY
     left = e.pageX - @relX
 
-    @model.updateFunc
+    @model.set
       left: if left < 0 then 0 else left
       top: if top < 88 then 88 else top
 
