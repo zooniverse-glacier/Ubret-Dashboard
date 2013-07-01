@@ -16,17 +16,22 @@ class WindowTitleBar extends BaseView
     @loading = false
     @loadingError = false
     @listenTo @model, 
-      'change:data_source change:name': @render
+      'change:name': @render
       'loading': @showLoading
       'loading-error': @showLoadingError
+      'loaded': @showLoaded
 
   showLoading: =>
-    console.log 'here'
-    console.log @$('.loading')
+    @$('.loaded').hide()
     @$('.loading').show()
 
   showLoadingError: =>
+    @$('.loading').hide()
     @$('.loading-error').show()
+
+  showLoaded: =>
+    @$('.loading').hide()
+    @$('.loaded').show()
 
   render: =>
     return @ unless @model.collection?

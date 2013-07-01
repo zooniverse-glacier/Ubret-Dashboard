@@ -12,5 +12,6 @@
 
 <span class="loading">Loading <span class="window-loading"></span></span>
 <span class="loading-error">Error Loading Tool Data</span>
+<span class="loaded">Data Ready</span>
 
 <input <%- if @editing: %>class="editing"<% end %> type="text" name="window-title" value="<%- @name %>">

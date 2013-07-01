@@ -121,12 +121,7 @@ class Tool extends Backbone.AssociatedModel
           @tool.parentTool tool
 
     else if @get('data_source').isExternal()
-      @tool.removeParentTool()
-      data = @get('data_source').data()
-      @trigger 'loading'
-      data.fetch()
-        .done(=> @tool.data(data.toJSON()))
-        .fail(=> @trigger 'loading-error')
+      @updateData(force)
 
     @tool.selectIds(@get('selected_uids'))
       .settings(@get('settings').toJSON())
@@ -178,8 +173,11 @@ class Tool extends Backbone.AssociatedModel
     return unless (not @get('data_source').isInternal() and @get('data_source').hasChanged()) or force
     return if @get('data_source.params').isEmpty()
     data = @get('data_source').data()
+    @trigger('loading')
     data.fetch()
-      .done(=> @tool.data(data.toJSON()))
+      .done(=> 
+        @trigger 'loaded'
+        @tool.data(data.toJSON()))
       .error(=> @trigger 'loading-error')
 
 module.exports = Tool

@@ -9,6 +9,7 @@ class DataSourceWindow extends Window
   events:
     'change select.search_types' : 'setSearchType'
     'click .load' : 'importData'
+    'change input' : 'validateParams'
 
   initialize: ->
     super
@@ -38,6 +39,7 @@ class DataSourceWindow extends Window
     @assign
       '.params' : @paramsView
     @$('.settings').remove()
+    @validateParams()
     @
 
   searchTypes: =>
@@ -45,8 +47,14 @@ class DataSourceWindow extends Window
       .get(@model.get('data_source.source_id')).search_types
 
   importData: =>
-    console.log @paramsView.setState()
     @model.updateFunc 'data_source.params', @paramsView.setState()
     @model.updateData(true)
+    @$('button.load').attr 'disabled', 'disabled'
+
+  validateParams: =>
+    if @paramsView.setState().isValid()
+      @$('button.load').removeAttr 'disabled'
+    else
+      @$('button.load').attr 'disabled', 'disabled'
 
 module.exports = DataSourceWindow

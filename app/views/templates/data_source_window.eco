@@ -9,5 +9,7 @@
     </select>
   </label>
   <div class="params"></div>
-  <button disabled="disabled" type="button" class="action load">Load Data</button>
+  <div class="controls">
+    <button disabled="disabled" type="button" class="action load">Load Data</button>
+  </div>
 </div>
