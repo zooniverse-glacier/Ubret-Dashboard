@@ -55,7 +55,9 @@ class AppView extends BaseView
     @render()
 
   projectChange: =>
-    User.current.getDashboards()
+    User.current?.dashboards.reset()
+    User.current?.getDashboards()
+    Ubret.Reset()
     Manager.get('router').navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   loadUbretTools: =>
