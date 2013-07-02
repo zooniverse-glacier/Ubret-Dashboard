@@ -26,6 +26,6 @@ class MapSettings extends BaseView
 
   changeSpectrum: (e) =>
     spectrum = e.currentTarget.value
-    @model.tool.settings({spectrum: spectrum}).start()
+    @model.tool.settings({spectrum: spectrum})
 
 module.exports = MapSettings

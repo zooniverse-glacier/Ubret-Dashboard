@@ -10,6 +10,7 @@ class DashboardView extends BaseView
   user: require 'lib/user'
   template: require './templates/layout/dashboard'
   tutorials: require 'tutorials'
+  warnDialog: require 'views/non_owner_dialog'
 
   subscriptions:
     'dashboard:initialized': 'onDashboardInit'
@@ -64,11 +65,20 @@ class DashboardView extends BaseView
     tutorial.el.bind('end-tutorial', @endTutorial)
     tutorial.start()
 
+  warnNonOwner: =>
+    dialog = new @warnDialog()
+    $('body').append dialog.render().el
+
   onDashboardInit: (@model) =>
     @toolboxView.setModel(@model)
     @render()
-    if @model.get('name') is 'Tutorial'
+    if @user.current? and @user.current.id isnt @model.get('user').id
+      @$el.on 'click', @warnNonOwner
+    else if @model.get('name') is 'Tutorial'
+      @$el.off 'click', @warnNonOwner
       @startTutorial()
+    else
+      @$el.off 'click', @warnNonOwner
     @model.on
       'add:tools': @addTool
       'reset:tools': @removeTools
