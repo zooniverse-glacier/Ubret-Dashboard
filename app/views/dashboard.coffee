@@ -60,7 +60,6 @@ class DashboardView extends BaseView
     @user.current.finishTutorial()
 
   startTutorial: =>
-    console.log @tutorials
     tutorial = @tutorials[@manager.get('project')]
     tutorial.el.bind('end-tutorial', @endTutorial)
     tutorial.start()
