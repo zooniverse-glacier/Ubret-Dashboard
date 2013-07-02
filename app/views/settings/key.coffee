@@ -9,11 +9,10 @@ class KeySettings extends BaseView
     'change .select-key' : 'onSelectKey'
 
   initialize: ->
-    @model.on 'change:selected_keys', @render
     @model.tool.on 'keys', @setKeys
 
   render: =>
-    @currentKey = if @model.get('selected_keys')? then @model.get('selected_keys')[0] else ''
+    @currentKey = @model.get('settings.statKey')
     @$el.html @template({ keys: @keys, currentKey: @currentKey })
     @
 
