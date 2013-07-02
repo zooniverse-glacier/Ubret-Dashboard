@@ -15,7 +15,7 @@ class Sharing extends BaseView
     title = @model.get('name')
     summary = "I just make this Dashboard on ZooTools"
     """
-      https://www.facbook.com/sharer/sharer.php
+      https://www.facebook.com/sharer/sharer.php
       ?s=100
       &p[url]=#{encodeURIComponent @dashboardHref()}
       &p[title]=#{encodeURIComponent title}
