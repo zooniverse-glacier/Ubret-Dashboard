@@ -1,7 +1,7 @@
 Projects =
   galaxy_zoo: 
     name: 'Galaxy Zoo'
-    talk: false
+    talk: true
     sources: ["Zooniverse", "Sky Server"]
     tools: ["Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table"],
     defaults: ["Table", "SubjectViewer"]
