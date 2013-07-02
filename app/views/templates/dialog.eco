@@ -7,6 +7,6 @@
   </div>
   <div class="dialog-footer">
     <button class="close cancel">Dismiss</button>
-    <button class="new-dashboard"><%- @confirmation %></button>
+    <button class="confirm"><%- @confirmation %></button>
   </div>
 </div>

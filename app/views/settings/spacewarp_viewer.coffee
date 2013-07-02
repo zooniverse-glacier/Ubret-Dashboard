@@ -19,30 +19,19 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.on 'swviewer:loaded', =>
       
       opts = @model.tool.opts
+      console.log 'initialize', opts
       
-      if opts.stretch?
-        @$el.find("##{opts.stretch}-#{@cid}").click()
-      else
-        @$el.find("#linear-#{@cid}").click()
-      
-      if opts.band?
-        @$el.find("##{opts.band}-#{@cid}").click()
-      else
-        @$el.find("#gri-#{@cid}").click()
+      # @$el.find("##{opts.stretch}-#{@cid}").click()
+      # @$el.find("##{opts.band}-#{@cid}").click()
       
       # Update UI elements
       inputs = @$el.find('input[type="range"]')
       inputs.filter("[name='alpha']").val(opts.alpha) if opts.alpha?
       inputs.filter("[name='q']").val(opts.q) if opts.q?
       
-      if opts.scales?
-        inputs.filter("[name='i']").val(opts.scales[0])
-        inputs.filter("[name='r']").val(opts.scales[1])
-        inputs.filter("[name='g']").val(opts.scales[2])
-      else
-        inputs.filter("[name='i']").val(0.4)
-        inputs.filter("[name='r']").val(0.6)
-        inputs.filter("[name='g']").val(1.7)
+      inputs.filter("[name='i']").val(opts.scales[0])
+      inputs.filter("[name='r']").val(opts.scales[1])
+      inputs.filter("[name='g']").val(opts.scales[2])
       
       inputs.filter("[name='min']").val(opts.sliderMin or 0)
       inputs.filter("[name='max']").val(opts.sliderMax or 1000)

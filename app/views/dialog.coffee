@@ -13,6 +13,7 @@ class Dialog extends BaseView
     @remove()
 
   confirm: (e) =>
+    console.log e.type, e.which
     unless e.type is 'keypress' and e.which isnt 13
       @confirmCallback(e)
 
