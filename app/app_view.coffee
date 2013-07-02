@@ -131,7 +131,7 @@ class AppView extends BaseView
 
   createDashboardView: =>
     tutorialEligiable = not User.current?.preferences(@dashboardModel.get('project_id'))?.tutorial? 
-    tutorialEligiable or= not @dashboardModel.get('name') is 'Tutorial'
+    tutorialEligiable = tutorialEligiable and not (@dashboardModel.get('name') is 'Tutorial')
     if tutorialEligiable and Tutorials[Manager.get('project')]?
       @startTutorial()
     @switchView(@dashboardView)
