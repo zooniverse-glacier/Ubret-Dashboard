@@ -1,6 +1,5 @@
 BaseView = require 'views/base_view'
 
-
 class SpacewarpViewerSettings extends BaseView
   className: 'spacewarp-viewer-settings'
   template: require 'views/templates/settings/spacewarp_viewer'
@@ -10,7 +9,7 @@ class SpacewarpViewerSettings extends BaseView
     'change input[name="alpha"]'    : 'onAlphaChange'
     'change input[name="Q"]'        : 'onQChange'
     'change input.scale'            : 'onScaleChange'
-    'change input[name="stretch"]'  : 'onStretchChange'
+    'change select.stretch'         : 'onStretchChange'
     'change input.extent'           : 'onExtentChange'
     'click .reset'                  : 'onReset'
   
@@ -19,22 +18,18 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.on 'swviewer:loaded', =>
       
       opts = @model.tool.opts
-      console.log 'initialize', opts
-      
-      # @$el.find("##{opts.stretch}-#{@cid}").click()
-      # @$el.find("##{opts.band}-#{@cid}").click()
       
       # Update UI elements
       inputs = @$el.find('input[type="range"]')
-      inputs.filter("[name='alpha']").val(opts.alpha) if opts.alpha?
-      inputs.filter("[name='q']").val(opts.q) if opts.q?
+      inputs.filter("[name='alpha']").val(opts.alpha)
+      inputs.filter("[name='q']").val(opts.q)
       
       inputs.filter("[name='i']").val(opts.scales[0])
       inputs.filter("[name='r']").val(opts.scales[1])
       inputs.filter("[name='g']").val(opts.scales[2])
       
-      inputs.filter("[name='min']").val(opts.sliderMin or 0)
-      inputs.filter("[name='max']").val(opts.sliderMax or 1000)
+      inputs.filter("[name='min']").val(opts.sliderMin)
+      inputs.filter("[name='max']").val(opts.sliderMax)
   
   render: =>
     @$el.html @template 
@@ -86,7 +81,7 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.settings(scales)
   
   onStretchChange: (e) =>
-    stretch = {stretch: e.currentTarget.dataset.function}
+    stretch = {stretch: e.target.value}
     @model.tool.settings(stretch)
   
   onExtentChange: (e) =>
@@ -112,14 +107,22 @@ class SpacewarpViewerSettings extends BaseView
     @model.tool.settings(extent)
 
   onReset: (e) =>
-    @iScale.val('0.4')
-    @rScale.val('0.6')
-    @gScale.val('1.7')
+    {SpacewarpViewer} = require 'config/tool_config'
+    defaults = SpacewarpViewer.defaults
+    
+    scales = defaults.scales
+    q = defaults.q
+    alpha = defaults.alpha
+    
+    @iScale.val(scales[0])
+    @rScale.val(scales[1])
+    @gScale.val(scales[2])
     @onScaleChange()
     
-    @qEl.val(1.0)
-    @alphaEl.val(0.09)
-    params = {q: 1.0, alpha: 0.09}
+    @qEl.val(q)
+    @alphaEl.val(alpha)
+    
+    params = {q: q, alpha: alpha}
     @model.tool.settings(params)
 
 

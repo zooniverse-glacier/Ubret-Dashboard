@@ -50,6 +50,13 @@
     <p>Stretch Function</p>
   </div>
   <div class='stretchfn'>
+    
+    <select class='stretch'>
+      <option value='linear'>Linear</option>
+      <option value='arcsinh'>Arcsinh</option>
+    </select>
+    
+    <!--
     <input type='radio' name='stretch' data-function='linear' id='linear-<%- @cid %>' />
     <label for='linear-<%- @cid %>'>Linear</label>
     
@@ -64,6 +71,7 @@
     
     <input type='radio' name='stretch' data-function='power' id='power-<%- @cid %>' />
     <label for='power-<%- @cid %>'>Power</label>
+    -->
   </div>
   
   <div class='subtitle'>
