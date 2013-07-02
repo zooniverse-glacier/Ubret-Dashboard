@@ -26,6 +26,7 @@ class MyDataLists extends BaseView
         base: @url()
     @render()
     @$('.my-data-list').html @loadingTemplate()
+    @collection.reset()
     @collection.fetch().then @render
 
   dashboardUrl: (project, ids, name) =>
