@@ -1,7 +1,7 @@
-<h4>Tool Settings</h4>
+<h4>Select Field</h4>
 <% if @keys: %>
   <select name="key" class="select-key" id="select-key">
-    <options name="key">Select a Field</options>
+    <option name="key">Select a Field</option>
     <% for key in @keys: %>
       <% if key is @currentKey: %>
         <option name="key" value="<%- key %>" selected><%- key %></option>
