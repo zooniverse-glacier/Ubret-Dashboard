@@ -33,5 +33,4 @@ class ZooniverseSourceWindow extends Window
     id = e.target.dataset.id
     @model.tool.selectIds id
 
-
 module.exports = ZooniverseSourceWindow

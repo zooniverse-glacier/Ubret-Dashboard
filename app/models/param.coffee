@@ -3,6 +3,7 @@ class Param extends Backbone.AssociatedModel
   isValid: =>
     if @get('required')
       val = @get('val')
+      console.log val if @get('key') is 'tolerance'
       if _.isUndefined(val) or val is ""
         false
       else

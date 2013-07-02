@@ -73,6 +73,8 @@ class Tool extends Backbone.AssociatedModel
       @tool = new Ubret.BaseTool
         selectIds: @get('selected_uids')
       @updateData(true)
+      if @get('tool_type') is 'Zooniverse'
+        @on 'change:data_source.params[0].val', @updateData
     else
       @tool = new Ubret[@get('tool_type')]
         selector: (@get('tool_type') + "-" + @cid)
@@ -85,7 +87,6 @@ class Tool extends Backbone.AssociatedModel
 
     @on 
       'change:data_source.source_id': @setupUbretTool
-      'change:data_source.params[0].val' : @updateData
       'change:height' : => @tool.height(parseInt(@get('height')) - 25)
       'change:width' : => @tool.width(parseInt(@get('width')))
       'add:fql_statements' : @sendStatement
@@ -113,7 +114,6 @@ class Tool extends Backbone.AssociatedModel
       left: x
 
   setupUbretTool: =>
-    console.log 'here'
     if @get('data_source').isInternal() and @get('data_source.source_id')?
       @sourceTool().on 'change:name', => @trigger 'update-name'
       if @sourceTool().tool?
@@ -173,9 +173,17 @@ class Tool extends Backbone.AssociatedModel
 
   updateData: (force=false) =>
     force = not(typeof force is 'object')
-    return unless (not @get('data_source').isInternal() and @get('data_source').hasChanged()) or force
-    return if @get('data_source.params').isEmpty()
-    data = @get('data_source').data()
+    dataSource = @get('data_source')
+    if dataSource.isZooniverse() 
+      if dataSource.get('params[0]').hasChanged or force
+        unless _.isEmpty(dataSource.get('params[0].val'))
+          @fetchData(dataSource) 
+    else if dataSource.isExternal()
+      if dataSource.get('params').isValid()
+        @fetchData(dataSource)
+
+  fetchData: (dataSource) =>
+    data = dataSource.data()
     @trigger('loading')
     data.fetch()
       .done(=> 

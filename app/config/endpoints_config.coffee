@@ -72,7 +72,7 @@ module.exports =
             label: 'z'
           tolerance: 
             type: 'Input'
-            required: false
+            required: true
             validation: [0, 5]
           limit: 
             type: "Input"
@@ -87,6 +87,7 @@ module.exports =
         params:
           query:
             type: "Textbox"
+            required: true
             placeholder: "Enter SQL query"
   ned:
     name: 'NED'
