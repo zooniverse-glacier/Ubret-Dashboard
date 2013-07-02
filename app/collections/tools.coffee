@@ -63,9 +63,9 @@ class Tools extends Backbone.Collection
     thirdIndex = @incrementIndex(secondIndex)
     fourthIndex = @incrementIndex(thirdIndex)
     @halfWindow(@index, 'left', 'top')
-    @halfWindow(@index, 'left', 'bottom')
-    @halfWindow(@index, 'right', 'top')
-    @halfWindow(@index, 'right', 'bottom')
+    @halfWindow(secondIndex, 'left', 'bottom')
+    @halfWindow(thirdIndex, 'right', 'top')
+    @halfWindow(fourthIndex, 'right', 'bottom')
     @focus(@at(@index))
  
   fullWindow: (index, side) =>
