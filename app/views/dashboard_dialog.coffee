@@ -1,29 +1,23 @@
-BaseView = require 'views/base_view'
+Dialog = require 'views/dialog'
 Manager = require 'modules/manager'
 
-class DashboardDialog extends BaseView
-  className: 'dialog'
-  tag: 'div'
-
+class DashboardDialog extends Dialog
   projects: require 'config/projects_config'
 
   template: require './templates/dashboard_dialog'
 
-  initialize: (options) ->
-    @parent = options.parent
+  title: 'Create New Dashbaord'
+  confirmation: 'Create Dashboard'
+  confirmCallback: (e) => @newDashboard(e) 
+
+  initialize: ->
+    super
     @selected = Manager.get('project')
-
-  events: 
-    'click span.window-close' : 'close'
-    'click button.close' : 'close'
-    'click button.new-dashboard' : 'newDashboard'
-
+    
   render: =>
-    @$el.html @template(@)
+    super
+    @content @template(@)
     @
-
-  close: =>
-    @remove()
 
   newDashboard: =>
     name = @$('input#name').val()

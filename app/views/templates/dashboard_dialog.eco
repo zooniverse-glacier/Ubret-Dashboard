@@ -1,32 +1,20 @@
-<div class="dashboard-dialog">
-  <div class="dialog-header">
-    <span class="window-close"></span>
-    <span class="window-title">Create New Dashboard</span>
+<form class="new-dashboard">
+  <div>
+    <label for="name" class="dialog-label">Dashboard Name
+      <input id="name" name="name" type="text" value=""/>
+    </label>
   </div>
-  <div class="dialog-content">
-    <form class="new-dashboard">
-      <div>
-        <label for="name" class="dialog-label">Dashboard Name
-          <input id="name" name="name" type="text" value=""/>
-        </label>
-      </div>
-      <div>
-        <label for="project_type" class="dialog-label">Project
-          <select id="project_type">
-            <% for key, value of @projects: %>
-              <% if key is @selected: %>
-                <option value="<%- key %>" selected><%- value.name %></option>
-              <% else: %>
-                <option value="<%- key %>"><%- value.name %></option>
-              <% end %>
-            <% end %>
-          </select>
-        </label>
-      </div>
-    </form>
+  <div>
+    <label for="project_type" class="dialog-label">Project
+      <select id="project_type">
+        <% for key, value of @projects: %>
+          <% if key is @selected: %>
+            <option value="<%- key %>" selected><%- value.name %></option>
+          <% else: %>
+            <option value="<%- key %>"><%- value.name %></option>
+          <% end %>
+        <% end %>
+      </select>
+    </label>
   </div>
-  <div class="dialog-footer">
-    <button class="close cancel">Cancel</button>
-    <button class="new-dashboard">Create Dashboard</button>
-  </div>
-</div>
+</form>

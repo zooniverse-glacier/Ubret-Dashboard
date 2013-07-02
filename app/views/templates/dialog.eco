@@ -1,0 +1,12 @@
+<div class="dashboard-dialog">
+  <div class="dialog-header">
+    <span class="window-close"></span>
+    <span class="window-title"><%- @title %></span>
+  </div>
+  <div class="dialog-content">
+  </div>
+  <div class="dialog-footer">
+    <button class="close cancel">Dismiss</button>
+    <button class="new-dashboard"><%- @confirmation %></button>
+  </div>
+</div>
