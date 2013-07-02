@@ -59,8 +59,8 @@
   position: aboslute
 
   .drawers
-    transition: transform 0.5s ease-in-out  
-    top: 14px
+    transition: all 0.3s ease-in-out
+    top: 13px
     position: absolute 
     z-index: 998
 
@@ -71,13 +71,14 @@
     background: $light-gray
     height: 28px
     padding: 5px
-    border: 1px solid black
+    border: 1px solid transparent
     display: inline-block
     position: absolute
     width: 850px
     z-index: 1
 
     &.active
+      border-color: #000
       z-index: 2
 
   ul.sources, ul.tools, ul.layouts

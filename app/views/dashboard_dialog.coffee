@@ -26,6 +26,5 @@ class DashboardDialog extends Dialog
     dashboard.save().done =>
       @parent.dashboardModel = dashboard
       @parent.navigateToDashboard()
-    @close()
 
 module.exports = DashboardDialog
