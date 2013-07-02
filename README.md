@@ -27,4 +27,4 @@ Open `app/config/tool_config.coffee` and add any configuration your tool needs t
 * `width` - Set the default width of the window
 * `data_source` - Specifies defaults for a tool's data source. 
 
-### Step 3 - Refreash the Page!
+### Step 3 - Refresh the Page!
