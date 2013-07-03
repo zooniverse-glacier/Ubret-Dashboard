@@ -3,7 +3,9 @@ class Filter extends Backbone.AssociatedModel
     @parseFql()
 
   toJSON: =>
-    {string: @get('string')}
+    {
+      string: @get('string')
+    }
 
   parseFql: =>
     string = @get('string')

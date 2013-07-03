@@ -166,6 +166,7 @@ class Tool extends Backbone.AssociatedModel
     @updateFunc() if @get('settings').hasChanged()
 
   sendStatement: (statement) =>
+    console.log statement
     if statement.isFilter()
       @tool.filters(statement.get('func'))
     else
