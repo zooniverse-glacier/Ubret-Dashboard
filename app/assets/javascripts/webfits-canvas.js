@@ -11,14 +11,14 @@
 
   WebFITS = {};
 
-  WebFITS.version = '0.2.6';
+  WebFITS.version = '0.4.2';
 
   this.astro.WebFITS = WebFITS;
 
   BaseApi = (function() {
 
     function BaseApi(el, dimension) {
-      var parentStyle;
+      var canvasStyle, overlayStyle, parentStyle;
       this.el = el;
       this.wheelHandler = __bind(this.wheelHandler, this);
 
@@ -27,8 +27,15 @@
       this.canvas = document.createElement('canvas');
       this.canvas.setAttribute('width', this.width);
       this.canvas.setAttribute('height', this.height);
+      this.canvas.setAttribute('class', 'visualization');
+      this.overlay = document.createElement('canvas');
+      this.overlay.setAttribute('width', this.width);
+      this.overlay.setAttribute('height', this.height);
+      this.overlay.setAttribute('class', 'overlay');
+      this.overlayCtx = this.overlay.getContext('2d');
       this.el.appendChild(this.canvas);
-      this.nImages = 0;
+      this.el.appendChild(this.overlay);
+      this.nImages = 1;
       this.lookup = {};
       if (!this.getContext()) {
         return null;
@@ -39,7 +46,13 @@
       parentStyle.width = "" + this.canvas.width + "px";
       parentStyle.height = "" + this.canvas.height + "px";
       parentStyle.overflow = 'hidden';
-      parentStyle.backgroundColor = '#151515';
+      parentStyle.backgroundColor = '#252525';
+      parentStyle.position = 'relative';
+      canvasStyle = this.canvas.style;
+      overlayStyle = this.overlay.style;
+      canvasStyle.position = 'absolute';
+      overlayStyle.position = 'absolute';
+      overlayStyle.pointerEvents = 'none';
       this.xOffset = -this.width / 2;
       this.yOffset = -this.height / 2;
       this.xOldOffset = this.xOffset;
@@ -47,10 +60,22 @@
       this.drag = false;
       this.zoom = 2 / this.width;
       this.minZoom = this.zoom / 8;
-      this.maxZoom = 12 * this.zoom;
+      this.maxZoom = 20 * this.zoom;
       this.zoomX = this.zoom;
       this.zoomY = this.zoom;
+      this.crosshair = false;
     }
+
+    BaseApi.prototype.drawCrosshair = function() {
+      this.overlay.width = this.overlay.width;
+      this.overlayCtx.lineWidth = 1;
+      this.overlayCtx.strokeStyle = '#0071e5';
+      this.overlayCtx.moveTo(0, this.yCurrent);
+      this.overlayCtx.lineTo(this.width, this.yCurrent);
+      this.overlayCtx.moveTo(this.xCurrent, 0);
+      this.overlayCtx.lineTo(this.xCurrent, this.height);
+      return this.overlayCtx.stroke();
+    };
 
     BaseApi.prototype.setupControls = function(callbacks, opts) {
       var _onmousedown, _onmousemove, _onmouseout, _onmouseover, _onmouseup,
@@ -82,6 +107,11 @@
       };
       _onmousemove = function(e) {
         var xDelta, yDelta;
+        if (_this.crosshair) {
+          _this.xCurrent = e.layerX;
+          _this.yCurrent = e.layerY;
+          _this.drawCrosshair();
+        }
         if (!_this.drag) {
           return;
         }
@@ -169,6 +199,15 @@
       this.zoom = this.zoom > this.maxZoom ? this.maxZoom : this.zoom;
       this.zoom = this.zoom < this.minZoom ? this.minZoom : this.zoom;
       return typeof this.zoomCallback === "function" ? this.zoomCallback() : void 0;
+    };
+
+    BaseApi.prototype.setCursor = function(type) {
+      this.overlay.width = this.overlay.width;
+      if (type === 'crosshair') {
+        return this.crosshair = true;
+      } else {
+        return this.crosshair = false;
+      }
     };
 
     return BaseApi;
