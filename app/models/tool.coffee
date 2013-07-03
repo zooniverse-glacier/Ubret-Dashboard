@@ -24,6 +24,7 @@ class Tool extends Backbone.AssociatedModel
     type: Backbone.Many
     key: 'fql_statements'
     relatedModel: require 'models/fql_statement'
+    collectionType: require 'collections/fql_statements'
   ]
 
   defaults:
@@ -90,6 +91,7 @@ class Tool extends Backbone.AssociatedModel
       'change:height' : => @tool.height(parseInt(@get('height')) - 25)
       'change:width' : => @tool.width(parseInt(@get('width')))
       'add:fql_statements' : @sendStatement
+      'remove:fql_statements' : @resetStatements
     @trigger 'ubret-created', @tool
 
   generatePosition: ->
@@ -128,10 +130,8 @@ class Tool extends Backbone.AssociatedModel
 
     @tool.selectIds(@get('selected_uids'))
       .settings(@get('settings').toJSON())
-      .filters(@get('fql_statements')?.chain()
-        .filter((s) -> s.isFilter()).map((s) -> s.get('func')).value())
-      .fields(@get('fql_statements')?.chain()
-        .filter((s) -> s.isField()).map((s) -> s.attributes).value())
+      .filters(@get('fql_statements')?.filters())
+      .fields(@get('fql_statements')?.fields())
 
   sourceTool: =>
     if @get('data_source').isInternal()
@@ -166,11 +166,15 @@ class Tool extends Backbone.AssociatedModel
     @updateFunc() if @get('settings').hasChanged()
 
   sendStatement: (statement) =>
-    console.log statement
     if statement.isFilter()
       @tool.filters(statement.get('func'))
     else
       @tool.fields(statement.attributes)
+
+  resetStatements: () =>
+    statements = @get('fql_statements')
+    @tool.filters(statements.filters(), true, true)
+    @tool.fields(statements.fields(), true, true)
 
   updateData: (force=false) =>
     force = not(typeof force is 'object')
