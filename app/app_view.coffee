@@ -66,7 +66,7 @@ class AppView extends BaseView
   forkDashboard: =>
     @dashboardModel.fork().done (response) =>
       @dashboardModel = new DashboardModel response
-      @loadUbretTools()
+      @navigateToDashboard()
 
   createDashboardFromDialog: =>
     dashboardDialog = new DashboardDialog { parent: @ }
