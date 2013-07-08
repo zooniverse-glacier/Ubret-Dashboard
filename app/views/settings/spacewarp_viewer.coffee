@@ -5,19 +5,21 @@ class SpacewarpViewerSettings extends BaseView
   template: require 'views/templates/settings/spacewarp_viewer'
   
   events:
-    'click input[name="band"]'      : 'onBandChange'
-    'change input[name="alpha"]'    : 'onAlphaChange'
-    'change input[name="Q"]'        : 'onQChange'
-    'change input.scale'            : 'onScaleChange'
-    'change select.stretch'         : 'onStretchChange'
-    'change input.extent'           : 'onExtentChange'
-    'click .reset'                  : 'onReset'
+    'click input[name="band"]'    : 'onBandChange'
+    'change input[name="alpha"]'  : 'onAlphaChange'
+    'change input[name="Q"]'      : 'onQChange'
+    'change input.scale'          : 'onScaleChange'
+    'change select.stretch'       : 'onStretchChange'
+    'change input.extent'         : 'onExtentChange'
+    'click .reset'                : 'onReset'
   
   
   initialize: =>
     @model.tool.on 'swviewer:loaded', =>
       
       opts = @model.tool.opts
+      @model.tool.on 'next', @next
+      @model.tool.on 'prev', @prev
       
       # Update UI elements
       inputs = @$el.find('input[type="range"]')
@@ -32,10 +34,13 @@ class SpacewarpViewerSettings extends BaseView
       inputs.filter("[name='max']").val(opts.sliderMax)
   
   render: =>
-    @$el.html @template 
+    subject = @model.tool.currentPageData()[0]
+    
+    @$el.html @template
       cid: @cid 
       alpha: @model.get('settings.alpha')
       q: @model.get('settings.q')
+      cftid: subject?.metadata?.id or null
     
     @qEl      = @$("input[name='q']")
     @alphaEl  = @$("input[name='alpha']")
@@ -45,6 +50,12 @@ class SpacewarpViewerSettings extends BaseView
     @gScale = @$('.scale[name="g"]')
     
     @
+  
+  next: =>
+    @render()
+  
+  prev: =>
+    @render()
   
   onBandChange: (e) =>
     band = e.currentTarget.dataset.band

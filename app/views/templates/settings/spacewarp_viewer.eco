@@ -55,23 +55,6 @@
       <option value='linear'>Linear</option>
       <option value='arcsinh'>Arcsinh</option>
     </select>
-    
-    <!--
-    <input type='radio' name='stretch' data-function='linear' id='linear-<%- @cid %>' />
-    <label for='linear-<%- @cid %>'>Linear</label>
-    
-    <input type='radio' name='stretch' data-function= 'logarithm' id='logarithm-<%- @cid %>' />
-    <label for='logarithm-<%- @cid %>'>Logarithm</label>
-    
-    <input type='radio' name='stretch' data-function='sqrt' id='sqrt-<%- @cid %>' />
-    <label for='sqrt-<%- @cid %>'>Square Root</label>
-    
-    <input type='radio' name='stretch' data-function='arcsinh' id='arcsinh-<%- @cid %>' />
-    <label for='arcsinh-<%- @cid %>'>Arcsinh</label>
-    
-    <input type='radio' name='stretch' data-function='power' id='power-<%- @cid %>' />
-    <label for='power-<%- @cid %>'>Power</label>
-    -->
   </div>
   
   <div class='subtitle'>
@@ -79,4 +62,15 @@
   </div>
   <input type="range" class='extent' name="min" min="0" max="1000" step="1" value="0">
   <input type="range" class='extent' name="max" min="0" max="1000" step="1" value="1000">
+  
+  <% if @cftid?: %>
+    <div class='download'>
+      <p>Download Data</p>
+      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_u.fits.fz">u</a>
+      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_g.fits.fz">g</a>
+      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_r.fits.fz">r</a>
+      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_i.fits.fz">i</a>
+      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_z.fits.fz">z</a>
+    </div>
+  <% end %>
 </div>
