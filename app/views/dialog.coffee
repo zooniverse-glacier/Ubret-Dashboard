@@ -14,6 +14,7 @@ class Dialog extends BaseView
 
   confirm: (e) =>
     unless e.type is 'keypress' and e.which isnt 13
+      e.preventDefault()
       @confirmCallback(e)
       @close()
 
