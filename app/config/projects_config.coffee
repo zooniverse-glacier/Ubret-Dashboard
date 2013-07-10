@@ -3,7 +3,7 @@ Projects =
     name: 'Galaxy Zoo'
     talk: true
     sources: ["Zooniverse", "Sky Server"]
-    tools: ["Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table"],
+    tools: ["Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table", "ColorMagnitudeChart"]
     defaults: ["Table", "SubjectViewer"]
 
   spacewarp: 

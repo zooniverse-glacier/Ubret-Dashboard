@@ -78,3 +78,5 @@ module.exports =
   "Sky Server" :
     settings: []
     data_source: {source_type: "external", source_id: "sky_server"}
+  "ColorMagnitudeChart":
+    settings: [settings.data]
