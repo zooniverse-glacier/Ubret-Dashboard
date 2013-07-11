@@ -21,8 +21,10 @@ class DataSource extends Backbone.AssociatedModel
     if @isZooniverse()
       new @zooSubjects([], {zoo_ids: @get('params[0].val') or []})
     else if @isExternal()
-      url = @manager.get('sources').get(@get('source_id')).url
-      new @extSubjects([], {params: @get('params'), base: url })
+      source = @manager.get('sources').get(@get('source_id'))
+      url = source.url
+      builder = source.search_types[@get('search_type')].builder
+      new @extSubjects([], {params: @get('params'), base: url, builder: builder })
     else
       throw new Error('unknown source type')
 

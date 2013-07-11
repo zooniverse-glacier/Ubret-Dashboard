@@ -5,18 +5,21 @@ class ExternalSubjectCollection extends Backbone.Collection
   sync: require 'lib/endpoints_sync'
 
   initialize: (models=[], options={}) ->
-    throw new Error('must provide a url') unless options.base
-
+    throw new Error('must provide a url') unless options.base 
+    
     @base = options.base
-    @urlBuild = options.builder
-    @params = new Object
-
+    @urlBuilder = options.builder
+    @params = {}
+    
     if options.params? and options.params.length
       options.params.each (param) =>
         @params[param.get('key')] = param.get('val')
 
   url: =>
-    @base + '?' + @processParams()
+    if @urlBuilder?
+      @base + "?q=#{@urlBuilder(@params)}"
+    else
+      @base + '?' + @processParams()
 
   comparator: (subject) ->
     subject.get('uid')

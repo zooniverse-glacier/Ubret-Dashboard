@@ -5,7 +5,7 @@
   <div class="column three-quarters">
     <select data-cid="<%- @.cid %>">
       <% for opt in @get('options'): %>
-        <option value="<%- opt %>"><%- opt %></option>
+        <option value="<%- opt %>" <%- 'selected' if opt is @get('val') %> ><%- opt %></option>
       <% end %>
     </select>
   </div>
