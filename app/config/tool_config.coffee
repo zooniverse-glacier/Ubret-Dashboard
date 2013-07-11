@@ -83,3 +83,7 @@ module.exports =
   "Snapshot Serengeti CartoDB":
     settings: []
     data_source: {source_type: "external", source_id: "serengeti_carto"}
+  "ImagePlayer":
+    settings: [settings.data]
+    
+    

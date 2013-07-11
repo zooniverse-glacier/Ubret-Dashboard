@@ -10,6 +10,7 @@ class DataSourceWindow extends Window
     'change select.search_types' : 'setSearchType'
     'click .load' : 'importData'
     'change input' : 'validateParams'
+    'change select' : 'validateParams'
 
   initialize: ->
     super

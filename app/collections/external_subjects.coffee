@@ -30,5 +30,15 @@ class ExternalSubjectCollection extends Backbone.Collection
       value = value.split('\n').join(' ') if key is 'query'
       params.push "#{key}=#{value}" 
     params.join("&")
+  
+  parse: (d) ->
+    console.log 'parse', d
+    
+    rows = _.map(d.rows,  (d) ->
+      d['image'] = d.imgurl
+      delete d.imgurl
+    )
+    return d.rows
+    
 
 module.exports = ExternalSubjectCollection
