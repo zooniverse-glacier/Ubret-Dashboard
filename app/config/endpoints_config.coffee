@@ -17,16 +17,33 @@ module.exports =
     name: "Snapshot Serengeti CartoDB"
     url: "https://aliburchard.cartodb.com/api/v2/sql"
     search_types:
-      species:
-        name: 'species'
+      filter:
+        name: 'Filter'
         builder: (i) ->
-          query = "SELECT * FROM ss_cons_coords WHERE species ILIKE '%#{i.species}%' ORDER BY timestamp_proc"
-          url = encodeURI(query)
-          return url.replace(/\+/g, '%2B')
+          
+          # Set base query
+          query = "SELECT * FROM ss_cons_coords WHERE "
+          
+          # Storage for all query criteria
+          critera = []
+          
+          # Check query parameters
+          unless i.species is ''
+            critera.push "species ILIKE '%#{i.species}%'"
+          unless i.site is ''
+            critera.push "site_code = '#{i.site}'"
+          
+          query += critera.join(" AND ")
+          
+          # Encode query appropriately
+          query = encodeURI(query)
+          return query.replace(/\+/g, '%2B')
+        
         params:
           species:
             type: 'Select'
             options: [
+              '',
               'aardvark',
               'aardwolf',
               'baboon',
@@ -76,17 +93,10 @@ module.exports =
               'zorilla',
               'human'
             ]
-            required: true
-      site:
-        name: 'site'
-        builder: (i) ->
-          query = "SELECT * FROM ss_cons_coords WHERE site_code = '#{i.site}' ORDER BY timestamp_proc"
-          url = encodeURI(query)
-          return url.replace(/\+/g, '%2B')
-        params:
-          species:
+          site:
             type: 'Select'
             options: [
+              '',
               'B04',
               'B05',
               'B06',
@@ -275,15 +285,6 @@ module.exports =
               'V12',
               'V13'
             ]
-            required: true
-      both:
-        name: 'both'
-        builder: (i) ->
-        params:
-          species:
-            type: 'Select'
-          site:
-            type: 'Select'
   
   sky_server:
     name: 'Sky Server'
