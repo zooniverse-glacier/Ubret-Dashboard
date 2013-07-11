@@ -16,7 +16,7 @@ Projects =
   serengeti: 
     name: 'Snapshot Serengeti'
     talk: true
-    sources: ["Zooniverse"]
+    sources: ["Zooniverse", "Snapshot Serengeti CartoDB"]
     tools: ["Mapper", "Statistics", "SubjectViewer", "Table", "BarGraph", "ImageGallery"]
     defaults: ["SubjectViewer"]
 

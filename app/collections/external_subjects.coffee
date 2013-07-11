@@ -8,6 +8,7 @@ class ExternalSubjectCollection extends Backbone.Collection
     throw new Error('must provide a url') unless options.base
 
     @base = options.base
+    @urlBuild = options.builder
     @params = new Object
 
     if options.params? and options.params.length

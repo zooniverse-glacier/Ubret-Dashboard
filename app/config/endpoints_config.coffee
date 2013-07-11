@@ -13,9 +13,38 @@ module.exports =
         auth: true
       collection:
         url: (id) -> "/talk/collections/#{id}"
+  serengeti_carto:
+    name: "Snapshot Serengeti CartoDB"
+    url: "https://aliburchard.cartodb.com"
+    search_types:
+      species:
+        name: 'species'
+        builder: (i) ->
+        params:
+          species:
+            type: 'Select'
+            options: []
+            required: true
+      site:
+        name: 'site'
+        builder: (i) ->
+        params:
+          species:
+            type: 'Select'
+            options: []
+            required: true
+      both:
+        name: 'both'
+        builder: (i) ->
+        params:
+          species:
+            type: 'Select'
+          site:
+            type: 'Select'
+  
   sky_server:
     name: 'Sky Server'
-    url: '/sky_server'
+    url: 'http://spelunker.herokuapp.com/sky_server'
     search_types:
       area:
         name: 'area'
@@ -91,7 +120,7 @@ module.exports =
             placeholder: "Enter SQL query"
   ned:
     name: 'NED'
-    url: '/ned'
+    url: 'http://spelunker.herokuapp.com/ned'
     search_types: [
       name: 'area'
       params:

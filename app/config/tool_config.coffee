@@ -80,3 +80,6 @@ module.exports =
     data_source: {source_type: "external", source_id: "sky_server"}
   "ColorMagnitudeChart":
     settings: [settings.data]
+  "Snapshot Serengeti CartoDB":
+    settings: []
+    data_source: {source_type: "external", source_id: "serengeti_carto"}
