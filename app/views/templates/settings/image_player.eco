@@ -1,5 +1,4 @@
-<p>image player what?!</p>
+<h4>Image Player</h4>
 
-<button class='action column'>Play</button>
-<button class='action column'>Pause</button>
-<button class='action column'>Reset</button>
+<input type='checkbox' class='action column' data-action='play-pause'>
+<button class='action column' data-action='reset'>Reset</button>
