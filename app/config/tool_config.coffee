@@ -9,6 +9,8 @@ settings =
   spectra_legend: require 'views/settings/spectra_legend'
   spacewarp_viewer: require 'views/settings/spacewarp_viewer'
   zooniverse: require 'views/settings/zooniverse_data'
+  image_player: require 'views/settings/image_player'
+
 
 module.exports = 
   "BarGraph":
@@ -84,6 +86,6 @@ module.exports =
     settings: []
     data_source: {source_type: "external", source_id: "serengeti_carto"}
   "ImagePlayer":
-    settings: [settings.data]
-    
+    settings: [settings.data, settings.image_player, settings.subject]
+    defaults: {currentPage: 0}
     

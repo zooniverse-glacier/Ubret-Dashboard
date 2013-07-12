@@ -1,0 +1,5 @@
+<p>image player what?!</p>
+
+<button class='action column'>Play</button>
+<button class='action column'>Pause</button>
+<button class='action column'>Reset</button>
