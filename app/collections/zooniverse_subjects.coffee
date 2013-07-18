@@ -87,7 +87,12 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       thumb: subject.location.thumbnail
       ra: subject.coords[0]
       dec: subject.coords[1]
-    metadata = _.omit subject.metadata, 'control', 'counters'
+      u: subject.metadata.umag
+      g: subject.metadata.gmag
+      r: subject.metadata.rmag
+      i: subject.metadata.imag
+      z: subject.metadata.zmag
+    metadata = _.omit subject.metadata, 'control', 'counters', 'umag', 'gmag', 'imag', 'rmag', 'zmag'
     model[key] = value for key, value of metadata
     model
 
