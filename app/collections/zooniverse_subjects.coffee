@@ -80,6 +80,9 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       params.push "#{key}=#{value}" 
     params.join('&')
 
+  galaxy_zoo_starburst: (subject) =>
+    @galaxy_zoo(subject)
+
   galaxy_zoo: (subject) =>
     model = 
       uid: subject.zooniverse_id
