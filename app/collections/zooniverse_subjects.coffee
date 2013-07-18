@@ -87,7 +87,8 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       thumb: subject.location.thumbnail
       ra: subject.coords[0]
       dec: subject.coords[1]
-    model[key] = value for key, value of subject.metadata when key isnt 'control' or key isnt 'counters'
+    metadata = _.omit subject.metadata, 'control', 'counters'
+    model[key] = value for key, value of metadata
     model
 
   galaxy_zoo: (subject) =>
