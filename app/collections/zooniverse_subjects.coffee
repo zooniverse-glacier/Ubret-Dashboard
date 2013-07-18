@@ -81,7 +81,14 @@ class ZooniverseSubjectCollection extends Backbone.Collection
     params.join('&')
 
   galaxy_zoo_starburst: (subject) =>
-    @galaxy_zoo(subject)
+    model = 
+      uid: subject.zooniverse_id
+      image: subject.location.standard
+      thumb: subject.location.thumbnail
+      ra: subject.coords[0]
+      dec: subject.coords[1]
+    model[key] = value for key, value of subject.metadata when key isnt 'control' or key isnt 'counters'
+    model
 
   galaxy_zoo: (subject) =>
     model = 
