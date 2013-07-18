@@ -46,6 +46,8 @@ class ZooniverseSubjectCollection extends Backbone.Collection
 
   url: =>
     if @type is 'collection'
+      if @id is '' or @id is undefined 
+        throw new Error('Must supply Collection id')
       @base(@id)
     else
       unless @user.current?
