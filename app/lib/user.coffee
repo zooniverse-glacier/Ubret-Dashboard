@@ -66,18 +66,26 @@ class User extends Backbone.Events
     $.ajax(opts).then (response) => cb response
 
   finishTutorial: =>
-    url = @manager.api() + "/users/preferences"
+    @setPrefs(JSON.stringify({key: "dashboard.tutorial", value: true}))
+
+  dismissBeta: =>
+    data = JSON.stringify({key: "dashboard.beta", value: true})
+    url = @manager.baseApi() + "/users/preferences"
+    @setPrefs(data, url)
+
+  setPrefs: (data, url=null) =>
+    url or= @manager.api() + "/users/preferences"
     opts = 
       url: url
       type: 'PUT'
-      data: JSON.stringify({key: "dashboard.tutorial", value: true})
+      data: data
     opts = _.extend(opts, @ajaxOpts)
-    $.ajax(opts).then (response) => console.log response
+    $.ajax(opts)
 
   basicAuth: =>
     "Basic " + btoa(@name + ":" + @apiToken)
 
-  preferences: (projectID) =>
+  projectPrefs: (projectID) =>
     if @prefs?
       @prefs[projectID]?.dashboard
     else

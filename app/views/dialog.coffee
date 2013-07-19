@@ -7,7 +7,7 @@ class Dialog extends BaseView
   dialogTemplate: require './templates/dialog'
 
   initialize: (options) ->
-    @parent = options.parent
+    @parent = options?.parent
  
   close: =>
     @remove()

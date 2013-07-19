@@ -4,6 +4,7 @@ DashboardView = require 'views/dashboard'
 SavedList = require 'views/saved_list'
 MyData = require 'views/my_data'
 DashboardDialog = require 'views/dashboard_dialog'
+BetaDialog = require 'views/beta_dialog'
 User = require 'lib/user'
 
 Manager = require 'modules/manager'
@@ -32,12 +33,19 @@ class AppView extends BaseView
 
   initialize: ->
     @$el.html @template()
+
+    @showBetaDialog() unless User.current.prefs?.dashboard?.beta
+
     @appHeader = new AppHeader({el: @$('.app-header')})
     @dashboardView = new DashboardView
     @appHeader.switch.on 'project-change', @projectChange
 
     # Main area views. Switched out when appropriate.
     @appFocusView = null
+
+  showBetaDialog: =>
+    betaDialog = new BetaDialog()
+    $('body').append betaDialog.render().el
 
   render: =>
     unless @appFocusView?
@@ -132,7 +140,7 @@ class AppView extends BaseView
     @render()
 
   createDashboardView: =>
-    tutorialEligiable = not User.current?.preferences(@dashboardModel.get('project_id'))?.tutorial? 
+    tutorialEligiable = not User.current?.projectPrefs(@dashboardModel.get('project_id'))?.tutorial? 
     tutorialEligiable = tutorialEligiable and not (@dashboardModel.get('name') is 'Tutorial')
     if tutorialEligiable and Tutorials[Manager.get('project')]?
       @startTutorial()
