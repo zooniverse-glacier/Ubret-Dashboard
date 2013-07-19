@@ -5,7 +5,7 @@ class BetaDialog extends Dialog
   title: "ZooTools Beta"
   confirmation: "Don't Show Again"
 
-  template: """<p>ZooTools is a Beta project, bugs may occur! Please report any problems you have to <a href="mailto:support@zooniverse.org">Support@Zooniverse</a>. Thank you for using ZooTools!</p>"""
+  template: """<p>ZooTools is a Beta project, bugs may occur! Please report any problems you have to <a href="mailto:ed@zooniverse.org">Support@Zooniverse</a>. Thank you for using ZooTools!</p>"""
 
   confirmCallback: (e) => @user.current.dismissBeta()
 
