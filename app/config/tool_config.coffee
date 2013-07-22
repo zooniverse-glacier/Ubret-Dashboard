@@ -10,6 +10,7 @@ settings =
   spacewarp_viewer: require 'views/settings/spacewarp_viewer'
   zooniverse: require 'views/settings/zooniverse_data'
   image_player: require 'views/settings/image_player'
+  download_data: require 'views/settings/download_data'
 
 
 module.exports = 
@@ -75,15 +76,15 @@ module.exports =
     width: 680
     height: 473
   "Zooniverse" :
-    settings: [settings.zooniverse]
+    settings: [settings.zooniverse, settings.download_data]
     data_source: {source_type: "zooniverse", params: [{key: 'zoo_ids', val: []}]}
   "Sky Server" :
-    settings: []
+    settings: [settings.download_data]
     data_source: {source_type: "external", source_id: "sky_server"}
   "ColorMagnitudeChart":
     settings: [settings.data]
   "Snapshot Serengeti CartoDB":
-    settings: []
+    settings: [settings.download_data]
     data_source: {source_type: "external", source_id: "serengeti_carto"}
   "ImagePlayer":
     settings: [settings.data, settings.image_player, settings.subject]

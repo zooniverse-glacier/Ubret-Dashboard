@@ -32,13 +32,12 @@ class ExternalSubjectCollection extends Backbone.Collection
     params.join("&")
   
   parse: (d) ->
-    console.log 'parse', d
-    
-    rows = _.map(d.rows,  (d) ->
-      d['image'] = d.imgurl
-      delete d.imgurl
-    )
-    return d.rows
-    
+    if d[0].imgurl?
+      rows = _.map(d.rows,  (d) ->
+        d['image'] = d.imgurl
+        delete d.imgurl
+      )
+      return d.rows
+    d
 
 module.exports = ExternalSubjectCollection

@@ -29,7 +29,7 @@ class ZooniverseDataSettings extends BaseView
   render: =>
     super
     @$el.html @template
-      collections: @talkCollections.toJSON()
+      collections: @talkCollections?.toJSON() or []
     @
 
   displaySource: (e) =>

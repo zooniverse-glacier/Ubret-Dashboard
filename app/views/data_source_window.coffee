@@ -17,6 +17,7 @@ class DataSourceWindow extends Window
     @paramsView = new ParamsView 
       collection: @model.get('data_source.params')
     @model.on 'add:data_source.params', @render
+    @model.set('settings_active', 'false')
 
   setParams: =>
     if @model.get('data_source.search_type')?
@@ -39,7 +40,6 @@ class DataSourceWindow extends Window
       search_types: @searchTypes()
     @assign
       '.params' : @paramsView
-    @$('.settings').remove()
     @validateParams()
     @
 
