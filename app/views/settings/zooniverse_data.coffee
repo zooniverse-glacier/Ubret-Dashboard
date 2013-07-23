@@ -7,6 +7,16 @@ class ZooniverseDataSettings extends BaseView
   template: require 'views/templates/settings/zooniverse_data'
   user: require 'lib/user'
   zooSubjects: require 'collections/zooniverse_subjects'
+  manager: require 'modules/manager'
+
+  defaultCollections:
+    galaxy_zoo_starburst: [
+      zooniverse_id: 'something'
+      title: 'Quench Sample'
+    ,
+      zooniverse_id: 'somethign else'
+      title: 'Control Sample'
+    ]
 
   initialize: ->
     if @user.current?
@@ -28,8 +38,11 @@ class ZooniverseDataSettings extends BaseView
 
   render: =>
     super
+    collections = @talkCollections?.toJSON() or []
+    projectCollections = @defaultCollections[@manager.get('project')]
+    collections = collections.concat(projectCollections) if projectCollections
     @$el.html @template
-      collections: @talkCollections?.toJSON() or []
+      collections: collections
     @
 
   displaySource: (e) =>
