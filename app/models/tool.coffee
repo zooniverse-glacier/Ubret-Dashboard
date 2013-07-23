@@ -78,7 +78,6 @@ class Tool extends Backbone.AssociatedModel
       if @get('tool_type') is 'Zooniverse'
         @on 'change:data_source.params[0].val', @updateData
       else if @get('tool_type') is 'Quench'
-        @on 'change:data_source.search_type', => console.log 'here'
         @on 'change:data_source.search_type', @updateData
     else
       @tool = new Ubret[@get('tool_type')]
@@ -183,7 +182,6 @@ class Tool extends Backbone.AssociatedModel
   updateData: (force=false) =>
     force = not(typeof force is 'object')
     dataSource = @get('data_source')
-    console.log @get('data_source')
     if dataSource.isZooniverse() 
       if dataSource.get('params[0]').hasChanged or force
         unless _.isEmpty(dataSource.get('params[0].val'))

@@ -57,7 +57,6 @@ class WindowTitleBar extends BaseView
     @trigger 'endDrag', e
 
   editTitle: (e) =>
-    console.log e
     e.preventDefault() 
     @editing = true
     @$('.window-title').addClass('editing')

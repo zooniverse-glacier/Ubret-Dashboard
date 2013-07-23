@@ -59,7 +59,6 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       @base(@user.current.id) + '?' + @processParams()
 
   fetch: =>
-    console.log @url
     return super unless @zooIDs?
     @fetchSubjects()
 
