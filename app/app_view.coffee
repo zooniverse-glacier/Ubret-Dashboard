@@ -34,7 +34,7 @@ class AppView extends BaseView
   initialize: ->
     @$el.html @template()
 
-    @showBetaDialog() unless User.current.prefs?.dashboard?.beta
+    @showBetaDialog() unless User.current?.prefs?.dashboard?.beta
 
     @appHeader = new AppHeader({el: @$('.app-header')})
     @dashboardView = new DashboardView
