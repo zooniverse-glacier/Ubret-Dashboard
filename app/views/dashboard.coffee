@@ -5,6 +5,7 @@ class DashboardView extends BaseView
   fqlbox: require 'views/fql_box'
   toolWindow: require 'views/tool_window'
   zooniverseWindow: require 'views/zooniverse_source_window'
+  quenchWindow: require 'views/quench_window'
   dataSourceWindow: require 'views/data_source_window'
   manager: require 'modules/manager'
   user: require 'lib/user'
@@ -49,7 +50,10 @@ class DashboardView extends BaseView
     if tool.get('tool_type') is 'Zooniverse'
       sourceWindow = new @zooniverseWindow({model: tool})
     else
-      sourceWindow = new @dataSourceWindow({model: tool})
+      if tool.get('tool_type') is 'Quench'
+        sourceWindow = new @quenchWindow({model: tool})
+      else
+        sourceWindow = new @dataSourceWindow({model: tool})
     @$el.append sourceWindow.render().el
 
   removeTools: =>

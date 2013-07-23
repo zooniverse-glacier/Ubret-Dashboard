@@ -56,6 +56,7 @@ class Tool extends Backbone.AssociatedModel
         @set 'height', config.height if config.height?
         @set 'width', config.width if config.width?
         @set 'locked_size', config.locked if config.locked?
+        @set 'settings_active', config.settings_active if config.settings_active?
         @get('settings').set config.defaults if config.defaults?
         @get('data_source').set config.data_source if config.data_source?
 
@@ -76,6 +77,9 @@ class Tool extends Backbone.AssociatedModel
       @updateData(true)
       if @get('tool_type') is 'Zooniverse'
         @on 'change:data_source.params[0].val', @updateData
+      else if @get('tool_type') is 'Quench'
+        @on 'change:data_source.search_type', => console.log 'here'
+        @on 'change:data_source.search_type', @updateData
     else
       @tool = new Ubret[@get('tool_type')]
         selector: (@get('tool_type') + "-" + @cid)
@@ -179,10 +183,14 @@ class Tool extends Backbone.AssociatedModel
   updateData: (force=false) =>
     force = not(typeof force is 'object')
     dataSource = @get('data_source')
+    console.log @get('data_source')
     if dataSource.isZooniverse() 
       if dataSource.get('params[0]').hasChanged or force
         unless _.isEmpty(dataSource.get('params[0].val'))
           @fetchData(dataSource) 
+    else if dataSource.isQuench()
+      if dataSource.get('search_type')?
+        @fetchData(dataSource)
     else if dataSource.isExternal()
       if dataSource.get('params').isValid()
         @fetchData(dataSource)

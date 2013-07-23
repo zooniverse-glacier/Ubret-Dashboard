@@ -20,6 +20,9 @@ class DataSource extends Backbone.AssociatedModel
   data: =>
     if @isZooniverse()
       new @zooSubjects([], {zoo_ids: @get('params[0].val') or []})
+    else if @isQuench()
+      url = "/data/galaxy_zoo_starburst/#{@get('search_type')}.json"
+      new @zooSubjects([], {overrideUrl: url})
     else if @isExternal()
       source = @manager.get('sources').get(@get('source_id'))
       url = source.url
@@ -33,6 +36,9 @@ class DataSource extends Backbone.AssociatedModel
 
   isZooniverse: =>
     @get('source_type') is 'zooniverse'
+
+  isQuench: =>
+    @get('source_type') is 'quench'
 
   isInternal: =>
     @get('source_type') is 'internal'

@@ -13,7 +13,7 @@ module.exports =
         auth: true
       collection:
         url: (id) -> "/talk/collections/#{id}"
-  serengeti_carto:
+   serengeti_carto:
     name: "Snapshot Serengeti CartoDB"
     url: "https://aliburchard.cartodb.com/api/v2/sql"
     search_types:

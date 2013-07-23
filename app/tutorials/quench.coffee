@@ -11,41 +11,27 @@ module.exports = new zootorial.Tutorial
       next: 'data1'
     data1: new Step
               header: 'Accessing Data'
-              details: "Before Dashboard can be used we must import data.  Let's access a collection from Talk.<br><br>Click 'Data'."
+              details: "Before Dashboard can be used we must import data.<br><br>Click 'Data'."
               attachment: 'left center a[data-drawer="data"] 2.0 .5'
               className: 'arrow-left'
               next:
                 'click li a[data-drawer="data"]': 'data2'
     data2: new Step
-              header: 'Zooniverse Data'
-              details: 'Specify "Zooniverse" as the data source.'
-              attachment: 'left center a[data-tool="Zooniverse"] 1.0 1.5'
+              header: 'Quench Data'
+              details: 'Specify "Quench" as the data source.'
+              attachment: 'left center a[data-tool="Quench"] 1.0 1.25'
               className: 'arrow-left'
               next:
-                'click a[data-tool="Zooniverse"]': 'data3'
+                'click a[data-tool="Quench"]': 'data3'
     data3: new Step
-              header: 'Recents, Favorites, and Talk Collections'
-              details: "You can access data from Recents, Favorites, or any Talk collection.<br><br>Click 'Collections' to import from Talk."
-              attachment: 'center center .tool-window center center'
+              header: 'Quench Datasets'
+              details: "You can access either the entire set of Quench Galaxies, or the set of Control Galaxies. <p> Click 'Quench Sample'. Allow a second to load. You're getting a lot of data!<p>"
+              attachment: 'center bottom .tool-window center top'
               next:
-                'click a[data-target="collections"]': 'data4'
-    data4: new Step
-              header: 'Talk Collection'
-              details: 'Select the "Quench Sample" collection. This is our 3,002 post-quenched galaxy sample. Notice the "Control Sample" collection that contains data on the 3,002 mass and reshift matched control galaxies.'
-              attachment: 'right center .collections > label left center'
-              className: 'arrow-right'
-              next:
-                'change select.user-collection': 'data5'
-    data5: new Step
-              header: 'Import'
-              details: 'Click "Import".'
-              attachment: 'right center button.import left center'
-              className: 'arrow-right'
-              next:
-                'click button.import': 'tool'
+                'click button[data-collection="sample"]': 'tool'
     tool: new Step
               header: 'Tool'
-              details: "Great! We have just connected a Talk collection to Dashboard.  Now let's connect a tool.<br><br>Click 'Tools'."
+              details: "Great! We have just connected a data source to Dashboard.  Now let's connect a tool.<br><br>Click 'Tools'."
               attachment: 'left center a[data-drawer="tool"] 2.0 .5'
               className: 'arrow-left'
               next:
@@ -65,7 +51,7 @@ module.exports = new zootorial.Tutorial
                   text = @details.replace("{{title}}", title)
                   details.html(text)
                 ), 0
-              details: 'This tool is used for viewing information about all the galaxies in your collection. <p> First connection a data source by selecting "{{title}}" from "Select Tool".</p>'
+              details: 'This tool is used for viewing information about all the galaxies in your collection. <p> First connect a data source by selecting "{{title}}" from "Select Tool".</p>'
               attachment: 'center center .Table center center'
               next:
                 'change select.sources': 'table3'
@@ -79,7 +65,7 @@ module.exports = new zootorial.Tutorial
 
     prompt1: new Step
               header: 'Prompt'
-              details: 'To create a column u_man - g_mag color, type "New Field \'u-g color\', .u - .g" in the Prompt, and click "Execute".'
+              details: 'To create a column u_man - g_mag color, type "New Field color, .u - .g" in the Prompt, and click "Execute".'
               attachment: 'right center button.fql-submit left center'
               className: 'arrow-right'
               next: 'click button.fql-submit' : 'prompt2'
@@ -92,41 +78,41 @@ module.exports = new zootorial.Tutorial
               next: 'scatter1'
 
     scatter1: new Step
-              header: 'Scatter Plot'
-              details: "Great! You now have a sense for the data we have for each source in this Collection and you've derived a new column of data. <p> Click 'Scatter Plot' to loko for trends in the data.</p>"
+              header: 'Scatterplot'
+              details: "Great! You now have a sense for the data we have for each source in this dataset, and you've derived a new column of data. <p> Click 'Scatterplot' to look for trends in the data.</p>"
               attachment: 'left center a[data-tool="Scatterplot"] 1.0 0.5'
               className: 'arrow-left'
               next: 'click a[data-tool="Scatterplot"]' : 'scatter2'
     scatter2: new Step
-              header: 'Scatter Plot'
+              header: 'Scatterplot'
               onEnter: (t) ->
-                title = $('.window-title').text().trim()[1]
+                title = $('.window-title').slice(1,2).text().trim()
                 setTimeout ( =>
                   details = t.el.find('.details')
                   text = @details.replace("{{title}}", title)
                   details.html(text)
                 ), 0
-              details: 'This tool is used for creating Scatter Plots. <p> First connection a data source by selecting "{{title}}" from "Select Tool".</p>'
+              details: 'This tool is used for creating Scatterplots. <p> First connect a data source by selecting "{{title}}" from "Select Tool".</p>'
               attachment: 'center center .Scatterplot center center'
               next: 'change select.sources' : 'scatter3'
     scatter3: new Step
-              header: 'Scatter Plot'
+              header: 'Scatterplot'
               details: 'Select log-mass for the x-axis'
               attachment: 'right center select.x-axis left center'
               className: 'arrow-right'
               next: 'change select.x-axis' : 'scatter4'
     scatter4: new Step
-              header: 'Scatter Plot'
-              details: 'Select u-g color for the y-axis'
+              header: 'Scatterplot'
+              details: 'Select color for the y-axis'
               attachment: 'right center select.y-axis left center'
               className: 'arrow-right'
               next: 'change select.y-axis' : 'scatter5'
-    scattter5: new Step
-              header: 'Scatter Plot'
+    scatter5: new Step
+              header: 'Scatterplot'
               details: 'Click the Settings Arrow to see your whole graph'
-              attachment: 'center top .window:has(.Table) .toggle center top'
+              attachment: 'center bottom .window:has(.Scatterplot) .toggle center top'
               className: 'arrow-bottom'
               next: 'click .toggle' : 'finish'
     finish: new Step
               header: 'Finished!'
-              details: "Congrat! You've derived new data and created your first plot."
+              details: "Congrats! You've derived new data and created your first plot."

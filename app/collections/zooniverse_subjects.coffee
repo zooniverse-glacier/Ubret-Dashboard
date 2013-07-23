@@ -5,6 +5,10 @@ class ZooniverseSubjectCollection extends Backbone.Collection
   sync: require 'lib/ouroboros_sync'
 
   initialize: (models=[], options={}) ->
+    if options.overrideUrl?
+      @url = options.overrideUrl
+      @sync = Backbone.sync
+      return
     @zooIDs = options.zoo_ids
     @type = options.type
     @id = options.id
@@ -55,6 +59,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
       @base(@user.current.id) + '?' + @processParams()
 
   fetch: =>
+    console.log @url
     return super unless @zooIDs?
     @fetchSubjects()
 

@@ -9,7 +9,7 @@ Projects =
   galaxy_zoo_starburst:
     name: 'Quench'
     talk: true
-    sources: ["Zooniverse", "Sky Server"]
+    sources: ["Quench", "Zooniverse", "Sky Server"]
     tools: ["Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table", "ColorMagnitudeChart"]
     defaults: ["Table", "SubjectViewer"]  
 

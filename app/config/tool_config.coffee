@@ -81,6 +81,12 @@ module.exports =
   "Sky Server" :
     settings: [settings.download_data]
     data_source: {source_type: "external", source_id: "sky_server"}
+  "Quench" :
+    settings: [settings.download_data]
+    settings_active: false
+    data_source: {source_type: 'quench'}
+    height: 150
+    width: 300
   "ColorMagnitudeChart":
     settings: [settings.data]
   "Snapshot Serengeti CartoDB":
