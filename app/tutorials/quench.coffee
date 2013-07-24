@@ -51,7 +51,7 @@ module.exports = new zootorial.Tutorial
                   text = @details.replace("{{title}}", title)
                   details.html(text)
                 ), 0
-              details: 'This tool is used for viewing information about all the galaxies in your collection. <p> First connect a data source by selecting "{{title}}" from "Select Tool".</p>'
+              details: 'This tool is used for viewing information about all the galaxies in your collection. <p> First connect a data source by selecting "{{title}}" from "Select Tool". It may take a moment to load</p>'
               attachment: 'center center .Table center center'
               next:
                 'change select.sources': 'table3'
@@ -65,7 +65,7 @@ module.exports = new zootorial.Tutorial
 
     prompt1: new Step
               header: 'Prompt'
-              details: 'To create a column u_man - g_mag color, type "New Field color, .u - .g" in the Prompt, and click "Execute".'
+              details: 'To create a column u_mag - g_mag color, type "New Field color, .u - .g" in the Prompt, and click "Execute".'
               attachment: 'right center button.fql-submit left center'
               className: 'arrow-right'
               next: 'click button.fql-submit' : 'prompt2'
