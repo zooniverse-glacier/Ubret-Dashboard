@@ -58,7 +58,7 @@ module.exports = new zootorial.Tutorial
 
     table3: new Step
               header: 'Table'
-              details: 'Each row corresponds to a different galaxy in your Collection. <p> To maniuplate the data in your table you can use the \'Prompt\'.</p>'
+              details: 'Each row corresponds to a different galaxy in your Collection. <p> To manipulate the data in your table you can use the \'Prompt\'.</p>'
               attachment: 'center center .Table center center'
               nextButton: 'Next'
               next: 'prompt1'
