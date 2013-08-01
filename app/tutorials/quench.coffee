@@ -65,7 +65,7 @@ module.exports = new zootorial.Tutorial
 
     prompt1: new Step
               header: 'Prompt'
-              details: 'To create a column u_mag - g_mag color, type "New Field color, .u - .g" in the Prompt, and click "Execute".'
+              details: 'To create a column u_mag - g_mag color, type "field \'u - g color\', .u - .g" in the Prompt, and click "Execute".'
               attachment: 'right center button.fql-submit left center'
               className: 'arrow-right'
               next: 'click button.fql-submit' : 'prompt2'
