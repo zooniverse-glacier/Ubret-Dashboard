@@ -83,7 +83,7 @@ class User extends Backbone.Events
     $.ajax(opts)
 
   basicAuth: =>
-    "Basic " + btoa(@name + ":" + @apiToken)
+    "Basic " + base64.encode(@name + ":" + @apiToken)
 
   projectPrefs: (projectID) =>
     if @prefs?
