@@ -30,7 +30,7 @@ class DataSettings extends BaseView
   updateValidSourceTools: =>
     @intSources = []
     @model.collection?.each (tool) =>
-      unless @model is tool 
+      unless @model is tool or @model is tool.sourceTool()
         @intSources.push { name: tool.get('name'), id: tool.id }
 
 module.exports = DataSettings
