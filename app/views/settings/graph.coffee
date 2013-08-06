@@ -7,6 +7,7 @@ class GraphSettings extends BaseView
 
   events:
     'change .axis': 'onChangeAxis'
+    'change .x-min, .x-max, .y-min, .y-max': 'setRange'
 
   initialize: ->
     @keys = []
@@ -18,6 +19,10 @@ class GraphSettings extends BaseView
       type: @model.get('tool_type')
       axis1: @model.get('settings.axis1')
       axis2: @model.get('settings.axis2')
+      xmin: @model.get('settings.x-min')
+      xmax: @model.get('settings.x-max')
+      ymin: @model.get('settings.y-min')
+      ymax: @model.get('settings.y-max')
     @
 
   setKeys: (keys) =>
@@ -30,6 +35,13 @@ class GraphSettings extends BaseView
     axis = "axis#{e.target.dataset.axis}"
     set = {}
     set[axis] = e.target.value
+    @model.tool.settings(set)
+
+  setRange: (e) =>
+    range = e.target.className
+    value = e.target.value
+    set = {}
+    set[range] = parseInt(value)
     @model.tool.settings(set)
 
 module.exports = GraphSettings

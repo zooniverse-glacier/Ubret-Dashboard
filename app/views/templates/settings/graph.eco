@@ -1,6 +1,6 @@
 <h4><%- @type %> Axis Settings</h4>
-<ul>
-  <li class="x">
+<ul class="nav columns graph">
+  <li class="x column full">
     <label>X-Axis: <select class="axis x-axis" data-axis='1'>
       <option value="">X-Axis Variable</option>
       <% if @keys.length isnt 0: %>
@@ -14,9 +14,18 @@
       <% end %>
     </select></label>
   </li>
+  <li class="x min max column full">
+    <label class="column one-half">X-Min: 
+      <input type="text" class="x-min" value="<%- @xmin %>"/>
+    </label>
+    <label class="column one-half">X-Max: 
+      <input type="text" class="x-max" value="<%- @xmax %>"/>
+    </label>
+  </li>
+
   
   <% if @type is 'Scatterplot': %>
-  <li class="y">
+  <li class="y column full">
     <label>Y-Axis: <select class="axis y-axis" data-axis='2'>
       <option value="">Y-Axis Variable</option>
       <% if @keys.length isnt 0: %>
@@ -29,6 +38,15 @@
         <% end %>
       <% end %>
     </select></label>
+  </li>
+
+  <li class="y min max column full">
+    <label class="column one-half">Y-Min: 
+      <input type="text" class="y-min" value="<%- @ymin %>"/>
+    </label>
+    <label class="column one-half">Y-Max: 
+      <input type="text" class="y-max" value="<%- @ymax %>"/>
+    </label>
   </li>
   <% end %>
 </ul>

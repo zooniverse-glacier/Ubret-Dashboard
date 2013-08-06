@@ -9,7 +9,7 @@
   right: -234px
   top: 0
   transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
-  width: 234px
+  width: 250px
   z-index: 4
   padding-top: 25px
 
@@ -81,6 +81,10 @@
     width: 100%
     display: block
 
+  .min, .max
+    input
+      width: 50%
+
   .value
     float: right
 
@@ -90,6 +94,10 @@
     li
       button
         @extends #choice-button
+
+  ul.graph
+    li
+      padding-top: 10px
 
   .command-history
     margin-top: 30px
