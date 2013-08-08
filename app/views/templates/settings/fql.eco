@@ -6,8 +6,8 @@
   <div class="fql-cheatsheet">
     <p>The Prompt lets you create new Filters and Fields on Dashboard Tools. Basic Usages looks like:
       <ul>
-        <li><label>Filter: </label> filter .u &gt; 15</li>
-        <li><label>Field: </label> field 'Color', .u + .g
+        <li>filter .u &gt; 15</li>
+        <li>field 'Color', .u + .g
       </ul>
     </p>
     <p>To refer to a field in a dataset use its name in all lowercase letters, preceeded by a dot with spaces replaced by underscores. For example 'PetroR90 U' becomes .petror90_u.</p>
