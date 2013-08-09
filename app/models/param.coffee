@@ -1,4 +1,8 @@
 class Param extends Backbone.AssociatedModel
+  
+  evaluate: =>
+    for key, value of @attributes when _.isFunction(value)
+      @set(key, value())
 
   isValid: =>
     if @get('required')
@@ -17,5 +21,8 @@ class Param extends Backbone.AssociatedModel
           validation[0] < val and validation[1] > val
     else
       true
+      
+  toJSON: =>
+    @pick('key', 'val')
 
 module.exports = Param

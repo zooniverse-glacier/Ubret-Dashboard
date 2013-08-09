@@ -90,7 +90,6 @@ class Toolbox extends BaseView
     drawers = @$('.drawers')
     target = @$(e.target).parent()
     if target.hasClass 'active'
-      console.log 'here'
       drawers.removeClass('active')
         .children().removeClass('active')
       target.removeClass('active')

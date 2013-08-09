@@ -4,8 +4,15 @@
   <div class="column one-quarter"><%- label %></div>
   <div class="column three-quarters">
     <select data-cid="<%- @.cid %>">
-      <% for opt in @get('options'): %>
-        <option value="<%- opt %>" <%- 'selected' if opt is @get('val') %> ><%- opt %></option>
+      <% opts = @get('options') %>
+      <% if _.isArray(opts): %>
+        <% for opt in opts: %>
+          <option value="<%- opt %>" <%- 'selected' if opt is @get('val') %> ><%- opt %></option>
+        <% end %>
+      <% else if _.isObject(opts): %>
+        <% for id, opt of opts: %>
+          <option value="<%- id %>" <%- 'selected' if id is @get('val') %> ><%- opt %></option>
+        <% end %>
       <% end %>
     </select>
   </div>

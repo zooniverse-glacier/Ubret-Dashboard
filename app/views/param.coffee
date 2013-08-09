@@ -3,6 +3,7 @@ BaseView = require 'views/base_view'
 class Param extends BaseView
   initialize: ->
     throw 'must pass a param' unless @model
+    @model.evaluate()
     if @model.get('type') then @$el.addClass @model.get('type').toLowerCase()
 
   render: =>

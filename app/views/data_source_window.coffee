@@ -13,6 +13,11 @@ class DataSourceWindow extends Window
     'change select' : 'validateParams'
 
   initialize: ->
+    search_type = @model.get('data_source.search_type')
+    if search_type?
+      params = @searchTypes()[search_type].params
+      @model.get('data_source.params').each (model) ->
+        model.set(params[model.get('key')])
     super
     @paramsView = new ParamsView 
       collection: @model.get('data_source.params')
