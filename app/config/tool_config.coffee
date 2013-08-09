@@ -89,9 +89,9 @@ module.exports =
     width: 300
   "ColorMagnitudeChart":
     settings: [settings.data]
-  "Snapshot Serengeti CartoDB":
+  "Snapshot Serengeti":
     settings: [settings.download_data]
-    data_source: {source_type: "external", source_id: "serengeti_carto"}
+    data_source: {source_type: "external", source_id: "serengeti_classifications"}
   "ImagePlayer":
     settings: [settings.data, settings.image_player, settings.subject]
     defaults: 

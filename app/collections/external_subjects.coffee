@@ -32,12 +32,15 @@ class ExternalSubjectCollection extends Backbone.Collection
     params.join("&")
   
   parse: (d) ->
-    if d[0].imgurl?
-      rows = _.map(d.rows,  (d) ->
-        d['image'] = d.imgurl
-        delete d.imgurl
+    if d.fields and d.fields.locations
+      rows = _.map(d.rows, (d) ->
+        d['uid'] = d.subject_id
+        d['image'] = d.locations
+        
+        delete d[field] for field in ['subject_id', 'locations', 'cartodb_id', 'created_at', 'updated_at', 'the_geom', 'the_geom_webmercator', 'user_group_ids']
+        d
       )
-      return d.rows
-    d
+    else
+      d
 
 module.exports = ExternalSubjectCollection

@@ -14,7 +14,7 @@ class DataSourceWindow extends Window
 
   initialize: ->
     search_type = @model.get('data_source.search_type')
-    if search_type?
+    if search_type? and search_type isnt ''
       params = @searchTypes()[search_type].params
       @model.get('data_source.params').each (model) ->
         model.set(params[model.get('key')])
