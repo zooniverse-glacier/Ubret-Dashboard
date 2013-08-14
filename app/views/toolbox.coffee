@@ -72,7 +72,7 @@ class Toolbox extends BaseView
 
   updateName: (e) =>
     if e.type is 'focusout' or e.which is 13
-      name = @$('.dashboard-name')
+      name = @$('.name')
       input = @$('input')
       newTitle = input.val()
       if newTitle is @model.get('name')
