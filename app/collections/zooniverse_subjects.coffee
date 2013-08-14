@@ -25,7 +25,7 @@ class ZooniverseSubjectCollection extends Backbone.Collection
         @params[param.get('key')] = param.get('val')
 
   parse: (response) ->
-    if response.type is "SubjectSet"
+    if response.type is "SubjectSet" or response.type is "KeywordSet"
       response.subjects
     else if _.isFunction(@[@manager.get('project')])
       if _.isArray(response)
