@@ -33,7 +33,7 @@
       <li><a data-drawer="tool" class="drawer-toggle" href="#">Tools</a></li>
       <li><a data-drawer="data" class="drawer-toggle" href="#">Data</a></li>
       <li><a data-drawer="layout" class="drawer-toggle" href="#">Layout</a></li>
-      <li><a class="remove-tools" href="#">Clear</a></li>
+      <li><a class="remove-tools" href="#">Clear All</a></li>
     </ul>
   </div>
   <span class="dashboard-name"><span class="name"><%- @name %></span><input type="text" value="<%- @name %>" /></span> 
