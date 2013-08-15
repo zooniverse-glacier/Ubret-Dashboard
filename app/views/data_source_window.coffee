@@ -11,6 +11,7 @@ class DataSourceWindow extends Window
     'click .load' : 'importData'
     'change input' : 'validateParams'
     'change select' : 'validateParams'
+    'keypress textarea' : 'validateParams'
 
   initialize: ->
     search_type = @model.get('data_source.search_type')
