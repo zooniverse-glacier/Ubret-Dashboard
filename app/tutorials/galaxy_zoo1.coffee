@@ -2,7 +2,7 @@
 
 module.exports = new zootorial.Tutorial 
   id: 'galaxy_zoo_dashboard_tutorial'
-  firstStep: 'share1'
+  firstStep: 'welcome'
   steps:
     welcome: new Step
       header: "Welcome"
@@ -82,7 +82,8 @@ module.exports = new zootorial.Tutorial
               details: "Want to share your map with someone? You can!<br><br>First, click on “Dashboards”."
               attachment: 'center top a.my-dashboards center bottom'
               className: 'arrow-top'
-              next: 'click a.my-dashboards': 'share2'
+              nextButton: 'Continue'
+              next: 'share2'
     share2: new Step
               header: 'Sharing Data'
               details: "Next, click on “Share”."
