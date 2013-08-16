@@ -10,7 +10,7 @@ Projects =
     name: 'Quench'
     talk: true
     sources: ["Quench", "Zooniverse", "Sky Server"]
-    tools: ["Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table", "ColorMagnitudeChart"]
+    tools: ["BarGraph", "Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table", "ColorMagnitudeChart"]
     defaults: ["Table", "SubjectViewer"]  
 
   spacewarp: 

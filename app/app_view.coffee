@@ -43,12 +43,21 @@ class AppView extends BaseView
 
     # Main area views. Switched out when appropriate.
     @appFocusView = null
+    
+    @state = 'landing'
 
   showBetaDialog: =>
     betaDialog = new BetaDialog()
     $('body').append betaDialog.render().el
 
   render: =>
+    if @state is 'landing'
+      if User.current?
+        Tutorials.landing.steps.welcome.details = "Follow this tutorial to get started using Dashboard."
+      tutorial = Tutorials.landing
+      tutorial.start()
+    @state += 1
+    
     unless @appFocusView?
       @assign
         '.app-header': @appHeader
@@ -66,7 +75,7 @@ class AppView extends BaseView
   projectChange: =>
     User.current?.dashboards.reset()
     User.current?.getDashboards()
-    Ubret.Reset()
+    delete @dashboardModel
     Manager.get('router').navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   loadUbretTools: =>
@@ -131,6 +140,7 @@ class AppView extends BaseView
   loadDashboard: (id) =>
     @$('.main-focus').html @loadingTemplate()
     @dashboardModel = new DashboardModel {id: id}
+    @state = 'create-dashboard'
     @dashboardModel.fetch().then @loadUbretTools, =>
       delete @dashboardModel
       Manager.get('router').navigate '', {trigger: true}
@@ -145,8 +155,8 @@ class AppView extends BaseView
     tutorialEligiable = tutorialEligiable and not (@dashboardModel.get('name') is 'Tutorial')
     if tutorialEligiable and Tutorials[Manager.get('project')]?
       @startTutorial()
-    @switchView(@dashboardView)
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
+    @switchView(@dashboardView)
 
   showSaved: =>
     unless @savedListView? 

@@ -73,7 +73,11 @@ class DashboardView extends BaseView
     dialog = new @warnDialog()
     $('body').append dialog.render().el
 
-  onDashboardInit: (@model) =>
+  onDashboardInit: (model) =>
+    if @model?
+      @model.off()
+      delete @model
+    @model = model
     @toolboxView.setModel(@model)
     @render()
     if @user.current? and @user.current.id isnt @model.get('user').id

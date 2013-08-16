@@ -140,7 +140,6 @@ module.exports =
         params:
           query:
             type: "Textbox"
-            required: true
             placeholder: "Enter SQL query"
   ned:
     name: 'NED'
