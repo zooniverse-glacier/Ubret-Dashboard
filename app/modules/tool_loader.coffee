@@ -6,7 +6,7 @@ ToolLoader = (dashboard, cb) ->
   Manager.set 'tools', projects[project].tools
 
   if parseInt(location.port) > 3332
-    Ubret.Loader Manager.get('tools'), cb
+    Ubret.Loader Manager.get('tools'), cb 
   else
     Ubret.ToolsetLoader Manager.get('project'), cb
 

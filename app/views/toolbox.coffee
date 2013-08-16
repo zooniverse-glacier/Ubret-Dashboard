@@ -32,6 +32,9 @@ class Toolbox extends BaseView
     @
 
   setModel: (model) =>
+    if @model?
+      @model.off()
+      delete @model
     @model = model
     @model.on 'add:tools remove:tools', @renderLayouts
     @render()

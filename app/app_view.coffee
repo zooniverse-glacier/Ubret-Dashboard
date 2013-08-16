@@ -75,7 +75,7 @@ class AppView extends BaseView
   projectChange: =>
     User.current?.dashboards.reset()
     User.current?.getDashboards()
-    Ubret.Reset()
+    delete @dashboardModel
     Manager.get('router').navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
 
   loadUbretTools: =>
@@ -155,8 +155,8 @@ class AppView extends BaseView
     tutorialEligiable = tutorialEligiable and not (@dashboardModel.get('name') is 'Tutorial')
     if tutorialEligiable and Tutorials[Manager.get('project')]?
       @startTutorial()
-    @switchView(@dashboardView)
     Backbone.Mediator.publish 'dashboard:initialized', @dashboardModel
+    @switchView(@dashboardView)
 
   showSaved: =>
     unless @savedListView? 
