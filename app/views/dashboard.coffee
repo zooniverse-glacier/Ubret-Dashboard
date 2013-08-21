@@ -79,7 +79,6 @@ class DashboardView extends BaseView
       delete @model
     @model = model
     @toolboxView.setModel(@model)
-    @render()
     if @user.current? and @user.current.id isnt @model.get('user').id
       @$el.on 'click', @warnNonOwner
     else if @model.get('name') is 'Tutorial'

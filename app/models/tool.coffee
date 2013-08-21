@@ -120,12 +120,14 @@ class Tool extends Backbone.AssociatedModel
 
   setupUbretTool: =>
     if @get('data_source').isInternal() and @get('data_source.source_id')?
-      @sourceTool().on 'change:name', => @trigger 'update-name'
-      if @sourceTool().tool?
-        @tool.parentTool(@sourceTool().tool) 
+      source = @sourceTool()
+      source.on 'change:name', => @trigger 'update-name'
+      if source.tool?
+        @tool.parentTool(source.tool) 
       else
         @trigger 'loading'
-        @sourceTool().once 'ubret-created', (tool) =>
+        source.once 'ubret-created', (tool) =>
+          console.log('here')
           @tool.parentTool tool
 
     else if @get('data_source').isExternal()
@@ -194,9 +196,11 @@ class Tool extends Backbone.AssociatedModel
         @fetchData(dataSource)
 
   fetchData: (dataSource) =>
+    return if @dataFetcher?
     data = dataSource.data()
     @trigger('loading')
-    data.fetch()
+    @dataFetcher = data.fetch()
+      .always(@dataFetcher = null)
       .done(=> 
         @trigger 'loaded'
         @tool.data(data.toJSON()))
