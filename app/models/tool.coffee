@@ -127,7 +127,6 @@ class Tool extends Backbone.AssociatedModel
       else
         @trigger 'loading'
         source.once 'ubret-created', (tool) =>
-          console.log('here')
           @tool.parentTool tool
 
     else if @get('data_source').isExternal()
