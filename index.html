@@ -2,7 +2,129 @@
 
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Zooniverse Dashboard</title>
-    <link href="/css/dashboard.css" rel="stylesheeet" type="text/css">
+    <!-- REMOVE IN BUILD PROCESS -->
+    <link href="/css/top-bar.css" rel="stylesheet" type="text/css">
+    <link href="/css/dialog.css" rel="stylesheet" type="text/css">
+    <link href="/css/dashboard.css" rel="stylesheet" type="text/css">
+    <!-- END REMOVE -->
   </head>
+  <body>
+    <header id="dashboard-header">
+      <div id="logo">
+        <span class="zooniverse-logo"></span>
+        <h1>zootools</h1>
+      </div>
+      <nav>
+        <span class="nav-el" id="current-project">
+          <span class="name">No Project</span>
+          <span class="down-arrow">▾</span> 
+        </span>
+        <ul id="project-select">
+          <li id="serengeti"><a href="#/serengeti">Snapshot Serengeti</a></li>
+          <li id="galaxy_zoo"><a href="#/galaxy_zoo">Galaxy Zoo</a></li>
+          <li id="spacewarp"><a href="#/spacewarp">SpaceWarps</a></li>
+          <li id="galaxy_zoo_starburst"><a href="#/galaxy_zoo_starburst">Galaxy Zoo Quench</a></li>
+        </ul>
+        <span class="nav-seperator"></span>
+        <span class="nav-el" id="nav-dashboard"><a href="#/dashboards">No Dashboard</a></span>
+        <span class="logged-in">
+          <span class="nav-seperator"></span>
+          <span class="nav-el" id="nav-saved"><a href="#/dashboards">Dashboards</a></span>
+          <span class="nav-seperator"></span>
+          <span class="nav-el" id="nav-data"><a href="#/data">Data</a></span>
+          <span class="nav-seperator"></span>
+          <span class="nav-el" id="create-dashboard">New Dashboard</span>
+        </span>
+      </nav>
+    </header>
+    <div id="app">
+      <section id="index">
+        <div class="logged-out">
+          <h3>You need to be logged in to use the ZooTools Dashboard.</h3>
+        </div>
+        <div class="logged-in">
+          <div class="no-project">
+            <label class="large">Select a Project: 
+              <select class="project">
+                <option value="">Projects:</option>
+                <option value="serengeti">Snapshot Serengeti</option>
+                <option value="galaxy_zoo">Galaxy Zoo</option>
+                <option value="galaxy_zoo_starburst">Galaxy Zoo Quench</option>
+                <option value="spacewarp">SpaceWarps</option>
+              </select>
+          </div>
+          <div class="project-selected">
+          </div>
+        </div>
+      </section>
+      <section id="dashboard">
+        <div class="layouts">
+          <label>Layouts: 
+            <ul>
+              <li><button>Row</button></li>
+              <li><button>Tiled</button></li>
+              <li><button>Tree</button></li>
+              <li><button>Freeform</button></li>
+            </ul>
+          </label>
+          <label>Zoom:
+            <ul>
+              <li><button>+</button></li>
+              <li><button>-</button></li>
+            </ul>
+          </label>
+        </div>
+        <div class="bottom drawer data"></div>
+        <div class="bottom drawer tools"></div>
+        <div class="left drawer tools"></div>
+      </section>
+      <section id="saved">
+        <div class="section-header">
+          <h2><span class="name"></span> Dashboards</h2>
+          <div class="layouts">
+            <label>Layouts: 
+              <ul>
+                <li><button>List</button></li>
+                <li><button>Tiled</button></li>
+              </ul>
+            </label>
+          </div>
+        </div>
+        <div class="logged-out">
+          <h3>You need to be logged in to view Saved Dashboards.</h3>
+        </div>
+        <div class="logged-in">
+        </div>
+      </section>
+      <section id="data">
+        <div class="section-header">
+          <h2><span class="name"></span> Data</h2>
+          <div class="layouts">
+            <label>Layouts: 
+              <ul>
+                <li><button>List</button></li>
+                <li><button>Tiled</button></li>
+              </ul>
+            </label>
+          </div>
+        </div>
+        <div class="logged-out">
+          <h3>You need to be logged in to view your Data.</h3>
+        </div>
+        <div class="logged-in">
+        </div>
+      </section>
+    </div>
+    <!-- REMOVE IN BUILD PROCESS -->
+    <script src="/bower_components/jquery/jquery.js"></script>
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/backbone/backbone.js"></script>
+    <script src="/bower_components/backbone-associations/backbone-associations.js"></script>
+    <script src="/vendor/base64.js"></script>
+    <script src="/vendor/zooniverse-2013-6-20-14-35-16.js"></script>
+    <script src="/js/dashboard.js" onload="initialize();"></script>
+    <!-- END REMOVE -->
+  </body>
 </html>

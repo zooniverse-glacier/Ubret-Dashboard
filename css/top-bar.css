@@ -1,0 +1,133 @@
+.zooniverse-top-bar {
+  background: #000;
+  color: #fff;
+  font: bold 11px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-shadow: 0 1px 1px #000;
+  top: 0;
+  z-index: 100;
+}
+.zooniverse-top-bar:before {
+  border-color: #000 #000 transparent transparent;
+  border-style: solid;
+  border-width: 20px 10px;
+  content: "";
+  height: 0;
+  position: absolute;
+  right: 100%;
+  top: 0;
+  width: 0;
+}
+.zooniverse-top-bar a {
+  border: 0;
+  color: inherit;
+  text-decoration: none;
+}
+.zooniverse-top-bar button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  text-shadow: inherit;
+  text-transform: inherit;
+}
+.zooniverse-top-bar .no-user {
+  display: block;
+  margin: 4px 6px 0;
+}
+.zooniverse-top-bar .no-user .zooniverse,
+.zooniverse-top-bar .no-user .sign-in {
+  display: inline-block;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+.zooniverse-top-bar .no-user .zooniverse {
+  font-size: 13px;
+}
+.zooniverse-top-bar .no-user .zooniverse .zooniverse-logo {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAACW0lEQVR42ryWX2jOYRTHt5GirdVYTG3UJkLN/MsYckGJC1yJKbmREisRFwopUsoSccUFciMXblys/Btb8zcrZG+R/ImRGbaSvD5PfX9vZ8fv/b3vmzj16Xmf8/w573POc87vKU6n00X/WobnM+lrb6qeZgFMgvKggh7oKKusu59rfXH/h56k8U2wDeoT5jyB43CqUCMT4QI0FuCVB9AMT41uBqwriZncAM8KNBBkpk61UP3tcAe++ZiMhbswzOnfwWW4B31QBrNgFdS4uTfhGtTCMmj37uqG6W7RfjgIP7OcYDcccroBGA9fQse6a32MgTWwL8FAkMOw0ulGKT5/BP6FAh5J+Pd784hFHZyHaqgy+k8wxp5kqjPwMYuBCsWiQv0N8DDki2LwyswdDfOtkaVus3MxBjbCawU/tLfhKKyFFhiEM27NEpvxU9xgp+uPg9MwQv2RME+nemTmdbh11fYkpW7ws+tPNgYiKVGJsdIXcwEyRr67wfIYo7+c7gekcqwbtEaeu8G55vcKaIOuaJHazfAmYV2RYpcx0uYGm+WeY3ARdqjMTIDZas9muRxWbtjAP4a3ytIo0C+lazBu6RVxskXXOJJ+lZghGe/zokrZnsojIRfBSac7YG9IJJdCxXQTr8CuHAa2Rm4x8l45NKSsNKo0hIxdHLNRSn+iU24oVZBXq1p4maaynzGyU5V2D7RCE9z6i0/6crjqE6pSNaZVunZV4+4CNw9pMMcbyOcb3yKf1ybMCS4+AUeyfuPzeRLxWmlSrapRPAa0eRevles5Xyv/4931W4ABAHD5k83VXALJAAAAAElFTkSuQmCC");
+  display: inline-block;
+  height: 25px;
+  margin-right: 5px;
+  position: relative;
+  top: -2px;
+  vertical-align: middle;
+  width: 25px;
+}
+.zooniverse-top-bar .no-user .sign-in {
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.zooniverse-top-bar .no-user .sign-in button {
+  padding: 10px 0;
+}
+.zooniverse-top-bar .current-user {
+  display: none;
+  margin-top: 5px;
+}
+.zooniverse-top-bar .current-user .messages,
+.zooniverse-top-bar .current-user .info,
+.zooniverse-top-bar .current-user .avatar,
+.zooniverse-top-bar .current-user .group {
+  display: inline-block;
+  margin: 0 6px;
+  vertical-align: middle;
+}
+.zooniverse-top-bar .current-user .messages {
+  margin-top: -3px;
+  opacity: 0.33;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=33)";
+  filter: alpha(opacity=33);
+}
+.zooniverse-top-bar .current-user .messages .message-count {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAKBAMAAABLZROSAAAALVBMVEW+vr7Nzc3Q0NDR0dHW1tbb29vg4ODk5OTn5+fo6Ojt7e3v7+/29vb6+vr///8OFDOYAAAAOElEQVQIHWPY+w4CbjOU9YFZL9IZykvmAZkv3csZysuD1r17pVoOYpULnzEEkiBWKUM4lAWkCLIAEVwyE0jlImMAAAAASUVORK5CYII=") right center no-repeat;
+  display: inline-block;
+  padding-right: 24px;
+}
+.zooniverse-top-bar .current-user .info {
+  line-height: 1;
+  margin-top: -3px;
+}
+.zooniverse-top-bar .current-user .info .current-user-name {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1;
+}
+.zooniverse-top-bar .current-user .info button {
+  font-size: 8px;
+  text-transform: uppercase;
+}
+.zooniverse-top-bar .current-user .avatar img {
+  height: 30px;
+  width: 30px;
+}
+.zooniverse-top-bar .current-user .group {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQCAYAAAD9L+QYAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo2MDhGMkU3OUNCOTgxMUUyOTY3NEM2NzQzRjg4MTg5MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo2MDhGMkU3QUNCOTgxMUUyOTY3NEM2NzQzRjg4MTg5MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjYwOEYyRTc3Q0I5ODExRTI5Njc0QzY3NDNGODgxODkxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjYwOEYyRTc4Q0I5ODExRTI5Njc0QzY3NDNGODgxODkxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+BKUAcAAAAbBJREFUeNqMlD1LA0EQhnOHCvEPWCkRCQiK6cTCIiCKvWBtGcEPSCOaJsQ/oChib0Bj4RcYQZFc7UcwBkGwUEQLG0MwhYgxvi/MwbLsZTPwMDc3M282s3vrNBqNkMUcMA/mQK/nec/wm2AjHo83bW4L2W0NLChxFKyDPrDYdFWy8i6QwKo64PexopIi9AhcvwE1/uMf6Eftk8QxMI38D/w23n+wqQdQLA1WwA0KxqRhVBXWzJU8bRJcSz91StDoZkFCVq6OKi3PX5aR+fkUaFfeU2+W4mFDU6f4S1ALEK5JPhSgEab4LqhriR3xFflnv1qecQJzrUic1fKce5biVyCjJC54zJT42NCclfe+sf5ciTP44VuKJ5UZ08ZBDhvC8x0BRTCjiTMuoiYi30EOTCj5VeSSrmyGozVPgQGwJcfRZFHJD0q9/uGlKF4NaOY8hy2nZQR8BuSqFM8bEmXM7B3+1SL+AlhXNuTOKH5iSPibdWoR9xd2ZNKgeAHcgW85Ym9yPGmHFvED8XvSVxcd6hWcFm5FXg1DhrvlHqOLNWt0W7gVl8CDsvFViZdtjf8CDADwXH2KGkAa9gAAAABJRU5ErkJggg==") right center no-repeat;
+  display: inline-block;
+  height: 20px;
+  opacity: 0.33;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=33)";
+  filter: alpha(opacity=33);
+  width: 24px;
+}
+.zooniverse-top-bar.signed-in .no-user {
+  display: none;
+}
+.zooniverse-top-bar.signed-in .current-user {
+  display: block;
+}
+.zooniverse-top-bar.has-messages .current-user .messages,
+.zooniverse-top-bar.has-group .current-user .group {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+}
+.zooniverse-top-bar .zooniverse-login-form button[name="sign-out"] {
+  display: none;
+}

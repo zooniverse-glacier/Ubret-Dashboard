@@ -1,0 +1,137 @@
+body {
+  font-family: "Ubuntu Sans", sans-serif;
+}
+
+header#dashboard-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  background: #333;
+  width: 100%;
+  border-bottom: 1px solid #222;
+  height: 35px;
+  padding-left: 20px;
+}
+
+header#dashboard-header h1 {
+  display: inline;
+  font-size: 14px;
+}
+
+header#dashboard-header nav {
+  display: inline;
+  width: 500px;
+}
+
+header#dashboard-header nav a {
+  color: white;
+  text-decoration: none;
+}
+
+header#dashboard-header span.dashboard-controls {
+  position: relative
+  right: 240px;
+}
+
+span.nav-el {
+  font-size: 14px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+span.nav-el.active a {
+  color: #5588ff;
+}
+
+span.nav-seperator {
+  border-left: 1px solid white;
+}
+
+span.down-arrow {
+  padding-left: 5px;  
+}
+
+ul#project-select {
+  top: 20px;
+  left: 115px;
+  display: none;
+  position: absolute;
+  width: 200px;
+  background: #222;
+  z-index: 999;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 0;
+  list-style-type: none;
+}
+
+ul#project-select li {
+  border-top: 1px solid white;
+  padding: 15px
+}
+          
+div#logo {
+  padding: 6px;
+  display: inline-block; 
+}
+
+div#app {
+  margin-top: 50px;
+}
+
+section {
+  display: none;
+  margin: 0 auto;
+  width: 1000px;
+}
+
+section#index {
+  display: block;
+}
+
+section div.logged-out {
+  display: none;
+}
+
+section div.logged-out h3{
+  text-align: center;
+}
+
+seciton div.logged-in {
+  display: none;
+}
+
+section h2 {
+  display: inline;
+}
+
+section .section-header {
+  width: 100%;
+  border-bottom: 1px solid #222;
+}
+
+.layouts {
+  float: right;
+}
+
+.layouts ul {
+  display: inline;
+  list-style: none;
+  padding: 0;
+}
+
+.layouts ul li {
+  display: inline;
+}
+
+.zooniverse-logo {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAACW0lEQVR42ryWX2jOYRTHt5GirdVYTG3UJkLN/MsYckGJC1yJKbmREisRFwopUsoSccUFciMXblys/Btb8zcrZG+R/ImRGbaSvD5PfX9vZ8fv/b3vmzj16Xmf8/w573POc87vKU6n00X/WobnM+lrb6qeZgFMgvKggh7oKKusu59rfXH/h56k8U2wDeoT5jyB43CqUCMT4QI0FuCVB9AMT41uBqwriZncAM8KNBBkpk61UP3tcAe++ZiMhbswzOnfwWW4B31QBrNgFdS4uTfhGtTCMmj37uqG6W7RfjgIP7OcYDcccroBGA9fQse6a32MgTWwL8FAkMOw0ulGKT5/BP6FAh5J+Pd784hFHZyHaqgy+k8wxp5kqjPwMYuBCsWiQv0N8DDki2LwyswdDfOtkaVus3MxBjbCawU/tLfhKKyFFhiEM27NEpvxU9xgp+uPg9MwQv2RME+nemTmdbh11fYkpW7ws+tPNgYiKVGJsdIXcwEyRr67wfIYo7+c7gekcqwbtEaeu8G55vcKaIOuaJHazfAmYV2RYpcx0uYGm+WeY3ARdqjMTIDZas9muRxWbtjAP4a3ytIo0C+lazBu6RVxskXXOJJ+lZghGe/zokrZnsojIRfBSac7YG9IJJdCxXQTr8CuHAa2Rm4x8l45NKSsNKo0hIxdHLNRSn+iU24oVZBXq1p4maaynzGyU5V2D7RCE9z6i0/6crjqE6pSNaZVunZV4+4CNw9pMMcbyOcb3yKf1ybMCS4+AUeyfuPzeRLxWmlSrapRPAa0eRevles5Xyv/4931W4ABAHD5k83VXALJAAAAAElFTkSuQmCC");
+  display: inline-block;
+  height: 25px;
+  margin-right: 5px;
+  position: relative;
+  top: -2px;
+  vertical-align: middle;
+  width: 25px;
+}
