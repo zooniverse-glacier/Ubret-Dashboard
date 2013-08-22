@@ -14,5 +14,10 @@
   "license": "APL",
   "bugs": {
     "url": "https://github.com/zooniverse/Ubret-Dashboard/issues"
+  },
+  "dependencies": {
+    "bower": "~1.2.2",
+    "aws-sdk": "~1.5.0",
+    "node-static": "~0.7.0"
   }
 }

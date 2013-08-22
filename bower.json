@@ -1,0 +1,25 @@
+{
+  "name": "dashboard",
+  "version": "0.2.0",
+  "homepage": "https://github.com/zooniverse/Ubret-Dashboard",
+  "authors": [
+    "Edward Paget <ed.paget@gmail.com>"
+  ],
+  "description": "ZooTools Dashboard",
+  "main": "dashboard.js",
+  "license": "APL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.0.0",
+    "underscore": "~1.5.1",
+    "jquery": "~2.0.3",
+    "backbone-associations": "~0.5.1"
+  }
+}
