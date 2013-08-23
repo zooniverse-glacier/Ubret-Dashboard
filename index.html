@@ -45,17 +45,29 @@
           <h3>You need to be logged in to use the ZooTools Dashboard.</h3>
         </div>
         <div class="logged-in">
+          <h3>ZooTools is place to organizae and visualize data from Zooniverse Projects</h3>
+          <p>Dashboards are collections of data sources and visualization tools that allow to gather data, manipulate it, display it, and share your creations with other Zooniverse users.</p>
+          <p>To get started follow the instructions below.</p>
           <div class="no-project">
-            <label class="large">Select a Project: 
+            <p>Each Dashboard is tied to a Zooniverse project. The type of project determines what tools and data sources will be available to use within your Dashboard.</p>
+            <label class="large">Select a Project to start creating your dashboard:
               <select class="project">
-                <option value="">Projects:</option>
+                <option value=""></option>
                 <option value="serengeti">Snapshot Serengeti</option>
                 <option value="galaxy_zoo">Galaxy Zoo</option>
                 <option value="galaxy_zoo_starburst">Galaxy Zoo Quench</option>
                 <option value="spacewarp">SpaceWarps</option>
               </select>
+            </label>
           </div>
           <div class="project-selected">
+            <p>Great you're making a dashboard for <span class="name"></span>.</p>
+            <label>Give your dashboard a name: <input type="text" id="dashboard-name" placeholder="My Interesting Dashboard"></label>
+            <p>You can also choose to load some data into your dashboard to get started.<p>
+            <label>Choose one of your talk collections: <select class="talk-collections"><option value="">No Data Please</option></select></label>
+            <p> or </p>
+            <label>Load a data from <span class="name"></span>'s Science Team: <select class="zoo-data-collections"><option value="">No Data Please</option></select></label>
+            <button id="create-dashboard">Create Dashboard</button>
           </div>
         </div>
       </section>

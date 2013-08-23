@@ -41,39 +41,119 @@
     }
   };
 
-  Dashboard.UserDashboards = Backbone.Collection.extend({
+  // Models
+  Dashboard.Dashboard = Backbone.AssociatedModel.extend({
+    sync: Dashboard.Sync
+
+  });
+
+  // Collections
+  
+  Dashboard.ProjectBasedCollection = Backbone.Collection.extend({
     initialize: function() {
       User.on('change', _.bind(this.fetch, this));
       this.listenTo(Dashboard.State, 'change:project', this.fetch);
     },
-
-    url: "/dashboards",
 
     sync: Dashboard.Sync,
 
     fetch: function() {
       if (!Dashboard.userAndProject())
         return
-      return Dashboard.UserDashboards.__super__.fetch.call(this);
+      return Dashboard.ProjectBasedCollection.__super__.fetch.call(this);
     }
   });
 
-  Dashboard.Saved = Backbone.View.extend({
+  Dashboard.UserDashboards = Dashboard.ProjectBasedCollection.extend({
+    model: Dashboard.Dashboard, 
+
+    url: "/dashboards"
+  });
+
+  Dashboard.UserCollections = Dashboard.ProjectBasedCollection.extend({
+    url: function() {
+      return "/talk/users/" + User.current.id + "?type=my_collections";
+    },
+
+    parse: function(response) {
+      return response.my_collections;
+    }
+  });
+
+  // Views 
+  Dashboard.ToggleView = Backbone.View.extend({
+    hide: function() {
+      this.$el.hide();
+    },
+
+    show: function() {
+      this.$el.show();
+    }
+  });
+
+  Dashboard.IndexPage = Dashboard.ToggleView.extend({
+    el: "#index", 
+
+    initialize: function() {
+      this.projectName = this.$('.name');
+      this.listenTo(Dashboard.State, 'change:project', this.updateProject);
+      User.on('initialized', _.bind(function() {
+        this.listenTo(User.current.collections, 'add reset', this.updateCollections);
+      }, this));
+      this.updateProject(null, Dashboard.State.get('project'));
+    },
+
+    events: {
+      'change select.project' : 'setProject',
+      'click button#create-dashboard' : 'createDashboard'
+    },
+
+    createDashboard: function(ev) {
+      User.current.dashboards
+        .create({name: this.$('#dashboard-name').val(), project: Dashboard.State.get('project')});
+    },
+
+    setProject: function(ev) {
+      if (ev.target.value === '')
+        return;
+      else
+        Dashboard.State.set('project', ev.target.value);
+    },
+
+    updateCollections: function(_, collections) {
+      collections.each(function(col) {
+        this.$('select.talk-collections')
+          .append('<option value="' + col.id + '">' + col.get('title') + '</option>');
+      }, this);
+    },
+
+    updateProject: function(state, project) {
+      if (!_.isUndefined(project)) {
+        this.$('.project-selected').show();
+        this.$('select.project').val(project);
+        this.projectName.text(Dashboard.projects[project].name);
+      } else {
+        this.$('.project-selected').hide();
+      }
+    }
+  });
+
+
+  Dashboard.Saved = Dashboard.ToggleView.extend({
     el: "#saved",
 
     initialize: function() {
-      this.collection = new Dashboard.UserDashboards();
-      this.collection.fetch();
+      this.collection = User.current.dashboards; 
     }
-  })
+  });
 
   Dashboard.App = Backbone.View.extend({
     el: "#app",
 
     sections: {
-      index: "#index", 
+      index: Dashboard.IndexPage, 
       dashboard: "#dashboard", 
-      saved: "#saved", 
+      saved: Dashboard.Saved, 
       data: "#data"
     },
 
@@ -83,11 +163,13 @@
     },
 
     setActive: function(state, active) {
-      active = this.sections[active];
-      if (_.isUndefined(active))
+      var section = this.sections[active];
+      if (_.isUndefined(section))
         throw new Error("Section doesn't exist");
+      else if (_.isFunction(section))
+        this.sections[active] = new section();
       this.active.hide();
-      this.active = this.$(active);
+      this.active = this.sections[active];
       this.active.show();
     }
 
@@ -130,16 +212,13 @@
       this.active.addClass("active");
     },
 
-    setDashboardHref: function(state, id) {
+    setDashboard: function(state, id) {
       curAnchor = this.$('#current-dashboard a');
       curAnchor.attr('href', curAnchor.attr('href') + "/" + id);
     },
 
-    setDashboardName: function(state, name) {
-      cur
-    },
-
     updateProject: function(state, project) {
+      var projectText;
       // Hide Project Select in case it's open
       this.projectSelect.hide();
 
@@ -154,14 +233,15 @@
 
       // Update the Active Project
       if (project === '') {
-        project = 'No Project';
+        projectText = 'No Project';
       } else {
       // Hide the Active Project from the List
         if (!_.isUndefined(this.hiddenProject))
           this.hiddenProject.show(); 
         this.hiddenProject = this.projectSelect.find('#' + project).hide();
+        projectText = Dashboard.projects[project].name;
       }
-      this.activeProject.text(Dashboard.projects[project].name);
+      this.activeProject.text(projectText);
     }
   });
 
@@ -232,18 +312,31 @@
       $('.logged-in').show();
     }
   }
+  
+  Dashboard.updateUser = function() {
+    if (Dashboard.userAndProject()) {
+      User.current.dashboards.fetch();
+      User.current.collections.fetch();
+    }
+  };
 
   this.initialize = function() {
     var topBar = new zooniverse.controllers.TopBar(),
       app = new Dashboard.App({model: Dashboard.State}),
       header = new Dashboard.Header({model: Dashboard.State}),
-      saved = new Dashboard.Saved(),
       router = new Dashboard.Router(Dashboard.State);
 
     topBar.el.appendTo(document.body);
 
     User.on('change', Dashboard.toggleLoggin);
-    User.fetch();
+
+    Backbone.Events.listenTo(Dashboard.State, 'change:project', Dashboard.updateUser);
+
+    User.fetch().then(function() {
+      User.current.collections = new Dashboard.UserCollections();
+      User.current.dashboards = new Dashboard.UserDashboards();
+      User.trigger('initialized');
+    }).then(Dashboard.updateUser);
 
     Backbone.history.start();
   };
