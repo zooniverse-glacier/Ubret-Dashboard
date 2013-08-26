@@ -9,7 +9,9 @@
 
   Dashboard.Api = new zooniverse.Api();
 
-  Dashboard.State = new Backbone.Model();
+  Dashboard.State = new Backbone.Model({
+    'list-type' : 'list'
+  });
 
   Dashboard.Sync = function(method, model, options) {
     var baseURL = "https://dev.zooniverse.org/projects/" + Dashboard.State.get('project');

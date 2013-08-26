@@ -11,17 +11,27 @@
     <!-- END REMOVE -->
     <!-- Templates -->
     <script id="dashboard-list-template" type="text/html">
-      <div class="
-      <a href="<%= project %>/dashboards/<%= id %>">
-        <span class="icon"><img src="/img/dashboard-preview.png"></span>
-        <span class="name"><%= name %></span>
-      </a>
-      <span class="created"><%= created_at %></span>
-      <span class="last-modified"><%= updated_at %></span>
-      <span class="children"><a href="<%= project %>/dashboards/<%= id %>/children">Children</a></span>
-      <span class="parent"><a href="<%= project %>/dashboards/<%= parent_id %>">Parent</a></span>
-      <span class="share">
-
+      <div class="dashboard-listing">
+        <div class="info">
+          <span class="name">
+            <a href="<%= get('project') %>/dashboards/<%= id %>">
+              <img src="/img/dashboard-preview.png">
+              <%= get('name') %>
+            </a>
+          </span>
+          <span class="pull-right">
+            <span class="last-modified">Last Update: <%= getFormattedDate('updated_at') %></span>
+            <span class="controls">
+              <a class="btn" href="<%= get('project') %>/dashboards/<%= id %>/children">Children</a>
+              <a class="btn <%= (get('parent_id')) ? '' : 'disabled' %>" href="<%= get('project') %>/dashboards/<%= get('parent_id') %>/">Parent</a>
+              <a class="delete btn">Delete</a>
+              <a class="share btn">Share</a>
+            </span>
+          </span>
+        </div>
+        <div class="share">
+        </div>
+      </div>
     </script>
     
   </head>
@@ -82,59 +92,57 @@
             <label>Choose one of your talk collections: <select class="talk-collections"><option value="">No Data Please</option></select></label>
             <p> or </p>
             <label>Load a data from <span class="name"></span>'s Science Team: <select class="zoo-data-collections"><option value="">No Data Please</option></select></label>
-            <button id="create-dashboard">Create Dashboard</button>
+            <button class="btn" id="create-dashboard">Create Dashboard</button>
           </div>
         </div>
       </section>
       <section id="dashboard">
         <div class="layouts">
-          <label>Layouts: 
-            <ul>
-              <li><button>Row</button></li>
-              <li><button>Tiled</button></li>
-              <li><button>Tree</button></li>
-              <li><button>Freeform</button></li>
-            </ul>
-          </label>
-          <label>Zoom:
-            <ul>
-              <li><button>+</button></li>
-              <li><button>-</button></li>
-            </ul>
-          </label>
+          <label>Layouts: </label>
+          <ul>
+            <li><button class="btn">Row</button></li>
+            <li><button class="btn">Tiled</button></li>
+            <li><button class="btn">Tree</button></li>
+            <li><button class="btn">Freeform</button></li>
+          </ul>
+          <label>Zoom: </label>
+          <ul>
+            <li><button class="btn">+</button></li>
+            <li><button class="btn">-</button></li>
+            <li><button class="btn">Focus</button></li>
+          </ul>
         </div>
         <div class="bottom drawer data"></div>
         <div class="bottom drawer tools"></div>
         <div class="left drawer tools"></div>
       </section>
-      <section id="saved">
+      <section id="saved" class="toggled-layout">
         <div class="section-header">
           <h2><span class="name"></span> Dashboards</h2>
           <div class="layouts">
-            <label>Layouts: 
-              <ul>
-                <li><button>List</button></li>
-                <li><button>Tiled</button></li>
-              </ul>
-            </label>
+            <label>Layouts: </label>
+            <ul>
+              <li><button class="btn" data-type="list">List</button></li>
+              <li><button class="btn" data-type="tiled">Tiled</button></li>
+            </ul>
           </div>
         </div>
         <div class="logged-out">
           <h3>You need to be logged in to view Saved Dashboards.</h3>
         </div>
         <div class="logged-in">
+          <div class="list"></div>
         </div>
       </section>
-      <section id="data">
+      <section id="data" class="toggled-layout">
         <div class="section-header">
           <h2><span class="name"></span> Data</h2>
           <div class="layouts">
-            <label>Layouts: 
-              <ul>
-                <li><button>List</button></li>
-                <li><button>Tiled</button></li>
-              </ul>
-            </label>
+            <label>Layouts: </label>
+            <ul>
+              <li><button class="btn">List</button></li>
+              <li><button class="btn">Tiled</button></li>
+            </ul>
           </div>
         </div>
         <div class="logged-out">
@@ -150,6 +158,7 @@
     <script src="/bower_components/underscore/underscore.js"></script>
     <script src="/bower_components/backbone/backbone.js"></script>
     <script src="/bower_components/backbone-associations/backbone-associations.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
     <script src="/vendor/base64.js"></script>
     <script src="/vendor/zooniverse-2013-6-20-14-35-16.js"></script>
     <script src="/js/dashboard.js"></script>

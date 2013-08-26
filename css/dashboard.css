@@ -2,6 +2,51 @@ body {
   font-family: "Ubuntu Sans", sans-serif;
 }
 
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right
+}
+
+.btn {
+  background: none repeat scroll 0 0 #009BFD;
+  border: 1px solid rgba(0, 0, 0, 0.67);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.33) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+  color: #FFFFFF;
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 10px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.67);
+  cursor: pointer;
+}
+
+.btn:hover {
+  box-shadow: 0 100px 0 rgba(255, 255, 255, 0.125) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+}
+
+.btn:active {
+  box-shadow: 0 100px 0 rgba(0, 0, 0, 0.125) inset, 0 1px 3px rgba(0, 0, 0, 0.67) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+}
+
+.btn.active {
+  box-shadow: 0 100px 0 rgba(0, 0, 0, 0.125) inset, 0 1px 3px rgba(0, 0, 0, 0.67) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+}
+
+.btn.disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.btn.disabled:active {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.33) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+}
+
+.btn.disabled:hover {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.33) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+}
+
 header#dashboard-header {
   position: absolute;
   top: 0;
@@ -127,6 +172,62 @@ section .section-header {
 
 .project-selected {
   display: none;
+}
+
+#saved.tiled .dashboard-listing {
+  width: 300px;
+  display: inline-block;
+  margin: 10px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+#saved.tiled .dashboard-listing span {
+  display: block;
+}
+
+#saved.tiled .dashboard-listing .info span img {
+  display: block;
+  width: inherit;
+  margin: 0 auto;
+  padding-bottom: 10px;k
+}
+
+#saved.tiled .dashboard-listing .info span.pull-right {
+  float: none;
+  width: inherit;
+  margin: 0 auto;
+}
+
+#saved.tiled .dashboard-listing .info .btn {
+  margin: -3px;
+}
+
+#saved .list a {
+  text-decoration: none;
+}
+
+#saved.list .dashboard-listing .info {
+  margin: 10px 0;
+}
+
+#saved.list .dashboard-listing .info span {
+  padding: 0 20px;
+}
+
+#saved.list .dashboard-listing .info span.last-modified, span.controls {
+  position: relative;
+  top: 10px;
+}
+
+#saved.list .dashboard-listing .info {
+  height: 40px;
+}
+#saved.list .dashboard-listing .info span.name img {
+  height: 30px;
+  position: relative;
+  top: 10px;
+  padding-right: 10px;
 }
 
 .zooniverse-logo {
