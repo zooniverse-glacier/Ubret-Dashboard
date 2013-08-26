@@ -4,6 +4,8 @@
   "description": "The New ZooTools Dashbaord",
   "main": "dashboard.js",
   "scripts": {
+    "build" : "node build.js",
+    "start" : "static .",
     "test": "mocha test.js"
   },
   "repository": {
@@ -18,6 +20,9 @@
   "dependencies": {
     "bower": "~1.2.2",
     "aws-sdk": "~1.5.0",
-    "node-static": "~0.7.0"
+    "node-static": "~0.7.0",
+    "clean-css": "~1.0.12",
+    "uglify-js": "~2.4.0",
+    "cheerio": "~0.12.1"
   }
 }
