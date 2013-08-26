@@ -9,6 +9,21 @@
     <link href="/css/dialog.css" rel="stylesheet" type="text/css">
     <link href="/css/dashboard.css" rel="stylesheet" type="text/css">
     <!-- END REMOVE -->
+    <!-- Templates -->
+    <script id="dashboard-list-template" type="text/html">
+      <div class="
+      <a href="<%= project %>/dashboards/<%= id %>">
+        <span class="icon"><img src="/img/dashboard-preview.png"></span>
+        <span class="name"><%= name %></span>
+      </a>
+      <span class="created"><%= created_at %></span>
+      <span class="last-modified"><%= updated_at %></span>
+      <span class="children"><a href="<%= project %>/dashboards/<%= id %>/children">Children</a></span>
+      <span class="parent"><a href="<%= project %>/dashboards/<%= parent_id %>">Parent</a></span>
+      <span class="share">
+
+    </script>
+    
   </head>
   <body>
     <header id="dashboard-header">
@@ -129,6 +144,7 @@
         </div>
       </section>
     </div>
+
     <!-- REMOVE IN BUILD PROCESS -->
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/bower_components/underscore/underscore.js"></script>
@@ -136,7 +152,11 @@
     <script src="/bower_components/backbone-associations/backbone-associations.js"></script>
     <script src="/vendor/base64.js"></script>
     <script src="/vendor/zooniverse-2013-6-20-14-35-16.js"></script>
-    <script src="/js/dashboard.js" onload="initialize();"></script>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/models.js"></script>
+    <script src="/js/collections.js"></script>
+    <script src="/js/views.js"></script>
+    <script src="/js/init.js" onload="initialize();"></script>
     <!-- END REMOVE -->
   </body>
 </html>
