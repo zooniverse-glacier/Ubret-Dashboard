@@ -174,7 +174,7 @@ section .section-header {
   display: none;
 }
 
-#saved.tiled .dashboard-listing {
+.toggled-layout.tiled .listing {
   width: 300px;
   display: inline-block;
   margin: 10px;
@@ -182,52 +182,56 @@ section .section-header {
   text-align: center;
 }
 
-#saved.tiled .dashboard-listing span {
+.toggled-layout.tiled .listing span {
   display: block;
+  margin-top: 10px;
 }
 
-#saved.tiled .dashboard-listing .info span img {
+.toggled-layout.tiled .listing span img {
   display: block;
   width: inherit;
   margin: 0 auto;
-  padding-bottom: 10px;k
+  padding-bottom: 10px;
 }
 
-#saved.tiled .dashboard-listing .info span.pull-right {
+.toggled-layout.tiled .listing span.pull-right {
   float: none;
   width: inherit;
   margin: 0 auto;
 }
 
-#saved.tiled .dashboard-listing .info .btn {
+.toggled-layout.tiled .listing .btn {
   margin: -3px;
 }
 
-#saved .list a {
+.toggled-layout .list-container a {
   text-decoration: none;
 }
 
-#saved.list .dashboard-listing .info {
+.toggled-layout.list .listing {
   margin: 10px 0;
+  height: 40px;
 }
 
-#saved.list .dashboard-listing .info span {
+.toggled-layout.list .listing span {
   padding: 0 20px;
 }
 
-#saved.list .dashboard-listing .info span.last-modified, span.controls {
+.toggled-layout.list .listing .pull-right span {
   position: relative;
   top: 10px;
 }
 
-#saved.list .dashboard-listing .info {
-  height: 40px;
-}
-#saved.list .dashboard-listing .info span.name img {
+.toggled-layout.list .listing span.name img {
   height: 30px;
   position: relative;
   top: 10px;
   padding-right: 10px;
+}
+
+#data span.description {
+  font-size: 10px;
+  color: #aaa;
 }
 
 .zooniverse-logo {

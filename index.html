@@ -11,27 +11,35 @@
     <!-- END REMOVE -->
     <!-- Templates -->
     <script id="dashboard-list-template" type="text/html">
-      <div class="dashboard-listing">
-        <div class="info">
-          <span class="name">
-            <a href="<%= get('project') %>/dashboards/<%= id %>">
-              <img src="/img/dashboard-preview.png">
-              <%= get('name') %>
-            </a>
-          </span>
-          <span class="pull-right">
-            <span class="last-modified">Last Update: <%= getFormattedDate('updated_at') %></span>
-            <span class="controls">
-              <a class="btn" href="<%= get('project') %>/dashboards/<%= id %>/children">Children</a>
-              <a class="btn <%= (get('parent_id')) ? '' : 'disabled' %>" href="<%= get('project') %>/dashboards/<%= get('parent_id') %>/">Parent</a>
-              <a class="delete btn">Delete</a>
-              <a class="share btn">Share</a>
-            </span>
-          </span>
-        </div>
-        <div class="share">
-        </div>
-      </div>
+      <span class="name">
+        <a href="<%= get('project') %>/dashboards/<%= id %>">
+          <img src="/img/dashboard-preview.png">
+          <%= get('name') %>
+        </a>
+      </span>
+      <span class="pull-right">
+        <span class="last-modified">Last Update: <%= getFormattedDate('updated_at') %></span>
+        <span class="controls">
+          <a class="btn" href="<%= get('project') %>/dashboards/<%= id %>/children">Children</a>
+          <a class="btn <%= (get('parent_id')) ? '' : 'disabled' %>" href="<%= get('project') %>/dashboards/<%= get('parent_id') %>/">Parent</a>
+          <a class="delete btn">Delete</a>
+          <a class="share btn">Share</a>
+        </span>
+      </span>
+    </script>
+
+    <script id="data-list-template" type="text/html">
+      <span class="name">
+        <img src="<%= get('thumbnail') %>">
+        <%= get('title') %>
+      </span>
+      <span class="pull-right">
+        <span class="description"><%= get('description') %></span>
+        <span class="controls">
+          <a class="btn add">Add to Current</a>
+          <a class="btn new">Create New with Data</a>
+        </span>
+      </span>
     </script>
     
   </head>
@@ -98,7 +106,7 @@
       </section>
       <section id="dashboard">
         <div class="layouts">
-          <label>Layouts: </label>
+          <label>Layout: </label>
           <ul>
             <li><button class="btn">Row</button></li>
             <li><button class="btn">Tiled</button></li>
@@ -120,7 +128,7 @@
         <div class="section-header">
           <h2><span class="name"></span> Dashboards</h2>
           <div class="layouts">
-            <label>Layouts: </label>
+            <label>Layout: </label>
             <ul>
               <li><button class="btn" data-type="list">List</button></li>
               <li><button class="btn" data-type="tiled">Tiled</button></li>
@@ -131,17 +139,17 @@
           <h3>You need to be logged in to view Saved Dashboards.</h3>
         </div>
         <div class="logged-in">
-          <div class="list"></div>
+          <div class="list-container"></div>
         </div>
       </section>
       <section id="data" class="toggled-layout">
         <div class="section-header">
           <h2><span class="name"></span> Data</h2>
           <div class="layouts">
-            <label>Layouts: </label>
+            <label>Layout: </label>
             <ul>
-              <li><button class="btn">List</button></li>
-              <li><button class="btn">Tiled</button></li>
+              <li><button data-type="list" class="btn">List</button></li>
+              <li><button data-type="tiled" class="btn">Tiled</button></li>
             </ul>
           </div>
         </div>
@@ -149,6 +157,7 @@
           <h3>You need to be logged in to view your Data.</h3>
         </div>
         <div class="logged-in">
+          <div class="list-container"></div>
         </div>
       </section>
     </div>
@@ -159,6 +168,7 @@
     <script src="/bower_components/backbone/backbone.js"></script>
     <script src="/bower_components/backbone-associations/backbone-associations.js"></script>
     <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/d3/d3.js"></script>
     <script src="/vendor/base64.js"></script>
     <script src="/vendor/zooniverse-2013-6-20-14-35-16.js"></script>
     <script src="/js/dashboard.js"></script>

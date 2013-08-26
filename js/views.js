@@ -10,6 +10,7 @@
 
     show: function() {
       this.$el.show();
+      this.render();
     }
   };
 
@@ -18,12 +19,32 @@
       var changed = state.previous('list-type');
       if (changed) {
         this.$el.removeClass(changed);
+        this.$('button[data-type="' + changed + '"]').removeClass('active');
       }
+      this.$('button[data-type="' + type + '"]').addClass('active');
       this.$el.addClass(type);
     },
 
     setListType: function(e) {
       Dashboard.State.set('list-type', e.target.dataset.type);
+    },
+
+    render: function() {
+      if (!this.collection)
+        return 
+
+      this.list = d3.select(this.el)
+        .select('.list-container')
+        .selectAll('.listing')
+        .data(this.collection.models, function(d) { return d.id; });
+
+      this.list.enter().append('div')
+        .attr('class', 'listing')
+        .html(_.bind(function(d) { console.log(d); return this.template(d) }, this));
+
+      this.list.exit().remove();
+
+      return this;
     }
   };
 
@@ -86,26 +107,18 @@
         this.listenTo(this.collection, 'add reset', this.render);
       }, this));
       this.listenTo(Dashboard.State, 'change:list-type', this.setListClass);
+      this.setListClass(Dashboard.State, Dashboard.State.get('list-type'));
     },
 
     events: {
       'click .layouts button' : 'setListType',
-    },
-
-    render: function() {
-      this.list = this.list || this.$('.list');
-      this.collection.chain().map(this.template)
-        .each(function(d) {
-          this.list.append(d);
-        }, this);
-      return this;
     }
   }, Dashboard.ToggleView, Dashboard.ToggleListLayout));
 
   Dashboard.Data = Backbone.View.extend(_.extend({
     el: '#data',
 
-    //template: _.template($('#data-list-template').html()),
+    template: _.template($('#data-list-template').html()),
 
     events: {
       'click .layouts button' : 'setListType',
@@ -117,18 +130,18 @@
         this.listenTo(this.collection, 'add reset', this.render);
       }, this));
       this.listenTo(Dashboard.State, 'change:list-type', this.setListClass);
+      this.setListClass(Dashboard.State, Dashboard.State.get('list-type'));
     }
-
   }, Dashboard.ToggleView, Dashboard.ToggleListLayout));
 
   Dashboard.App = Backbone.View.extend({
     el: "#app",
 
     sections: {
-      index: Dashboard.IndexPage, 
+      index: new Dashboard.IndexPage, 
       dashboard: "#dashboard", 
-      saved: Dashboard.Saved, 
-      data: Dashboard.Data
+      saved: new Dashboard.Saved, 
+      data: new Dashboard.Data
     },
 
     initialize: function() {
@@ -140,8 +153,6 @@
       var section = this.sections[active];
       if (_.isUndefined(section))
         throw new Error("Section doesn't exist");
-      else if (_.isFunction(section))
-        this.sections[active] = new section();
       this.active.hide();
       this.active = this.sections[active];
       this.active.show();

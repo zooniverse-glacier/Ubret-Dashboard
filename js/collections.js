@@ -30,7 +30,16 @@
     },
 
     parse: function(response) {
-      return response.my_collections;
+      return _.map(response.my_collections, function(col) {
+        return {
+          title: col.title,
+          zooniverse_id: col.zooniverse_id,
+          subjects: _.pluck(col.subjects, 'zooniverse_id'),
+          image: col.subjects[0].location.standard,
+          thumbnail: col.subjects[0].location.thumbnail,
+          description: col.description
+        };
+      });
     }
   });
 }).call(this);
