@@ -85,7 +85,7 @@
     },
 
     updateProject: function(state, project) {
-      if (!_.isUndefined(project)) {
+      if (project) {
         this.$('.project-selected').show();
         this.$('select.project').val(project);
         this.projectName.text(Dashboard.projects[project].name);
@@ -217,7 +217,7 @@
       anchors.each(function(i) {this.setAttribute('href', hrefs[i])});
 
       // Update the Active Project
-      if (project === '') {
+      if (!project) {
         projectText = 'No Project';
       } else {
         // Hide the Active Project from the List

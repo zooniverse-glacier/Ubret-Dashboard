@@ -10,7 +10,8 @@
   Dashboard.Api = new zooniverse.Api();
 
   Dashboard.State = new Backbone.Model({
-    'list-type' : 'list'
+    'list-type' : 'list',
+    'project' : false
   });
 
   Dashboard.Sync = function(method, model, options) {
@@ -27,8 +28,8 @@
   };
 
   Dashboard.userAndProject = function() {
-    return (User.current && !_.isUndefined(Dashboard.State.get('project')));
-  }
+    return (User.current && Dashboard.State.get('project'));
+  };
 
   Dashboard.projects = {
     galaxy_zoo: {
@@ -45,8 +46,7 @@
     }
   };
 
-   // Views 
-   Dashboard.Router = Backbone.Router.extend({
+  Dashboard.Router = Backbone.Router.extend({
     routes: {
       '': 'index',
       ':project' : 'setProject',
@@ -113,7 +113,7 @@
       $('.logged-in').show();
     }
   }
-  
+
   Dashboard.updateUser = function() {
     if (Dashboard.userAndProject()) {
       User.current.dashboards.fetch();
