@@ -4,8 +4,9 @@
   this.initialize = function() {
     var topBar = new zooniverse.controllers.TopBar(),
       app = new Dashboard.App({model: Dashboard.State}),
-      header = new Dashboard.Header({model: Dashboard.State}),
-      router = new Dashboard.Router(Dashboard.State);
+      header = new Dashboard.Header({model: Dashboard.State});
+
+    Dashboard.router = new Dashboard.Router(Dashboard.State, User);
 
     topBar.el.appendTo(document.body);
 

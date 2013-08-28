@@ -12,7 +12,7 @@
     <!-- Templates -->
     <script id="dashboard-list-template" type="text/html">
       <span class="name">
-        <a href="<%= get('project') %>/dashboards/<%= id %>">
+        <a href="#/<%= get('project') %>/dashboards/<%= id %>">
           <img src="img/dashboard-preview.png">
           <%= get('name') %>
         </a>
@@ -20,8 +20,8 @@
       <span class="pull-right">
         <span class="last-modified">Last Update: <%= getFormattedDate('updated_at') %></span>
         <span class="controls">
-          <a class="btn" href="<%= get('project') %>/dashboards/<%= id %>/children">Children</a>
-          <a class="btn <%= (get('parent_id')) ? '' : 'disabled' %>" href="<%= get('project') %>/dashboards/<%= get('parent_id') %>/">Parent</a>
+          <a class="btn" href="#/<%= get('project') %>/dashboards/<%= id %>/children">Children</a>
+          <a class="btn <%= (get('parent_id')) ? '' : 'disabled' %>" href="#/<%= get('project') %>/dashboards/<%= get('parent_id') %>/">Parent</a>
           <a class="delete btn">Delete</a>
           <a class="share btn">Share</a>
         </span>
@@ -45,40 +45,43 @@
   </head>
   <body>
     <header id="dashboard-header">
-      <div id="logo">
-        <span class="zooniverse-logo"></span>
-        <h1>zootools</h1>
-      </div>
-      <nav>
-        <span class="nav-el" id="current-project">
+      <span id="menu">
+      </span>
+      <span class="pull-center">
+        <span id="logo">
+          zootools
+        </span>
+        <span id="current-project">
           <span class="name">No Project</span>
           <span class="down-arrow">▾</span> 
         </span>
-        <ul id="project-select">
-          <li id="serengeti"><a href="#/serengeti">Snapshot Serengeti</a></li>
-          <li id="galaxy_zoo"><a href="#/galaxy_zoo">Galaxy Zoo</a></li>
-          <li id="spacewarp"><a href="#/spacewarp">SpaceWarps</a></li>
-          <li id="galaxy_zoo_starburst"><a href="#/galaxy_zoo_starburst">Galaxy Zoo Quench</a></li>
-        </ul>
-        <span class="nav-seperator"></span>
-        <span class="nav-el" id="nav-dashboard"><a href="#/dashboards">No Dashboard</a></span>
-        <span class="logged-in">
-          <span class="nav-seperator"></span>
-          <span class="nav-el" id="nav-saved"><a href="#/dashboards">Dashboards</a></span>
-          <span class="nav-seperator"></span>
-          <span class="nav-el" id="nav-data"><a href="#/data">Data</a></span>
-          <span class="nav-seperator"></span>
-          <span class="nav-el" id="create-dashboard">New Dashboard</span>
-        </span>
-      </nav>
+      </span>
+      <ul id="project-select">
+        <li id="serengeti"><a href="#/serengeti">Snapshot Serengeti</a></li>
+        <li id="galaxy_zoo"><a href="#/galaxy_zoo">Galaxy Zoo</a></li>
+        <li id="spacewarp"><a href="#/spacewarp">SpaceWarps</a></li>
+        <li id="galaxy_zoo_starburst"><a href="#/galaxy_zoo_starburst">Galaxy Zoo Quench</a></li>
+      </ul>
     </header>
+    <nav id="menu-panel">
+      <div class="panel" data-level="0">
+        <h2>ZooTools Nav</h2>
+        <ul>
+          <li id="new-dashboard">New Dashboard</li>
+          <li class="disabled" id="copy-dashboard">Copy Dashboard</li>
+          <li class="disabled" id="current-dashboard">Current Dashboard</li>
+          <li id="saved-dashboards">Saved Dashboards</li>
+          <li id="saved-data">Saved Data</li>
+        </ul>
+      </div>
+    </nav>
     <div id="app">
       <section id="index">
         <div class="logged-out">
           <h3>You need to be logged in to use the ZooTools Dashboard.</h3>
         </div>
         <div class="logged-in">
-          <h3>ZooTools is place to organizae and visualize data from Zooniverse Projects</h3>
+          <h3>ZooTools is a place to organize and visualize data from Zooniverse Projects</h3>
           <p>Dashboards are collections of data sources and visualization tools that allow to gather data, manipulate it, display it, and share your creations with other Zooniverse users.</p>
           <p>To get started follow the instructions below.</p>
           <div class="no-project">
@@ -97,32 +100,38 @@
             <p>Great you're making a dashboard for <span class="name"></span>.</p>
             <label>Give your dashboard a name: <input type="text" id="dashboard-name" placeholder="My Interesting Dashboard"></label>
             <p>You can also choose to load some data into your dashboard to get started.<p>
-            <label>Choose one of your talk collections: <select class="talk-collections"><option value="">No Data Please</option></select></label>
+            <label>Choose one of your talk collections: <select class="talk-collections"></select></label>
             <p> or </p>
             <label>Load a data from <span class="name"></span>'s Science Team: <select class="zoo-data-collections"><option value="">No Data Please</option></select></label>
             <button class="btn" id="create-dashboard">Create Dashboard</button>
           </div>
         </div>
       </section>
-      <section id="dashboard">
-        <div class="layouts">
-          <label>Layout: </label>
-          <ul>
-            <li><button class="btn">Row</button></li>
-            <li><button class="btn">Tiled</button></li>
-            <li><button class="btn">Tree</button></li>
-            <li><button class="btn">Freeform</button></li>
-          </ul>
-          <label>Zoom: </label>
-          <ul>
-            <li><button class="btn">+</button></li>
-            <li><button class="btn">-</button></li>
-            <li><button class="btn">Focus</button></li>
-          </ul>
+      <section id="dashboard"> 
+        <div class="section-header">
+          <h2></h2>
+          <div class="layouts">
+            <label>Layout: </label>
+            <ul>
+              <li><button class="btn">Row</button></li>
+              <li><button class="btn">Tiled</button></li>
+              <li><button class="btn">Tree</button></li>
+              <li><button class="btn">Freeform</button></li>
+            </ul>
+            <label>Zoom: </label>
+            <ul>
+              <li><button class="btn">+</button></li>
+              <li><button class="btn">-</button></li>
+              <li><button class="btn">Focus</button></li>
+            </ul>
+          </div>
         </div>
-        <div class="bottom drawer data"></div>
-        <div class="bottom drawer tools"></div>
-        <div class="left drawer tools"></div>
+        <div id="data-drawer" class="bottom drawer">
+        </div>
+        <div id="tools-drawer" class="bottom drawer">
+        </div>
+        <div id="tree-drawer" class="left drawer">
+        </div>
       </section>
       <section id="saved" class="toggled-layout">
         <div class="section-header">
@@ -172,8 +181,8 @@
     <script src="/vendor/base64.js"></script>
     <script src="/vendor/zooniverse-2013-6-20-14-35-16.js"></script>
     <script src="/js/dashboard.js"></script>
-    <script src="/js/models.js"></script>
-    <script src="/js/collections.js"></script>
+    <script src="/js/tools.js"></script>
+    <script src="/js/dashboards.js"></script>
     <script src="/js/views.js"></script>
     <script src="/js/init.js" onload="initialize();"></script>
     <!-- END REMOVE -->

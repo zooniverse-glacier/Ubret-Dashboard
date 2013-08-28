@@ -3,6 +3,40 @@
   var Dashboard = this.Dashboard;
   var User = this.User;
 
+  Dashboard.Dashboard = Backbone.AssociatedModel.extend({
+    relations: [
+      {
+        type: Backbone.Many,
+        key: 'tools',
+        relatedModel: Dashboard.Tool,
+        collectionType: Dashboard.Tools
+      }
+    ],
+
+    sync: Dashboard.Sync,
+
+    url: function() {
+      return "/dashboards/" + this.id;
+    },
+
+    fetch: function() {
+      if (!Dashboard.State.get('project'))
+        return
+      return Dashboard.Dashboard.__super__.fetch.call(this);
+    },
+
+    getFormattedDate: function(field) {
+      var date = moment(this.get(field)),
+        now = moment();
+      if (date.isBefore(now.subtract('days', 2)))
+        return date.format('lll');
+      else if (date.isBefore(now.subtract('days', 1)))
+        return 'Yesterday';
+      else
+        return date.fromNow();
+    }
+  });
+
   Dashboard.ProjectBasedCollection = Backbone.Collection.extend({
     initialize: function() {
       User.on('change', _.bind(this.fetch, this));
@@ -32,14 +66,15 @@
     parse: function(response) {
       return _.map(response.my_collections, function(col) {
         return {
-          title: col.title,
-          zooniverse_id: col.zooniverse_id,
-          subjects: _.pluck(col.subjects, 'zooniverse_id'),
+          id: col.zooniverse_id,
           image: col.subjects[0].location.standard,
+          title: col.title,
+          subjects: _.pluck(col.subjects, 'zooniverse_id'),
           thumbnail: col.subjects[0].location.thumbnail,
           description: col.description
         };
       });
     }
   });
+
 }).call(this);

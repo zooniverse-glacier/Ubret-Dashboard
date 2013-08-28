@@ -57,8 +57,9 @@
       ':project/collections/:colletions(/:name)' : 'dashboardFromCollections' 
     },
 
-    initialize: function(state) {
+    initialize: function(state, user) {
       this.state = state;
+      this.user = user;
     },
 
     index: function() {
@@ -92,7 +93,14 @@
     showDashboard: function(project, id) {
       this.setProjectState(project);
       this.setPage('dashboard');
-      this.state.set('currentDashboard', id);
+      if (User.current.dashboards) {
+        this.state.set('currentDashboard', User.current.dashboards.get(id));
+      } else {
+        var dashboardModel = new Dashboard.Dashboard({id: id})
+        dashboardModel.fetch().then(_.bind(function() {
+          this.state.set('currentDashboard', dashboardModel);
+        }, this));
+      }
     },
 
     dashboardFromSubjects: function(project, subjects, name) {
