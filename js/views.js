@@ -123,29 +123,83 @@
     }
   });
 
+  Dashboard.Create = Backbone.View.extend({
+    template: $("#new-dashboard").html(),
+
+    initialize: function() {
+      this.listenTo(Dashboard.State, 'change:project', this.setSelected);
+      this.listenTo(this.collection, 'add reset', this.render);
+    },
+
+    events: {
+      'click .create-dashboard-go' : 'createDashboard'
+    },
+
+    setSelected: function() {
+      this.$('.create-dashboard-project').val(Dashboard.State.get('project'));
+    },
+
+    createDashboard: function(ev) {
+      var newDashboard = User.current.dashboards.create({
+        name: this.$('.create-dashboard-name').val(), 
+        project: this.$('.create-dashboard-project').val()
+      }, {wait: true})
+      newDashboard.once('sync', function(m) {
+        var url = "#/" + m.get('project') + "/dashboards/" + m.id;
+        Dashboard.router.navigate(url, {trigger: true});
+      });
+    },
+
+    render: function() {
+      this.$el.html(this.template);
+      var projects = [['', {name: 'Choose a project'}]]
+        .concat(_.pairs(Dashboard.projects))
+
+      var collections = [{id: '', get: function() { return 'No Data Please' }}]
+        .concat(this.collection.models);
+
+      var projectOptions = d3.select(this.el)
+        .select('.create-dashboard-project').selectAll('option')
+        .data(projects, function(d) { return d[0]});
+
+      var dataOptions = d3.select(this.el)
+        .select('.create-dashboard-data').selectAll('option')
+        .data(collections, function(d) { return d.id });
+
+      projectOptions.enter().append('option')
+        .attr('value', function(d) { return d[0] })
+        .text(function(d) {return d[1].name});
+
+      projectOptions.exit().remove();
+
+      dataOptions.enter().append('option')
+        .attr('value', function(d) { return d.id; })
+        .text(function(d) { return d.get('title'); });
+
+      dataOptions.exit().remove();
+
+      this.setSelected();
+      return this;
+    }
+  });
+
   Dashboard.IndexPage = Backbone.View.extend(_.extend({
     el: "#index", 
 
+    template: _.template($('#welcome-overlay').html()),
+
     initialize: function() {
       this.projectName = this.$('.name');
-      this.listenTo(Dashboard.State, 'change:project', this.updateProject);
       User.on('initialized', _.bind(function() {
-        this.listenTo(User.current.collections, 'add reset', this.updateCollections);
+        this.collection = User.current.dashboards;
+        this.dashboardCreate = new Dashboard.Create({collection: User.current.collections});
+        this.render();
+        this.listenTo(this.collection, 'add reset', this.updateRecents);
       }, this));
-      this.updateProject(null, Dashboard.State.get('project'));
     },
 
     events: {
       'change select.project' : 'setProject',
-      'click button#create-dashboard' : 'createDashboard'
-    },
-
-    createDashboard: function(ev) {
-      User.current.dashboards
-      .create({
-        name: this.$('#dashboard-name').val(), 
-        project: Dashboard.State.get('project')
-      });
     },
 
     setProject: function(ev) {
@@ -155,29 +209,36 @@
         Dashboard.State.set('project', ev.target.value);
     },
 
-    updateCollections: function(_, collection) {
-      // Create a fake object for the first item in the select
-      var selectData = [{id: '', get: function() { return 'No Data Please' }}]
-        .concat(collection.models)
+    updateRecents: function() {
+      var recents = d3.select(this.el).select('#welcome-recents').selectAll('li')
+        .data(this.collection.models.slice(0,3), function (d) { return d.id });
+     
+      recents.enter().append('li')
+        .append('a')
+        .attr('href', function(d) { 
+          return "#/" + d.get('project') + "/dashboards/" + d.id 
+        })
+        .html(function(d) { 
+          var name = '<span class="name">' + d.get('name') + '</span>';
+          var data = '<span class="date">' + d.getFormattedDate('updated_at') + '</span>'
+          return name + data;
+        });
 
-      var talkCols = d3.select('select.talk-collections').selectAll('option')
-        .data(selectData, function(col) { return col.id });
-
-      talkCols.enter().append('option')
-        .attr('value', function(col) { return col.id })
-        .text(function(col) { return col.get('title') });
-
-      talkCols.exit().remove();
+      recents.exit().remove();
     },
 
-    updateProject: function(state, project) {
-      if (project) {
-        this.$('.project-selected').show();
-        this.$('select.project').val(project);
-        this.projectName.text(Dashboard.projects[project].name);
-      } else {
-        this.$('.project-selected').hide();
-      }
+    render: function() {
+      if (!User.current)
+        return;
+
+      // Render Welcome Template
+      this.$('.logged-in').html(this.template({project: Dashboard.State.get('project')}));
+      this.$('#welcome-create').html(this.dashboardCreate.render().el);
+
+      if (!_.isEmpty(User.current.dashboards))
+        this.updateRecents();
+
+      return this;
     }
   }, Dashboard.ToggleView));
 
@@ -233,6 +294,7 @@
     initialize: function() {
       this.active = this.$('#index');
       this.listenTo(this.model, 'change:page', this.setActive);
+      this.listenTo(this.model, 'change:project', this.redirect);
     },
 
     setActive: function(state, active) {

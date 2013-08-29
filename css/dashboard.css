@@ -1,7 +1,22 @@
 body {
   font-family: "Ubuntu Sans", sans-serif;
   height: 100%;
-  background: #eee; 
+  background: #ededed;
+}
+
+.overlay-container {
+  background: #0c9cf5;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.overlay-container.full-width {
+  width: 100%;
+}
+
+.overlay-container.full-height {
+  height: 100%;
 }
 
 .pull-left {
@@ -12,11 +27,112 @@ body {
   float: right
 }
 
+.create-dashboard select, .create-dashboard input, .create-dashboard button {
+  height: 35px;
+  width: 200px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+}
+
+.create-dashboard button {
+  position: relative;
+  top: -2px;
+}
+
+.create-dashboard {
+  width: 300px;
+}
+
+.dashboard-overlay {
+  color: #fff;
+  margin: 100px;
+}
+
+.dashboard-overlay h1 {
+  font-size: 60px;
+  margin: 0;
+}
+  
+.dashboard-overlay h2 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.dashboard-overlay p {
+  font-size: 20px;
+  margin: 0;
+}
+
+.dashboard-overlay .light {
+  font-weight: 300;
+}
+
+.dashboard-overlay select, .dashboard-overlay input, .dashboard-overlay button {
+  padding: 5px;
+  border: 3px solid #fff;
+  background: inherit;
+  color: #fff;
+  font-size: 16px; 
+}
+
+.dashboard-overlay button {
+  background: #333;
+  color: #fff;
+  border: none;
+  width: 50px;
+}
+
+.dashboard-overlay .exit {
+  position: absolute;
+  top: 0;
+  left: 15px;
+}
+
+.dashboard-overlay a {
+  color: white;
+  font-size: 10px;
+  font-style: italic;
+}
+
+.dashboard-overlay a:hover {
+  color: #ff5555;
+}
+
+.dashboard-overlay ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.dashboard-overlay ul li a {
+  width: 100%;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 16px;
+  font-style: normal;
+  margin: 5px 0;
+}
+
+.dashboard-overlay ul .date {
+  float: right;
+  font-style: italic;
+}
+
+.dashboard-overlay .half {
+  display: block;
+  width: 46%;
+  padding: 2%;
+  text-align: left;
+}
+
 .btn {
-  background: none repeat scroll 0 0 #009BFD;
-  border: 1px solid rgba(0, 0, 0, 0.67);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.33) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
-  color: #FFFFFF;
+  background: #0c9cf5; 
+  color: #fff;
+  border: none;
   display: inline-block;
   font-size: 14px;
   padding: 3px 10px;
@@ -25,7 +141,7 @@ body {
 }
 
 .btn:hover {
-  box-shadow: 0 100px 0 rgba(255, 255, 255, 0.125) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+  background: #0f7bbd;
 }
 
 .btn:active {
@@ -41,20 +157,12 @@ body {
   cursor: default;
 }
 
-.btn.disabled:active {
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.33) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
-}
-
-.btn.disabled:hover {
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.33) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
-}
-
 #dashboard-header {
   position: absolute;
   top: 0;
   left: 0;
   color: white;
-  background: #444;
+  background: #000;
   width: 100%;
   border-bottom: 1px solid #222;
   height: 35px;
@@ -62,7 +170,7 @@ body {
 
 #dashboard-header span#menu:before {
   background: none repeat scroll 0 0 #FFFFFF;
-  box-shadow: 0 4px #444, 0 8px #FFFFFF, 0 12px #444, 0 16px #FFFFFF;
+  box-shadow: 0 4px #000, 0 8px #FFFFFF, 0 12px #000, 0 16px #FFFFFF;
   content: "";
   height: 4px;
   position: absolute;
@@ -71,12 +179,19 @@ body {
   width: 30px;
 }
 
-#dashboard-header span#menu.active:before, #dashboard-header span#menu.active:hover:before {
-  box-shadow: 0 4px #009BFD, 0 8px #FFFFFF, 0 12px #009BFD, 0 16px #FFFFFF;
+#dashboard-header span#menu.active:before  {
+  box-shadow: 0 4px #0c9cf5, 0 8px #FFFFFF, 0 12px #0c9cf5, 0 16px #FFFFFF;
+}
+
+#dashboard-header span#menu.active:hover {
+  background: #0f7bdd;
+}
+#dashboard-header span#menu.active:hover:before {
+  box-shadow: 0 4px #0f7bbd, 0 8px #FFFFFF, 0 12px #0f7bbd, 0 16px #FFFFFF;
 }
 
 #dashboard-header span#menu:hover:before {
-  box-shadow: 0 4px #666, 0 8px #FFFFFF, 0 12px #666, 0 16px #FFFFFF;
+  box-shadow: 0 4px #525252, 0 8px #FFFFFF, 0 12px #525252, 0 16px #FFFFFF;
 }
 
 #dashboard-header span#menu {
@@ -88,15 +203,15 @@ body {
 }
 
 #dashboard-header span#menu:after {
-  border-left: 1px solid #444;  
+  border-left: 1px solid #000;  
 }
 
 #dashboard-header span#menu:hover {
-  background: #666;
+  background: #525252;
 }
 
 #dashboard-header span#menu.active {
-  background: #009BFD; 
+  background: #0c9cf5; 
 }
 
 span.down-arrow {
@@ -110,7 +225,7 @@ span.down-arrow {
   display: none;
   position: absolute;
   width: 200px;
-  background: #444;
+  background: #000;
   z-index: 999;
   padding-left: 5px;
   padding-right: 5px;
@@ -134,7 +249,7 @@ nav#menu-panel {
   width: 260px;
   left: -260px;
   top: 36px;
-  background: #444;
+  background: #000;
   transition: transform .5s linear;
   z-index: 999;
   color: white;
@@ -167,12 +282,13 @@ nav#menu-panel ul li:first-child {
 }
 
 nav#menu-panel ul li:hover {
-  background: #666;
+  background: #525252;
+  color: #0f7bdd;
 }
 
 nav#menu-panel ul li.active {
   cursor: default;
-  color: #009BFD;
+  color: #0c9cf5;
 }
 
 nav#menu-panel ul li.disabled {
@@ -181,7 +297,7 @@ nav#menu-panel ul li.disabled {
 }
 
 nav#menu-panel ul li.disabled:hover,  nav#menu-panel ul li.active:hover {
-  background: #444;
+  background: #000;
 }
 
 div#app {

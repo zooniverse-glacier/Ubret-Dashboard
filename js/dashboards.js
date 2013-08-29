@@ -15,9 +15,7 @@
 
     sync: Dashboard.Sync,
 
-    url: function() {
-      return "/dashboards/" + this.id;
-    },
+    urlRoot: "/dashboards",
 
     fetch: function() {
       if (!Dashboard.State.get('project'))
@@ -44,6 +42,10 @@
     },
 
     sync: Dashboard.Sync,
+
+    comparator: function(m) {
+      return -(new Date(m.get('updated_at')).getTime());
+    },
 
     fetch: function() {
       if (!Dashboard.userAndProject())

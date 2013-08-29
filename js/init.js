@@ -14,11 +14,15 @@
 
     Backbone.Events.listenTo(Dashboard.State, 'change:project', Dashboard.updateUser);
 
-    User.fetch().then(function() {
+    User.fetch()
+    User.on('change', function(response) {
+      if (!User.current)
+        return;
       User.current.collections = new Dashboard.UserCollections();
       User.current.dashboards = new Dashboard.UserDashboards();
       User.trigger('initialized');
-    }).then(Dashboard.updateUser);
+      Dashboard.updateUser();
+    });
 
     Backbone.history.start();
   };
