@@ -1,7 +1,7 @@
 (function() {
   var Dashbaord = this.Dashboard;
 
-  Dashboard.IndexPage = Backbone.View.extend(_.extend({
+  Dashboard.IndexPage = Backbone.View.extend({
     el: "#index", 
 
     template: _.template($('#welcome-overlay').html()),
@@ -57,6 +57,16 @@
         this.updateRecents();
 
       return this;
-    }
-  }, Dashboard.ToggleView));
+    },
+
+		show: function() {
+			this.$el.addClass('active');
+			this.$el.show();
+		},
+
+		hide: function() {
+			this.$el.removeClass('active');
+			this.$el.show();
+		}
+  });
 }).call(this);

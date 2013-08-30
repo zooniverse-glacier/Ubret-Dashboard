@@ -9,7 +9,7 @@
   z-index: 100;
 }
 .zooniverse-dialog .underlay {
-  background: rgba(0,0,0,0);
+  background: #0c9cf5;
   display: table;
   width: 100%;
   -webkit-transition: background-color 0.5s ease-in-out;
@@ -29,11 +29,8 @@
   perspective: 1000px;
 }
 .zooniverse-dialog .underlay .container .dialog {
-  background: #f4f4f4;
-  border-top: 5px solid #050505;
-  -webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.5);
-  box-shadow: 0 3px 5px rgba(0,0,0,0.5);
-  color: #000;
+  background: #0c9cf5;
+  color: #fff;
   display: inline-block;
   max-width: 33%;
   opacity: 0;
@@ -43,11 +40,11 @@
   position: relative;
   text-align: left;
   text-shadow: none;
-  -webkit-transform: translateY(-25%) rotateX(30deg) scale(0.75);
-  -moz-transform: translateY(-25%) rotateX(30deg) scale(0.75);
-  -o-transform: translateY(-25%) rotateX(30deg) scale(0.75);
-  -ms-transform: translateY(-25%) rotateX(30deg) scale(0.75);
-  transform: translateY(-25%) rotateX(30deg) scale(0.75);
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
   -webkit-transition: opacity 0.25s ease-in-out, -webkit-transform 0.33s ease-in-out;
   -moz-transition: opacity 0.25s ease-in-out, -moz-transform 0.33s ease-in-out;
   -o-transition: opacity 0.25s ease-in-out, -o-transform 0.33s ease-in-out;
@@ -69,7 +66,7 @@
   border: 5px solid #c30;
 }
 .zooniverse-dialog.showing .underlay {
-  background: rgba(0,0,0,0.5);
+  background: #0c9cf5;
 }
 .zooniverse-dialog.showing .underlay .container .dialog {
   opacity: 1;
@@ -140,15 +137,16 @@
   display: block;
   margin: 10px 0;
 }
-.zooniverse-dialog input {
-  background: #f0f0f0;
-  border: 1px solid #ccc;
+.zooniverse-dialog input, .zooniverse-dialog select { 
+  background: #0c9cf5;
+  border: 3px solid #fff;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-box-shadow: 0 1px 0 #fff;
-  box-shadow: 0 1px 0 #fff;
   font-size: 12px;
+  color: #fff;
+  font-size: 16px;
   padding: 10px;
 }
 .zooniverse-dialog input:first-child {
@@ -171,22 +169,21 @@
   text-align: center;
 }
 .zooniverse-dialog .action button {
-  background: #fff;
-  border: 1px solid #bbb;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0 1px 0 #fff inset, 0 1px 3px rgba(0,0,0,0.25);
-  box-shadow: 0 1px 0 #fff inset, 0 1px 3px rgba(0,0,0,0.25);
-  font-size: 12px;
-  font-weight: bold;
+  background: #333;
+  border: none; 
+  font-size: 20px;
+  height: 35px;
   margin: 0 5px;
   padding: 3px 10px;
 }
 .zooniverse-dialog .action button:active {
-  border-color: rgba(0,0,0,0.25);
-  -webkit-box-shadow: 0 100px rgba(0,0,0,0.125) inset;
-  box-shadow: 0 100px rgba(0,0,0,0.125) inset;
+  background: #525252;
 }
+
+.zooniverse-dialog .action button:hover {
+  background: #525252;
+}
+
 @-moz-keyframes zooniverse-progress {
   0% {
     background-position: 0 0;
