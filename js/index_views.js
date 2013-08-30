@@ -8,6 +8,8 @@
 
     initialize: function() {
       this.projectName = this.$('.name');
+      this.listenTo(Dashboard.State, 'change:project', this.updateProjectView);
+      this.listenTo(Dashboard.State, 'change:project', this.render);
       User.on('initialized', _.bind(function() {
         this.collection = User.current.dashboards;
         this.dashboardCreate = new Dashboard.Create({collection: User.current.collections});
@@ -24,7 +26,31 @@
       if (ev.target.value === '')
         return;
       else
-        Dashboard.State.set('project', ev.target.value);
+        Dashboard.router.navigate("#/" + ev.target.value, {trigger: true});
+    },
+
+    updateProjectView: function() {
+      if (Dashboard.State.get('project')) {
+        this.$('.project-selected').show();
+        this.$('.no-project').hide();
+      } else {
+        this.$('.project-selected').hide();
+        this.$('.no-project').show();
+      }
+    },
+
+    listProjects: function() {
+      var projectList = [['', {name: 'Projects'}]]
+        .concat(_.pairs(Dashboard.projects))
+
+      var projectSelect = d3.select(this.el).select('.project').selectAll('option')
+        .data(projectList, function(d) { return d[0]; });
+
+      projectSelect.enter().append('option')
+        .attr('value', function(d) { return d[0]; })
+        .text(function(d) { return d[1].name; });
+
+      projectSelect.exit().remove();
     },
 
     updateRecents: function() {
@@ -52,9 +78,13 @@
       // Render Welcome Template
       this.$('.logged-in').html(this.template({project: Dashboard.State.get('project')}));
       this.$('#welcome-create').html(this.dashboardCreate.render().el);
+      this.updateProjectView();
 
       if (!_.isEmpty(User.current.dashboards))
         this.updateRecents();
+
+      if (!Dashboard.State.get('projects'))
+        this.listProjects();
 
       return this;
     },
@@ -66,7 +96,7 @@
 
 		hide: function() {
 			this.$el.removeClass('active');
-			this.$el.show();
+			this.$el.hide();
 		}
   });
 }).call(this);

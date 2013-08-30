@@ -94,8 +94,8 @@ section#index.active .dashboard-overlay {
 
 .dashboard-overlay .exit {
   position: absolute;
-  top: 0;
-  left: 15px;
+  top: -100px;
+  left: -85px;
 }
 
 .dashboard-overlay a {

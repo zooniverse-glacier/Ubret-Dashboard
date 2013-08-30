@@ -76,4 +76,7 @@
     }
   });
 
+  Dashboard.CreateDashboardView = Backbone.View.extend({
+  });
+
 }).call(this);

@@ -23,7 +23,6 @@
         throw new Error("Section doesn't exist");
       this.active.hide();
       this.active = this.sections[active];
-      console.log('here');
       this.active.show();
     }
   });
