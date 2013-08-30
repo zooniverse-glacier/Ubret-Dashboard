@@ -28,7 +28,7 @@
   });
 
   Dashboard.Menu = Backbone.View.extend({
-    el: '#menu-panel',
+    el: '#global-menu',
 
     events: {
       'click li' : 'navigateTo'
@@ -77,13 +77,11 @@
         navigate('/data');
       else if (ev.attr('id') === 'current-dashboard')
         navigate('/dashboards/' + this.model.get('currentDashboard').id);
+      else if (ev.attr('id') === 'new-dashboard')
+        navigate('');
       else if (ev.attr('id') === 'copy-dashboard')
         this.model.get('currentDashboard').copy().then(function(response) {
           navigate('/dashboards/' + response.id)
-        });
-      else if (ev.attr('id') === 'new-dashboard')
-        new Dashboard.CreateDashboardDialog().then(function(model) {
-          navigate('/dashboards/' + model.id)
         });
 
       $('#menu').toggleClass('active');
@@ -109,10 +107,25 @@
       this.projectSelect = this.$('#project-select');
       this.menu = new Dashboard.Menu({model: this.model});
       this.listenTo(this.model, 'change:project', this.updateProject);
+      this.listenTo(this.model, 'change:page', this.updatePageHeader);
+      this.listenTo(this.model, 'change:currentDashboard', this.updatePageHeader);
     },
 
     toggleProjects: function() {
       this.projectSelect.toggle();
+    },
+
+    updatePageHeader: function() {
+      var page = this.model.get('page');
+      var dashboard = this.model.get('currentDashboard');
+      if (page === 'dashboard' && !_.isUndefined(dashboard)) {
+        this.$('#dashboard-controls').show();
+        this.$('#current-dashboard').show()
+          .text(dashboard.get("name"));
+      } else {
+        this.$('#current-dashboard').hide();
+        this.$('#dashboard-controls').hide();
+      }
     },
 
     toggleMenu: function() {

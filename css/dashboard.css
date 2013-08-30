@@ -142,7 +142,6 @@ section#index.active .dashboard-overlay {
   display: inline-block;
   font-size: 14px;
   padding: 3px 10px;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.67);
   cursor: pointer;
 }
 
@@ -174,6 +173,27 @@ section#index.active .dashboard-overlay {
   height: 35px;
 }
 
+#dashboard-header span.menu {
+  cursor: pointer;
+  width: 45px;
+  position: absolute;
+  height: 35px; 
+  border-right: 1px solid #525252;
+}
+
+
+#dashboard-header span.menu#tools-menu {
+  left: 45px;
+}
+
+#dashboard-header span.menu#data-menu {
+  left: 90px;
+}
+
+#dashboard-header span.menu#layout-menu {
+  left: 135px;
+}
+
 #dashboard-header span#menu:before {
   background: none repeat scroll 0 0 #FFFFFF;
   box-shadow: 0 4px #000, 0 8px #FFFFFF, 0 12px #000, 0 16px #FFFFFF;
@@ -189,7 +209,7 @@ section#index.active .dashboard-overlay {
   box-shadow: 0 4px #0c9cf5, 0 8px #FFFFFF, 0 12px #0c9cf5, 0 16px #FFFFFF;
 }
 
-#dashboard-header span#menu.active:hover {
+#dashboard-header span.menu.active:hover {
   background: #0f7bdd;
 }
 #dashboard-header span#menu.active:hover:before {
@@ -200,23 +220,15 @@ section#index.active .dashboard-overlay {
   box-shadow: 0 4px #525252, 0 8px #FFFFFF, 0 12px #525252, 0 16px #FFFFFF;
 }
 
-#dashboard-header span#menu {
-  cursor: pointer;
-  width: 45px;
-  position: absolute;
-  height: 35px; 
-  border-right: 1px solid #000;
-}
-
-#dashboard-header span#menu:after {
+#dashboard-header span.menu:after {
   border-left: 1px solid #000;  
 }
 
-#dashboard-header span#menu:hover {
+#dashboard-header span.menu:hover {
   background: #525252;
 }
 
-#dashboard-header span#menu.active {
+#dashboard-header span.menu.active {
   background: #0c9cf5; 
 }
 
@@ -249,7 +261,7 @@ ul#project-select li a {
   text-decoration: none;
 }
 
-nav#menu-panel {
+nav.menu-panel {
   height: 100%;
   position: absolute;
   width: 260px;
@@ -261,21 +273,21 @@ nav#menu-panel {
   color: white;
 }
 
-nav#menu-panel.active {
+nav.menu-panel.active {
   transform: translateX(260px);
 }
 
-nav#menu-panel h2 {
+nav.menu-panel h2 {
   font-weight: 200;
   margin-left: 30px;
 }
 
-nav#menu-panel ul {
+nav.menu-panel ul {
   padding: 0;
   list-style: none;
 }
 
-nav#menu-panel ul li {
+nav.menu-panel ul li {
   cursor: pointer;
   width: 200px;
   border-bottom: 1px solid #fff;
@@ -283,26 +295,26 @@ nav#menu-panel ul li {
   color: white;
 }
 
-nav#menu-panel ul li:first-child {
+nav.menu-panel ul li:first-child {
   border-top: 1px solid #fff;
 }
 
-nav#menu-panel ul li:hover {
+nav.menu-panel ul li:hover {
   background: #525252;
   color: #0f7bdd;
 }
 
-nav#menu-panel ul li.active {
+nav.menu-panel ul li.active {
   cursor: default;
   color: #0c9cf5;
 }
 
-nav#menu-panel ul li.disabled {
+nav.menu-panel ul li.disabled {
   cursor: default;
   color: #888;
 }
 
-nav#menu-panel ul li.disabled:hover,  nav#menu-panel ul li.active:hover {
+nav.menu-panel ul li.disabled:hover,  nav.menu-panel ul li.active:hover {
   background: #000;
 }
 
@@ -344,6 +356,36 @@ section h2 {
 section .section-header {
   width: 100%;
   border-bottom: 1px solid #222;
+}
+
+section#dashboard ul#zoom-controls {
+  list-style: none;
+  right: 0;
+  top: 50%;
+  margin-top: -112px;
+  position: absolute;
+}
+
+section#dashboard ul#zoom-controls .btn {
+  width: 75px;
+  height: 75px;
+  background: #000;
+}
+
+section#dashboard ul#zoom-controls li {
+  border-bottom: 1px solid #ededed;
+}
+
+section#dashboard ul#zoom-controls li:last-child {
+  border-bottom: none;
+}
+
+section#dashboard ul#zoom-controls .btn:hover {
+  background: #525252;
+}
+
+section#dashboard ul#zoom-controls .btn:active {
+  background: #ff5555;
 }
 
 .layouts {
@@ -472,9 +514,10 @@ section .section-header {
 }
 
 .pull-center {
+  width: 350px;
   position: absolute;
   left: 50%; 
-  margin-left: -110px;
+  margin-left: -175px;
   text-align: center;
   top: 10px;
 }

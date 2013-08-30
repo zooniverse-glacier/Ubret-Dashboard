@@ -29,7 +29,7 @@
         .attr('class', 'listing')
         .html(_.bind(function(d) { return this.template(d) }, this));
 
-      this.list.exit().remove();
+      this.list.exit().transition().style('opacity', 0).remove();
 
       return this;
     }
@@ -43,7 +43,7 @@
     initialize: function() {
       User.on('initialized', _.bind(function() {
         this.collection = User.current.dashboards; 
-        this.listenTo(this.collection, 'add reset', this.render);
+        this.listenTo(this.collection, 'add reset remove', this.render);
       }, this));
       this.listenTo(Dashboard.State, 'change:list-type', this.setListClass);
       this.setListClass(Dashboard.State, Dashboard.State.get('list-type'));
@@ -51,7 +51,14 @@
 
     events: {
       'click .layouts button' : 'setListType',
+      'click .delete' : 'removeDashboard'
+    },
+
+    removeDashboard: function(ev) {
+      var model = this.collection.get(ev.target.dataset.id);
+      this.collection.remove(model);
     }
+
   }, Dashboard.ToggleView, Dashboard.ToggleListLayout));
 
   Dashboard.Data = Backbone.View.extend(_.extend({

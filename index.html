@@ -23,8 +23,8 @@
         <span class="controls">
           <a class="btn" href="#/<%= get('project') %>/dashboards/<%= id %>/children">Children</a>
           <a class="btn <%= (get('parent_id')) ? '' : 'disabled' %>" href="#/<%= get('project') %>/dashboards/<%= get('parent_id') %>/">Parent</a>
-          <a class="delete btn">Delete</a>
-          <a class="share btn">Share</a>
+          <a data-id="<%= id %>" class="delete btn">Delete</a>
+          <a data-id="<$= id %>" class="share btn">Share</a>
         </span>
       </span>
     </script>
@@ -83,11 +83,24 @@
   </head>
   <body>
     <header id="dashboard-header">
-      <span id="menu">
+      <span class="menu" id="menu">
+      </span>
+      <span id="dashboard-controls">
+        <span class="menu" id="tools-menu">
+          tools
+        </span>
+        <span class="menu" id="data-menu">
+          data
+        </span>
+        <span class="menu" id="layout-menu">
+          layout
+        </span>
       </span>
       <span class="pull-center">
         <span id="logo">
           zootools
+          <span id="current-dashboard">
+          </span>
         </span>
         <span id="current-project">
           <span class="name">No Project</span>
@@ -101,7 +114,7 @@
         <li id="galaxy_zoo_starburst"><a href="#/galaxy_zoo_starburst">Galaxy Zoo Quench</a></li>
       </ul>
     </header>
-    <nav id="menu-panel">
+    <nav id="global-menu" class="menu-panel">
       <div class="panel" data-level="0">
         <h2>ZooTools Nav</h2>
         <ul>
@@ -122,24 +135,11 @@
         </div>
       </section>
       <section id="dashboard"> 
-        <div class="section-header">
-          <h2></h2>
-          <div class="layouts">
-            <label>Layout: </label>
-            <ul>
-              <li><button class="btn">Row</button></li>
-              <li><button class="btn">Tiled</button></li>
-              <li><button class="btn">Tree</button></li>
-              <li><button class="btn">Freeform</button></li>
-            </ul>
-            <label>Zoom: </label>
-            <ul>
-              <li><button class="btn">+</button></li>
-              <li><button class="btn">-</button></li>
-              <li><button class="btn">Focus</button></li>
-            </ul>
-          </div>
-        </div>
+        <ul id="zoom-controls">
+          <li><button id="examine" class="btn">ex</button></li>
+          <li><button id="zoom-in" class="btn">+</button></li>
+          <li><button id="zoom-out" class="btn">-</button></li>
+        </ul>
         <div id="data-drawer" class="bottom drawer">
         </div>
         <div id="tools-drawer" class="bottom drawer">

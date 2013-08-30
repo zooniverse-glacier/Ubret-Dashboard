@@ -13,6 +13,13 @@
       }
     ],
 
+    initialize: function() {
+      this.listenTo(this, 'remove', function() {
+        delete this.url;
+        this.destroy();
+      }); 
+    },
+
     sync: Dashboard.Sync,
 
     urlRoot: "/dashboards",
