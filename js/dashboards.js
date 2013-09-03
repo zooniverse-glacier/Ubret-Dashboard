@@ -39,6 +39,25 @@
         return 'Yesterday';
       else
         return date.fromNow();
+    },
+
+    copy: function() {
+      var url = "https://dev.zooniverse.org/projects/" + 
+        Dashboard.State.get('project') + 
+        "/dashboards/" + 
+        this.id + "/fork";
+      return $.ajax({
+        type: 'POST',
+        url: url,
+        crossDomain: true,
+        beforeSend: function(xhr) {
+          var auth = base64.encode(User.current.name + ":" + User.current.api_key);
+          xhr.setRequestHeader('Authorization', "Basic: " + auth);
+        }
+      }).then(function(response) {
+        User.current.dashboards.add(response);
+        return response.id;
+      });
     }
   });
 

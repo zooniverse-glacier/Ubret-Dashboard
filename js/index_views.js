@@ -1,25 +1,26 @@
 (function() {
-  var Dashbaord = this.Dashboard;
+  "use strict";
+
+  var Dashboard = this.Dashboard;
 
   Dashboard.IndexPage = Backbone.View.extend({
-    el: "#index", 
-
+    className: 'dashboard-welcome-view',
     template: _.template($('#welcome-overlay').html()),
 
     initialize: function() {
       this.projectName = this.$('.name');
       this.listenTo(Dashboard.State, 'change:project', this.updateProjectView);
       this.listenTo(Dashboard.State, 'change:project', this.render);
+      this.dashboardCreate = new Dashboard.Create();
       User.on('initialized', _.bind(function() {
         this.collection = User.current.dashboards;
-        this.dashboardCreate = new Dashboard.Create({collection: User.current.collections});
         this.render();
         this.listenTo(this.collection, 'add reset', this.updateRecents);
       }, this));
     },
 
     events: {
-      'change select.project' : 'setProject',
+      'change select.project' : 'setProject'
     },
 
     setProject: function(ev) {
@@ -76,7 +77,7 @@
         return;
 
       // Render Welcome Template
-      this.$('.logged-in').html(this.template({project: Dashboard.State.get('project')}));
+      this.$el.html(this.template({project: Dashboard.State.get('project')}));
       this.$('#welcome-create').html(this.dashboardCreate.render().el);
       this.updateProjectView();
 
@@ -87,16 +88,10 @@
         this.listProjects();
 
       return this;
-    },
+    }
+  });
 
-		show: function() {
-			this.$el.addClass('active');
-			this.$el.show();
-		},
-
-		hide: function() {
-			this.$el.removeClass('active');
-			this.$el.hide();
-		}
+  Dashboard.IndexDialog = new zooniverse.controllers.Dialog({
+    content: new Dashboard.IndexPage().$el
   });
 }).call(this);

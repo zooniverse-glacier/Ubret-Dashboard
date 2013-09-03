@@ -15,11 +15,16 @@
   };
 
   Dashboard.Create = Backbone.View.extend({
-    template: $("#new-dashboard").html(),
+    className: 'create-dashboard',
+    template: _.template($("#new-dashboard").html()),
 
     initialize: function() {
       this.listenTo(Dashboard.State, 'change:project', this.setSelected);
-      this.listenTo(this.collection, 'add reset', this.render);
+      User.on('initialized', _.bind(function() {
+        this.collection = User.current.collections;
+        this.listenTo(this.collection, 'add reset', this.render);
+        this.render();
+      }, this));
     },
 
     events: {
@@ -31,18 +36,20 @@
     },
 
     createDashboard: function(ev) {
+      this.$el.addClass('loading');
       var newDashboard = User.current.dashboards.create({
         name: this.$('.create-dashboard-name').val(), 
         project: this.$('.create-dashboard-project').val()
       }, {wait: true})
-      newDashboard.once('sync', function(m) {
+      newDashboard.once('sync', _.bind(function(m) {
+        this.$el.removeClass('loading');
         var url = "#/" + m.get('project') + "/dashboards/" + m.id;
         Dashboard.router.navigate(url, {trigger: true});
-      });
+      }, this));
     },
 
     render: function() {
-      this.$el.html(this.template);
+      this.$el.html(this.template());
       var projects = [['', {name: 'Choose a project'}]]
         .concat(_.pairs(Dashboard.projects))
 
@@ -74,5 +81,10 @@
       this.setSelected();
       return this;
     }
+  });
+
+
+  Dashboard.CreateDialog = new zooniverse.controllers.Dialog({
+    content: new Dashboard.Create().$el
   });
 }).call(this);
