@@ -49,7 +49,7 @@
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template({project: Dashboard.State.get('project')}));
       var projects = [['', {name: 'Choose a project'}]]
         .concat(_.pairs(Dashboard.projects))
 

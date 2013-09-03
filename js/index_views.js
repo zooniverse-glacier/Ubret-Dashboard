@@ -79,6 +79,7 @@
       // Render Welcome Template
       this.$el.html(this.template({project: Dashboard.State.get('project')}));
       this.$('#welcome-create').html(this.dashboardCreate.render().el);
+      this.$('#welcome-create .exit').hide();
       this.updateProjectView();
 
       if (!_.isEmpty(User.current.dashboards))

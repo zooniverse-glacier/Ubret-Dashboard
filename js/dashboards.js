@@ -42,7 +42,7 @@
     },
 
     copy: function() {
-      var url = "https://dev.zooniverse.org/projects/" + 
+      var url = "http://localhost:3000/projects/" + 
         Dashboard.State.get('project') + 
         "/dashboards/" + 
         this.id + "/fork";

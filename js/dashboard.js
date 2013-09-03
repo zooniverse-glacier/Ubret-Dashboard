@@ -7,7 +7,9 @@
   var Dashboard = root.Dashboard;
   var User = root.User;
 
-  Dashboard.Api = new zooniverse.Api();
+  Dashboard.Api = new zooniverse.Api({
+    host: "http://localhost:3000"
+  });
 
   Dashboard.State = new Backbone.Model({
     'list-type' : 'list',
@@ -15,7 +17,7 @@
   });
 
   Dashboard.Sync = function(method, model, options) {
-    var baseURL = "https://dev.zooniverse.org/projects/" + Dashboard.State.get('project');
+    var baseURL = "http://localhost:3000/projects/" + Dashboard.State.get('project');
     options.url = baseURL + _.result(model, 'url');
     options.crossDomain = true;
     if (!_.isUndefined(User.current)) {
