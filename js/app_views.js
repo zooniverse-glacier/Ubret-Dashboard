@@ -1,11 +1,13 @@
 (function() {
+  "use strict";
   var Dashboard = this.Dashboard;
 
   Dashboard.App = Backbone.View.extend({
     el: "#app",
 
     sections: {
-      index: new Dashboard.IndexPage, 
+      index: Dashboard.IndexDialog,
+      new: Dashboard.CreateDialog,
       dashboard: new Dashboard.DashboardView,
       saved: new Dashboard.Saved, 
       data: new Dashboard.Data
@@ -78,10 +80,10 @@
       else if (ev.attr('id') === 'current-dashboard')
         navigate('/dashboards/' + this.model.get('currentDashboard').id);
       else if (ev.attr('id') === 'new-dashboard')
-        navigate('');
+        navigate('/dashboards/new');
       else if (ev.attr('id') === 'copy-dashboard')
         this.model.get('currentDashboard').copy().then(function(response) {
-          navigate('/dashboards/' + response.id)
+          navigate('/dashboards/' + response)
         });
 
       $('#menu').toggleClass('active');

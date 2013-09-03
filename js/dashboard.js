@@ -49,10 +49,13 @@
   Dashboard.Router = Backbone.Router.extend({
     routes: {
       '': 'index',
-      ':project' : 'setProject',
-      ':project/dashboards' : 'showSaved',
-      ':project/data' : 'showData',
-      ':project/dashboards/:id' : 'showDashboard',
+      ':project(/)' : 'setProject',
+      ':project/dashboards(/)' : 'showSaved',
+      ':project/data(/)' : 'showData',
+      ':project/dashboards/new(/)' : 'newDashboard',
+      ':project/dashboards/:id(/)' : 'showDashboard',
+      ':project/dashboards/:id/children(/)' : 'showDashboardChildren',
+      ':project/dashboards/:id/copy(/)' : 'copyDashboard',
       ':project/subjects/:subjects(/:name)' : 'dashboardFromSubjects',
       ':project/collections/:colletions(/:name)' : 'dashboardFromCollections' 
     },
@@ -88,6 +91,11 @@
     showData: function(project) {
       this.setProjectState(project);
       this.setPage('data');
+    },
+
+    newDashboard: function(project) {
+      this.setProjectState(project);
+      this.setPage('new');
     },
 
     showDashboard: function(project, id) {
