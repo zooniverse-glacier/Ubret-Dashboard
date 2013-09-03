@@ -26,7 +26,7 @@
 
     fetch: function() {
       if (!Dashboard.State.get('project'))
-        return
+        return;
       return Dashboard.Dashboard.__super__.fetch.call(this);
     },
 
