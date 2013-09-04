@@ -5,10 +5,8 @@
     <meta charset="utf-8">
     <title>Zooniverse Dashboard</title>
     <!-- REMOVE IN BUILD PROCESS -->
-    <link href="/bower_components/normalize-css/normalize.css" rel="stylesheet" type="text/css">
-    <link href="/css/top-bar.css" rel="stylesheet" type="text/css">
-    <link href="/css/dialog.css" rel="stylesheet" type="text/css">
-    <link href="/css/dashboard.css" rel="stylesheet" type="text/css">
+    <link href="/css/vendor.css" rel="stylesheet" type="text/css">
+    <link href="/css/app.css" rel="stylesheet" type="text/css">
     <!-- END REMOVE -->
     <!-- Templates -->
     <script id="dashboard-list-template" type="text/html">
@@ -184,25 +182,8 @@
     </div>
 
     <!-- REMOVE IN BUILD PROCESS -->
-    <script src="/bower_components/jquery/jquery.js"></script>
-    <script src="/bower_components/underscore/underscore.js"></script>
-    <script src="/bower_components/backbone/backbone.js"></script>
-    <script src="/bower_components/backbone-associations/backbone-associations.js"></script>
-    <script src="/bower_components/moment/moment.js"></script>
-    <script src="/bower_components/d3/d3.js"></script>
-    <script src="/vendor/base64.js"></script>
-    <script src="/vendor/zooniverse-2013-6-20-14-35-16.js"></script>
-    <script src="http://localhost:3001/libu.js"></script>
-    <!--<script src="http://localhost:3001/tools.js"></script>!-->
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/tools.js"></script>
-    <script src="/js/dashboards.js"></script>
-    <script src="/js/common_views.js"></script>
-    <script src="/js/list_views.js"></script>
-    <script src="/js/dashboard_views.js"></script>
-    <script src="/js/index_views.js"></script>
-    <script src="/js/app_views.js"></script>
-    <script src="/js/init.js" onload="initialize();"></script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js" onload="require('init')();"></script>
     <!-- END REMOVE -->
   </body>
 </html>

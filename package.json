@@ -4,8 +4,8 @@
   "description": "The New ZooTools Dashbaord",
   "main": "dashboard.js",
   "scripts": {
-    "build" : "node build.js",
-    "start" : "static .",
+    "build": "node build.js",
+    "start": "static .",
     "test": "mocha test.js"
   },
   "repository": {
@@ -23,6 +23,9 @@
     "node-static": "~0.7.0",
     "clean-css": "~1.0.12",
     "uglify-js": "~2.4.0",
-    "cheerio": "~0.12.1"
+    "cheerio": "~0.12.1",
+    "javascript-brunch": "~1.6.0",
+    "css-brunch": "~1.6.0",
+    "eco-brunch": "~1.7.1"
   }
 }
