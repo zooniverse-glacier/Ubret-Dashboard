@@ -13,7 +13,6 @@ body {
 }
 
 .create-dashboard select, .create-dashboard input, .create-dashboard button {
-  height: 35px;
   width: 100%;
   margin: 5px 0;
   padding: 5px;
