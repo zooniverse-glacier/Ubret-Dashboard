@@ -5,7 +5,7 @@ Tools = Backbone.Collection.extend({
     return "/dashboards/" + this.dashboardID + "/tools"
   },
 
-  sync: Dashboard.Sync,
+  sync: require('lib/sync'), 
 
   getExternal: function() {
     return this.filter(function(t) { 

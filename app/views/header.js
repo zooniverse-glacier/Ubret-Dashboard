@@ -1,6 +1,9 @@
+var Menu = require('views/menu');
+
 var Header = Backbone.View.extend({
   el: "header",
   active: null,
+  projects: require('config/projects'),
 
   events: {
     "click #current-project" : 'toggleProjects',
@@ -10,7 +13,7 @@ var Header = Backbone.View.extend({
   initialize: function() {
     this.activeProject = this.$('#current-project .name');
     this.projectSelect = this.$('#project-select');
-    this.menu = new Dashboard.Menu({model: this.model});
+    this.menu = new Menu({model: this.model});
     this.listenTo(this.model, 'change:project', this.updateProject);
     this.listenTo(this.model, 'change:page', this.updatePageHeader);
     this.listenTo(this.model, 'change:currentDashboard', this.updatePageHeader);
@@ -51,7 +54,7 @@ var Header = Backbone.View.extend({
       if (!_.isUndefined(this.hiddenProject))
         this.hiddenProject.show(); 
       this.hiddenProject = this.projectSelect.find('#' + project).hide();
-      projectText = Dashboard.projects[project].name;
+      projectText = this.projects[project].name;
     }
     this.activeProject.text(projectText);
   }

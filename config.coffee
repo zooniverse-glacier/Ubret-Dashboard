@@ -6,10 +6,8 @@ exports.config =
         'js/vendor.js': /^(bower_components|vendor)/
 
     stylesheets:
-      defaultExtension: 'css'
       joinTo: 
-        'css/app.css' : /^styles/
-        'css/vendor.css' : /^(bower_components|vendor)/
+        'css/app.css' : /^(bower_components|vendor|app\/styles)/
 
     templates:
       joinTo: 'javascripts/app.js'

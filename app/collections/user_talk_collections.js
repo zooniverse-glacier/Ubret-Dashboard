@@ -1,4 +1,6 @@
-UserTalkCollections = Dashboard.ProjectBasedCollection.extend({
+var ProjectBasedCollection = require('collections/project_based_collection');
+
+var UserTalkCollections = ProjectBasedCollection.extend({
   url: function() {
     return "/talk/users/" + User.current.id + "?type=my_collections";
   },

@@ -1,12 +1,17 @@
-IndexPage = Backbone.View.extend({
+var User = zooniverse.models.User,
+  dashboardCreate = require('views/create_dashboard');
+
+var Index = Backbone.View.extend({
+  model: require('lib/state'),
   className: 'dashboard-welcome-view',
   template: _.template($('#welcome-overlay').html()),
+  projects: require('config/projects'),
+  dashboardCreate: new dashboardCreate(),
 
   initialize: function() {
     this.projectName = this.$('.name');
-    this.listenTo(Dashboard.State, 'change:project', this.updateProjectView);
-    this.listenTo(Dashboard.State, 'change:project', this.render);
-    this.dashboardCreate = new Dashboard.Create();
+    this.listenTo(this.model, 'change:project', this.updateProjectView);
+    this.listenTo(this.model, 'change:project', this.render);
     User.on('initialized', _.bind(function() {
       this.collection = User.current.dashboards;
       this.render();
@@ -22,11 +27,11 @@ IndexPage = Backbone.View.extend({
     if (ev.target.value === '')
       return;
     else
-      Dashboard.router.navigate("#/" + ev.target.value, {trigger: true});
+      router.navigate("#/" + ev.target.value, {trigger: true});
   },
 
   updateProjectView: function() {
-    if (Dashboard.State.get('project')) {
+    if (this.model.get('project')) {
       this.$('.project-selected').show();
       this.$('.no-project').hide();
     } else {
@@ -37,7 +42,7 @@ IndexPage = Backbone.View.extend({
 
   listProjects: function() {
     var projectList = [['', {name: 'Projects'}]]
-      .concat(_.pairs(Dashboard.projects))
+      .concat(_.pairs(this.projects))
 
     var projectSelect = d3.select(this.el).select('.project').selectAll('option')
       .data(projectList, function(d) { return d[0]; });
@@ -72,7 +77,7 @@ IndexPage = Backbone.View.extend({
       return;
 
     // Render Welcome Template
-    this.$el.html(this.template({project: Dashboard.State.get('project')}));
+    this.$el.html(this.template({project: this.model.get('project')}));
     this.$('#welcome-create').html(this.dashboardCreate.render().el);
     this.$('#welcome-create .exit').hide();
     this.updateProjectView();
@@ -80,7 +85,7 @@ IndexPage = Backbone.View.extend({
     if (!_.isEmpty(User.current.dashboards))
       this.updateRecents();
 
-    if (!Dashboard.State.get('projects'))
+    if (!this.model.get('projects'))
       this.listProjects();
 
     return this;

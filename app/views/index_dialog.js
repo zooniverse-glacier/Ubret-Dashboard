@@ -1,3 +1,5 @@
+var IndexView = require('views/index')
+
 module.exports = new zooniverse.controllers.Dialog({
-  content: new Dashboard.IndexPage().$el
+  content: new IndexView().$el
 });

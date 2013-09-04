@@ -1,5 +1,8 @@
-Data = Backbone.View.extend(_.extend({
+var User = zooniverse.models.User;
+
+var Data = Backbone.View.extend(_.extend({
   el: '#data',
+  state: require('lib/state'),
 
   template: _.template($('#data-list-template').html()),
 
@@ -12,8 +15,8 @@ Data = Backbone.View.extend(_.extend({
       this.collection = User.current.collections;
       this.listenTo(this.collection, 'add reset', this.render);
     }, this));
-    this.listenTo(Dashboard.State, 'change:list-type', this.setListClass);
-    this.setListClass(Dashboard.State, Dashboard.State.get('list-type'));
+    this.listenTo(this.state, 'change:list-type', this.setListClass);
+    this.setListClass(this.state, this.state.get('list-type'));
   }
 }, require('views/toggle'), require('views/toggle_list')));
 

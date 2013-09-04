@@ -1,5 +1,8 @@
-Saved = Backbone.View.extend(_.extend({
+var User = zooniverse.models.User;
+
+var Saved = Backbone.View.extend(_.extend({
     el: "#saved",
+    state: require('lib/state'),
 
     template: _.template($('#dashboard-list-template').html()),
 
@@ -8,8 +11,8 @@ Saved = Backbone.View.extend(_.extend({
         this.collection = User.current.dashboards; 
         this.listenTo(this.collection, 'add reset remove', this.render);
       }, this));
-      this.listenTo(Dashboard.State, 'change:list-type', this.setListClass);
-      this.setListClass(Dashboard.State, Dashboard.State.get('list-type'));
+      this.listenTo(this.state, 'change:list-type', this.setListClass);
+      this.setListClass(this.state, this.state.get('list-type'));
     },
 
     events: {
@@ -22,6 +25,6 @@ Saved = Backbone.View.extend(_.extend({
       this.collection.remove(model);
     }
 
-  }, require('views/toggle'), require('view/toggle_list')));
+  }, require('views/toggle'), require('views/toggle_list')));
 
 module.exports = Saved;

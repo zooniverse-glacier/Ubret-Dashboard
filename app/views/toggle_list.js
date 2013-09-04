@@ -10,7 +10,7 @@ module.exports = {
   },
 
   setListType: function(e) {
-    Dashboard.State.set('list-type', e.target.dataset.type);
+    this.state.set('list-type', e.target.dataset.type);
   },
 
   render: function() {

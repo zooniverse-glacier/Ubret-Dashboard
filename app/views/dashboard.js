@@ -1,16 +1,17 @@
-Dashboard = Backbone.View.extend(_.extend({
+var User = zooniverse.models.User;
+
+var Dashboard = Backbone.View.extend(_.extend({
   el: '#dashboard',
+  state: require('lib/state'),
 
   initialize: function() {
     User.on('initialized', _.bind(function() {
       this.collection = User.current.dashboards;
     }, this));
-    this.listenTo(Dashboard.State, 'change:currentDashboard', this.updateDashboard);
-    this.model = Dashboard.State.get('currentDashboard');
-    if (this.model) {
-      this.sidebarTree = new Dashboard.SimpleTreeView({model: this.model}).render();
+    this.listenTo(this.state, 'change:currentDashboard', this.updateDashboard);
+    this.model = this.state.get('currentDashboard');
+    if (this.model) 
       this.render();
-    }
   },
 
   treeLayout: d3.layout.tree(),
@@ -24,9 +25,8 @@ Dashboard = Backbone.View.extend(_.extend({
   updateDashboard: function(state, model) {
     this.$(".section-header h2").text(model.get('name'));
     this.model = model;
-    this.sidebarTree == new Dashboard.SimpleTreeView({model: this.model}).render();
     this.render();
   }
-}, require('views/toggle_view')));
+}, require('views/toggle')));
 
 module.exports = Dashboard;

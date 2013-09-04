@@ -1,19 +1,21 @@
-ProjectBasedCollection = Backbone.Collection.extend({
+var User = zooniverse.models.User;
+
+var ProjectBasedCollection = Backbone.Collection.extend({
   initialize: function() {
     User.on('change', _.bind(this.fetch, this));
-    this.listenTo(Dashboard.State, 'change:project', this.fetch);
+    this.listenTo(require('lib/state'), 'change:project', this.fetch);
   },
 
-  sync: Dashboard.Sync,
+  sync: require('lib/sync'), 
 
   comparator: function(m) {
     return -(new Date(m.get('updated_at')).getTime());
   },
 
   fetch: function() {
-    if (!Dashboard.userAndProject())
-      return
-    return Dashboard.ProjectBasedCollection.__super__.fetch.call(this);
+    if (!(User.current && require('lib/state').get('project')))
+      return;
+    return ProjectBasedCollection.__super__.fetch.call(this);
   }
 });
 

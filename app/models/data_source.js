@@ -1,5 +1,5 @@
 DataSource = Backbone.AssociatedModel.extend({
-  sync: Dashboard.Sync,
+  sync: require('lib/sync'),
 
   isInternal: function() {
     return this.get('source_type') === 'internal';

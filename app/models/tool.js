@@ -5,11 +5,11 @@ Tool = Backbone.AssociatedModel.extend({
     {
       type: Backbone.One,
       key: 'data_source',
-      relatedModel: Dashboard.DataSource
+      relatedModel: require('models/data_source')
     }
   ],
 
-  sync: Dashboard.Sync,
+  sync: require('lib/sync'), 
 
   getChildren: function() {
     if (!this.collection)

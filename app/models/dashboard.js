@@ -1,10 +1,12 @@
 var Dashboard = Backbone.AssociatedModel.extend({
+  state: require('lib/state'),
+
   relations: [
     {
       type: Backbone.Many,
       key: 'tools',
-      relatedModel: Dashboard.Tool,
-      collectionType: Dashboard.Tools
+      relatedModel: require('models/tool'), 
+      collectionType: require('collections/tools') 
     }
   ],
 
@@ -15,14 +17,14 @@ var Dashboard = Backbone.AssociatedModel.extend({
     }); 
   },
 
-  sync: Dashboard.Sync,
+  sync: require('lib/sync'),
 
   urlRoot: "/dashboards",
 
   fetch: function() {
-    if (!Dashboard.State.get('project'))
+    if (!this.state.get('project'))
       return;
-    return Dashboard.Dashboard.__super__.fetch.call(this);
+    return Dashboard.__super__.fetch.call(this);
   },
 
   getFormattedDate: function(field) {
@@ -38,7 +40,7 @@ var Dashboard = Backbone.AssociatedModel.extend({
 
   copy: function() {
     var url = "http://localhost:3000/projects/" + 
-      Dashboard.State.get('project') + 
+      this.state.get('project') + 
       "/dashboards/" + 
       this.id + "/fork";
     return $.ajax({

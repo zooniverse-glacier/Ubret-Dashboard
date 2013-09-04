@@ -35,7 +35,7 @@ Menu = Backbone.View.extend({
 
   navigateTo: function(ev) {
     var navigate = _.bind(function(destination) {
-      Dashboard.router.navigate('#/' + this.model.get('project') + destination, { trigger: true })
+      router.navigate('#/' + this.model.get('project') + destination, { trigger: true })
     }, this);
 
     ev = $(ev.target);

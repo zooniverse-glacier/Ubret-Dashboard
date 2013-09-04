@@ -1,5 +1,7 @@
-UserDashboards = Dashboard.ProjectBasedCollection.extend({
-  model: Dashboard.Dashboard, 
+var ProjectBasedCollection = require('collections/project_based_collection');
+
+var UserDashboards = ProjectBasedCollection.extend({
+  model: require('models/dashboard'),
 
   url: "/dashboards"
 });

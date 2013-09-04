@@ -24,5 +24,17 @@
     "moment": "~2.1.0",
     "d3": "~3.3.2",
     "normalize-css": "~2.1.3"
+  },
+  "overrides": {
+    "backbone": {
+      "dependencies" : {
+        "underscore" : "*",
+        "jquery" : "*"
+      },
+      "main": "backbone.js"
+    },
+    "underscore": {
+      "main" : "underscore.js"
+    }
   }
 }
