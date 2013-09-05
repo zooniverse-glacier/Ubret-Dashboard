@@ -1,4 +1,5 @@
-var ProjectBasedCollection = require('collections/project_based_collection');
+var ProjectBasedCollection = require('collections/project_based_collection'),
+  User = zooniverse.models.User;
 
 var UserTalkCollections = ProjectBasedCollection.extend({
   url: function() {
