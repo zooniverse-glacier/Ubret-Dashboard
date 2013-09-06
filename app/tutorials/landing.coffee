@@ -21,3 +21,4 @@ module.exports = new zootorial.Tutorial
               details: 'Zoo Tools uses "Dashboards" to organize your work. To start, click Create Dashboard.'
               attachment: 'center -0.2 button.create-dashboard center bottom'
               className: 'arrow-top'
+              nextButton: 'Finish Tutorial'

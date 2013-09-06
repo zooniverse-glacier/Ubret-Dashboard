@@ -51,10 +51,11 @@ class AppView extends BaseView
     $('body').append betaDialog.render().el
 
   render: =>
-    if @state is 'landing'
-      if User.current?
+    if @state is 'landing' and not User.current?.prefs?.dashboard?.welcome_tut
+      if User.current? 
         Tutorials.landing.steps.welcome.details = "Follow this tutorial to get started using Dashboard."
       tutorial = Tutorials.landing
+      tutorial.el.bind('end-tutorial', @endTutorial)
       tutorial.start()
     @state += 1
     
@@ -77,6 +78,11 @@ class AppView extends BaseView
     User.current?.getDashboards()
     delete @dashboardModel
     Manager.get('router').navigate("#/dashboards/#{Manager.get('project')}", {trigger: true})
+
+  endTutorial: =>
+    data = JSON.stringify({key: 'dashboard.welcome_tut', value: true})
+    url = Manager.baseApi() + "/users/preferences"
+    User.current.setPrefs(data, url)
 
   loadUbretTools: =>
     ToolLoader @dashboardModel, @createDashboardView

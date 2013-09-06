@@ -26,6 +26,8 @@ gzip -9 -c "public/stylesheets/vendor-$timestamp.css" > "public/stylesheets/vend
 
 # Substitue timestamped files
 mv public/index.html public/index.old.html
-sed "s/app\.\([a-z]*\)/app-$timestamp.\1/g;s/vendor\.\([a-z]*\)/vendor-$timestamp.\1/g;s/localhost:3001/ubret\.s3\.amazonaws\.com\/ubret_library/g" <public/index.old.html > public/index.html
+sed "s/app\.\([a-z]*\)/app-$timestamp.\1/g;s/vendor\.\([a-z]*\)/vendor-$timestamp.\1/g;s/localhost:3001/ubret\.s3\.amazonaws\.com\/ubret_library/g" <public/index.old.html > public/index.old2.html
+sed "s/<\!--//;s/-->//" < public/index.old2.html > public/index.html
 rm public/index.old.html
+rm public/index.old2.html
 echo 'build successful!'
