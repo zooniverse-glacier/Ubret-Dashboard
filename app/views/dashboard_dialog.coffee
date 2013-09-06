@@ -6,7 +6,7 @@ class DashboardDialog extends Dialog
 
   template: require './templates/dashboard_dialog'
 
-  title: 'Create New Dashbaord'
+  title: 'Create New Dashboard'
   confirmation: 'Create Dashboard'
   confirmCallback: (e) => @newDashboard(e) 
 
