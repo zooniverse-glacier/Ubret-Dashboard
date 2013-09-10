@@ -3,6 +3,7 @@ var AppView = require('views/app_view'),
   Api = require('lib/api'),
   Header = require('views/header'),
   UserTalkCollections = require('collections/user_talk_collections'),
+  Login = zooniverse.controllers.loginDialog,
   UserDashboards = require('collections/user_dashboards');
 
 module.exports = function() {
@@ -38,15 +39,19 @@ module.exports = function() {
 
   Backbone.Events.listenTo(state, 'change:project', updateUser);
 
-  User.fetch()
   User.on('change', function(response) {
-    if (!User.current)
+    if (!User.current) {
+      app.active.hide();
+      Login.show();
       return;
+    }
     User.current.collections = new UserTalkCollections();
     User.current.dashboards = new UserDashboards();
     User.trigger('initialized');
     updateUser();
   });
+
+  User.fetch();
 
   Backbone.history.start();
 };

@@ -1,6 +1,7 @@
 var Dashboard = require('views/dashboard'),
   Saved = require('views/saved_list'),
-  Data = require('views/data_list');
+  Data = require('views/data_list'),
+  User = zooniverse.models.User;
 
 var App = Backbone.View.extend({
   el: "#app",
@@ -17,15 +18,16 @@ var App = Backbone.View.extend({
     this.active = this.$('#index');
     this.listenTo(this.model, 'change:page', this.setActive);
     this.listenTo(this.model, 'change:project', this.redirect);
+    User.on('change', _.bind(this.setActive, this));
   },
 
   setActive: function(state, active) {
-    var section = this.sections[active];
-    if (_.isUndefined(section))
-      throw new Error("Section doesn't exist");
-    this.active.hide();
-    this.active = this.sections[active];
-    this.active.show();
+    if (_.isString(active)) {
+      this.active.hide();
+      this.active = this.sections[active];
+    }
+    if ((active === 'dashboard') || User.current)
+      this.active.show();
   }
 });
 
