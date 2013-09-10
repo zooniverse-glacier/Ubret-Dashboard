@@ -1,4 +1,6 @@
-Router = Backbone.Router.extend({
+var Dashboard = require("models/dashboard");
+
+var Router = Backbone.Router.extend({
   routes: {
     '': 'index',
     ':project(/)' : 'setProject',
@@ -53,10 +55,10 @@ Router = Backbone.Router.extend({
   showDashboard: function(project, id) {
     this.setProjectState(project);
     this.setPage('dashboard');
-    if (User.current.dashboards) {
-      this.state.set('currentDashboard', User.current.dashboards.get(id));
+    if (this.user.current.dashboards) {
+      this.state.set('currentDashboard', this.user.current.dashboards.get(id));
     } else {
-      var dashboardModel = new Dashboard.Dashboard({id: id})
+      var dashboardModel = new Dashboard({id: id})
       dashboardModel.fetch().then(_.bind(function() {
         this.state.set('currentDashboard', dashboardModel);
       }, this));
