@@ -4,6 +4,7 @@
   display: inline-block;
   margin: 0 20px;
   border: 1px solid $standardGray;
+  padding: 20px;
   background: $panelWhite;
 
   .title-bar
@@ -11,7 +12,10 @@
     color: $panelWhite;
 
   &.new-tool-chain
-    background: $hoverGray;
-    padding: 20px;
+    background: $standardGray;
+    color: $panelWhite;
     text-align: center;
     cursor: pointer;
+
+    &:hover
+      background: $hoverGray;

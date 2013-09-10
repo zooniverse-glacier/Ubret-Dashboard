@@ -2,7 +2,7 @@ Tools = Backbone.Collection.extend({
   model: require('models/tool'),
 
   url: function() {
-    return "/dashboards/" + this.dashboardID + "/tools"
+    return "/dashboards/" + this.parents[0].id + "/tools"
   },
 
   sync: require('lib/sync'), 

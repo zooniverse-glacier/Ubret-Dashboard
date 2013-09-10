@@ -1,4 +1,4 @@
-var TitleBar = Backbone.View.extends({
+var TitleBar = Backbone.View.extend({
 });
 
 module.exports = TitleBar;

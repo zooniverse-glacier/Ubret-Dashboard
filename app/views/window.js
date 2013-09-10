@@ -3,10 +3,13 @@ var state = require('lib/state'),
   SettingsPane = require('views/settings_pane'),
   TitleBar = require('views/title_bar');
 
-var Window = Backbone.View.extends({
+var Window = Backbone.View.extend({
+  template: require('templates/window'),
+
   initialize: function() {
+    this.model.getUbretTool();
     this.titleBar = new TitleBar({model: this.model});
-    this.toolPane = new ToolPan({model: this.model});
+    this.toolPane = new ToolPane({model: this.model});
     this.settingsPane = new SettingsPane({model: this.model});
     this.listenTo(this.model, 'height width', this.setSize);
     this.listenTo(this.model, 'top left', this.setPosition);
@@ -18,6 +21,7 @@ var Window = Backbone.View.extends({
     this.$('.title-bar').html(this.titleBar.render().el);
     this.$('.tool-pane').html(this.toolPane.render().el);
     this.$('.settings-pane').html(this.settingsPane.render().el);
+    return this;
   }
 });
 
