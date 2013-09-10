@@ -1,0 +1,58 @@
+@import "common"
+
+nav.menu-panel {
+  height: 100%;
+  position: absolute;
+  width: 260px;
+  left: -260px;
+  top: 36px;
+  background: $mainBlack;
+  transition: transform .5s linear;
+  z-index: 999;
+  color: white;
+}
+
+nav.menu-panel.active {
+  transform: translateX(260px);
+}
+
+nav.menu-panel h2 {
+  font-weight: 200;
+  margin-left: 30px;
+}
+
+nav.menu-panel ul {
+  padding: 0;
+  list-style: none;
+}
+
+nav.menu-panel ul li {
+  cursor: pointer;
+  width: 200px;
+  border-bottom: 1px solid $panelWhite;
+  padding: 10px 30px;
+  color: white;
+}
+
+nav.menu-panel ul li:first-child {
+  border-top: 1px solid $panelWhite;
+}
+
+nav.menu-panel ul li:hover {
+  background: $standardGray;
+  color: $hoverBlue;
+}
+
+nav.menu-panel ul li.active {
+  cursor: default;
+  color: $standardBlue;
+}
+
+nav.menu-panel ul li.disabled {
+  cursor: default;
+  color: #888;
+}
+
+nav.menu-panel ul li.disabled:hover,  nav.menu-panel ul li.active:hover {
+  background: $mainBlack;
+}

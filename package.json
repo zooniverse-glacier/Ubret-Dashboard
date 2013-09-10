@@ -26,6 +26,7 @@
     "cheerio": "~0.12.1",
     "javascript-brunch": "~1.6.0",
     "css-brunch": "~1.6.0",
-    "eco-brunch": "~1.7.1"
+    "eco-brunch": "~1.7.1",
+    "stylus-brunch": "~1.7.0"
   }
 }

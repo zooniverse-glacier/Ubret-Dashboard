@@ -1,0 +1,130 @@
+@import "common"
+
+#dashboard-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: $panelWhite;
+  background: $mainBlack;
+  width: 100%;
+  border-bottom: 1px solid $standardGray; 
+  height: 35px;
+}
+
+#dashboard-header span.menu {
+  cursor: pointer;
+  width: 45px;
+  position: absolute;
+  height: 35px; 
+  border-right: 1px solid $hoverGray;
+}
+
+
+#dashboard-header span.menu#tools-menu {
+  left: 45px;
+}
+
+#dashboard-header span.menu#data-menu {
+  left: 90px;
+}
+
+#dashboard-header span.menu#layout-menu {
+  left: 135px;
+}
+
+#dashboard-header span#menu:before {
+  background: none repeat scroll 0 0 $panelWhite;
+  box-shadow: 0 4px $mainBlack, 0 8px $panelWhite, 0 12px $mainBlack, 0 16px $panelWhite;
+  content: "";
+  height: 4px;
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  width: 30px;
+}
+
+#dashboard-header span#menu.active:before  {
+  box-shadow: 0 4px $standardBlue, 0 8px $panelWhite, 0 12px $standardBlue, 0 16px $panelWhite;
+}
+
+#dashboard-header span.menu.active:hover {
+  background: $hoverBlue; 
+}
+#dashboard-header span#menu.active:hover:before {
+  box-shadow: 0 4px $hoverBlue, 0 8px $panelWhite, 0 12px $hoverBlue, 0 16px $panelWhite;
+}
+
+#dashboard-header span#menu:hover:before {
+  box-shadow: 0 4px $hoverGray, 0 8px $panelWhite, 0 12px $hoverGray, 0 16px $panelWhite;
+}
+
+#dashboard-header span.menu:after {
+  border-left: 1px solid $mainBlack;  
+}
+
+#dashboard-header span.menu:hover {
+  background: $hoverGray;
+}
+
+#dashboard-header span.menu.active {
+  background: $standardBlue; 
+}
+
+span.down-arrow {
+  padding-left: 5px;  
+}
+
+#dashboard-header ul#project-select {
+  top: 20px;
+  left: 50%;
+  margin-left: -100px;
+  display: none;
+  position: absolute;
+  width: 200px;
+  background: $mainBlack;
+  z-index: 999;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 0;
+  list-style-type: none;
+}
+
+ul#project-select li {
+  border-top: 1px solid white;
+  padding: 15px 15px 10px;
+}
+
+ul#project-select li a {
+  color: white;
+  text-decoration: none;
+}
+
+.pull-center {
+  width: 350px;
+  position: absolute;
+  left: 50%; 
+  margin-left: -175px;
+  text-align: center;
+  top: 10px;
+}
+
+
+#current-project {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+#logo {
+  font-weight: 700;
+  padding-left: 40px;
+}
+
+#logo:before {
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAACW0lEQVR42ryWX2jOYRTHt5GirdVYTG3UJkLN/MsYckGJC1yJKbmREisRFwopUsoSccUFciMXblys/Btb8zcrZG+R/ImRGbaSvD5PfX9vZ8fv/b3vmzj16Xmf8/w573POc87vKU6n00X/WobnM+lrb6qeZgFMgvKggh7oKKusu59rfXH/h56k8U2wDeoT5jyB43CqUCMT4QI0FuCVB9AMT41uBqwriZncAM8KNBBkpk61UP3tcAe++ZiMhbswzOnfwWW4B31QBrNgFdS4uTfhGtTCMmj37uqG6W7RfjgIP7OcYDcccroBGA9fQse6a32MgTWwL8FAkMOw0ulGKT5/BP6FAh5J+Pd784hFHZyHaqgy+k8wxp5kqjPwMYuBCsWiQv0N8DDki2LwyswdDfOtkaVus3MxBjbCawU/tLfhKKyFFhiEM27NEpvxU9xgp+uPg9MwQv2RME+nemTmdbh11fYkpW7ws+tPNgYiKVGJsdIXcwEyRr67wfIYo7+c7gekcqwbtEaeu8G55vcKaIOuaJHazfAmYV2RYpcx0uYGm+WeY3ARdqjMTIDZas9muRxWbtjAP4a3ytIo0C+lazBu6RVxskXXOJJ+lZghGe/zokrZnsojIRfBSac7YG9IJJdCxXQTr8CuHAa2Rm4x8l45NKSsNKo0hIxdHLNRSn+iU24oVZBXq1p4maaynzGyU5V2D7RCE9z6i0/6crjqE6pSNaZVunZV4+4CNw9pMMcbyOcb3yKf1ybMCS4+AUeyfuPzeRLxWmlSrapRPAa0eRevles5Xyv/4931W4ABAHD5k83VXALJAAAAAElFTkSuQmCC") no-repeat scroll 0 0;
+  height: 25px;
+  width: 25px;
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: -5px;
+}

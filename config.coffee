@@ -7,7 +7,13 @@ exports.config =
 
     stylesheets:
       joinTo: 
-        'css/app.css' : /^(bower_components|vendor|app\/styles)/
+        'css/app.css' : /^app\/styles/
+        'css/vendor.css' : /^(bower_components|vendor)/
+
+      order: 
+        before: [
+          'app/styles/common.styl'
+        ]
 
     templates:
       joinTo: 'js/app.js'

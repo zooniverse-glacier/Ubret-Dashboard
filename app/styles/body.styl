@@ -1,0 +1,38 @@
+@import "common"
+
+body
+  font-family: "Ubuntu Sans", sans-serif
+  height: 100%
+  background: $backgroundGray
+
+div#app
+  min-height: 100%;
+  padding-top: 50px;
+
+.pull-left
+  float: left
+
+.pull-right
+  float: right
+
+.btn 
+  background: $standardBlue; 
+  color: $panelWhite;
+  border: none;
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px 10px;
+  cursor: pointer;
+
+.btn:hover
+  background: $hoverBlue; 
+
+.btn:active
+  box-shadow: 0 100px 0 rgba(0, 0, 0, 0.125) inset, 0 1px 3px rgba(0, 0, 0, 0.67) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+
+.btn.active
+  box-shadow: 0 100px 0 rgba(0, 0, 0, 0.125) inset, 0 1px 3px rgba(0, 0, 0, 0.67) inset, 0 1px 0 rgba(255, 255, 255, 0.33);
+
+.btn.disabled
+  opacity: .4;
+  cursor: default;
