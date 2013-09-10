@@ -10,4 +10,4 @@ exports.config =
         'css/app.css' : /^(bower_components|vendor|app\/styles)/
 
     templates:
-      joinTo: 'javascripts/app.js'
+      joinTo: 'js/app.js'

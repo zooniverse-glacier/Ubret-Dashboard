@@ -4,7 +4,7 @@ var Create = Backbone.View.extend({
   model: require('lib/state'),
   projects: require('config/projects'),
   className: 'create-dashboard',
-  template: _.template($("#new-dashboard").html()),
+  template: require('templates/new_dashboard'),
 
   initialize: function() {
     this.listenTo(this.model, 'change:project', this.setSelected);

@@ -4,7 +4,7 @@ var Data = Backbone.View.extend(_.extend({
   el: '#data',
   state: require('lib/state'),
 
-  template: _.template($('#data-list-template').html()),
+  template: require('templates/data_list'),
 
   events: {
     'click .layouts button' : 'setListType',

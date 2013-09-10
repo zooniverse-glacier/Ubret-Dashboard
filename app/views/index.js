@@ -4,7 +4,7 @@ var User = zooniverse.models.User,
 var Index = Backbone.View.extend({
   model: require('lib/state'),
   className: 'dashboard-welcome-view',
-  template: _.template($('#welcome-overlay').html()),
+  template: require('templates/welcome'), 
   projects: require('config/projects'),
   dashboardCreate: new dashboardCreate(),
 

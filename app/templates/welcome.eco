@@ -1,0 +1,21 @@
+<a class="exit" href="/#/<%- @project %>/dashboards">I know what to do!</a>
+<h1 class="half">Welcome to <span class="light">zoo</span>tools!</h1>
+<div class="pull-left">
+  <p class="half"> Welcome to your Dashboard. This is a place for volunteers (such as yourself!) to observe, collect, and analyze data from Zooniverse citizen sciecne projects. Think of it as a more advance toolset than what is offered in a regular Zooniverse Project</p>
+</div>
+<div class="no-project">
+  <h2> To Get Started Select a Project: </h2>
+  <select class="project"></select>
+</div>
+<div class="project-selected">
+  <div class="half pull-left">
+    <div id="welcome-create"></div>
+  </div>
+
+  <div class="half pull-right">
+    <h2>Open a recent Dashboard</h2>
+    <ul id="welcome-recents">
+    </ul>
+    <a href="#/<%- @project %>/dashboards">View all</a>
+  </div>
+</div>

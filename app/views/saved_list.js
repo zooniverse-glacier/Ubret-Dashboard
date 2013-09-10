@@ -4,7 +4,7 @@ var Saved = Backbone.View.extend(_.extend({
     el: "#saved",
     state: require('lib/state'),
 
-    template: _.template($('#dashboard-list-template').html()),
+    template: require('templates/saved_list'), 
 
     initialize: function() {
       User.on('initialized', _.bind(function() {
