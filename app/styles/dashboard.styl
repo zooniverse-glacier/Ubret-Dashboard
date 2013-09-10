@@ -1,31 +1,33 @@
 @import "common"
 
-section#dashboard ul#zoom-controls {
-  list-style: none;
-  right: 0;
-  top: 50%;
-  margin-top: -75px;
-  position: absolute;
-}
+section#dashboard 
+  width: 100%;
 
-section#dashboard ul#zoom-controls .btn {
-  width: 50px;
-  height: 50px;
-  background: $mainBlack;
-}
+  ul#zoom-controls
+    list-style: none;
+    right: 0;
+    top: 50%;
+    margin-top: -75px;
+    position: absolute;
 
-section#dashboard ul#zoom-controls li {
-  border-bottom: 1px solid #ededed;
-}
+  ul#zoom-controls .btn
+    width: 50px;
+    height: 50px;
+    background: $mainBlack;
 
-section#dashboard ul#zoom-controls li:last-child {
-  border-bottom: none;
-}
+  ul#zoom-controls li
+    border-bottom: 1px solid #ededed;
 
-section#dashboard ul#zoom-controls .btn:hover {
-  background: $standardGray;
-}
+  ul#zoom-controls li:last-child
+    border-bottom: none;
 
-section#dashboard ul#zoom-controls .btn:active {
-  background: $focusRed;
-}
+  ul#zoom-controls .btn:hover
+    background: $standardGray;
+
+  ul#zoom-controls .btn:active
+    background: $focusRed;
+
+  .row
+    display: block
+    width: 100%;
+    margin-bottom: 20px;

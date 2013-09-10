@@ -17,6 +17,10 @@ var Dashboard = Backbone.AssociatedModel.extend({
     }); 
   },
 
+  defaults: {
+    zoom: 3
+  },
+
   sync: require('lib/sync'),
 
   urlRoot: "/dashboards",

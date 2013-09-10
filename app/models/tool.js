@@ -9,13 +9,22 @@ Tool = Backbone.AssociatedModel.extend({
     }
   ],
 
+  initialize: function() {
+    this.listenTo(this, 'change:tool_type', this.setTool);
+  },
+
+  setTool: function(_, type) {
+    this.UbretTool = require('tools/' + type); 
+  },
+
   sync: require('lib/sync'), 
 
-  createUbretTool: function() {
+  ubretTool: function() {
+    if (this.ubretTool);
+      return this.ubretTool
     if (this.get('tool_type'))
       return;
-    this.ubretTool = require('tools/' + this.get('tool_type'));
-    this.ubretTool = new this.ubretTool(this.get("settings"), this.getParent());
+    this.ubretTool = new this.UbretTool(this.get("settings"), this.getParent());
   },
 
   getParent: function() {
