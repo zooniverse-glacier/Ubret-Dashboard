@@ -1,7 +1,7 @@
 @import "common"
 
 section#dashboard 
-  width: 100%;
+  width: inherit
 
   ul#zoom-controls
     list-style: none;
@@ -9,6 +9,7 @@ section#dashboard
     top: 50%;
     margin-top: -75px;
     position: absolute;
+    z-index: 1000
 
   ul#zoom-controls .btn
     width: 50px;
@@ -29,6 +30,5 @@ section#dashboard
 
   .row
     display: block
-    width: 100%;
     margin-bottom: 20px;
     overflow-y: hidden;

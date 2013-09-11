@@ -6,7 +6,8 @@ var TitleBar = Backbone.View.extend({
   },
 
   events: {
-    "click .close" : "triggerClose"
+    "click .close" : "triggerClose",
+    "click .settings-toggle" : "toggleSettings"
   },
 
   triggerClose: function() {
@@ -15,6 +16,12 @@ var TitleBar = Backbone.View.extend({
 
   setName: function(m, title) {
     this.$('.title').text(title);
+  },
+
+  toggleSettings: function() {
+    var sa = (this.model.get('settings_active') || false);
+    this.$('.settings-toggle').toggleClass('active');
+    this.model.set('settings_active', !sa);
   },
 
   render: function() {

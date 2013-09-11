@@ -29,6 +29,7 @@ var Window = Backbone.View.extend({
     this.settingsPane = new SettingsPane({model: this.model});
 
     this.listenTo(this.titleBar, 'close', this.close);
+    this.listenTo(this.model, 'change:settings_active', this.toggleSettings)
   },
 
   close: function() {
@@ -47,6 +48,13 @@ var Window = Backbone.View.extend({
 
   handleNewChain: function(ev) {
     return false;
+  },
+
+  toggleSettings: function(m, sa) {
+    if (sa)
+      this.$('.settings-pane').addClass('active');
+    else
+      this.$('.settings-pane').removeClass('active');
   },
 
   dropAdd: function(ev) {

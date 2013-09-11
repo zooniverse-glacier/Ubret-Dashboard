@@ -35,12 +35,12 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   startToolChain: function(ev) {
-    var position = this.model.get('tools')
-      .max(function(t) { return t.get('top') }) + 1;
+    var tools = this.model.get('tools'),
+      position = (tools.empty()) ? 0 : tools.max(function(t) { return t.get('top') }) + 1;
     this.model.get('tools').create({
       tool_type: 'tool_chain',
       name: "New Tool Chain",
-      top: position
+      row: position
     });
   },
 
@@ -49,7 +49,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     if (!this.model)
       return;
     var chains = _.pairs(this.model.get('tools')
-      .groupBy(function(t) { return t.get('top'); }));
+      .groupBy(function(t) { return t.get('row'); }));
 
     var rows = d3.select(this.el).selectAll('.row')
       .data(chains, function(d) { return d[0] + d[1][0].id; });
