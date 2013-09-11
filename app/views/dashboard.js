@@ -51,7 +51,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     var zoomLevel = this.model.get('zoom'),
       height = this.windowMinHeight * zoomLevel,
       width = Math.floor(height * (3/2));
-
+      itemsInRow = Math.floor((window.innerWidth * 1.1) / width) + 1;
 
     var chains = _.pairs(this.model.get('tools')
         .groupBy(function(t) { return t.get('row'); }));
@@ -60,12 +60,14 @@ var Dashboard = Backbone.View.extend(_.extend({
       .data(chains, function(d) { return d[0] + d[1][0].id; });
 
     rows.enter().append('div')
-      .attr('class', 'row');
+      .attr('class', 'row')
+
+    rows.style('height', (height + 50) + "px");
 
     rows.exit().remove();
 
     var tools = rows.selectAll('.window')
-      .data(function(d) { return d[1];}, function(d) { return d.id });
+      .data(function(d) { return d[1].slice(0, itemsInRow);}, function(d) { return d.id });
 
     tools.enter().append('div')
       .attr('class', 'window')

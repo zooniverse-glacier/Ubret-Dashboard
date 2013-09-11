@@ -81,6 +81,9 @@ var Window = Backbone.View.extend({
       this.$('.tool-pane').html(this.toolPane.render().el);
       this.$('.settings-pane').html(this.settingsPane.render().el);
     }
+    this.titleBar.delegateEvents();
+    this.toolPane.delegateEvents();
+    this.settingsPane.delegateEvents();
     return this;
   }
 });
