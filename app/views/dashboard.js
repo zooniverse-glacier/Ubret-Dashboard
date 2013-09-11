@@ -39,6 +39,7 @@ var Dashboard = Backbone.View.extend(_.extend({
       .max(function(t) { return t.get('top') }) + 1;
     this.model.get('tools').create({
       tool_type: 'tool_chain',
+      name: "New Tool Chain",
       top: position
     });
   },
@@ -63,7 +64,7 @@ var Dashboard = Backbone.View.extend(_.extend({
 
     tools.enter().append('div')
       .attr('class', 'window')
-      .append(this.drawWindow);
+      .append(_.bind(this.drawWindow, this));
 
     tools.exit().remove();
 
@@ -73,7 +74,7 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   drawWindow: function(t) { 
-    var window = new Window({model: t});
+    var window = new Window({model: t, dashboard: this.model});
     return window.render().el; 
   },
 

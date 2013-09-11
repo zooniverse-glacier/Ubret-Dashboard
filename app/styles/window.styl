@@ -6,6 +6,7 @@
   border: 1px solid $standardGray;
   padding: 20px;
   background: $panelWhite;
+  overflow: hidden;
 
   .title-bar
     background: $mainBlack
@@ -16,17 +17,13 @@
     height: 20px;
     padding: 5px 20px;
     width: 100%;
+    text-align: center;
+    cursor: pointer
 
     .close
-      cursor: pointer
-
-    .title
-      position: relative
-      left: 50%
-      right: 50%
+      float: left;
 
     .settings-toggle
-      cursor: pointer
       transform: rotate(180deg)
       transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
       top: 4px
@@ -41,3 +38,6 @@
 
     &:hover
       background: $hoverGray;
+
+  &.selected
+    box-shadow: 5px 5px $hoverBlue
