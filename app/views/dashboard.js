@@ -95,6 +95,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     this.model = model;
     this.render();
     this.listenTo(this.model, 'change:zoom', this.setZoom);
+    this.listenTo(this.model, 'remove:tools add:tools', this.render);
   }
 }, require('views/toggle')));
 

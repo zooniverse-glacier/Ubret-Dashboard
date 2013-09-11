@@ -13,7 +13,12 @@ var Window = Backbone.View.extend({
     this.settingsPane = new SettingsPane({model: this.model});
     this.listenTo(this.model, 'height width', this.setSize);
     this.listenTo(this.model, 'top left', this.setPosition);
-    this.listenTo(this.titleBar, 'close', this.remove);
+    this.listenTo(this.titleBar, 'close', this.close);
+  },
+
+  close: function() {
+    this.model.destroy();
+    this.remove();
   },
 
   render: function() {

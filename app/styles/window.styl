@@ -10,6 +10,28 @@
   .title-bar
     background: $mainBlack
     color: $panelWhite;
+    position: relative;
+    top: -20px;
+    left: -20px;
+    height: 20px;
+    padding: 5px 20px;
+    width: 100%;
+
+    .close
+      cursor: pointer
+
+    .title
+      position: relative
+      left: 50%
+      right: 50%
+
+    .settings-toggle
+      cursor: pointer
+      transform: rotate(180deg)
+      transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
+      top: 4px
+      width: 20px
+      float: right
 
   &.new-tool-chain
     background: $standardGray;

@@ -19,6 +19,9 @@ var Tool = Backbone.AssociatedModel.extend({
   initialize: function() {
     if (!this.get('tool_type'))
       throw new Error("Tool must have a type defined");
+
+    if (_.isString(this.url))
+      this.url = this.url + "/tools/" + this.id;
     
     this.setDefaults();
     this.setTool();
