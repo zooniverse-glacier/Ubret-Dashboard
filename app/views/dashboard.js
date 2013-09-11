@@ -36,7 +36,7 @@ var Dashboard = Backbone.View.extend(_.extend({
 
   startToolChain: function(ev) {
     var tools = this.model.get('tools'),
-      position = (tools.empty()) ? 0 : tools.max(function(t) { return t.get('top') }) + 1;
+      position = (tools.isEmpty()) ? 0 : tools.max(function(t) { return t.get('top') }) + 1;
     this.model.get('tools').create({
       tool_type: 'tool_chain',
       name: "New Tool Chain",
@@ -45,13 +45,18 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   render: function() {
-    this.$('.row').remove();
     if (!this.model)
       return;
-    var chains = _.pairs(this.model.get('tools')
-      .groupBy(function(t) { return t.get('row'); }));
 
-    var rows = d3.select(this.el).selectAll('.row')
+    var zoomLevel = this.model.get('zoom'),
+      height = this.windowMinHeight * zoomLevel,
+      width = Math.floor(height * (3/2));
+
+
+    var chains = _.pairs(this.model.get('tools')
+        .groupBy(function(t) { return t.get('row'); }));
+
+    rows = d3.select(this.el).selectAll('.row')
       .data(chains, function(d) { return d[0] + d[1][0].id; });
 
     rows.enter().append('div')
@@ -66,11 +71,11 @@ var Dashboard = Backbone.View.extend(_.extend({
       .attr('class', 'window')
       .append(_.bind(this.drawWindow, this));
 
-    tools.exit().remove();
+    tools.style('height', height + 'px')
+      .style('width', width + 'px')
 
-    this.$el.append('<div class="row"></div>')
-    this.$('.row:last-child').append(this.newToolChainTemplate());
-    this.setZoom();
+    tools.exit().remove();
+    this.setZoom(null, zoomLevel);
   },
 
   drawWindow: function(t) { 
@@ -78,20 +83,12 @@ var Dashboard = Backbone.View.extend(_.extend({
     return window.render().el; 
   },
 
-  setZoom: function(model, zoom) {
-    var zoomLevel = zoom || this.model.get('zoom');
-    var height = this.windowMinHeight * zoomLevel;
-    var width = Math.floor(height * (3/2));
-
-    this.$('.window').height( height + "px" )
-      .width( width + "px");
-    this.$('.row').height( height + 50 + "px" );
-    this.model.get('tools').setHeight(height - 35);
-
+  setZoom: function(state, zoom) {
+    this.model.get('tools').setHeight(this.windowMinHeight * zoom)
     this.$('.btn').removeClass('disabled');
-    if (zoomLevel === 1)
+    if (zoom === 1)
       this.$('#zoom-out').addClass('disabled');
-    else if (zoomLevel === 8)
+    else if (zoom === 8)
       this.$('#zoom-in').addClass('disabled');
   },
 
@@ -99,6 +96,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     this.stopListening();
     this.model = model;
     this.render();
+    this.listenTo(this.model, 'change:zoom', this.render);
     this.listenTo(this.model, 'change:zoom', this.setZoom);
     this.listenTo(this.model, 'remove:tools add:tools', this.render);
   }
