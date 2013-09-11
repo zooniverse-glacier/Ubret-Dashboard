@@ -1,8 +1,8 @@
-DataSource = Backbone.AssociatedModel.extend({
+var DataSource = Backbone.AssociatedModel.extend({
   sync: require('lib/sync'),
 
   isInternal: function() {
-    return this.get('source_type') === 'internal';
+    return !!this.get('parent'); 
   },
 
   isExternal: function() {

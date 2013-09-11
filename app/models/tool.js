@@ -7,13 +7,19 @@ var Tool = Backbone.AssociatedModel.extend({
   relations: [
     {
       type: Backbone.One,
-      key: 'data_source',
+      key: 'data',
       relatedModel: require('models/data_source')
+    },
+    { 
+      type: Backbone.One,
+      key: 'settings',
+      relatedModel: require('models/settings') 
     }
   ],
 
   defaults: {
-    settings: {}
+    settings: {},
+    data: {}
   },
 
   initialize: function() {
@@ -27,9 +33,10 @@ var Tool = Backbone.AssociatedModel.extend({
     this.setTool();
 
     if (this.get('tool_type') === "tool_chain") {
-      User.on("initialized", _.bind(this.setCollections, this));
-      if (User.current)
+      User.on("initialized", _.bind(function() {
         this.setCollections();
+        this.listenTo(User.current.collections, 'add remove', this.setCollections);
+      }, this));
     }
   },
 
@@ -44,13 +51,13 @@ var Tool = Backbone.AssociatedModel.extend({
   setDefaults: function() {
     var settings = this.get('settings');
     _.each(ToolConfig[this.get("tool_type")], function(v, k) {
-      if (!settings[k])
-        if (_.isFunction(v) && (k !== "User"))
-          settings[k] = v();
+      if (!settings.get(k)) {
+        if (_.isFunction(v))
+          settings.set(k, v());
         else
-          settings[k] = v;
+          settings.set(k, v);
+      }
     });
-    this.set('settings', settings);
   },
 
   setTool: function() {
@@ -60,9 +67,15 @@ var Tool = Backbone.AssociatedModel.extend({
   sync: require('lib/sync'), 
 
   getUbretTool: function() {
-    if (!this.ubretTool) 
-      this.ubretTool = new this.UbretTool(this.get('settings'), 
-                                          this.getParent());
+    if (!this.ubretTool)  {
+      var parent = this.getParent()
+      if (parent)
+        parent = parent.getUbretTool()
+      else 
+        parent = null
+      this.ubretTool = new this.UbretTool(this.get('settings').toJSON(), parent); 
+    }
+                                          
     return this.ubretTool
   },
 
@@ -83,6 +96,11 @@ var Tool = Backbone.AssociatedModel.extend({
     return this.collection.filter(function(t) {
       return t.get('data_source.source_id') === this.id
     }, this);
+  },
+
+  createChild: function(tool) {
+    tool.data = {parent: this.id};
+    this.collection.create(tool, {wait: true});
   }
 });
 

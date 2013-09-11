@@ -6,5 +6,10 @@ module.exports = {
     project: function() { return state.get('project'); },
     title: "Double Click to Edit Title",
     annotation : "Double Click to Edit Annotation"
+  },
+  table: {
+    currentPage: 0,
+    sortColumn: 'uid',
+    sortOrder: 'a'
   }
 }

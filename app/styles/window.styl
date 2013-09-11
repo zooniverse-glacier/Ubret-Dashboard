@@ -8,6 +8,34 @@
   background: $panelWhite;
   overflow: hidden;
 
+  .container 
+    position: absolute
+    height: inherit
+    width: inherit
+
+  .drag-target
+    position: absolute; 
+    opacity: .3;
+    text-align: center;
+    z-index: 99;
+    width: 150px;
+    padding: 10px 0;
+    display: none;
+
+    &.add-to-chain
+      background: green;
+      right: -75px;
+      transform: rotate(-90deg);
+
+    &.add-new-chain
+      background: red;
+      bottom: -20px;
+      left: 50%;
+      margin-left: -75px
+
+  .tool-pane
+    overflow: auto;
+
   .title-bar
     background: $mainBlack
     color: $panelWhite;
@@ -19,6 +47,7 @@
     width: 100%;
     text-align: center;
     cursor: pointer
+    z-index: 100;
 
     .close
       float: left;

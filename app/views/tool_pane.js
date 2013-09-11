@@ -1,6 +1,7 @@
 var ToolPane = Backbone.View.extend({
   render: function() {
-    this.el = this.model.getUbretTool().el;
+    this.$el.html(this.model.getUbretTool().el);
+    this.model.getUbretTool().delegateEvents();
     return this;
   },
 });

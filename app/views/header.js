@@ -1,4 +1,5 @@
-var Menu = require('views/menu');
+var GlobalMenu = require('views/global_menu'),
+  ToolMenu = require('views/tool_menu');
 
 var Header = Backbone.View.extend({
   el: "header",
@@ -7,13 +8,16 @@ var Header = Backbone.View.extend({
 
   events: {
     "click #current-project" : 'toggleProjects',
-    "click #menu" : "toggleMenu"
+    "click #menu" : "toggleMenu",
+    "click #tool-menu" : "toggleToolMenu"
   },
 
   initialize: function() {
     this.activeProject = this.$('#current-project .name');
     this.projectSelect = this.$('#project-select');
-    this.menu = new Menu({model: this.model});
+    this.globalMenu = new GlobalMenu({model: this.model});
+    this.toolMenu = new ToolMenu({model: this.model});
+
     this.listenTo(this.model, 'change:project', this.updateProject);
     this.listenTo(this.model, 'change:page', this.updatePageHeader);
     this.listenTo(this.model, 'change:currentDashboard', this.updatePageHeader);
@@ -37,8 +41,17 @@ var Header = Backbone.View.extend({
   },
 
   toggleMenu: function() {
+    if (this.toolMenu.$el.hasClass('active'))
+      this.toggleToolMenu();
     this.$('#menu').toggleClass('active');
-    this.menu.toggle();
+    this.globalMenu.toggle();
+  },
+
+  toggleToolMenu: function() {
+    if (this.globalMenu.$el.hasClass('active'))
+      this.toggleMenu();
+    this.$('#tool-menu').toggleClass('active');
+    this.toolMenu.toggle();
   },
 
   updateProject: function(state, project) {

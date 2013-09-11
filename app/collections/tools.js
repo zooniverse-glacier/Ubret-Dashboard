@@ -19,6 +19,10 @@ Tools = Backbone.Collection.extend({
     });
   },
 
+  setHeight: function(height) {
+    this.each(function(m) { m.getUbretTool().setHeight(height); });
+  },
+
   toTree: function(startingTools) {
     if (!startingTools)
       startingTools = this.getExternal();

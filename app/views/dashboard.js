@@ -82,8 +82,12 @@ var Dashboard = Backbone.View.extend(_.extend({
     var zoomLevel = zoom || this.model.get('zoom');
     var height = this.windowMinHeight * zoomLevel;
     var width = Math.floor(height * (3/2));
+
     this.$('.window').height( height + "px" )
       .width( width + "px");
+    this.$('.row').height( height + 50 + "px" );
+    this.model.get('tools').setHeight(height - 35);
+
     this.$('.btn').removeClass('disabled');
     if (zoomLevel === 1)
       this.$('#zoom-out').addClass('disabled');

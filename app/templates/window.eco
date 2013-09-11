@@ -1,3 +1,6 @@
 <div class="title-bar"></div>
 <div class="tool-pane"></div>
 <div class="settings-pane"></div>
+
+<div class="drag-target add-to-chain">Add To Chain</div>
+<div class="drag-target add-new-chain">Create New Chain</div>
