@@ -37,10 +37,16 @@ var Dashboard = Backbone.AssociatedModel.extend({
   urlRoot: "/dashboards",
 
   groupRows: function() {
+    console.log(arguments);
     var rows = this.get('rows')
     this.get('tools').chain().groupBy(function(m) { return m.get('row') })
       .each(function(ts, row) {
-        rows.add({ id: row, models: ts, index: 0, length: ts.length });
+				if (rows.get(row)) {
+					rows.get(row).set('models', ts);
+					rows.get(row).set('length', ts.length);
+				} else {
+        	rows.add({ id: row, models: ts, index: 0, length: ts.length });
+				}
       });
   },
 
