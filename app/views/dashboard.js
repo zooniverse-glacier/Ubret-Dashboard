@@ -82,7 +82,7 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   render: function(rs) {
-    if (!this.model)
+    if (!this.model || !this.model.get('tools'))
       return;
 
     var zoomLevel = this.model.get('zoom'),
@@ -155,7 +155,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     this.model = model;
     this.render();
     this.listenTo(this.model, 'change:zoom', this.render);
-    this.listenTo(this.model, 'change:rows[*]', this.render);
+    this.listenTo(this.model, 'change:rows[*] add:rows remove:rows', this.render);
   }
 }, require('views/toggle')));
 

@@ -4,6 +4,8 @@ var ToolConfig = require('config/tool'),
 var Tool = Backbone.AssociatedModel.extend({
   idAttribute: "_id",
 
+  sync: require('lib/sync'), 
+
   relations: [
     {
       type: Backbone.One,
@@ -66,8 +68,6 @@ var Tool = Backbone.AssociatedModel.extend({
     this.UbretTool = require('tools/' + this.get('tool_type')); 
   },
 
-  sync: require('lib/sync'), 
-
   getUbretTool: function() {
     if (!this.ubretTool)  {
       var parent = this.getParent()
@@ -101,12 +101,13 @@ var Tool = Backbone.AssociatedModel.extend({
     if (!this.collection)
       return;
     return this.collection.filter(function(t) {
-      return t.get('data_source.source_id') === this.id
+      return t.get('data.parent') === this.id
     }, this);
   },
 
   createChild: function(tool) {
     tool.data = {parent: this.id};
+    tool.row = this.get('row');
     this.collection.create(tool, {wait: true});
   },
 
@@ -117,7 +118,22 @@ var Tool = Backbone.AssociatedModel.extend({
       this.save(attr, value, opts);
     else
       this.set(attr, value);
-  }
+  },
+
+  destroy: function() {
+    var children = this.getChildren();
+    var parent = this.getParent()
+    if (!_.isEmpty(children)) {
+      if (parent)
+        _.each(children, function(c) { c.update('data', {parent: parent.id}); });
+      else
+        _.each(children, function(c) { 
+          c.update('data', {parent: null}); 
+          c.destroy()
+        });
+    } 
+    Backbone.AssociatedModel.prototype.destroy.call(this);
+  },
 });
 
 module.exports = Tool;
