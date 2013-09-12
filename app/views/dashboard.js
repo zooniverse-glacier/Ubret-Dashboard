@@ -4,7 +4,6 @@ var User = zooniverse.models.User,
 var Dashboard = Backbone.View.extend(_.extend({
   el: '#dashboard',
   state: require('lib/state'),
-  newToolChainTemplate: require('templates/new_tool_chain'),
   windowMinHeight: 100,
 
   initialize: function() {
@@ -59,7 +58,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     rows = d3.select(this.el).selectAll('.row')
       .data(chains, function(d) { return d[0] + d[1][0].id; });
 
-    rows.enter().append('div')
+    rows.enter().insert('div', '.new-tool-chain')
       .attr('class', 'row')
 
     rows.style('height', (height + 50) + "px");

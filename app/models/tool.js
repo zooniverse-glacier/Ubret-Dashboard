@@ -28,6 +28,8 @@ var Tool = Backbone.AssociatedModel.extend({
 
     if (_.isString(this.url))
       this.url = this.url + "/tools/" + this.id;
+
+    this.persistedState = ToolConfig[this.get('tool_type')].persistedState;
     
     this.setDefaults();
     this.setTool();
@@ -50,7 +52,7 @@ var Tool = Backbone.AssociatedModel.extend({
 
   setDefaults: function() {
     var settings = this.get('settings');
-    _.each(ToolConfig[this.get("tool_type")], function(v, k) {
+    _.each(ToolConfig[this.get("tool_type")].settings, function(v, k) {
       if (!settings.get(k)) {
         if (_.isFunction(v))
           settings.set(k, v());
@@ -74,9 +76,14 @@ var Tool = Backbone.AssociatedModel.extend({
       else 
         parent = null
       this.ubretTool = new this.UbretTool(this.get('settings').toJSON(), parent); 
+      this.ubretTool.state.when([], [this.persistedState], this.test, this);
     }
                                           
     return this.ubretTool
+  },
+
+  test: function(update) {
+    this.update('settings', update)
   },
 
   resetUbret: function() {
@@ -101,6 +108,15 @@ var Tool = Backbone.AssociatedModel.extend({
   createChild: function(tool) {
     tool.data = {parent: this.id};
     this.collection.create(tool, {wait: true});
+  },
+
+  update: function(attr, value, opts) {
+    opts = opts || {};
+    _.defaults(opts, {patch: true})
+    if (this.id) 
+      this.save(attr, value, opts);
+    else
+      this.set(attr, value);
   }
 });
 

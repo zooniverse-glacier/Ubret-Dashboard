@@ -3,13 +3,19 @@ var state = require("lib/state"),
 
 module.exports = {
   tool_chain: {
-    project: function() { return state.get('project'); },
-    title: "Double Click to Edit Title",
-    annotation : "Double Click to Edit Annotation"
+    settings : {
+      project: function() { return state.get('project'); },
+      title: "Double Click to Edit Title",
+      annotation : "Double Click to Edit Annotation"
+    },
+    persistedState: ['id', 'user', 'project']
   },
   table: {
-    currentPage: 0,
-    sortColumn: 'uid',
-    sortOrder: 'a'
+    settings: {
+      currentPage: 0,
+      sortColumn: 'uid',
+      sortOrder: 'a'
+    },
+    persistedState: ['currentPage', 'sortOrder', 'sortColumn']
   }
 }
