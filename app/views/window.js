@@ -81,6 +81,10 @@ var Window = Backbone.View.extend({
       this.$('.tool-pane').html(this.toolPane.render().el);
       this.$('.settings-pane').html(this.settingsPane.render().el);
     }
+
+    if (this.model.get('settings_active'))
+      this.$('.settings-pane').addClass('active') 
+
     this.titleBar.delegateEvents();
     this.toolPane.delegateEvents();
     this.settingsPane.delegateEvents();
