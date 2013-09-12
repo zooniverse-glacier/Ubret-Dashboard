@@ -8,12 +8,10 @@ var Window = Backbone.View.extend({
   className: 'container',
 
   events: {
-    'dragenter' : 'handleWindowDrag',
-    'dragover' : 'handleWindowDrag',
+    'dragover' : 'showTargets',
+    'dragleave' : 'hideTargets',
     'dragover .add-to-chain' : 'handleAddToChain',
     'dragover .add-new-chain' : 'handleNewChain',
-    'dragleave .add-to-chain' : 'handleAddToChain',
-    'dragleave .add-new-chain' : 'handleNewChain',
     'drop .add-to-chain' : 'dropAdd',
     'drop .add-new-chain' : 'dropNew'
   },
@@ -37,16 +35,21 @@ var Window = Backbone.View.extend({
     this.remove();
   },
 
-  handleWindowDrag: function(ev) {
+  showTargets: function(ev) {
+    this.$('.drag-target').show();
+  },
+
+  hideTargets: function(ev) {
+    this.$('.drag-target').hide();
+  },
+
+  handleAddToChain: function(ev) {
     this.$('.drag-target').show();
     return false;
   },
 
-  handleAddToChain: function(ev) {
-    return false;
-  },
-
   handleNewChain: function(ev) {
+    this.$('.drag-target').show();
     return false;
   },
 
@@ -60,8 +63,7 @@ var Window = Backbone.View.extend({
   dropAdd: function(ev) {
     ev = ev.originalEvent;
     ev.preventDefault();
-    this.$('.drag-target').show();
-
+    this.$('.drag-target').hide();
     var tool = JSON.parse(ev.dataTransfer.getData('application/json'));
     this.model.createChild(tool);
   },
@@ -69,7 +71,7 @@ var Window = Backbone.View.extend({
   dropNew: function(ev) {
     ev = ev.originalEvent;
     ev.preventDefault();
-    this.$('.drag-target').show();
+    this.$('.drag-target').hide();
   },
 
   render: function() {
