@@ -7,6 +7,12 @@ var Dashboard = Backbone.AssociatedModel.extend({
       key: 'tools',
       relatedModel: require('models/tool'), 
       collectionType: require('collections/tools') 
+    },
+    {
+      type: Backbone.Many,
+      key: 'rows',
+      relatedModel: Backbone.AssociatedModel,
+      collectionType: Backbone.Collection
     }
   ],
 
@@ -15,15 +21,28 @@ var Dashboard = Backbone.AssociatedModel.extend({
       delete this.url;
       this.destroy();
     }); 
+
+    this.listenTo(this, 'add:tools remove:tools', this.groupRows);
+    this.groupRows();
   },
 
   defaults: {
-    zoom: 3
+    zoom: 3,
+    rows: [],
+    tools: []
   },
 
   sync: require('lib/sync'),
 
   urlRoot: "/dashboards",
+
+  groupRows: function() {
+    var rows = this.get('rows')
+    this.get('tools').chain().groupBy(function(m) { return m.get('row') })
+      .each(function(ts, row) {
+        rows.add({ id: row, models: ts, index: 0, length: ts.length });
+      });
+  },
 
   fetch: function() {
     if (!this.state.get('project'))
@@ -40,6 +59,12 @@ var Dashboard = Backbone.AssociatedModel.extend({
       return 'Yesterday';
     else
       return date.fromNow();
+  },
+
+  toJSON: function() {
+    var json = this.attributes;
+    delete json.rows;
+    return json;
   },
 
   copy: function() {
