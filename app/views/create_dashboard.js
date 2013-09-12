@@ -24,7 +24,6 @@ var Create = Backbone.View.extend({
   },
 
   createDashboard: function(ev) {
-    console.log(ev);
     this.$el.addClass('loading');
     var newDashboard = User.current.dashboards.create({
       name: this.$('.create-dashboard-name').val(), 

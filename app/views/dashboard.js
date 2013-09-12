@@ -49,7 +49,6 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   windowSpacing: function(_, i) {
-    console.log(i);
     var zoom = this.model.get('zoom'),
       spacing = this.windowMinHeight * 1.5 * zoom 
         + this.windowPadding + this.windowMargin;
@@ -82,7 +81,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     });
   },
 
-  render: function() {
+  render: function(rs) {
     if (!this.model)
       return;
 
@@ -105,22 +104,33 @@ var Dashboard = Backbone.View.extend(_.extend({
     rows.exit().remove();
 
     var tools = rows.selectAll('.window').data(function(d) { 
-      return d.get('models').slice(d.get('index'), itemsInRow)
+      return d.get('models').slice(d.get('index'), d.get('index') + itemsInRow)
     }, function(d) { return d.id });
 
     tools.enter().append('div')
       .attr('class', 'window')
+      .style('height', height + 'px')
+      .style('width', width + 'px')
       .style('left', _.bind(function(_, i) {
-        return this.windowSpacing(_, i - 1);
+        if (rs && rs.previous('index') > rs.get('index'))
+          i = i - 1;
+        else if (rs)
+          i = i + 1;
+        return this.windowSpacing(_, i);
       }, this))
       .append(_.bind(this.drawWindow, this));
 
-    tools.style('height', height + 'px')
+    tools.transition(1000).style('height', height + 'px')
       .style('width', width + 'px')
-      .transition().style('left', _.bind(this.windowSpacing, this))
+      .style('left', _.bind(this.windowSpacing, this))
 
-    tools.exit().transition()
-      .style('left', this.windowSpacing(0, -1))
+    tools.exit().style('z-index', -10)
+      .transition().style('left', _.bind(function(d, i) {
+        if (rs && rs.previous('index') < rs.get('index'))
+          return this.windowSpacing(0, -1)
+        else if (rs)
+          return this.windowSpacing(0, itemsInRow + 1)
+      }, this))
       .remove();
 
     this.setZoom(zoomLevel);
