@@ -96,7 +96,7 @@ var Dashboard = Backbone.View.extend(_.extend({
 
     rows.enter().insert('div', '.new-tool-chain')
       .attr('class', 'row')
-      .attr('id', function(d) { return "row-" + d.id })
+      .attr('id', function(d) { console.log(d.id); return "row-" + d.id })
       .html(_.bind(function(d) { return this.rowTemplate({id: d.id}); }, this));
 
     rows.style('height', height + this.windowPadding +"px");
@@ -117,8 +117,7 @@ var Dashboard = Backbone.View.extend(_.extend({
         else if (rs)
           i = i + 1;
         return this.windowSpacing(_, i);
-      }, this))
-      .append(_.bind(this.drawWindow, this));
+      }, this)).append(_.bind(this.drawWindow, this));
 
     tools.transition(1000).style('height', height + 'px')
       .style('width', width + 'px')
@@ -130,8 +129,7 @@ var Dashboard = Backbone.View.extend(_.extend({
           return this.windowSpacing(0, -1)
         else if (rs)
           return this.windowSpacing(0, itemsInRow + 1)
-      }, this))
-      .remove();
+      }, this)).remove();
 
     this.setZoom(zoomLevel);
   },

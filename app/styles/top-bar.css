@@ -3,7 +3,7 @@
   color: #fff;
   font: bold 11px "Helvetica Neue", Arial, Helvetica, sans-serif;
   height: 40px;
-  position: absolute;
+  position: fixed;
   right: 0;
   text-align: center;
   text-shadow: 0 1px 1px #000;
@@ -16,7 +16,7 @@
   border-width: 20px 10px;
   content: "";
   height: 0;
-  position: absolute;
+  position: fixed;
   right: 100%;
   top: 0;
   width: 0;
