@@ -8,7 +8,7 @@ module.exports = {
       title: "Double Click to Edit Title",
       annotation : "Double Click to Edit Annotation"
     },
-    persistedState: ['id', 'user', 'project']
+    persistedState: ['id', 'user', 'project', 'title', 'annotation']
   },
   table: {
     settings: {
