@@ -1,7 +1,0 @@
-<h4>Spectra Legend</h4>
-
-<ul class="spectra-legend">
-  <li><button class="full spectra emissions">Emission Lines</button></li>
-  <li><button class="full spectra flux">Flux Line</button></li>
-  <li><button class="full spectra best-fit">Best Fit Line</button></li>
-</ul>

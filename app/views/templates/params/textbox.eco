@@ -1,6 +1,0 @@
-<% label = require('./label')(@) %>
-
-<div>
-  <div><%- label %>
-  <textarea data-cid="<%- @cid %>" ><%- @get('val') %></textarea>
-</div>

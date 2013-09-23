@@ -1,4 +1,0 @@
-<div class="collection my-data-subject">
-  <img src="<%- @image %>" />
-  <label><a href="<%- @url %>"><%- @title %></a></label>
-</div>

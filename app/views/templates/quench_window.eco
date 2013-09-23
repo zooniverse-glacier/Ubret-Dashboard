@@ -1,4 +1,0 @@
-<div class="collection-select">
-  <button data-collection="sample" type="button" class="action">Quench Sample</button>
-  <button data-collection="control" type="button" class="action">Quench Control</button>
-</div>

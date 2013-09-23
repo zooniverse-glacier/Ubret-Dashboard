@@ -1,6 +1,0 @@
-<div class="loading-page">
-  <div class="loading">
-    <img width="64" height="64" src="/images/ajax-loader-big.gif" alt="loading spinner" />
-    <p>Loading Please Wait...</p>
-  </div>
-</div>
