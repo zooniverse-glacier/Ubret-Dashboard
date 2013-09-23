@@ -1,0 +1,9 @@
+<a class="exit" href="/#/<%- @project %>/dashboards">X</a>
+<h2>Start a new Dashboard</h2>
+<form class="create-dashboard">
+  <div class="loader"></div>
+  <input class="create-dashboard-name" placeholder="Name the Dashboard" type="text">
+  <select class="create-dashboard-project"></select>
+  <select class="create-dashboard-data"></select>
+  <button class="create-dashboard-go">Create Dashboard</button>
+</form>

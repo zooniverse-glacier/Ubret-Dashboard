@@ -1,0 +1,89 @@
+@import "common"
+
+#dashboard-header
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  color: $panelWhite;
+  background: $mainBlack;
+  width: 100%;
+  border-bottom: 1px solid $standardGray; 
+  height: 15px;
+  text-align: center;
+  padding: 10px 0;
+
+#dashboard-header span.menu
+  cursor: pointe
+  width: 45px;
+  position: absolute;
+  height: 35px; 
+  border-right: 1px solid $hoverGray;
+  left: 0;
+  top: 0;
+
+#dashboard-header span.menu#tool-menu
+  left: 45px;
+
+#dashboard-header span#menu:before
+  background: none repeat scroll 0 0 $panelWhite;
+  box-shadow: 0 4px $mainBlack, 0 8px $panelWhite, 0 12px $mainBlack, 0 16px $panelWhite;
+  content: "";
+  height: 4px;
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  width: 30px;
+
+#dashboard-header span#menu.active:before 
+  box-shadow: 0 4px $standardBlue, 0 8px $panelWhite, 0 12px $standardBlue, 0 16px $panelWhite;
+
+#dashboard-header span.menu.active:hover
+  background: $hoverBlue; 
+#dashboard-header span#menu.active:hover:before
+  box-shadow: 0 4px $hoverBlue, 0 8px $panelWhite, 0 12px $hoverBlue, 0 16px $panelWhite;
+
+#dashboard-header span#menu:hover:before
+  box-shadow: 0 4px $hoverGray, 0 8px $panelWhite, 0 12px $hoverGray, 0 16px $panelWhite;
+
+#dashboard-header span.menu:after
+  border-left: 1px solid $mainBlack;
+
+#dashboard-header span.menu:hover
+  background: $hoverGray;
+
+#dashboard-header span.menu.active
+  background: $standardBlue; 
+
+span.down-arrow
+  padding-left: 5px;  
+
+#dashboard-header ul#project-select
+  top: 20px;
+  left: 50%;
+  margin-left: -100px;
+  display: none;
+  position: absolute;
+  width: 200px;
+  background: $mainBlack;
+  z-index: 999;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 0;
+  list-style-type: none;
+
+ul#project-select li
+  border-top: 1px solid white;
+  padding: 15px 15px 10px;
+
+ul#project-select li a
+  color: white;
+  text-decoration: none;
+
+#current-project
+  font-size: 12px;
+  line-height: 14px;
+
+#logo
+  font-weight: 700;
+  padding-left: 40px;

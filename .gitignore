@@ -1,5 +1,7 @@
 node_modules/
-public/
-tiles/
 .DS_Store
 npm-debug.log
+bower_components/
+public/
+npm*
+aws-cred.json

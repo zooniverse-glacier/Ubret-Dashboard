@@ -1,0 +1,119 @@
+@import "common"
+
+body section {
+  display: none;
+  margin: 0 auto;
+  width: 1000px;
+}
+
+section#index {
+  display: block;
+}
+
+section#dashboard {
+  height: 100%;
+}
+
+section div.logged-out {
+  display: none;
+}
+
+section div.logged-out h3{
+  text-align: center;
+}
+
+section div.logged-in {
+  display: none;
+}
+
+section h2 {
+  display: inline;
+}
+
+section .section-header {
+  width: 100%;
+  border-bottom: 1px solid $standardGray;
+}
+
+.layouts {
+  float: right;
+}
+
+.layouts div {
+  margin-bottom: 10px;
+}
+
+.layouts ul {
+  display: inline;
+  list-style: none;
+  padding: 0;
+}
+
+.layouts ul li {
+  display: inline;
+}
+
+.project-selected {
+  display: none;
+}
+
+.toggled-layout.tiled .listing {
+  width: 300px;
+  display: inline-block;
+  margin: 10px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.toggled-layout.tiled .listing span {
+  display: block;
+  margin-top: 10px;
+}
+
+.toggled-layout.tiled .listing span img {
+  display: block;
+  width: inherit;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
+.toggled-layout.tiled .listing span.pull-right {
+  float: none;
+  width: inherit;
+  margin: 0 auto;
+}
+
+.toggled-layout.tiled .listing .btn {
+  margin: -3px;
+}
+
+.toggled-layout .list-container a {
+  text-decoration: none;
+}
+
+.toggled-layout.list .listing {
+  margin: 10px 0;
+  height: 40px;
+}
+
+.toggled-layout.list .listing span {
+  padding: 0 20px;
+}
+
+.toggled-layout.list .listing .pull-right span {
+  position: relative;
+  top: 10px;
+}
+
+.toggled-layout.list .listing span.name img {
+  height: 30px;
+  position: relative;
+  top: 10px;
+  padding-right: 10px;
+}
+
+.toggle {
+  border: 1px solid #222;
+  border-bottom: none;
+  padding: 0 10px;
+}

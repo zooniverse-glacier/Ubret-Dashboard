@@ -1,0 +1,8 @@
+<span class="close">X</span>
+<span class="title">
+  <h4><%- @get('name') %></h4>
+  <input type="text" value="<%- @get("name") %>">
+</span>
+<span class="settings-toggle <% if @get('settings_active'): %> active <% end %>">
+  <img src="/img/settings-toggle.png">
+</span>

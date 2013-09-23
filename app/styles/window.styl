@@ -1,0 +1,116 @@
+@import "common"
+
+.window
+  display: inline-block;
+  margin: 0 20px;
+  border: 1px solid $standardGray;
+  background: $panelWhite;
+  padding: 20px;
+  position: absolute; 
+  overflow: hidden
+
+  .container 
+    position: absolute
+    height: inherit
+    width: inherit
+
+  .drag-target
+    position: absolute; 
+    opacity: .3;
+    text-align: center;
+    z-index: 99;
+    width: 150px;
+    padding: 10px 0;
+    display: none;
+
+    &.add-to-chain
+      background: green;
+      right: -75px;
+      transform: rotate(-90deg);
+      top: 50%
+
+    &.add-new-chain
+      background: red;
+      bottom: -20px;
+      left: 50%;
+      margin-left: -75px
+
+  .tool-pane
+    overflow: auto;
+    width: 100%;
+    height: 100%
+    margin-top: -10px;
+    display: inline-block
+
+  .settings-pane
+    display: inline-block
+    background: $standardGray
+    color: $panelWhite
+    position: absolute
+    top: 10px
+    right: -270px 
+    width: 200px;
+    padding: 0 25px
+    transition: right 0.5s ease-in-out
+    height: 100%
+    padding-bottom: 10px;
+
+    &.active
+     right: -20px 
+
+    h2
+      display: block
+      font-size: 14px;
+      width: 100%
+      border-bottom: 1px solid $panelWhite
+
+  .title-bar
+    background: $mainBlack
+    color: $panelWhite;
+    position: relative;
+    top: -20px;
+    left: -20px;
+    height: 20px;
+    padding: 5px 20px;
+    width: 100%;
+    text-align: center;
+    cursor: pointer
+    z-index: 1;
+ 
+    input
+      display: none
+      position: relative
+      top: -3px
+      height: 25px
+      box-sizing: border-box
+      border: none
+
+    h4
+      font-size: 15px
+      display: inline
+
+    .close
+      float: left;
+
+    .settings-toggle
+      transform: rotate(180deg)
+      transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
+      top: 4px
+      width: 20px
+      float: right
+
+      &.active
+        transform: rotate(0deg)
+
+  &.new-tool-chain
+    margin-top: 20px;
+    background: $standardGray;
+    color: $panelWhite;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover
+      background: $hoverGray;
+
+  &.selected
+    box-shadow: 5px 5px $hoverBlue

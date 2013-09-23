@@ -1,0 +1,125 @@
+<!Doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Zooniverse Dashboard</title>
+    <!-- REMOVE IN BUILD PROCESS -->
+    <link href="/css/app.css" rel="stylesheet" type="text/css">
+    <link href="/css/vendor.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:3001/css/tools.css" rel="stylesheet" type="text/css">
+    <!-- END REMOVE -->
+  <body>
+    <header id="dashboard-header">
+      <span class="menu" id="menu">
+      </span>
+      <span id="dashboard-controls">
+        <span class="menu" id="tool-menu">
+          tools
+        </span>
+     </span>
+      <span class="pull-center">
+        <span id="logo">
+          zootools
+          <span id="current-dashboard">
+        </span>
+        </span>
+        <span id="current-project">
+          <span class="name">No Project</span>
+          <span class="down-arrow">▾</span> 
+        </span>
+      </span>
+      <ul id="project-select">
+        <li id="serengeti"><a href="#/serengeti">Snapshot Serengeti</a></li>
+        <li id="galaxy_zoo"><a href="#/galaxy_zoo">Galaxy Zoo</a></li>
+        <li id="spacewarp"><a href="#/spacewarp">SpaceWarps</a></li>
+        <li id="galaxy_zoo_starburst"><a href="#/galaxy_zoo_starburst">Galaxy Zoo Quench</a></li>
+      </ul>
+    </header>
+    <nav id="global-menu" class="menu-panel">
+      <div class="panel">
+        <h2>ZooTools Nav</h2>
+        <ul>
+          <li id="new-dashboard">New Dashboard</li>
+          <li class="disabled" id="copy-dashboard">Copy Dashboard</li>
+          <li class="disabled" id="current-dashboard">Current Dashboard</li>
+          <li id="saved-dashboards">Saved Dashboards</li>
+          <li id="saved-data">Saved Data</li>
+        </ul>
+      </div>
+    </nav>
+    <nav id="tools-menu" class="menu-panel">
+      <div class="panel">
+        <h2>Tools</h2>
+        <ul>
+        </ul>
+      </div>
+    </nav>
+    <div id="app">
+      <section id="index">
+        <div class="logged-out">
+          <h3>You need to be logged in to use the ZooTools Dashboard.</h3>
+        </div>
+        <div class="logged-in">
+        </div>
+      </section>
+      <section id="dashboard"> 
+        <ul id="zoom-controls">
+          <li><button id="examine" class="btn">ex</button></li>
+          <li><button id="zoom-in" class="btn">+</button></li>
+          <li><button id="zoom-out" class="btn">-</button></li>
+        </ul>
+        <div class="window new-tool-chain">
+          <h2>Start a New Tool Chain</h2>
+          <h1>+</h1>
+        </div>
+      </section>
+      <section id="saved" class="toggled-layout">
+        <div class="section-header">
+          <h2><span class="name"></span> Dashboards</h2>
+          <div class="layouts">
+            <label>Layout: </label>
+            <ul>
+              <li><button class="btn" data-type="list">List</button></li>
+              <li><button class="btn" data-type="tiled">Tiled</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="logged-out">
+          <h3>You need to be logged in to view Saved Dashboards.</h3>
+        </div>
+        <div class="logged-in">
+          <div class="list-container"></div>
+        </div>
+      </section>
+      <section id="data" class="toggled-layout">
+        <div class="section-header">
+          <h2><span class="name"></span> Data</h2>
+          <div class="layouts">
+            <label>Layout: </label>
+            <ul>
+              <li><button data-type="list" class="btn">List</button></li>
+              <li><button data-type="tiled" class="btn">Tiled</button></li>
+            </ul>
+          </div>
+        </div>
+        <div class="logged-out">
+          <h3>You need to be logged in to view your Data.</h3>
+        </div>
+        <div class="logged-in">
+          <div class="list-container"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- REMOVE IN BUILD PROCESS -->
+    <script src="http://localhost:3001/js/libubret.js"></script>
+    <script src="http://localhost:3001/js/tools.js"></script>
+    <!-- END REMOVE -->
+
+    <!-- REMOVE IN BUILD PROCESS -->
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js" onload="require('init')();"></script>
+    <!-- END REMOVE -->
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "dashboard",
+  "version": "0.2.4",
+  "description": "The New ZooTools Dashbaord",
+  "main": "dashboard.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "static .",
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zooniverse/Ubret-Dashboard"
+  },
+  "author": "Ed Paget",
+  "license": "APL",
+  "bugs": {
+    "url": "https://github.com/zooniverse/Ubret-Dashboard/issues"
+  },
+  "dependencies": {
+    "bower": "~1.2.2",
+    "aws-sdk": "~1.5.0",
+    "node-static": "~0.7.0",
+    "clean-css": "~1.0.12",
+    "uglify-js": "~2.4.0",
+    "cheerio": "~0.12.1",
+    "javascript-brunch": "~1.6.0",
+    "css-brunch": "~1.6.0",
+    "eco-brunch": "~1.7.1",
+    "stylus-brunch": "~1.7.0"
+  }
+}

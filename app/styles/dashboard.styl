@@ -1,0 +1,53 @@
+@import "common"
+
+section#dashboard 
+  width: 200%
+
+  ul#zoom-controls
+    list-style: none;
+    right: 0;
+    top: 50%;
+    margin-top: -75px;
+    position: absolute;
+    z-index: 1000
+
+  ul#zoom-controls .btn
+    width: 50px;
+    height: 50px;
+    background: $mainBlack;
+
+  ul#zoom-controls li
+    border-bottom: 1px solid #ededed;
+
+  ul#zoom-controls li:last-child
+    border-bottom: none;
+
+  ul#zoom-controls .btn:hover
+    background: $standardGray;
+
+  ul#zoom-controls .btn:active
+    background: $focusRed;
+
+  .row
+    display: block
+    padding: 20px 0;
+    border-bottom: 1px solid $standardGray
+    overflow: hidden;
+    position: relative
+
+    .scroll
+      position: absolute 
+      top: 20px
+      height: inherit
+      width: 30px
+      z-index: 999
+      background: $standardGray
+      opacity: 0
+
+      &.active
+        opacity: .5
+
+      &.pull-right
+        float: left
+        left: 50%
+        margin-left: -30px

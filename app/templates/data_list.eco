@@ -1,0 +1,11 @@
+<span class="name">
+  <img src="<%- @get('thumbnail') %>">
+  <%- @get('title') %>
+</span>
+<span class="pull-right">
+  <span class="description"><%- @get('description') %></span>
+  <span class="controls">
+    <a class="btn add">Add to Current</a>
+    <a class="btn new">Create New with Data</a>
+  </span>
+</span>

@@ -1,0 +1,2 @@
+<div data-row="<%- @id %>" class="scroll pull-left"></div>
+<div data-row="<%- @id %>" class="scroll pull-right"></div>
