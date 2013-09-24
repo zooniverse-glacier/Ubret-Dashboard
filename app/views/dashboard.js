@@ -71,8 +71,7 @@ var Dashboard = Backbone.View.extend(_.extend({
 
   startToolChain: function(ev) {
     var tools = this.model.get('tools'),
-      position = (tools.isEmpty()) ? 0 : 
-        tools.max(function(t) { return t.get('row') }).get('row') + 1;
+      position = tools.nextRow();
 
     this.model.get('tools').create({
       tool_type: 'tool_chain',
@@ -119,7 +118,7 @@ var Dashboard = Backbone.View.extend(_.extend({
         return this.windowSpacing(_, i);
       }, this)).append(_.bind(this.drawWindow, this));
 
-    tools.transition(1000).style('height', height + 'px')
+    tools.style('height', height + 'px')
       .style('width', width + 'px')
       .style('left', _.bind(this.windowSpacing, this))
 

@@ -72,6 +72,19 @@ var Window = Backbone.View.extend({
     ev = ev.originalEvent;
     ev.preventDefault();
     this.$('.drag-target').hide();
+    var newTool = JSON.parse(ev.dataTransfer.getData('application/json'));
+    this.model.collection.create({
+      tool_type: 'tool_chain',
+      name: "New Chain from " + this.model.get('name'),
+      row: this.model.collection.nextRow(),
+      data: {
+        parent: this.model.id
+      }
+    }, {wait: true});
+
+    this.model.collection.once('add', function(tool) {
+      tool.createChild(newTool)
+    });
   },
 
   render: function() {

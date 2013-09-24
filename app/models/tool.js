@@ -37,24 +37,33 @@ var Tool = Backbone.AssociatedModel.extend({
     this.setTool();
 
     if (this.get('tool_type') === "tool_chain") {
-      if (User.current) {
-        this.setCollections()
-        this.listenTo(User.current.collections, 'add remove', this.setCollections);
-      } else {
-        User.on("initialized", _.bind(function() {
-          this.setCollections();
-          this.listenTo(User.current.collections, 'add remove', this.setCollections);
-        }, this));
-      }
+      if (User.current)
+        this.setCollections();
+      else
+        User.on("initialized", _.bind(function() {this.setCollections(); }, this));
     }
   },
 
-  setCollections: function() {
-    var collections = User.current.collections.chain()
-      .map(function(col) { return [col.id, col.get('title')]; })
-      .object().value();
-    this.getUbretTool().setTalkCollections(collections);
+  setCollections: function () {
+    this.setTalk();
+    this.setZooData();
+    this.listenTo(User.current.collections, 'add remove', this.setTalk);
+    this.listenTo(User.current.zooData, 'add remove', this.setZooData);
     this.getUbretTool().setUser(User.current.id);
+  },
+
+  setTalk: function() {
+    var collections = User.current.collections.map(function(col) { 
+      return [col.id, col.get('title')]; 
+    });
+    this.getUbretTool().setTalkCollections(_.object(collections));
+  },
+
+  setZooData: function() {
+    var collections = User.current.zooData.map(function(col) { 
+      return [col.id, {name: col.id, user: col.get('user')}]; 
+    });
+    this.getUbretTool().setZooDataCollections(_.object(collections));
   },
 
   setDefaults: function() {

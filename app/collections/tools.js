@@ -36,6 +36,13 @@ Tools = Backbone.Collection.extend({
         return toolTree;
       }
     }, this);
+  },
+
+  nextRow: function () {
+    if (this.isEmpty())
+      return 0
+    else
+      return this.max(function(t) { return t.get('row') }).get('row') + 1;
   }
 });
 
