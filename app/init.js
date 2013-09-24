@@ -4,7 +4,9 @@ var AppView = require('views/app_view'),
   Header = require('views/header'),
   UserTalkCollections = require('collections/user_talk_collections'),
   Login = zooniverse.controllers.loginDialog,
-  UserDashboards = require('collections/user_dashboards');
+  UserDashboards = require('collections/user_dashboards'),
+  UserZooDataCollections = require('collections/user_zoo_data_collections');
+  
 
 module.exports = function() {
   var User = zooniverse.models.User;
@@ -23,6 +25,7 @@ module.exports = function() {
     if (User.current && state.get('project')) {
       User.current.dashboards.fetch();
       User.current.collections.fetch();
+      User.current.zooData.fetch();
     }
   };
 
@@ -46,6 +49,7 @@ module.exports = function() {
       return;
     }
     User.current.collections = new UserTalkCollections();
+    User.current.zooData = new UserZooDataCollections();
     User.current.dashboards = new UserDashboards();
     User.trigger('initialized');
     updateUser();

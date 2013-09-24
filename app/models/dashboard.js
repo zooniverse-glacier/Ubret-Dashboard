@@ -78,7 +78,7 @@ var Dashboard = Backbone.AssociatedModel.extend({
   },
 
   copy: function() {
-    var url = "http://localhost:3000/projects/" + 
+    var url = "https://dev.zooniverse.org/projects/" + 
       this.state.get('project') + 
       "/dashboards/" + 
       this.id + "/fork";

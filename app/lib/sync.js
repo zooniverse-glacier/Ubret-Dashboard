@@ -1,7 +1,7 @@
 var User = zooniverse.models.User;
 
 var Sync = function(method, model, options) {
-  var baseURL = "http://localhost:3000/projects/" + require('lib/state').get('project');
+  var baseURL = "https://dev.zooniverse.org/projects/" + require('lib/state').get('project');
   options.url = _.result(model, 'url');
   if (!(options.url.match(baseURL)))
     options.url = baseURL + options.url;

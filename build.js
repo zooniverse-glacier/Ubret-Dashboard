@@ -8,18 +8,18 @@ var fs = require('fs'),
 AWS.config.loadFromPath('./aws-cred.json');
 
 var s3bucket = new AWS.S3({params: {Bucket: 'tools.zooniverse.org'}});
-var $ = cheerio.load(fs.readFileSync("./index.html"));
+var $ = cheerio.load(fs.readFileSync("./public/index.html"));
 var version = require('./package').version;
 
 console.log("Building Dashboard Version: ", version);
 
 // Upload Images
 
-fs.readdir('./img', function(err, imgs) {
+fs.readdir('./public/img', function(err, imgs) {
   if (err)
     return console.log("Failed to read img dir");
   imgs.forEach(function(img) {
-    fs.readFile('./img/' + img, function(err, file) {
+    fs.readFile('./public/img/' + img, function(err, file) {
       var fileType = img.split('.').slice(-1)[0];
       if (err)
         return console.log("Failed to read: ", img);
@@ -42,9 +42,11 @@ fs.readdir('./img', function(err, imgs) {
 
 console.log("Build CSS");
 
-var cssInput = $('link[rel="stylesheet"]').toArray().map(function(link) {
-  return "." + link.attribs.href;
-});
+var cssInput = [
+  "./public/css/app.css",
+  "./public/css/vendor.css",
+  "../Ubret/public/css/tools.css"
+];
 
 var css = clean.process(cssInput.map(function(f) { 
   return fs.readFileSync(f); 
@@ -74,12 +76,12 @@ zlib.gzip(css, function(err, result) {
 
 console.log("Build JS");
 
-var jsInput = $('script').toArray().reduce(function(accum, script) {
-  if (script.attribs.src)
-    return accum.concat("." + script.attribs.src);
-  else
-    return accum;
-}, []);
+var jsInput = [
+  "./public/js/vendor.js",
+  "./public/js/app.js",
+  "../Ubret/public/js/libubret.js",
+  "../Ubret/public/js/tools.js"
+];
 
 var js = uglify.minify(jsInput, {outSourceMap: 'app.js.map'});
 
@@ -107,9 +109,9 @@ zlib.gzip(js.code, function(err, result) {
 
 console.log("Update HTML");
 $('link').remove();
-$('script[src^="/"]').remove();
+$('script').remove();
 $('head').append('<link rel="stylesheet" type="text/css" href="css/style.' + version + '.css">');
-$('body').append('<script src="js/app.' + version + '.js" onload="initialize();"></script>');
+$('body').append('<script src="js/app.' + version + '.js" onload="require(' + "'init'" + ')();"></script>');
 
 console.log("Upload HTML to s3");
 
