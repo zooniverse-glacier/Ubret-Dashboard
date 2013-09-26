@@ -16,6 +16,6 @@ module.exports = {
       sortColumn: 'uid',
       sortOrder: 'a'
     },
-    persistedState: ['currentPage', 'sortOrder', 'sortColumn']
+    persistedState: ['currentPage', 'sortOrder', 'sortColumn', 'selection']
   }
 }
