@@ -119,9 +119,29 @@ var Tool = Backbone.AssociatedModel.extend({
     }, this);
   },
 
+  getNonChainChild: function() {
+    return _.find(this.getChildren(), function(c) {
+      return (c.get('tool_type') !== 'tool_chain');
+    });
+  },
+
+  wipeTool: function() {
+    delete this.ubretTool;
+    _.each(this.getChildren(), function(c) { c.wipeTool() });
+  },
+
   createChild: function(tool) {
     tool.data = {parent: this.id};
     tool.row = this.get('row');
+
+    var child = this.getNonChainChild();
+    console.log(child);
+    if (child)
+      this.collection.once('add', function(tool) {
+        child.wipeTool();
+        child.update('data', {parent: tool.id});
+      }, this);
+
     this.collection.create(tool, {wait: true});
   },
 
@@ -129,9 +149,9 @@ var Tool = Backbone.AssociatedModel.extend({
     opts = opts || {};
     _.defaults(opts, {patch: true})
     if (this.id) 
-      this.save(attr, value, opts);
+      return this.save(attr, value, opts);
     else
-      this.set(attr, value);
+      return this.set(attr, value);
   },
 
   destroy: function() {

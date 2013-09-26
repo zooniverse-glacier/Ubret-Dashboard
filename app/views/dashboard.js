@@ -116,11 +116,14 @@ var Dashboard = Backbone.View.extend(_.extend({
         else if (rs)
           i = i + 1;
         return this.windowSpacing(_, i);
-      }, this)).append(_.bind(this.drawWindow, this));
+      }, this))
 
     tools.style('height', height + 'px')
       .style('width', width + 'px')
+      .transition()
       .style('left', _.bind(this.windowSpacing, this))
+
+    tools.append(_.bind(this.drawWindow, this));
 
     tools.exit().style('z-index', -10)
       .transition().style('left', _.bind(function(d, i) {

@@ -19,23 +19,25 @@ Tools = Backbone.Collection.extend({
     });
   },
 
+  getChains: function() {
+    return this.filter(function(t) {
+      return t.get('tool_type') === 'tool_chain';
+    });
+  },
+
   setHeight: function(height) {
     this.each(function(m) { m.getUbretTool().setHeight(height); });
   },
 
-  toTree: function(startingTools) {
-    if (!startingTools)
-      startingTools = this.getExternal();
-    return _.map(startingTools, function(t) {
-      var toolTree = t.pick('_id', 'name')
-      var children = t.getChildren() 
-      if (!children || _.isEmpty(children)) {
-        return toolTree;
-      } else {
-        toolTree.children = this.toTree(children);
-        return toolTree;
-      }
-    }, this);
+  toolTree: function(tool, accum) {
+    if (!accum)
+      accum = [];
+
+    child = tool.getNonChainChild();
+    if (child)
+      return this.toolTree(child, accum.concat(tool));
+    else
+      return accum.concat(tool);
   },
 
   nextRow: function () {

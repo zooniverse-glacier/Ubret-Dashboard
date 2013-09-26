@@ -22,7 +22,7 @@ var Dashboard = Backbone.AssociatedModel.extend({
       this.destroy();
     }); 
 
-    this.listenTo(this, 'add:tools remove:tools', this.groupRows);
+    this.listenTo(this, 'add:tools remove:tools change:tools[*].data', this.groupRows);
     this.groupRows();
   },
 
@@ -37,21 +37,18 @@ var Dashboard = Backbone.AssociatedModel.extend({
   urlRoot: "/dashboards",
 
   groupRows: function() {
-    var rows = this.get('rows'),
-      grouped = this.get('tools').groupBy(function(m) { return m.get('row') });
+    var rows = this.get('rows');
 
-    rows.chain()
-      .filter(function(r) { return !_.contains(_.keys(grouped), r.id) })
-      .each(function(r) { rows.remove(r); });
-
-    _.each(grouped, function(ts, row) {
-				if (rows.get(row)) {
-					rows.get(row).set('models', ts);
-					rows.get(row).set('length', ts.length);
-				} else {
-        	rows.add({ id: row, models: ts, index: 0, length: ts.length });
-				}
-      });
+    _.each(this.get('tools').getChains(), function(chain) {
+      row = chain.get('row');
+      tools = this.get('tools').toolTree(chain);
+      if (rows.get(row)) {
+        rows.get(row).set('models', tools);
+        rows.get(row).set('length', tools.length);
+      } else {
+        rows.add({ id: row, models: tools, index: 0, length: tools.length });
+      }
+    }, this);
   },
 
   fetch: function() {
