@@ -17,5 +17,13 @@ module.exports = {
       sortOrder: 'a'
     },
     persistedState: ['currentPage', 'sortOrder', 'sortColumn', 'selection']
+  },
+  prompt: {
+    settings: {},
+    persistedState: ['statements']
+  },
+  scatterplot: {
+    settings: {},
+    persistedState: ['xAxis', 'yAxis', 'xMin', 'xMax', 'yMin', 'yMax', 'selection']
   }
 }

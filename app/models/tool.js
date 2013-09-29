@@ -84,19 +84,20 @@ var Tool = Backbone.AssociatedModel.extend({
 
   getUbretTool: function() {
     if (!this.ubretTool)  {
-      var parent = this.getParent()
+      var parent = this.getParent(),
+        settings = this.get('settings').toJSON();
       if (parent)
         parent = parent.getUbretTool()
       else 
         parent = null
-      this.ubretTool = new this.UbretTool(this.get('settings').toJSON(), parent); 
-      this.ubretTool.state.when([], [this.persistedState], this.test, this);
+
+      this.ubretTool = new this.UbretTool(settings, parent); 
+      this.ubretTool.state.when([], [this.persistedState], this.toSettings, this);
     }
-                                          
     return this.ubretTool
   },
 
-  test: function(update) {
+  toSettings: function(update) {
     this.update('settings', update)
   },
 
@@ -135,7 +136,6 @@ var Tool = Backbone.AssociatedModel.extend({
     tool.row = this.get('row');
 
     var child = this.getNonChainChild();
-    console.log(child);
     if (child)
       this.collection.once('add', function(tool) {
         child.wipeTool();

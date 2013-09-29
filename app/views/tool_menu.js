@@ -22,14 +22,17 @@ var ToolMenu = Menu.extend({
     tools.enter().append('li')
       .attr('draggable', true)
       .attr('data-tool', function(d) { return d[0]; })
+      .attr('data-name', function(d) { return d[1]; })
       .text(function(d) { return d[1]; })
 
     tools.exit().remove();
   },
 
   setDrag: function(ev) {
-    var ev = ev.originalEvent,
-      tool = {tool_type: 'table', name: 'New Table'};
+    var toolType = ev.target.dataset.tool,
+      toolName = "New " + ev.target.dataset.name,
+      ev = ev.originalEvent,
+      tool = {tool_type: toolType, name: toolName};
 
     ev.dataTransfer.setData('application/json', JSON.stringify(tool));
     ev.dataTransfer.effectAllowed = 'copy';

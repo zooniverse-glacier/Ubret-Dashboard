@@ -1,5 +1,4 @@
 var state = require('lib/state'),
-  ToolPane = require('views/tool_pane'),
   SettingsPane = require('views/settings_pane'),
   TitleBar = require('views/title_bar');
 
@@ -23,10 +22,10 @@ var Window = Backbone.View.extend({
     }
 
     this.titleBar = new TitleBar({model: this.model});
-    this.toolPane = new ToolPane({model: this.model});
     this.settingsPane = new SettingsPane({model: this.model});
 
     this.listenTo(this.titleBar, 'close', this.close);
+    this.listenTo(this.model, 'change:data.parent', this.render);
     this.listenTo(this.model, 'change:settings_active', this.toggleSettings)
   },
 
@@ -93,7 +92,7 @@ var Window = Backbone.View.extend({
     if (!this.dashboard || this.dashboard.get('zoom') === 1) {
       this.$('.tool-pane').html("<h2>" + this.model.get('name') + "</h2>");
     } else {
-      this.$('.tool-pane').html(this.toolPane.render().el);
+      this.$('.tool-pane').html(this.model.getUbretTool().el);
       this.$('.settings-pane').html(this.settingsPane.render().el);
     }
 
@@ -101,8 +100,8 @@ var Window = Backbone.View.extend({
       this.$('.settings-pane').addClass('active') 
 
     this.titleBar.delegateEvents();
-    this.toolPane.delegateEvents();
     this.settingsPane.delegateEvents();
+    this.model.getUbretTool().delegateEvents();
     return this;
   }
 });

@@ -95,7 +95,7 @@ var Dashboard = Backbone.View.extend(_.extend({
 
     rows.enter().insert('div', '.new-tool-chain')
       .attr('class', 'row')
-      .attr('id', function(d) { console.log(d.id); return "row-" + d.id })
+      .attr('id', function(d) { return "row-" + d.id })
       .html(_.bind(function(d) { return this.rowTemplate({id: d.id}); }, this));
 
     rows.style('height', height + this.windowPadding +"px");
@@ -117,13 +117,12 @@ var Dashboard = Backbone.View.extend(_.extend({
           i = i + 1;
         return this.windowSpacing(_, i);
       }, this))
+      .append(_.bind(this.drawWindow, this));
 
     tools.style('height', height + 'px')
       .style('width', width + 'px')
       .transition()
       .style('left', _.bind(this.windowSpacing, this))
-
-    tools.append(_.bind(this.drawWindow, this));
 
     tools.exit().style('z-index', -10)
       .transition().style('left', _.bind(function(d, i) {
@@ -142,8 +141,12 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   setZoom: function(zoom) {
-    this.model.get('tools').setHeight(this.windowMinHeight * zoom)
+    var height = this.windowMinHeight * zoom,
+      width = Math.floor(height * (3/2));
+
+    this.model.get('tools').setSize(height, width)
     this.$('.btn').removeClass('disabled');
+
     if (zoom === 1)
       this.$('#zoom-out').addClass('disabled');
     else if (zoom === 8)

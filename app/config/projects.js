@@ -2,13 +2,15 @@ module.exports = {
   galaxy_zoo: {
     name: "Galaxy Zoo",
     tools: {
-      table: "Table"
+      table: "Table",
     }
   },
   galaxy_zoo_starburst: {
     name: "Galaxy Zoo Quench",
     tools: {
-      table: "Table"
+      table: "Table",
+      prompt: "Prompt",
+      scatterplot: "Scatter Plot"
     }
   },
   serengeti: {

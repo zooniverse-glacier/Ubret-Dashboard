@@ -25,8 +25,8 @@ Tools = Backbone.Collection.extend({
     });
   },
 
-  setHeight: function(height) {
-    this.each(function(m) { m.getUbretTool().setHeight(height); });
+  setSize: function(height, width) {
+    this.each(function(m) { m.getUbretTool().setSize(height, width); });
   },
 
   toolTree: function(tool, accum) {
