@@ -25,5 +25,9 @@ module.exports = {
   scatterplot: {
     settings: {},
     persistedState: ['xAxis', 'yAxis', 'xMin', 'xMax', 'yMin', 'yMax', 'selection']
+  },
+  statistics: {
+    settings: {},
+    persistedState: ['key']
   }
 }

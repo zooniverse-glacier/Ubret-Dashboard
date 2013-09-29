@@ -10,7 +10,8 @@ module.exports = {
     tools: {
       table: "Table",
       prompt: "Prompt",
-      scatterplot: "Scatter Plot"
+      scatterplot: "Scatter Plot",
+      statistics: "Statistics"
     }
   },
   serengeti: {
