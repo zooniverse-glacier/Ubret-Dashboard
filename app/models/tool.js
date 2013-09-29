@@ -61,7 +61,7 @@ var Tool = Backbone.AssociatedModel.extend({
 
   setZooData: function() {
     var collections = User.current.zooData.map(function(col) { 
-      return [col.id, {name: col.id, user: col.get('user')}]; 
+      return [col.id, {name: col.get('name'), user: col.get('user')}]; 
     });
     this.getUbretTool().setZooDataCollections(_.object(collections));
   },
