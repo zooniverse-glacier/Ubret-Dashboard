@@ -12,7 +12,8 @@ module.exports = {
       prompt: "Prompt",
       scatterplot: "Scatter Plot",
       statistics: "Statistics",
-      histogram: "Histogram"
+      histogram: "Histogram",
+      subject_viewer: "Subject Viewer"
     }
   },
   serengeti: {

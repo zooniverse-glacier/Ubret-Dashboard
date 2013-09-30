@@ -33,5 +33,9 @@ module.exports = {
   histogram: {
     settings: {},
     persistedState: ['xAxis', 'xMin', 'xMax', 'selection', 'bins']
+  },
+  subject_viewer: {
+    settings: {currentPage: 0},
+    persistedState: ['currentPage']
   }
 }
