@@ -4,5 +4,5 @@
   <input type="text" value="<%- @get("name") %>">
 </span>
 <span class="settings-toggle <% if @get('settings_active'): %> active <% end %>">
-  <img src="/img/settings-toggle.png">
+  <img src="img/settings-toggle.png">
 </span>
