@@ -48,6 +48,8 @@ var TitleBar = Backbone.View.extend({
 
   render: function() {
     this.$el.html(this.template(this.model));
+    if (_.isEmpty(this.model.getUbretTool().settings))
+      this.$('.settings-toggle').hide()
     return this;
   }
 });
