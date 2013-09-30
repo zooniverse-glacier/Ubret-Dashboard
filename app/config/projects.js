@@ -11,7 +11,8 @@ module.exports = {
       table: "Table",
       prompt: "Prompt",
       scatterplot: "Scatter Plot",
-      statistics: "Statistics"
+      statistics: "Statistics",
+      histogram: "Histogram"
     }
   },
   serengeti: {

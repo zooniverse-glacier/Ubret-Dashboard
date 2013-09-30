@@ -8,7 +8,7 @@
   <span class="last-modified">Last Update: <%- @getFormattedDate('updated_at') %></span>
   <span class="controls">
     <a class="btn" href="#/<%- @get('project') %>/dashboards/<%- @id %>/children">Children</a>
-    <a class="btn <%- (@get('parent_id')) ? '' : 'disabled' %>" href="#/<%- @get('project') %>/dashboards/<%- @get('parent_id') %>">Parent</a>
+    <a class="btn <% if !@get('parent_id')?: %> disabled <% end %>" href="#/<%- @get('project') %>/dashboards/<%- @get('parent_id') %>">Parent</a>
     <a data-id="<%- @id %>" class="delete btn">Delete</a>
     <a data-id="<%- @id %>" class="share btn">Share</a>
   </span>

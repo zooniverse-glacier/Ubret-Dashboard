@@ -29,5 +29,9 @@ module.exports = {
   statistics: {
     settings: {},
     persistedState: ['key']
+  },
+  histogram: {
+    settings: {},
+    persistedState: ['xAxis', 'xMin', 'xMax', 'selection', 'bins']
   }
 }
