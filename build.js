@@ -9,7 +9,7 @@ AWS.config.loadFromPath('./aws-cred.json');
 
 var s3bucket = new AWS.S3({params: {Bucket: 'tools.zooniverse.org'}});
 var $ = cheerio.load(fs.readFileSync("./public/index.html"));
-var version = require('./package').version;
+var version = require('./package').version + "+" + require('../Ubret/package').version;
 
 console.log("Building Dashboard Version: ", version);
 
