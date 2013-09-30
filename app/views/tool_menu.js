@@ -15,7 +15,11 @@ var ToolMenu = Menu.extend({
   },
 
   render: function() {
-    var projectTools = _.pairs(ProjectConfig[this.model.get('project')].tools);
+    var project = this.model.get('project');
+    if (!project)
+      return;
+
+    var projectTools = _.pairs(ProjectConfig[project].tools);
     tools = d3.select(this.el).select('.panel ul').selectAll('li')
       .data(projectTools, function(d) { return d[0]; });
 
