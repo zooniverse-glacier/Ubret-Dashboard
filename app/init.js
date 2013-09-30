@@ -42,9 +42,11 @@ module.exports = function() {
   Backbone.Events.listenTo(state, 'change:project', updateUser);
 
   User.on('change', function(response) {
-    if (!User.current) {
+    if (!User.current && (state.get('page') !== "dashboard")) {
       app.active.hide();
       Login.show();
+      return;
+    } else if (!User.current && (state.get('page') === "dashboard")) {
       return;
     }
     User.current.collections = new UserTalkCollections();

@@ -54,7 +54,7 @@ var Router = Backbone.Router.extend({
     this.setProjectState(project);
     this.setPage('dashboard');
     State.set('examineMode', false);
-    if (User.current.dashboards) {
+    if (User.current && User.current.dashboards) {
       State.set('currentDashboard', User.current.dashboards.get(id));
       State.set('currentDashboardId', id);
     } else {
