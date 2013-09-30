@@ -78,7 +78,7 @@ var Window = Backbone.View.extend({
       name: "New Chain from " + this.model.get('name'),
       row: this.model.collection.nextRow(),
       data: {
-        parent: this.model.id
+        parent_id: this.model.id
       }
     }, {wait: true});
 

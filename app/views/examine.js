@@ -4,6 +4,7 @@ var Examine = Backbone.View.extend({
   className: 'examine-mode',
   template: require('templates/examine'),
   padding: 160,
+  spacing: 25,
 
   initialize: function() {
     State.on('change:examineMode change:page', this.render, this);
@@ -17,7 +18,7 @@ var Examine = Backbone.View.extend({
     if (length === 1) 
       return window.innerWidth - (2 * this.padding);
     else
-      return (window.innerWidth - (2 * this.padding)) / 2;
+      return (window.innerWidth - (2 * this.padding)) / 2 - this.spacing;
   },
 
   render: function(s) {
