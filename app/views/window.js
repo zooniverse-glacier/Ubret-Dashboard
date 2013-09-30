@@ -27,6 +27,7 @@ var Window = Backbone.View.extend({
     this.listenTo(this.titleBar, 'close', this.close);
     this.listenTo(this.model, 'change:data.parent', this.render);
     this.listenTo(this.model, 'change:settings_active', this.toggleSettings)
+    this.listenTo(this.model, 'change:selected', this.setSelected);
   },
 
   close: function() {
@@ -86,6 +87,14 @@ var Window = Backbone.View.extend({
     });
   },
 
+  setSelected: function(m, sel) {
+    sel = sel || m.get('selected')
+    if (sel)
+      this.$el.parents().addClass('selected');
+    else
+      this.$el.parents().removeClass('selected');
+  },
+
   render: function() {
     this.$el.html(this.template());
     this.$('.title-bar').html(this.titleBar.render().el);
@@ -102,6 +111,7 @@ var Window = Backbone.View.extend({
     this.titleBar.delegateEvents();
     this.settingsPane.delegateEvents();
     this.model.getUbretTool().delegateEvents();
+    this.setSelected(this.model);
     return this;
   }
 });

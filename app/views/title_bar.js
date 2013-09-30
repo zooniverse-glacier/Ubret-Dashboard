@@ -18,7 +18,10 @@ var TitleBar = Backbone.View.extend({
   },
 
   selectTool: function() {
-    this.model.set("selected", true);
+    if (this.model.get("selected"))
+      this.model.set("selected", false);
+    else
+      this.model.set("selected", true);
   },
 
   setName: function(m, title) {
