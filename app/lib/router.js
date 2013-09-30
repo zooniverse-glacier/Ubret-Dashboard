@@ -12,8 +12,9 @@ var Router = Backbone.Router.extend({
     ':project/dashboards/:id(/)' : 'showDashboard',
     ':project/dashboards/:id/children(/)' : 'showDashboardChildren',
     ':project/dashboards/:id/copy(/)' : 'copyDashboard',
+    ':project/dashboards/:id/examine/:toolIds' : 'examineMode',
     ':project/subjects/:subjects(/:name)' : 'dashboardFromSubjects',
-    ':project/collections/:colletions(/:name)' : 'dashboardFromCollections' 
+    ':project/collections/:collections(/:name)' : 'dashboardFromCollections'
   },
 
   index: function() {
@@ -52,15 +53,29 @@ var Router = Backbone.Router.extend({
   showDashboard: function(project, id) {
     this.setProjectState(project);
     this.setPage('dashboard');
+    State.set('examineMode', false);
     if (User.current.dashboards) {
       State.set('currentDashboard', User.current.dashboards.get(id));
       State.set('currentDashboardId', id);
     } else {
       var dashboardModel = new Dashboard({id: id})
-      dashboardModel.fetch().then(_.bind(function() {
+      return dashboardModel.fetch().then(_.bind(function() {
         State.set('currentDashboard', dashboardModel);
         State.set('currentDashboardId', dashboardModel.id);
       }, this));
+    }
+  },
+
+  examineMode: function(project, id, ids) {
+    var promise = this.showDashboard(project, id);
+    if (!promise) { 
+      State.set('examine', ids.split(','));
+      State.set('examineMode', true);
+    } else {
+      promise.then(_.bind(function() {
+        State.set('examine', ids.split(','));
+        State.set('examineMode', true);
+      }, this))
     }
   },
 

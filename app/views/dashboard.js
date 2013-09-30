@@ -1,5 +1,6 @@
 var User = zooniverse.models.User,
   Window = require('views/window'),
+  ExamineDialog = require('views/examine_dialog'),
   State = require('lib/state');
 
 var Dashboard = Backbone.View.extend(_.extend({
@@ -12,6 +13,7 @@ var Dashboard = Backbone.View.extend(_.extend({
   initialize: function() {
     User.on('initialized', _.bind(function() {
       this.collection = User.current.dashboards;
+      this.showExamine(State, State.get('examineMode'));
     }, this));
     State.on('change:currentDashboardId', this.updateDashboard, this);
   },
@@ -19,10 +21,27 @@ var Dashboard = Backbone.View.extend(_.extend({
   events: {
     'click #zoom-in' : 'zoomIn',
     'click #zoom-out' : 'zoomOut',
+    'click #examine' : 'examineMode',
     'click .new-tool-chain' : 'startToolChain',
     'mouseover .scroll' : 'showScroll',
     'mouseleave .scroll' : 'hideScroll',
     'click .scroll' : 'scrollRow'
+  },
+
+  showExamine: function(m, e) {
+    if (e) 
+      ExamineDialog.show();
+    else {
+      ExamineDialog.hide();
+    }
+  },
+
+  examineMode: function() {
+    var selected = this.model.get("tools").chain()
+      .filter(function(m) { return m.get('selected') })
+      .pluck('id').value().join(',');
+    var url = location.hash + "/examine/" + selected;
+    window.router.navigate(url, {trigger: true});
   },
 
   showScroll: function(ev) {
@@ -133,6 +152,7 @@ var Dashboard = Backbone.View.extend(_.extend({
       }, this)).remove();
 
     this.setZoom(zoomLevel);
+    this.showExamine(State, State.get('examineMode'));
   },
 
   drawWindow: function(t) { 
@@ -159,6 +179,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     this.model = model;
     this.listenTo(this.model, 'change:zoom', this.render);
     this.listenTo(this.model, 'change:rows[*] add:rows remove:rows', this.render);
+    State.on('change:examineMode', this.showExamine, this);
     if (this.model.get('rows'))
       this.render();
   }

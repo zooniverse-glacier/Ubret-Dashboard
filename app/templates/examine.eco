@@ -1,0 +1,2 @@
+<span class="close"><a href="<%- @url %>">X</a></span>
+<div class="tools"></div>
