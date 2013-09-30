@@ -1,9 +1,9 @@
 var User = zooniverse.models.User,
-  Window = require('views/window');
+  Window = require('views/window'),
+  State = require('lib/state');
 
 var Dashboard = Backbone.View.extend(_.extend({
   el: '#dashboard',
-  state: require('lib/state'),
   windowMinHeight: 100,
   windowPadding: 42,
   windowMargin: 40,
@@ -13,7 +13,7 @@ var Dashboard = Backbone.View.extend(_.extend({
     User.on('initialized', _.bind(function() {
       this.collection = User.current.dashboards;
     }, this));
-    this.listenTo(this.state, 'change:currentDashboard', this.updateDashboard);
+    State.on('change:currentDashboardId', this.updateDashboard, this);
   },
 
   events: {
@@ -153,12 +153,14 @@ var Dashboard = Backbone.View.extend(_.extend({
       this.$('#zoom-in').addClass('disabled');
   },
 
-  updateDashboard: function(state, model) {
+  updateDashboard: function(state) {
+    model = state.get('currentDashboard');
     this.stopListening();
     this.model = model;
-    this.render();
     this.listenTo(this.model, 'change:zoom', this.render);
     this.listenTo(this.model, 'change:rows[*] add:rows remove:rows', this.render);
+    if (this.model.get('rows'))
+      this.render();
   }
 }, require('views/toggle')));
 

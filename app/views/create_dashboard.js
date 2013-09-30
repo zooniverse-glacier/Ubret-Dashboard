@@ -28,9 +28,10 @@ var Create = Backbone.View.extend({
     var newDashboard = User.current.dashboards.create({
       name: this.$('.create-dashboard-name').val(), 
       project: this.$('.create-dashboard-project').val()
-    }, {wait: true})
-    newDashboard.once('sync', _.bind(function(m) {
+    }, {wait: true, remove: false})
+    User.current.dashboards.once('add', _.bind(function(m) {
       this.$el.removeClass('loading');
+      m.set('rows', []);
       var url = "#/" + m.get('project') + "/dashboards/" + m.id;
       router.navigate(url, {trigger: true});
     }, this));

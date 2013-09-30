@@ -1,4 +1,6 @@
-var Dashboard = require("models/dashboard");
+var Dashboard = require("models/dashboard"),
+  State = require('lib/state'),
+  User = zooniverse.models.User;
 
 var Router = Backbone.Router.extend({
   routes: {
@@ -14,22 +16,17 @@ var Router = Backbone.Router.extend({
     ':project/collections/:colletions(/:name)' : 'dashboardFromCollections' 
   },
 
-  initialize: function(state, user) {
-    this.state = state;
-    this.user = user;
-  },
-
   index: function() {
     this.setProjectState('');
     this.setPage('index');
   },
 
   setProjectState: function(project) {
-    this.state.set('project', project);
+    State.set('project', project);
   },
 
   setPage: function(page) {
-    this.state.set('page', page);
+    State.set('page', page);
   },
 
   setProject: function(project) {
@@ -55,12 +52,14 @@ var Router = Backbone.Router.extend({
   showDashboard: function(project, id) {
     this.setProjectState(project);
     this.setPage('dashboard');
-    if (this.user.current.dashboards) {
-      this.state.set('currentDashboard', this.user.current.dashboards.get(id));
+    if (User.current.dashboards) {
+      State.set('currentDashboard', User.current.dashboards.get(id));
+      State.set('currentDashboardId', id);
     } else {
       var dashboardModel = new Dashboard({id: id})
       dashboardModel.fetch().then(_.bind(function() {
-        this.state.set('currentDashboard', dashboardModel);
+        State.set('currentDashboard', dashboardModel);
+        State.set('currentDashboardId', dashboardModel.id);
       }, this));
     }
   },

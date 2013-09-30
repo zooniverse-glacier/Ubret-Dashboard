@@ -6,7 +6,6 @@ var AppView = require('views/app_view'),
   Login = zooniverse.controllers.loginDialog,
   UserDashboards = require('collections/user_dashboards'),
   UserZooDataCollections = require('collections/user_zoo_data_collections');
-  
 
 module.exports = function() {
   var User = zooniverse.models.User;
@@ -34,7 +33,7 @@ module.exports = function() {
     app = new AppView({model: state}),
     header = new Header({model: state});
 
-  window.router = new Router(state, User);
+  window.router = new Router();
 
   topBar.el.appendTo(document.body);
 
