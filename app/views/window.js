@@ -25,7 +25,7 @@ var Window = Backbone.View.extend({
     this.settingsPane = new SettingsPane({model: this.model});
 
     this.listenTo(this.titleBar, 'close', this.close);
-    this.listenTo(this.model, 'change:data.parent', this.render);
+    this.listenTo(this.model, 'change:data.parent_id', this.render);
     this.listenTo(this.model, 'change:settings_active', this.toggleSettings)
     this.listenTo(this.model, 'change:selected', this.setSelected);
   },

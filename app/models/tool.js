@@ -106,7 +106,7 @@ var Tool = Backbone.AssociatedModel.extend({
   },
 
   getParent: function() {
-    var parent = this.collection.get(this.get('data.parent'));
+    var parent = this.collection.get(this.get('data.parent_id'));
     if (!parent)
       return null;
     return parent;
@@ -116,7 +116,7 @@ var Tool = Backbone.AssociatedModel.extend({
     if (!this.collection)
       return;
     return this.collection.filter(function(t) {
-      return t.get('data.parent') === this.id
+      return t.get('data.parent_id') === this.id
     }, this);
   },
 
@@ -132,14 +132,14 @@ var Tool = Backbone.AssociatedModel.extend({
   },
 
   createChild: function(tool) {
-    tool.data = {parent: this.id};
+    tool.data = {parent_id: this.id};
     tool.row = this.get('row');
 
     var child = this.getNonChainChild();
     if (child)
       this.collection.once('add', function(tool) {
         child.wipeTool();
-        child.update('data', {parent: tool.id});
+        child.update('data', {parent_id: tool.id});
       }, this);
 
     this.collection.create(tool, {wait: true});
@@ -159,10 +159,10 @@ var Tool = Backbone.AssociatedModel.extend({
     var parent = this.getParent()
     if (!_.isEmpty(children)) {
       if (parent)
-        _.each(children, function(c) { c.update('data', {parent: parent.id}); });
+        _.each(children, function(c) { c.update('data', {parent_id: parent.id}); });
       else
         _.each(children, function(c) { 
-          c.update('data', {parent: null}); 
+          c.update('data', {parent_id: null}); 
           c.destroy()
         });
     } 
