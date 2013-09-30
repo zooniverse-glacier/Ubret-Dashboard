@@ -14,6 +14,7 @@ var Dashboard = Backbone.View.extend(_.extend({
       this.collection = User.current.dashboards;
     }, this));
     State.on('change:currentDashboardId', this.updateDashboard, this);
+    State.on('change:page', this.reset, this);
   },
 
   events: {
@@ -150,6 +151,13 @@ var Dashboard = Backbone.View.extend(_.extend({
   drawWindow: function(t) { 
     var window = new Window({model: t, dashboard: this.model});
     return window.render().el; 
+  },
+
+  reset: function(s, p) {
+    if (p !== 'dashboard')
+      return;
+    this.$('.row').remove()
+    this.render();
   },
 
   setZoom: function(zoom) {

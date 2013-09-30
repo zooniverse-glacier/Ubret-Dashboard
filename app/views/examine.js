@@ -50,9 +50,11 @@ var Examine = Backbone.View.extend({
     examineWindows.append('h2').text(function(d) { return d.get('name')})
 
     examineWindows.append(function(d) { 
-        d.getUbretTool().setSize(height, width);
-        return d.getUbretTool().el; 
-      });
+      d.getUbretTool().setSize(height, width);
+      d.getUbretTool().delegateEvents();
+      return d.getUbretTool().el; 
+    });
+
   }
 });
 
