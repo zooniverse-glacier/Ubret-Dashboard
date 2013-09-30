@@ -101,8 +101,8 @@ var Window = Backbone.View.extend({
     if (!this.dashboard || this.dashboard.get('zoom') === 1) {
       this.$('.tool-pane').html("<h2>" + this.model.get('name') + "</h2>");
     } else {
-      this.$('.tool-pane').html(this.model.getUbretTool().el);
-      this.$('.settings-pane').html(this.settingsPane.render().el);
+      this.$('.tool-pane').html(this.model.getUbretTool().$el);
+      this.$('.settings-pane').html(this.settingsPane.render().$el);
     }
 
     if (this.model.get('settings_active'))
