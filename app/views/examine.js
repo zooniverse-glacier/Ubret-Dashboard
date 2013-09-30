@@ -6,7 +6,7 @@ var Examine = Backbone.View.extend({
   padding: 160,
 
   initialize: function() {
-    State.on('change:examineMode', this.render, this);
+    State.on('change:examineMode change:page', this.render, this);
   },
 
   height: function(length) {
@@ -20,7 +20,8 @@ var Examine = Backbone.View.extend({
       return (window.innerWidth - (2 * this.padding)) / 2;
   },
 
-  render: function(s, mode) {
+  render: function(s) {
+    mode = s.get('examineMode');
     if (!mode)
       return;
 
@@ -41,9 +42,12 @@ var Examine = Backbone.View.extend({
       .attr('class', 'container')
       .style('height', height + "px")
       .style('width', width + "px")
-      .append(function(d) { 
+
+    examineWindows.append('h2').text(function(d) { return d.get('name')})
+
+    examineWindows.append(function(d) { 
         d.getUbretTool().setSize(height, width);
-        return d.getUbretTool().el 
+        return d.getUbretTool().el; 
       });
   }
 });

@@ -9,6 +9,7 @@ var App = Backbone.View.extend({
   sections: {
     index: require('views/index_dialog'),
     new: require('views/create_dashboard_dialog'),
+    examine: require('views/examine_dialog'),
     dashboard: new Dashboard(),
     saved: new Saved(),
     data: new Data()
@@ -26,7 +27,7 @@ var App = Backbone.View.extend({
       this.active.hide();
       this.active = this.sections[active];
     }
-    if ((active === 'dashboard') || User.current)
+    if ((active === 'dashboard') || (active === "examine") || User.current)
       this.active.show();
   }
 });

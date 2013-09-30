@@ -1,6 +1,5 @@
 var User = zooniverse.models.User,
   Window = require('views/window'),
-  ExamineDialog = require('views/examine_dialog'),
   State = require('lib/state');
 
 var Dashboard = Backbone.View.extend(_.extend({
@@ -13,7 +12,6 @@ var Dashboard = Backbone.View.extend(_.extend({
   initialize: function() {
     User.on('initialized', _.bind(function() {
       this.collection = User.current.dashboards;
-      this.showExamine(State, State.get('examineMode'));
     }, this));
     State.on('change:currentDashboardId', this.updateDashboard, this);
   },
@@ -28,18 +26,12 @@ var Dashboard = Backbone.View.extend(_.extend({
     'click .scroll' : 'scrollRow'
   },
 
-  showExamine: function(m, e) {
-    if (e) 
-      ExamineDialog.show();
-    else {
-      ExamineDialog.hide();
-    }
-  },
-
   examineMode: function() {
     var selected = this.model.get("tools").chain()
       .filter(function(m) { return m.get('selected') })
       .pluck('id').value().join(',');
+    if (selected === '')
+      return;
     var url = location.hash + "/examine/" + selected;
     window.router.navigate(url, {trigger: true});
   },
@@ -136,12 +128,15 @@ var Dashboard = Backbone.View.extend(_.extend({
           i = i + 1;
         return this.windowSpacing(_, i);
       }, this))
-      .append(_.bind(this.drawWindow, this));
 
     tools.style('height', height + 'px')
       .style('width', width + 'px')
       .transition()
       .style('left', _.bind(this.windowSpacing, this))
+      .transition()
+
+    tools.selectAll('.containers').remove();
+    tools.append(_.bind(this.drawWindow, this));
 
     tools.exit().style('z-index', -10)
       .transition().style('left', _.bind(function(d, i) {
@@ -152,7 +147,7 @@ var Dashboard = Backbone.View.extend(_.extend({
       }, this)).remove();
 
     this.setZoom(zoomLevel);
-    this.showExamine(State, State.get('examineMode'));
+    return this;
   },
 
   drawWindow: function(t) { 
@@ -179,7 +174,6 @@ var Dashboard = Backbone.View.extend(_.extend({
     this.model = model;
     this.listenTo(this.model, 'change:zoom', this.render);
     this.listenTo(this.model, 'change:rows[*] add:rows remove:rows', this.render);
-    State.on('change:examineMode', this.showExamine, this);
     if (this.model.get('rows'))
       this.render();
   }

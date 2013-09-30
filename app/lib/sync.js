@@ -6,7 +6,7 @@ var Sync = function(method, model, options) {
   if (!(options.url.match(baseURL)))
     options.url = baseURL + options.url;
   options.crossDomain = true;
-  if (!_.isUndefined(User.current)) {
+  if (!_.isNull(User.current)) {
     options.beforeSend = function(xhr) {
       var auth = base64.encode(User.current.name + ":" + User.current.api_key);
       xhr.setRequestHeader('Authorization', "Basic: " + auth);

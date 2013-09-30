@@ -53,7 +53,10 @@ var Router = Backbone.Router.extend({
   showDashboard: function(project, id) {
     this.setProjectState(project);
     this.setPage('dashboard');
-    State.set('examineMode', false);
+    this.loadDashboard(id);
+  },
+
+  loadDashboard: function(id) {
     if (User.current && User.current.dashboards) {
       State.set('currentDashboard', User.current.dashboards.get(id));
       State.set('currentDashboardId', id);
@@ -67,13 +70,14 @@ var Router = Backbone.Router.extend({
   },
 
   examineMode: function(project, id, ids) {
-    var promise = this.showDashboard(project, id);
+    State.set('examine', ids.split(','));
+    this.setProjectState(project);
+    this.setPage('examine');
+    var promise = this.loadDashboard(id);
     if (!promise) { 
-      State.set('examine', ids.split(','));
       State.set('examineMode', true);
     } else {
       promise.then(_.bind(function() {
-        State.set('examine', ids.split(','));
         State.set('examineMode', true);
       }, this))
     }
