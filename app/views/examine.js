@@ -31,11 +31,14 @@ var Examine = Backbone.View.extend({
       tools = tools.filter(function(t) {return !( -1 === _.indexOf(ids, t.id))}),
       length = tools.length,
       height = this.height(length),
-      width = this.width(length);
+      width = this.width(length),
+      url = "#/" + s.get('project') + "/dashboards/" + s.get('currentDashboardId');
 
-    this.$el.html(this.template({url: "#/" + s.get('project') + "/dashboards/" + s.get('currentDashboardId')}));
+    console.log(ids, tools);
 
-    d3.select(this.el).select('.tools').style('width', this.width(1) + 40 + "px");
+    this.$el.html(this.template({url: url})); 
+
+    d3.select(this.el).select('.tools').style('width', window.innerWidth + "px");
     var examineWindows = d3.select(this.el).select('.tools').selectAll('.container')
       .data(tools, function(d) { return d.id });
 
