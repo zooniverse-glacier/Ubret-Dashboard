@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "The New ZooTools Dashbaord",
   "main": "dashboard.js",
   "scripts": {
