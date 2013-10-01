@@ -15,6 +15,7 @@ var Header = Backbone.View.extend({
   initialize: function() {
     this.activeProject = this.$('#current-project .name');
     this.projectSelect = this.$('#project-select');
+    this.downArrow = this.$('.down-arrow');
     this.globalMenu = new GlobalMenu({model: this.model});
     this.toolMenu = new ToolMenu({model: this.model});
 
@@ -24,7 +25,8 @@ var Header = Backbone.View.extend({
   },
 
   toggleProjects: function() {
-    this.projectSelect.toggle();
+    this.projectSelect.toggleClass('active');
+    this.downArrow.toggleClass('active');
   },
 
   updatePageHeader: function() {
@@ -33,7 +35,7 @@ var Header = Backbone.View.extend({
     if (page === 'dashboard' && !_.isUndefined(dashboard)) {
       this.$('#dashboard-controls').show();
       this.$('#current-dashboard').show()
-        .text(dashboard.get("name"));
+        .text(dashboard.get("name") + " - ");
     } else {
       this.$('#current-dashboard').hide();
       this.$('#dashboard-controls').hide();
@@ -57,7 +59,7 @@ var Header = Backbone.View.extend({
   updateProject: function(state, project) {
     var projectText;
     // Hide Project Select in case it's open
-    this.projectSelect.hide();
+    this.projectSelect.removeClass('active');
 
     // Update the Active Project
     if (!project) {

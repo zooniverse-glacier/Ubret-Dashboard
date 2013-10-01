@@ -9,84 +9,108 @@
   background: $mainBlack;
   width: 100%;
   border-bottom: 1px solid $standardGray; 
-  height: 15px;
+  height: 40px;
   text-align: center;
   padding: 10px 0;
+  box-sizing: border-box;
 
-#dashboard-header span.menu
-  cursor: pointe
-  width: 45px;
-  position: absolute;
-  height: 35px; 
-  border-right: 1px solid $hoverGray;
-  left: 0;
-  top: 0;
+  span.menu
+    cursor: pointe
+    width: 45px;
+    position: absolute;
+    height: 40px; 
+    border-right: 1px solid $hoverGray;
+    left: 0;
+    top: 0;
 
-#dashboard-header span.menu#tool-menu
-  left: 45px;
+    &#tool-menu
+      left: 45px;
 
-  img
-    margin: 5px
+      img
+        margin: 8px
 
-#dashboard-header span#menu:before
-  background: none repeat scroll 0 0 $panelWhite;
-  box-shadow: 0 4px $mainBlack, 0 8px $panelWhite, 0 12px $mainBlack, 0 16px $panelWhite;
-  content: "";
-  height: 4px;
-  position: absolute;
-  left: 7px;
-  top: 8px;
-  width: 30px;
+    &.active:hover
+      background: $hoverBlue; 
 
-#dashboard-header span#menu.active:before 
-  box-shadow: 0 4px $standardBlue, 0 8px $panelWhite, 0 12px $standardBlue, 0 16px $panelWhite;
+    &:after
+      border-left: 1px solid $mainBlack;
 
-#dashboard-header span.menu.active:hover
-  background: $hoverBlue; 
-#dashboard-header span#menu.active:hover:before
-  box-shadow: 0 4px $hoverBlue, 0 8px $panelWhite, 0 12px $hoverBlue, 0 16px $panelWhite;
+    &:hover
+      background: $hoverGray;
 
-#dashboard-header span#menu:hover:before
-  box-shadow: 0 4px $hoverGray, 0 8px $panelWhite, 0 12px $hoverGray, 0 16px $panelWhite;
+    &.active
+      background: $standardBlue; 
 
-#dashboard-header span.menu:after
-  border-left: 1px solid $mainBlack;
+    &#menu
+      &:before
+        background: none repeat scroll 0 0 $panelWhite;
+        box-shadow: 0 4px $mainBlack, 0 8px $panelWhite, 0 12px $mainBlack, 0 16px $panelWhite;
+        content: "";
+        height: 4px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 25px;
 
-#dashboard-header span.menu:hover
-  background: $hoverGray;
+      &.active:before 
+        box-shadow: 0 4px $standardBlue, 0 8px $panelWhite, 0 12px $standardBlue, 0 16px $panelWhite;
 
-#dashboard-header span.menu.active
-  background: $standardBlue; 
+      &.active:hover:before
+        box-shadow: 0 4px $hoverBlue, 0 8px $panelWhite, 0 12px $hoverBlue, 0 16px $panelWhite;
 
-span.down-arrow
-  padding-left: 5px;  
+      &:hover:before
+        box-shadow: 0 4px $hoverGray, 0 8px $panelWhite, 0 12px $hoverGray, 0 16px $panelWhite;
 
-#dashboard-header ul#project-select
-  top: 20px;
-  left: 50%;
-  margin-left: -100px;
-  display: none;
-  position: absolute;
-  width: 200px;
-  background: $mainBlack;
-  z-index: 999;
-  padding-left: 5px;
-  padding-right: 5px;
-  line-height: 0;
-  list-style-type: none;
+  span.down-arrow
+    display: inline-block
+    cursor: pointer
+    transform-origin: 50% 50%
+    text-align: left
+    transition: transform 0.5s ease-in-out
 
-ul#project-select li
-  border-top: 1px solid white;
-  padding: 15px 15px 10px;
+    &.active
+      transform: rotate(180deg);
 
-ul#project-select li a
-  color: white;
-  text-decoration: none;
+  ul#project-select
+    width: 200px;
+    position: absolute;
+    background: $mainBlack;
+    z-index: -1;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 0;
+    list-style-type: none;
+    font-weight: 400;
+    box-sizing: border-box
+    top: -130px;
+    transition: transform 0.5s ease-in-out;
 
-#current-project
-  font-size: 12px;
-  line-height: 14px;
+    &.active
+      transform: translateY(152px);
 
-#logo
-  font-weight: 700;
-  padding-left: 40px;
+    li
+      border-top: 1px solid white;
+      padding: 15px 15px 10px;
+
+    li a
+      color: white;
+      text-decoration: none;
+
+  #current-project
+    font-size: 18px
+    font-weight: 300
+    position: absolute;
+    margin-left: 5px;
+    top: 0
+    background: $mainBlack
+    padding-top: 10px
+    padding-bottom: 4px
+    width: 220px
+    text-align: left
+
+  #zoo-tools-title
+    font-size: 18px
+    font-weight: 300
+    background: $mainBlack;
+    padding-top: 10px
+    padding-bottom: 4px
