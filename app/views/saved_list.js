@@ -22,7 +22,7 @@ var Saved = Backbone.View.extend(_.extend({
 
     removeDashboard: function(ev) {
       var model = this.collection.get(ev.target.dataset.id);
-      this.collection.remove(model);
+      model.destroy();
     }
 
   }, require('views/toggle'), require('views/toggle_list')));

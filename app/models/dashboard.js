@@ -17,11 +17,6 @@ var Dashboard = Backbone.AssociatedModel.extend({
   ],
 
   initialize: function() {
-    this.listenTo(this, 'remove', function() {
-      delete this.url;
-      this.destroy();
-    }); 
-
     this.listenTo(this, 'add:tools remove:tools change:tools[*].data', this.groupRows);
     this.groupRows();
   },
@@ -35,6 +30,15 @@ var Dashboard = Backbone.AssociatedModel.extend({
   sync: require('lib/sync'),
 
   urlRoot: "/dashboards",
+
+  url: function() {
+    return "/dashboards/" + this.id;
+  },
+
+  destroy: function() {
+    delete this.url;
+    Backbone.AssociatedModel.prototype.destroy.call(this);
+  },
 
   groupRows: function() {
     var rows = this.get('rows');
@@ -75,10 +79,10 @@ var Dashboard = Backbone.AssociatedModel.extend({
   },
 
   copy: function() {
-    var url = "https://dev.zooniverse.org/projects/" + 
-      this.state.get('project') + 
-      "/dashboards/" + 
-      this.id + "/fork";
+    var url = (!location.port || (location.port === "3333")) ? 
+      "https://dev.zooniverse.org/projects/" : "http://localhost:3000/projects/";
+    url = url + this.state.get('project') + "/dashboards/" +  this.id + "/fork";
+    console.log(url);
     return $.ajax({
       type: 'POST',
       url: url,

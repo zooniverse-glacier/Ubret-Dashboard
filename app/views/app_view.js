@@ -1,7 +1,8 @@
 var Dashboard = require('views/dashboard'),
   Saved = require('views/saved_list'),
   Data = require('views/data_list'),
-  User = zooniverse.models.User;
+  User = zooniverse.models.User,
+  Children = require('views/dashboard_children');
 
 var App = Backbone.View.extend({
   el: "#app",
@@ -12,7 +13,8 @@ var App = Backbone.View.extend({
     examine: require('views/examine_dialog'),
     dashboard: new Dashboard(),
     saved: new Saved(),
-    data: new Data()
+    data: new Data(),
+    children: new Children()
   },
 
   initialize: function() {
@@ -27,7 +29,10 @@ var App = Backbone.View.extend({
       this.active.hide();
       this.active = this.sections[active];
     }
-    if ((active === 'dashboard') || (active === "examine") || User.current)
+    if ((active === 'dashboard') || 
+        (active === 'children') ||
+        (active === "examine") || 
+        User.current)
       this.active.show();
   }
 });

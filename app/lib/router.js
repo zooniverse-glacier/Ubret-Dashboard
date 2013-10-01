@@ -89,6 +89,12 @@ var Router = Backbone.Router.extend({
 
   dashboardFromCollections: function(project, collections, name) {
     this.setProjectState(project);
+  },
+
+  showDashboardChildren: function(project, id) {
+    this.setProjectState(project);
+    this.loadDashboard(id);
+    this.setPage('children');
   }
 });
 
