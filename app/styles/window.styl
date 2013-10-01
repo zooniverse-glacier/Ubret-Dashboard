@@ -78,6 +78,21 @@
     text-align: center;
     cursor: pointer
     z-index: 1;
+
+    button
+      border: none
+      background: $mainBlack
+      color: $panelWhite
+      font-weight: 700
+      font-size: 20px
+      position: absolute
+      height: 30px
+      vertical-align: center
+      padding: 0
+      width: 30px
+
+      &:hover
+        background: $hoverGray
  
     input
       display: none
@@ -92,17 +107,24 @@
       display: inline
 
     .close
-      float: left;
+      left: 0
+      top: 0
+      border-right: 1px solid $hoverGray
 
     .settings-toggle
-      transform: rotate(180deg)
       transition: all 0.4s cubic-bezier(0.0, 0.0, 0.35, 1.0)
-      top: 4px
-      width: 20px
-      float: right
+      top: 0
+      right: 0
+      border-left: 1px solid $hoverGray
 
       &.active
-        transform: rotate(0deg)
+        background: $standardBlue
+
+        &:hover
+          background: $hoverGray
+
+      img
+        margin-top: 4px
 
   &.new-tool-chain
     margin-top: 20px;
