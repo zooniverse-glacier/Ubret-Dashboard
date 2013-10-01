@@ -102,6 +102,8 @@ var Dashboard = Backbone.View.extend(_.extend({
       itemsInRow = Math.floor((window.innerWidth * 1.1) / width) + 1;
 
     var chains = this.model.get('rows');
+
+    console.log(chains);
     rows = d3.select(this.el).selectAll('.row')
       .data(chains.models, function(d) { return d.id });
 

@@ -8,25 +8,25 @@ section#dashboard
     right: 0;
     top: 50%;
     margin-top: -75px;
-    position: absolute;
+    position: fixed;
     z-index: 1000
 
-  ul#zoom-controls .btn
-    width: 50px;
-    height: 50px;
-    background: $mainBlack;
+    .btn
+      width: 50px;
+      height: 50px;
+      background: $mainBlack;
 
-  ul#zoom-controls li
-    border-bottom: 1px solid #ededed;
+    li
+      border-bottom: 1px solid #ededed;
 
-  ul#zoom-controls li:last-child
-    border-bottom: none;
+    li:last-child
+      border-bottom: none;
 
-  ul#zoom-controls .btn:hover
-    background: $standardGray;
+    .btn:hover
+      background: $standardGray;
 
-  ul#zoom-controls .btn:active
-    background: $focusRed;
+    .btn:active
+      background: $focusRed;
 
   .row
     display: block

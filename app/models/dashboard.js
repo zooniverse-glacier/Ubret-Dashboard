@@ -41,9 +41,13 @@ var Dashboard = Backbone.AssociatedModel.extend({
   },
 
   groupRows: function() {
-    var rows = this.get('rows');
+    var rows = this.get('rows'),
+      chains = this.get('tools').getChains(),
+      removedRows = _.without.apply(null, [rows.pluck('id')].concat(_.map(chains, function(c) { return c.get('row') })));
+   
+    rows.remove(removedRows) 
 
-    _.each(this.get('tools').getChains(), function(chain) {
+    _.each(chains, function(chain) {
       row = chain.get('row');
       tools = this.get('tools').toolTree(chain);
       if (rows.get(row)) {
