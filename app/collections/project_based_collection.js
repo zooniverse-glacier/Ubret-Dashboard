@@ -13,6 +13,7 @@ var ProjectBasedCollection = Backbone.Collection.extend({
   },
 
   fetch: function() {
+    this.reset();
     if (!(User.current && require('lib/state').get('project')))
       return;
     return ProjectBasedCollection.__super__.fetch.call(this);
