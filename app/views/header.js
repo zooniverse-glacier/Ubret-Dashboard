@@ -7,13 +7,12 @@ var Header = Backbone.View.extend({
   projects: require('config/projects'),
 
   events: {
-    "click #current-project" : 'toggleProjects',
     "click #menu" : "toggleMenu",
     "click #tool-menu" : "toggleToolMenu"
   },
 
   initialize: function() {
-    this.activeProject = this.$('#current-project .name');
+    this.activeProject = this.$('#current-project.name');
     this.projectSelect = this.$('#project-select');
     this.downArrow = this.$('.down-arrow');
     this.globalMenu = new GlobalMenu({model: this.model});
@@ -22,11 +21,6 @@ var Header = Backbone.View.extend({
     this.listenTo(this.model, 'change:project', this.updateProject);
     this.listenTo(this.model, 'change:page', this.updatePageHeader);
     this.listenTo(this.model, 'change:currentDashboard', this.updatePageHeader);
-  },
-
-  toggleProjects: function() {
-    this.projectSelect.toggleClass('active');
-    this.downArrow.toggleClass('active');
   },
 
   updatePageHeader: function() {

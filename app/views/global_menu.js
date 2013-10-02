@@ -1,4 +1,5 @@
-var Menu = require('views/menu');
+var Menu = require('views/menu'),
+  ProjectMenu = require('views/project_menu');
 
 var GlobalMenu = Menu.extend({
   el: '#global-menu',
@@ -15,6 +16,7 @@ var GlobalMenu = Menu.extend({
 
   initialize: function() {
     this.menuItems = this.$('a');
+    this.projectMenu = new ProjectMenu({parent: this}).render();
     this.listenTo(this.model, 'change:project', this.updateProject);
     this.listenTo(this.model, 'change:page', this.updateActive);
     this.listenTo(this.model, 'change:currentDashboard', this.updateDashboard);
@@ -56,6 +58,8 @@ var GlobalMenu = Menu.extend({
       this.model.get('currentDashboard').copy().then(function(response) {
         navigate('/dashboards/' + response)
       });
+    else if (ev.attr('id') == "change-project")
+      return this.projectMenu.$el.addClass('active');
 
     $('#menu').toggleClass('active');
     this.toggle();

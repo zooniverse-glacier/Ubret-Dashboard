@@ -61,56 +61,8 @@
       &:hover:before
         box-shadow: 0 4px $hoverGray, 0 8px $panelWhite, 0 12px $hoverGray, 0 16px $panelWhite;
 
-  span.down-arrow
+  .pull-center
     display: inline-block
-    cursor: pointer
-    transform-origin: 50% 50%
-    text-align: left
-    transition: transform 0.5s ease-in-out
-
-    &.active
-      transform: rotate(180deg);
-
-  ul#project-select
-    width: 200px;
-    position: absolute;
-    background: $mainBlack;
-    z-index: -1;
-    padding-left: 5px;
-    padding-right: 5px;
-    line-height: 0;
-    list-style-type: none;
-    font-weight: 400;
-    box-sizing: border-box
-    top: -130px;
-    transition: transform 0.5s ease-in-out;
-
-    &.active
-      transform: translateY(152px);
-
-    li
-      border-top: 1px solid white;
-      padding: 15px 15px 10px;
-
-    li a
-      color: white;
-      text-decoration: none;
-
-  #current-project
+    text-align: center
     font-size: 18px
     font-weight: 300
-    position: absolute;
-    margin-left: 5px;
-    top: 0
-    background: $mainBlack
-    padding-top: 10px
-    padding-bottom: 4px
-    width: 220px
-    text-align: left
-
-  #zoo-tools-title
-    font-size: 18px
-    font-weight: 300
-    background: $mainBlack;
-    padding-top: 10px
-    padding-bottom: 4px
