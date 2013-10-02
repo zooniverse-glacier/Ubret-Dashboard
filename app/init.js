@@ -22,24 +22,13 @@ module.exports = function() {
 
   var updateUser = function() {
     if (User.current && state.get('project')) {
-      User.current.dashboards.fetch();
-      User.current.collections.fetch();
-      User.current.zooData.fetch();
+      User.current.promises.dashboards = User.current.dashboards.fetch();
+      User.current.promises.collections = User.current.collections.fetch();
+      User.current.promises.zooData = User.current.zooData.fetch();
     }
   };
 
-  var state = require('lib/state'),
-    topBar = new zooniverse.controllers.TopBar(),
-    app = new AppView({model: state}),
-    header = new Header({model: state});
-
-  window.router = new Router();
-
-  topBar.el.appendTo(document.body);
-
   User.on('change', toggleLoggin);
-
-  Backbone.Events.listenTo(state, 'change:project', updateUser);
 
   User.on('change', function(response) {
     if (!User.current && 
@@ -54,11 +43,23 @@ module.exports = function() {
     User.current.collections = new UserTalkCollections();
     User.current.zooData = new UserZooDataCollections();
     User.current.dashboards = new UserDashboards();
+    User.current.promises = {collections: null, zooData: null, dashboards: null};
     User.trigger('initialized');
     updateUser();
   });
 
-  User.fetch();
+  var promise = User.fetch();
+  window.router = new Router(promise);
+
+  var state = require('lib/state'),
+    topBar = new zooniverse.controllers.TopBar(),
+    app = new AppView({model: state}),
+    header = new Header({model: state});
+
+  Backbone.Events.listenTo(state, 'change:project', updateUser);
+
+  topBar.el.appendTo(document.body);
+
 
   Backbone.history.start();
 };

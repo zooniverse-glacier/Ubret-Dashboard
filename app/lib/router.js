@@ -17,6 +17,10 @@ var Router = Backbone.Router.extend({
     ':project/collections/:collections(/:name)' : 'dashboardFromCollections'
   },
 
+  initialize: function(userPromise) {
+    this.userPromise = userPromise;
+  },
+
   index: function() {
     this.setProjectState('');
     this.setPage('index');
@@ -58,14 +62,20 @@ var Router = Backbone.Router.extend({
 
   loadDashboard: function(id) {
     if (User.current && User.current.dashboards) {
-      State.set('currentDashboard', User.current.dashboards.get(id));
-      State.set('currentDashboardId', id);
-    } else {
+      if (User.current.dashboards.isEmpty()) {
+        return User.current.promises.dashboards.then(_.bind(_.partial(this.loadDashboard, id), this));
+      } else {
+        State.set('currentDashboard', User.current.dashboards.get(id));
+        State.set('currentDashboardId', id);
+      };
+    } else if (this.userPromise.state() !== 'pending') {
       var dashboardModel = new Dashboard({id: id})
       return dashboardModel.fetch().then(_.bind(function() {
         State.set('currentDashboard', dashboardModel);
         State.set('currentDashboardId', dashboardModel.id);
       }, this));
+    } else {
+      return this.userPromise.then(_.bind(_.partial(this.loadDashboard, id), this));
     }
   },
 

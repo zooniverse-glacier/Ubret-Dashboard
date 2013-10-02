@@ -1,5 +1,6 @@
 var ToolConfig = require('config/tool'),
-  User = zooniverse.models.User;
+  User = zooniverse.models.User,
+  State = require('lib/state');
 
 var Tool = Backbone.AssociatedModel.extend({
   idAttribute: "_id",
@@ -45,6 +46,8 @@ var Tool = Backbone.AssociatedModel.extend({
   },
 
   setCollections: function () {
+    if (!this.isActive())
+      return;
     this.setTalk();
     this.setZooData();
     this.listenTo(User.current.collections, 'add remove', this.setTalk);
@@ -167,6 +170,13 @@ var Tool = Backbone.AssociatedModel.extend({
         });
     } 
     Backbone.AssociatedModel.prototype.destroy.call(this);
+  },
+
+  isActive: function() {
+    if (!this.collection.parents)
+      return;
+    var dashboardId = this.collection.parents[0].id;
+    return State.get('currentDashboardId') === dashboardId;
   },
 });
 

@@ -34,8 +34,6 @@ var Examine = Backbone.View.extend({
       width = this.width(length),
       url = "#/" + s.get('project') + "/dashboards/" + s.get('currentDashboardId');
 
-    console.log(ids, tools);
-
     this.$el.html(this.template({url: url})); 
 
     d3.select(this.el).select('.tools').style('width', window.innerWidth + "px");
