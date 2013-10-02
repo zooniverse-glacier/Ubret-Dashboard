@@ -149,10 +149,11 @@ var Tool = Backbone.AssociatedModel.extend({
     if (_.isString(this.url)) {
       var lastPath = _.last(this.url.split('/'));
       if (lastPath === this.id)
-        return;
-      else if (lastPath === 'dashboards')
-        this.url = this.collection.parents[0].url; 
-      this.url = this.url + "/tools/" + this.id;
+        this.url = this.url
+      else if (lastPath === 'dashboards') 
+        this.url = this.collection.parents[0].url + "/tools/" + this.id;
+      else
+        this.url = this.url + "/tools/" + this.id;
     }
     
     opts = opts || {};
