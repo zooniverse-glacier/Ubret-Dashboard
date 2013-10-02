@@ -29,9 +29,6 @@ var Tool = Backbone.AssociatedModel.extend({
     if (!this.get('tool_type'))
       throw new Error("Tool must have a type defined");
 
-    if (_.isString(this.url))
-      this.url = this.url + "/tools/" + this.id;
-
     this.persistedState = ToolConfig[this.get('tool_type')].persistedState;
     
     this.setDefaults();
@@ -149,6 +146,15 @@ var Tool = Backbone.AssociatedModel.extend({
   },
 
   update: function(attr, value, opts) {
+    if (_.isString(this.url)) {
+      var lastPath = _.last(this.url.split('/'));
+      if (lastPath === this.id)
+        return;
+      else if (lastPath === 'dashboards')
+        this.url = this.collection.parents[0].url; 
+      this.url = this.url + "/tools/" + this.id;
+    }
+    
     opts = opts || {};
     _.defaults(opts, {patch: true})
     if (this.id) 

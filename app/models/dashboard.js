@@ -19,6 +19,11 @@ var Dashboard = Backbone.AssociatedModel.extend({
   initialize: function() {
     this.listenTo(this, 'add:tools remove:tools change:tools[*].data', this.groupRows);
     this.groupRows();
+
+    if (_.isString(this.url)) {
+      if (_.last(this.url.split('/')) == 'dashboards')
+        this.url = this.url + '/' + this.id;
+    }
   },
 
   defaults: {
