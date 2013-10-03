@@ -1,69 +1,63 @@
 @import "common"
 
-.dashboard-welcome-view h1 {
-  font-size: 60px;
-  margin: 0;
-}
-  
-.dashboard-welcome-view h2 {
-  font-size: 16px;
-  margin: 0;
-}
+.dashboard-welcome-view
 
-.dashboard-welcome-view p {
-  font-size: 20px;
-  margin: 0;
-}
+  h1 
+    font-size: 60px;
+    margin: 0;
+    
+  h2 
+    font-size: 16px;
+    margin: 0;
 
-.dashboard-welcome-view .light {
-  font-weight: 300;
-}
+  p 
+    font-size: 20px;
+    margin: 0;
 
-.dashboard-welcome-view select, .dashboard-welcome-view input {
-  border: 3px solid $panelWhite;
-  background: inherit;
-  color: $panelWhite;
-  font-size: 16px; 
-}
-.dashboard-welcome-view .exit {
-  position: absolute;
-  top: -100px;
-  left: -85px;
-}
+  .light 
+    font-weight: 300;
 
-.dashboard-welcome-view a {
-  color: white;
-  font-size: 10px;
-  font-style: italic;
-}
+  select, input 
+    border: 3px solid $panelWhite;
+    background: inherit;
+    color: $panelWhite;
+    font-size: 16px; 
 
-.dashboard-welcome-view a:hover {
-  color: $focusRed 
-}
+  .exit 
+    position: absolute;
+    top: -100px;
+    left: -85px;
 
-.dashboard-welcome-view ul {
-  list-style: none;
-  padding: 0;
-  width: 100%;
-}
+  a 
+    color: white;
+    font-size: 10px;
+    font-style: italic;
 
-.dashboard-welcome-view ul li a {
-  width: 100%;
-  display: inline-block;
-  text-decoration: none;
-  font-size: 16px;
-  font-style: normal;
-  margin: 5px 0;
-}
+    &:hover 
+      color: $focusRed 
 
-.dashboard-welcome-view ul .date {
-  float: right;
-  font-style: italic;
-}
+  ul 
+    list-style: none;
+    padding: 0;
+    width: 100%;
 
-.dashboard-welcome-view .half {
-  display: block;
-  width: 46%;
-  padding: 2%;
-  text-align: left;
-}
+    li a 
+      width: 100%;
+      display: inline-block;
+      text-decoration: none;
+      font-size: 16px;
+      font-style: normal;
+      margin: 5px 0;
+
+    .date 
+      float: right;
+      font-style: italic;
+
+  .half 
+    display: block;
+    width: 46%;
+    padding: 2%;
+    text-align: left;
+
+  .no-project
+    margin-left: 20px
