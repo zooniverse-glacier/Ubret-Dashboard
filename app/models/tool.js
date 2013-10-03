@@ -36,9 +36,9 @@ var Tool = Backbone.AssociatedModel.extend({
 
     if (this.get('tool_type') === "tool_chain") {
       if (User.current)
-        this.setCollections();
+        _.defer(_.bind(this.setCollections, this));
       else
-        User.on("initialized", _.bind(function() {this.setCollections(); }, this));
+        User.once("initialized", _.bind(this.setCollections, this));
     }
   },
 
