@@ -145,7 +145,7 @@ var Tool = Backbone.AssociatedModel.extend({
     this.collection.create(tool, {wait: true});
   },
 
-  update: function(attr, value, opts) {
+  setURL: function() {
     if (_.isString(this.url)) {
       var lastPath = _.last(this.url.split('/'));
       if (lastPath === this.id)
@@ -155,6 +155,10 @@ var Tool = Backbone.AssociatedModel.extend({
       else
         this.url = this.url + "/tools/" + this.id;
     }
+  },
+
+  update: function(attr, value, opts) {
+    this.setURL()
     
     opts = opts || {};
     _.defaults(opts, {patch: true})
@@ -165,6 +169,7 @@ var Tool = Backbone.AssociatedModel.extend({
   },
 
   destroy: function() {
+    this.setURL();
     var children = this.getChildren();
     var parent = this.getParent()
     if (!_.isEmpty(children)) {
