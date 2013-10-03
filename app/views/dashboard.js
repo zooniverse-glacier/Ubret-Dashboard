@@ -18,23 +18,10 @@ var Dashboard = Backbone.View.extend(_.extend({
   },
 
   events: {
-    'click #zoom-in' : 'zoomIn',
-    'click #zoom-out' : 'zoomOut',
-    'click #examine' : 'examineMode',
     'click .new-tool-chain' : 'startToolChain',
     'mouseover .scroll' : 'showScroll',
     'mouseleave .scroll' : 'hideScroll',
     'click .scroll' : 'scrollRow'
-  },
-
-  examineMode: function() {
-    var selected = this.model.get("tools").chain()
-      .filter(function(m) { return m.get('selected') })
-      .pluck('id').value().join(',');
-    if (selected === '')
-      return;
-    var url = location.hash + "/examine/" + selected;
-    window.router.navigate(url, {trigger: true});
   },
 
   showScroll: function(ev) {
@@ -65,20 +52,6 @@ var Dashboard = Backbone.View.extend(_.extend({
       spacing = this.windowMinHeight * 1.5 * zoom 
         + this.windowPadding + this.windowMargin;
     return i * spacing + 'px';
-  },
-
-  zoomIn: function(ev) {
-    if ($(ev.target).hasClass('disabled'))
-      return;
-    var curZoom = this.model.get('zoom') + 1;
-    this.model.set('zoom', curZoom);
-  },
-
-  zoomOut: function(ev) {
-    if ($(ev.target).hasClass('disabled'))
-      return;
-    var curZoom = this.model.get('zoom') - 1;
-    this.model.set('zoom', curZoom);
   },
 
   startToolChain: function(ev) {

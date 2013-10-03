@@ -7,6 +7,9 @@ var Header = Backbone.View.extend({
   projects: require('config/projects'),
 
   events: {
+    'click #zoom-in' : 'zoomIn',
+    'click #zoom-out' : 'zoomOut',
+    'click #examine' : 'examineMode',
     "click #menu" : "toggleMenu",
     "click #tool-menu" : "toggleToolMenu"
   },
@@ -21,6 +24,30 @@ var Header = Backbone.View.extend({
     this.listenTo(this.model, 'change:project', this.updateProject);
     this.listenTo(this.model, 'change:page', this.updatePageHeader);
     this.listenTo(this.model, 'change:currentDashboard', this.updatePageHeader);
+  },
+
+  examineMode: function() {
+    var selected = this.model.get('currentDashboard').get("tools").chain()
+      .filter(function(m) { return m.get('selected') })
+      .pluck('id').value().join(',');
+    if (selected === '')
+      return;
+    var url = location.hash + "/examine/" + selected;
+    window.router.navigate(url, {trigger: true});
+  },
+
+  zoomIn: function(ev) {
+    if ($(ev.target).hasClass('disabled'))
+      return;
+    var curZoom = this.model.get('currentDashboard').get('zoom') + 1;
+    this.model.get('currentDashboard').set('zoom', curZoom);
+  },
+
+  zoomOut: function(ev) {
+    if ($(ev.target).hasClass('disabled'))
+      return;
+    var curZoom = this.model.get('currentDashboard').get('zoom') - 1;
+    this.model.get('currentDashboard').set('zoom', curZoom);
   },
 
   updatePageHeader: function() {
