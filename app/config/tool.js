@@ -36,6 +36,6 @@ module.exports = {
   },
   subject_viewer: {
     settings: {currentPage: 0},
-    persistedState: ['currentPage']
+    persistedState: ['currentPage', 'selection']
   }
 }
