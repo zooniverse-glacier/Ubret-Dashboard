@@ -173,13 +173,10 @@ var Tool = Backbone.AssociatedModel.extend({
     var children = this.getChildren();
     var parent = this.getParent()
     if (!_.isEmpty(children)) {
-      if (parent)
+      if (parent && (this.get('tool_type') !== 'tool_chain'))
         _.each(children, function(c) { c.update('data', {parent_id: parent.id}); });
       else
-        _.each(children, function(c) { 
-          c.update('data', {parent_id: null}); 
-          c.destroy()
-        });
+        _.each(children, function(c) { console.log('here'); c.destroy()});
     } 
     Backbone.AssociatedModel.prototype.destroy.call(this);
   },

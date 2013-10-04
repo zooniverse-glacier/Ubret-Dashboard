@@ -13,7 +13,8 @@ module.exports = {
       scatterplot: "Scatter Plot",
       statistics: "Statistics",
       histogram: "Histogram",
-      subject_viewer: "Subject Viewer"
+      subject_viewer: "Subject Viewer",
+      spectra: "Spectra Viewer"
     }
   },
   serengeti: {

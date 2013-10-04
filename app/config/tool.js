@@ -37,5 +37,14 @@ module.exports = {
   subject_viewer: {
     settings: {currentPage: 0},
     persistedState: ['currentPage', 'selection']
+  },
+  spectra: {
+    settings: {
+      currentPage: 0, 
+      bestFitLine: 'show', 
+      fluxLine: 'show', 
+      emissionLines: 'show'
+    },
+    persistedState: ['currentPage', 'bestFitLine', 'fluxLine', 'emissionLines']
   }
 }

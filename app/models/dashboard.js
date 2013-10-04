@@ -21,7 +21,7 @@ var Dashboard = Backbone.AssociatedModel.extend({
     this.groupRows();
 
     if (_.isString(this.url)) {
-      if (_.last(this.url.split('/')) == 'dashboards')
+      if ((_.last(this.url.split('/')) == 'dashboards') && (this.id))
         this.url = this.url + '/' + this.id;
     }
   },
@@ -35,10 +35,6 @@ var Dashboard = Backbone.AssociatedModel.extend({
   sync: require('lib/sync'),
 
   urlRoot: "/dashboards",
-
-  url: function() {
-    return "/dashboards/" + this.id;
-  },
 
   destroy: function() {
     delete this.url;
