@@ -8,7 +8,7 @@ class Tool extends Backbone.AssociatedModel
 
   updateFunc:(args...) =>
     if @id? and @user.current?
-      @save(args...)
+      @throttledSave(args...)
     else
       @set(args...)
 
@@ -45,7 +45,9 @@ class Tool extends Backbone.AssociatedModel
   initialize: ->
     unless @get('name') then @set 'name', "#{@get('tool_type')}-#{@collection.length + 1}"
 
-    @on 'add:fql_statements', => @save()
+    @on 'add:fql_statements', => @updateFunc()
+
+    @throttledSave = _.throttle(_.bind(@save, @), 1000)
 
     if @isNew()
       @generatePosition()

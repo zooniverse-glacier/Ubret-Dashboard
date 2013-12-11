@@ -31,3 +31,6 @@ sed "s/<\!--//;s/-->//" < public/index.old2.html > public/index.html
 rm public/index.old.html
 rm public/index.old2.html
 echo 'build successful!'
+
+s3cmd put --recursive --acl-public public/ s3://tools.zooniverse.org
+rm -rf public
