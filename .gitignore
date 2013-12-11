@@ -3,3 +3,5 @@ public/
 tiles/
 .DS_Store
 npm-debug.log
+bower_components/
+aws-cred.json
