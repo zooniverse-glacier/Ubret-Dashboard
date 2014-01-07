@@ -7,42 +7,62 @@
   <span class='reset'>reset color</span>
   
   <br/><br/>
-  
-  <input type='radio' name='band' data-band='u' id='u-<%- @cid %>' />
-  <label for='u-<%- @cid %>'>u</label>
-  
-  <input type='radio' name='band' data-band='g' id='g-<%- @cid %>' />
-  <label for='g-<%- @cid %>'>g</label>
-  
-  <input type='radio' name='band' data-band='r' id='r-<%- @cid %>' />
-  <label for='r-<%- @cid %>'>r</label>
-  
-  <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
-  <label for='i-<%- @cid %>'>i</label>
-  
-  <input type='radio' name='band' data-band='z' id='z-<%- @cid %>' />
-  <label for='z-<%- @cid %>'>z</label>
+
+  <% if @cftid?: %>
+    <% if @cftid.split("_")[0] is "CFHTLS": %>
+      <input type='radio' name='band' data-band='u' id='u-<%- @cid %>' />
+      <label for='u-<%- @cid %>'>u</label>
+      
+      <input type='radio' name='band' data-band='g' id='g-<%- @cid %>' />
+      <label for='g-<%- @cid %>'>g</label>
+      
+      <input type='radio' name='band' data-band='r' id='r-<%- @cid %>' />
+      <label for='r-<%- @cid %>'>r</label>
+      
+      <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
+      <label for='i-<%- @cid %>'>i</label>
+      
+      <input type='radio' name='band' data-band='z' id='z-<%- @cid %>' />
+      <label for='z-<%- @cid %>'>z</label>
+    <% else: %>
+      <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
+      <label for='i-<%- @cid %>'>i</label>
+      
+      <input type='radio' name='band' data-band='j' id='J-<%- @cid %>' />
+      <label for='J-<%- @cid %>'>J</label>
+      
+      <input type='radio' name='band' data-band='Ks' id='Ks-<%- @cid %>' />
+      <label for='Ks-<%- @cid %>'>Ks</label>
+    <% end %>
+  <% end %>
 </div>
 
 <div class='parameters color'>
   <div class='subtitle'>
     <p>Non-linearity Parameters</p>
   </div>
-  <input type="range" name="alpha" min="0.01" max="1" step="0.01" value="<%- @alpha %>">
-  <div class='parameter'>&alpha;: 0.09</div>
+  <div>
+    <input type="range" name="alpha" min="0.001" max="1" step="0.001" value="<%- @alpha %>"><span class='parameter'>&alpha;: <%- @alpha %></span>
+  </div>
   
-  <input type="range" name="Q" min="0.01" max="10" step="0.001" value="<%- @q %>">
-  <div class='parameter'>Q: 1</div>
+  <div> 
+    <input type="range" name="Q" min="0.01" max="10" step="0.001" value="<%- @q %>"><span class='parameter'>Q: <%- @q %></span>
+  </div>
   
   <div class='subtitle'>
     <p>Color Scale Parameters</p>
   </div>
-  <input type="range" class='scale red' name="i" min="0" max="2" step="0.01" value="1">
-  <div class='parameter'>R: 1</div>
-  <input type="range" class='scale green' name="r" min="0" max="2" step="0.01" value="1">
-  <div class='parameter'>G: 1</div>
-  <input type="range" class='scale blue' name="g" min="0" max="2" step="0.01" value="1">
-  <div class='parameter'>B: 1</div>
+
+
+  <div> 
+    <input type="range" class='scale red' name="i" min="0" max="2" step="0.01" value="<%- @scale[0] %>"><span class='parameter'>R: <%- @scale[0] %> </span>
+  </div>
+  <div> 
+    <input type="range" class='scale green' name="r" min="0" max="2" step="0.01" value="<%- @scale[1] %>"><span class='parameter'>G: <%- @scale[1] %></span>
+  </div>
+  <div> 
+    <input type="range" class='scale blue' name="g" min="0" max="2" step="0.01" value="<%- @scale[2] %>"><span class='parameter'>B: <%- @scale[2] %></span>
+  </div>
 </div>
 
 <div class='parameters grayscale'>
@@ -60,6 +80,7 @@
   <div class='subtitle'>
     <p>Scale Parameters</p>
   </div>
+  <div>
   <input type="range" class='extent' name="min" min="0" max="1000" step="1" value="0">
   <input type="range" class='extent' name="max" min="0" max="1000" step="1" value="1000">
   

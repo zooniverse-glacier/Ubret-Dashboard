@@ -22,8 +22,8 @@
       cursor pointer
       
   .parameters
-    display none
-    
+    display: none
+
     .subtitle
       position relative
       
@@ -51,29 +51,28 @@
         
     input[type='range']
       clear both
-      width 100%
+      width 60%
       display block
       margin-bottom 10px
+      background: none
+      border: none
+      box-sizing: border-box
+      margin-left: 0
+      padding-left: 0
+      display: inline-block
       
-      // Edit display to show parameter value on slide
-      &:active + .parameter
-        display none
-  
   .color
     display block
     
   .parameter
-    display none
-    position absolute
-    width 70px
-    height 25px
-    background $gray-light
-    opacity 0.8
-    border-radius 4px
-    font-size 11px
-    text-align center
-    padding-top 8px
-    font-weight 700
+    width 25%
+    box-sizing: border-box
+    display: inline-block
+    position: relative
+    top: -15px
+    text-align: right
+    font-weight: 400
+    font-size: 10px
 
 select.stretch
   appearance none

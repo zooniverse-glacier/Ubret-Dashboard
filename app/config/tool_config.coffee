@@ -64,13 +64,16 @@ module.exports =
     settings: [settings.data, settings.spacewarp_viewer, settings.subject]
     defaults: {
       currentPage: 0,
-      alpha: 0.09,
+      alpha: 0.004,
       q: 1.0,
       scales: [0.4, 0.6, 1.7],
       stretch: 'linear',
       band: 'gri',
       sliderMin: 0,
-      sliderMax: 1000
+      sliderMax: 1000,
+      zoom: 0.01,
+      xOffset: -99.54,
+      yOffset: -99.09
     }
     titleBarControls: true
     width: 680

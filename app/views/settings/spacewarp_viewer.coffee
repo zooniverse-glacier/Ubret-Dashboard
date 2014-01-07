@@ -16,6 +16,7 @@ class SpacewarpViewerSettings extends BaseView
   
   initialize: =>
     @model.tool.on 'swviewer:loaded', =>
+      @render()
       
       opts = @model.tool.opts
       @model.tool.on 'next', @next
@@ -41,13 +42,14 @@ class SpacewarpViewerSettings extends BaseView
       alpha: @model.get('settings.alpha')
       q: @model.get('settings.q')
       cftid: subject?.metadata?.id or null
+      scale: @model.get('settings.scales')
     
-    @qEl      = @$("input[name='q']")
-    @alphaEl  = @$("input[name='alpha']")
+    @qEl or= @$("input[name='q']")
+    @alphaEl or= @$("input[name='alpha']")
     
-    @iScale = @$('.scale[name="i"]')
-    @rScale = @$('.scale[name="r"]')
-    @gScale = @$('.scale[name="g"]')
+    @iScale or= @$('.scale[name="i"]')
+    @rScale or= @$('.scale[name="r"]')
+    @gScale or= @$('.scale[name="g"]')
     
     @
   
@@ -73,27 +75,36 @@ class SpacewarpViewerSettings extends BaseView
    
     setting = {band: band}
     @model.tool.settings(setting)
+    @render()
   
   onAlphaChange: (e) =>
     alpha = {alpha: e.currentTarget.value}
     @model.tool.settings(alpha)
+    @render()
     
   onQChange: (e) =>
     q = {q: e.currentTarget.value}
     @model.tool.settings(q)
+    @render()
   
-  onScaleChange: (e) =>
-    scales =
-      scales:
-        i: @iScale.val()
-        r: @rScale.val()
-        g: @gScale.val()
-    scales = { scales: [@iScale.val(), @rScale.val(), @gScale.val()] }
-    @model.tool.settings(scales)
+  onScaleChange: ({target}) =>
+    {className, value} = target
+    className = className.split(" ")[1]
+    value = parseFloat(value)
+    scales = @model.get('settings.scales')
+    if className is 'red'
+      scales[0] = value
+    else if className is 'green'
+      scales[1] = value
+    else if className is 'blue'
+      scales[2] = value
+    @model.tool.settings({scales: scales})
+    @render()
   
   onStretchChange: (e) =>
     stretch = {stretch: e.target.value}
     @model.tool.settings(stretch)
+    @render()
   
   onExtentChange: (e) =>
     min = @$el.find('[name="min"]').val()
@@ -116,6 +127,7 @@ class SpacewarpViewerSettings extends BaseView
         min: min
         max: max
     @model.tool.settings(extent)
+    @render()
 
   onReset: (e) =>
     {SpacewarpViewer} = require 'config/tool_config'
@@ -135,6 +147,7 @@ class SpacewarpViewerSettings extends BaseView
     
     params = {q: q, alpha: alpha}
     @model.tool.settings(params)
+    @render()
 
 
 module.exports = SpacewarpViewerSettings
