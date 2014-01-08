@@ -38,7 +38,12 @@ class SpacewarpViewerSettings extends BaseView
   
   render: =>
     subject = @model.tool.currentPageData()[0]
-    extent = @model.get('settings.extent') or {min: @scaleExtent(0), max: @scaleExtent(1000)}
+    extent = @model.get('settings.extent') 
+    unless extent? 
+      if @model.tool.ready
+        extent = {min: @scaleExtent(0), max: @scaleExtent(1000)}
+      else
+        extent = {min: 0, max: 0}
     
     @$el.html @template
       cid: @cid 
@@ -46,10 +51,11 @@ class SpacewarpViewerSettings extends BaseView
       q: @model.get('settings.q')
       cftid: subject?.metadata?.id or null
       scale: @model.get('settings.scales')
-      band: @model.get('settings.band')
+      band: @model.tool.opts.band
       extent: extent
-      minSlider: @model.get('settings.sliderMin')
-      maxSlider: @model.get('settings.sliderMax')
+      minSlider: @model.get('settings.sliderMin') or 0
+      maxSlider: @model.get('settings.sliderMax') or 1000
+      stretch: @model.get('settings.stretch')
     
     @qEl or= @$("input[name='q']")
     @alphaEl or= @$("input[name='alpha']")
@@ -58,7 +64,6 @@ class SpacewarpViewerSettings extends BaseView
     @rScale or= @$('.scale[name="r"]')
     @gScale or= @$('.scale[name="g"]')
 
-    console.log @model.get('settings'), @model.get('settings.band')
 
     @$('[data-band="' + @model.get('settings.band') + '"]').prop('checked', true)
     
@@ -133,14 +138,14 @@ class SpacewarpViewerSettings extends BaseView
     
     @qEl.val(q)
     @alphaEl.val(alpha)
-    
-    @model.tool.settings({q: q, alpha: alpha, scales: scales})
+  
+    @model.tool.settings({band: 'gri', q: q, alpha: alpha, scales: scales})
     @render()
 
   scaleExtent: (ex) =>
     # Scale to gMin and gMax
     {gMin, gMax} = @model.tool.opts
     gRange = gMax - gMin
-    gRange * ex / 1000 + gMin
+    gRange * (ex / 1000) + gMin
 
 module.exports = SpacewarpViewerSettings

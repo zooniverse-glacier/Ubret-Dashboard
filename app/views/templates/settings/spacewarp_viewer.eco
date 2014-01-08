@@ -9,6 +9,9 @@
   <br/><br/>
 
   <% if @cftid?: %>
+    <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
+    <label for='i-<%- @cid %>'>i</label>
+      
     <% if @cftid.split("_")[0] is "CFHTLS": %>
       <input type='radio' name='band' data-band='u' id='u-<%- @cid %>' />
       <label for='u-<%- @cid %>'>u</label>
@@ -19,15 +22,9 @@
       <input type='radio' name='band' data-band='r' id='r-<%- @cid %>' />
       <label for='r-<%- @cid %>'>r</label>
       
-      <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
-      <label for='i-<%- @cid %>'>i</label>
-      
       <input type='radio' name='band' data-band='z' id='z-<%- @cid %>' />
       <label for='z-<%- @cid %>'>z</label>
     <% else: %>
-      <input type='radio' name='band' data-band='i' id='i-<%- @cid %>' />
-      <label for='i-<%- @cid %>'>i</label>
-      
       <input type='radio' name='band' data-band='j' id='J-<%- @cid %>' />
       <label for='J-<%- @cid %>'>J</label>
       
@@ -74,8 +71,8 @@
     <div class='stretchfn'>
       
       <select class='stretch'>
-        <option value='linear'>Linear</option>
-        <option value='arcsinh'>Arcsinh</option>
+        <option <% if @stretch is 'linear': %> selected <% end %> value='linear'>Linear</option>
+        <option <% if @stretch is 'arcsinh': %> selected <% end %>value='arcsinh'>Arcsinh</option>
       </select>
     </div>
     
