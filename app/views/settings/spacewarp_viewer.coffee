@@ -33,9 +33,12 @@ class SpacewarpViewerSettings extends BaseView
       
       inputs.filter("[name='min']").val(opts.sliderMin)
       inputs.filter("[name='max']").val(opts.sliderMax)
+    @model.tool.on 'next', =>
+      @render()
   
   render: =>
     subject = @model.tool.currentPageData()[0]
+    extent = @model.get('settings.extent') or {min: @scaleExtent(0), max: @scaleExtent(1000)}
     
     @$el.html @template
       cid: @cid 
@@ -43,6 +46,10 @@ class SpacewarpViewerSettings extends BaseView
       q: @model.get('settings.q')
       cftid: subject?.metadata?.id or null
       scale: @model.get('settings.scales')
+      band: @model.get('settings.band')
+      extent: extent
+      minSlider: @model.get('settings.sliderMin')
+      maxSlider: @model.get('settings.sliderMax')
     
     @qEl or= @$("input[name='q']")
     @alphaEl or= @$("input[name='alpha']")
@@ -50,6 +57,10 @@ class SpacewarpViewerSettings extends BaseView
     @iScale or= @$('.scale[name="i"]')
     @rScale or= @$('.scale[name="r"]')
     @gScale or= @$('.scale[name="g"]')
+
+    console.log @model.get('settings'), @model.get('settings.band')
+
+    @$('[data-band="' + @model.get('settings.band') + '"]').prop('checked', true)
     
     @
   
@@ -60,35 +71,25 @@ class SpacewarpViewerSettings extends BaseView
     @render()
   
   onBandChange: (e) =>
-    band = e.currentTarget.dataset.band
-    
-    color = @$el.find('.parameters.color')
-    gray  = @$el.find('.parameters.grayscale')
+    band = e.target.dataset.band
     
     # Show and hide appropriate UI elements
-    if band is 'gri'
-      color.show()
-      gray.hide()
-    else
-      color.hide()
-      gray.show()
-   
-    setting = {band: band}
-    @model.tool.settings(setting)
+    @model.tool.settings({band: band})
     @render()
   
   onAlphaChange: (e) =>
-    alpha = {alpha: e.currentTarget.value}
+    alpha = {alpha: parseFloat(e.currentTarget.value)}
     @model.tool.settings(alpha)
     @render()
     
   onQChange: (e) =>
-    q = {q: e.currentTarget.value}
+    q = {q: parseFloat(e.currentTarget.value)}
     @model.tool.settings(q)
     @render()
   
-  onScaleChange: ({target}) =>
-    {className, value} = target
+  onScaleChange: (e) =>
+    return unless e?
+    {className, value} = e.target
     className = className.split(" ")[1]
     value = parseFloat(value)
     scales = @model.get('settings.scales')
@@ -104,28 +105,17 @@ class SpacewarpViewerSettings extends BaseView
   onStretchChange: (e) =>
     stretch = {stretch: e.target.value}
     @model.tool.settings(stretch)
-    @render()
   
   onExtentChange: (e) =>
-    min = @$el.find('[name="min"]').val()
-    max = @$el.find('[name="max"]').val()
+    min = parseInt(@$('[name="min"]').val())
+    max = parseInt(@$('[name="max"]').val())
     
     @model.tool.settings({sliderMin: min, sliderMax: max})
     
-    # Scale to gMin and gMax
-    opts = @model.tool.opts
-    gMin = opts.gMin
-    gMax = opts.gMax
-    
-    gRange = gMax - gMin
-    
-    min = gRange * min / 1000 + gMin
-    max = gRange * max / 1000 + gMin
-    
     extent =
       extent:
-        min: min
-        max: max
+        min: @scaleExtent(min)
+        max: @scaleExtent(max) 
     @model.tool.settings(extent)
     @render()
 
@@ -133,21 +123,24 @@ class SpacewarpViewerSettings extends BaseView
     {SpacewarpViewer} = require 'config/tool_config'
     defaults = SpacewarpViewer.defaults
     
-    scales = defaults.scales
+    scales = _.clone(defaults.scales)
     q = defaults.q
     alpha = defaults.alpha
-    
+   
     @iScale.val(scales[0])
     @rScale.val(scales[1])
     @gScale.val(scales[2])
-    @onScaleChange()
     
     @qEl.val(q)
     @alphaEl.val(alpha)
     
-    params = {q: q, alpha: alpha}
-    @model.tool.settings(params)
+    @model.tool.settings({q: q, alpha: alpha, scales: scales})
     @render()
 
+  scaleExtent: (ex) =>
+    # Scale to gMin and gMax
+    {gMin, gMax} = @model.tool.opts
+    gRange = gMax - gMin
+    gRange * ex / 1000 + gMin
 
 module.exports = SpacewarpViewerSettings

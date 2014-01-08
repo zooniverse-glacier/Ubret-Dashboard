@@ -37,61 +37,64 @@
   <% end %>
 </div>
 
-<div class='parameters color'>
-  <div class='subtitle'>
-    <p>Non-linearity Parameters</p>
-  </div>
-  <div>
-    <input type="range" name="alpha" min="0.001" max="1" step="0.001" value="<%- @alpha %>"><span class='parameter'>&alpha;: <%- @alpha %></span>
-  </div>
-  
-  <div> 
-    <input type="range" name="Q" min="0.01" max="10" step="0.001" value="<%- @q %>"><span class='parameter'>Q: <%- @q %></span>
-  </div>
-  
-  <div class='subtitle'>
-    <p>Color Scale Parameters</p>
-  </div>
-
-
-  <div> 
-    <input type="range" class='scale red' name="i" min="0" max="2" step="0.01" value="<%- @scale[0] %>"><span class='parameter'>R: <%- @scale[0] %> </span>
-  </div>
-  <div> 
-    <input type="range" class='scale green' name="r" min="0" max="2" step="0.01" value="<%- @scale[1] %>"><span class='parameter'>G: <%- @scale[1] %></span>
-  </div>
-  <div> 
-    <input type="range" class='scale blue' name="g" min="0" max="2" step="0.01" value="<%- @scale[2] %>"><span class='parameter'>B: <%- @scale[2] %></span>
-  </div>
-</div>
-
-<div class='parameters grayscale'>
-  <div class='subtitle'>
-    <p>Stretch Function</p>
-  </div>
-  <div class='stretchfn'>
-    
-    <select class='stretch'>
-      <option value='linear'>Linear</option>
-      <option value='arcsinh'>Arcsinh</option>
-    </select>
-  </div>
-  
-  <div class='subtitle'>
-    <p>Scale Parameters</p>
-  </div>
-  <div>
-  <input type="range" class='extent' name="min" min="0" max="1000" step="1" value="0">
-  <input type="range" class='extent' name="max" min="0" max="1000" step="1" value="1000">
-  
-  <% if @cftid?: %>
-    <div class='download'>
-      <p>Download Data</p>
-      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_u.fits.fz">u</a>
-      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_g.fits.fz">g</a>
-      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_r.fits.fz">r</a>
-      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_i.fits.fz">i</a>
-      <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_z.fits.fz">z</a>
+<% if @band is 'gri': %>
+  <div class='parameters color'>
+    <div class='subtitle'>
+      <p>Non-linearity Parameters</p>
     </div>
-  <% end %>
-</div>
+    <div>
+      <input type="range" name="alpha" min="0.001" max="0.1" step="0.001" value="<%- @alpha %>"><span class='parameter'>&alpha;: <%- @alpha.toFixed(3) %></span>
+    </div>
+    
+    <div> 
+      <input type="range" name="Q" min="0.01" max="8" step="0.001" value="<%- @q %>"><span class='parameter'>Q: <%- @q.toFixed(3) %></span>
+    </div>
+    
+    <div class='subtitle'>
+      <p>Color Scale Parameters</p>
+    </div>
+
+
+    <div> 
+      <input type="range" class='scale red' name="i" min="0" max="2" step="0.01" value="<%- @scale[0] %>"><span class='parameter'>R: <%- @scale[0].toFixed(2) %> </span>
+    </div>
+    <div> 
+      <input type="range" class='scale green' name="r" min="0" max="2" step="0.01" value="<%- @scale[1] %>"><span class='parameter'>G: <%- @scale[1].toFixed(2) %></span>
+    </div>
+    <div> 
+      <input type="range" class='scale blue' name="g" min="0" max="2" step="0.01" value="<%- @scale[2] %>"><span class='parameter'>B: <%- @scale[2].toFixed(2) %></span>
+    </div>
+  </div>
+
+<% else: %>
+  <div class='parameters grayscale'>
+    <div class='subtitle'>
+      <p>Stretch Function</p>
+    </div>
+    <div class='stretchfn'>
+      
+      <select class='stretch'>
+        <option value='linear'>Linear</option>
+        <option value='arcsinh'>Arcsinh</option>
+      </select>
+    </div>
+    
+    <div class='subtitle'>
+      <p>Scale Parameters</p>
+    </div>
+    <div>
+    <input type="range" class='extent' name="min" min="0" max="1000" step="1" value="<%- @minSlider %>"><span class='parameter'>Min: <%- @extent.min.toFixed(0)  %></span>
+    <input type="range" class='extent' name="max" min="0" max="1000" step="1" value="<%- @maxSlider %>"><span class='parameter'>Max: <%- @extent.max.toFixed(0) %></span>
+    
+    <% if @cftid?: %>
+      <div class='download'>
+        <p>Download Data</p>
+        <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_u.fits.fz">u</a>
+        <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_g.fits.fz">g</a>
+        <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_r.fits.fz">r</a>
+        <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_i.fits.fz">i</a>
+        <a href="http://spacewarps.org.s3.amazonaws.com/subjects/raw/<%- @cftid %>_z.fits.fz">z</a>
+      </div>
+    <% end %>
+  </div>
+<% end %>
