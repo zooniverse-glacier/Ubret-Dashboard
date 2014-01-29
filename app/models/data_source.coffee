@@ -20,6 +20,9 @@ class DataSource extends Backbone.AssociatedModel
   data: =>
     if @isZooniverse()
       new @zooSubjects([], {zoo_ids: @get('params[0].val') or []})
+    else if @isMpcorb()
+      url = "/data/galaxy_zoo/mpcorb.json"
+      new @zooSubjects([], {overrideUrl: url})
     else if @isQuench()
       url = "/data/galaxy_zoo_starburst/#{@get('search_type')}.json"
       new @zooSubjects([], {overrideUrl: url})
@@ -42,5 +45,8 @@ class DataSource extends Backbone.AssociatedModel
 
   isInternal: =>
     @get('source_type') is 'internal'
+
+  isMpcorb: =>
+    @get('source_type') is 'mpcorb'
 
 module.exports = DataSource
