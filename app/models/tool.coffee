@@ -78,7 +78,7 @@ class Tool extends Backbone.AssociatedModel
         selectIds: @get('selected_uids')
       @updateData(true)
       if @get('tool_type') is 'Zooniverse'
-        @on 'change:data_source.params[0].val', @updateData
+        @on 'change:data_source.params[0].val', (=> @updateData(true))
       else if @get('tool_type') is 'Quench'
         @on 'change:data_source.search_type', @updateData
     else
@@ -186,7 +186,7 @@ class Tool extends Backbone.AssociatedModel
     force = not(typeof force is 'object')
     dataSource = @get('data_source')
     if dataSource.isZooniverse() 
-      if dataSource.get('params[0]').hasChanged or force
+      if dataSource.get('params[0]').hasChanged() or force
         unless _.isEmpty(dataSource.get('params[0].val'))
           @fetchData(dataSource) 
     else if dataSource.isQuench()
@@ -197,14 +197,15 @@ class Tool extends Backbone.AssociatedModel
         @fetchData(dataSource)
 
   fetchData: (dataSource) =>
-    return if @dataFetcher?
     data = dataSource.data()
     @trigger('loading')
     @dataFetcher = data.fetch()
-      .always(@dataFetcher = null)
       .done(=> 
         @trigger 'loaded'
-        @tool.data(data.toJSON()))
-      .error(=> @trigger 'loading-error')
+        @tool.data(data.toJSON())
+        delete @dataFetcher)
+      .error(=> 
+        @trigger 'loading-error'
+        delete @dataFetcher)
 
 module.exports = Tool

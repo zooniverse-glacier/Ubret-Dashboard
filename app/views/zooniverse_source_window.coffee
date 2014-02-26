@@ -11,6 +11,7 @@ class ZooniverseSourceWindow extends Window
   initialize: ->
     super
     @model.on 'change:data_source.params[0].val', @render
+    @model.on 'change:selected_uids', @render
 
   render: =>
     super
