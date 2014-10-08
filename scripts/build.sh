@@ -3,7 +3,7 @@
 # Setup Build Directorys and Brunch Build the Application
 set -e
 echo 'building application...'
-mkdir public
+# mkdir public
 
 npm install .
 brunch build -o
@@ -32,5 +32,8 @@ rm public/index.old.html
 rm public/index.old2.html
 echo 'build successful!'
 
-s3cmd put --recursive --acl-public public/ s3://tools.zooniverse.org
-rm -rf public
+aws s3 cp public/ s3://zooniverse-static/tools.zooniverse.org --recursive --acl public-read
+rm -rf public/javascripts/app-*
+rm -rf public/javascripts/vendor-*
+rm -rf public/stylesheets/app-*
+rm -rf public/stylesheets/vendor-*
