@@ -1,0 +1,14 @@
+<div class="collection-select">
+  <h3>Select Data:</h3>
+  <select>
+    <option value="m5" <% if @search_type is "m5": %>selected<% end %>>M5</option>
+    <option value="m67" <% if @search_type is "m67": %>selected<% end %>>M67</option>
+    <option value="ngc2571" <% if @search_type is "ngc2571": %>selected<% end %>>NGC2571</option>
+    <option value="ngc6611" <% if @search_type is "ngc6611": %>selected<% end %>>NGC6611</option>
+    <option value="ngc6791" <% if @search_type is "ngc6791": %>selected<% end %>>NGC6791</option>
+    <option value="ngc6819" <% if @search_type is "ngc6819": %>selected<% end %>>NGC6819</option>
+    <option value="pleiades" <% if @search_type is "pleiades": %>selected<% end %>>Pleiades</option>
+  </select>
+
+  <button type="button" class="action">Load Data</button>
+</div>

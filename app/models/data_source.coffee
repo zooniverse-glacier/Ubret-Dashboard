@@ -1,7 +1,10 @@
+tabletop = require 'lib/spreadsheet'
+
 class DataSource extends Backbone.AssociatedModel
   manager: require 'modules/manager'
   extSubjects: require 'collections/external_subjects'
   zooSubjects: require 'collections/zooniverse_subjects'
+  spreadsheetSubjects: require 'collections/google_subject_collection'
 
   relations: [
     type: Backbone.Many
@@ -26,6 +29,9 @@ class DataSource extends Backbone.AssociatedModel
     else if @isQuench()
       url = "/data/galaxy_zoo_starburst/#{@get('search_type')}.json"
       new @zooSubjects([], {overrideUrl: url})
+    else if @isGoogle()
+      tt = tabletop("https://docs.google.com/spreadsheets/d/17lvt94pGq3W4qnj9Fnh9jdVSNAYOd_B1RSAWk-FA0OY/pubhtml")
+      new @spreadsheetSubjects([], {tabletop: tt, sheet: @get('search_type')})
     else if @isExternal()
       source = @manager.get('sources').get(@get('source_id'))
       url = source.url
@@ -45,6 +51,9 @@ class DataSource extends Backbone.AssociatedModel
 
   isInternal: =>
     @get('source_type') is 'internal'
+
+  isGoogle: =>
+    @get('source_type') is 'google'
 
   isMpcorb: =>
     @get('source_type') is 'mpcorb'

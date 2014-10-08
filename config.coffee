@@ -16,6 +16,8 @@ exports.config =
           'vendor/scripts/html5slider.js',
           'vendor/scripts/base64.js',
           'vendor/scripts/zooniverse-2013-6-20-14-35-16',
+          'vendor/scripts/tabletop.js',
+          'vendor/scripts/backbone.tabletopSync.js',
           'test/vendor/scripts/mocha-1.4.2.js',
           'test/vendor/scripts/chai.js',
           'test/vendor/scripts/sinon-1.5.2.js',

@@ -12,7 +12,6 @@ settings =
   image_player: require 'views/settings/image_player'
   download_data: require 'views/settings/download_data'
 
-
 module.exports = 
   "BarGraph":
     settings: [settings.data, settings.graph]
@@ -88,6 +87,12 @@ module.exports =
     settings: [settings.download_data]
     settings_active: false
     data_source: {source_type: 'quench'}
+    height: 150
+    width: 300
+  "Cluster" :
+    settings: [settings.download_data]
+    settings_active: false
+    data_source: {source_type: 'google'}
     height: 150
     width: 300
   "ColorMagnitudeChart":

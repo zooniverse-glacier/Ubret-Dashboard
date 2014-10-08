@@ -11,7 +11,14 @@ Projects =
     talk: true
     sources: ["Quench", "Zooniverse", "Sky Server"]
     tools: ["BarGraph", "Histogram", "Scatterplot", "Mapper", "Statistics", "SubjectViewer", "Spectra", "Table", "ColorMagnitudeChart"]
-    defaults: ["Table", "SubjectViewer"]  
+    defaults: ["Table", "SubjectViewer"]
+
+  clusters:
+    name: "Classroom Clusters",
+    talk: false
+    sources: ["Cluster"]
+    tools: ["BarGraph", "Histogram", "Scatterplot", "Mapper", "Statistics",  "Spectra", "Table", "ColorMagnitudeChart"]
+    defaults: ["Table"]
 
   spacewarp: 
     name: 'Space Warps'

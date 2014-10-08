@@ -78,8 +78,8 @@ class Tool extends Backbone.AssociatedModel
         selectIds: @get('selected_uids')
       @updateData(true)
       if @get('tool_type') is 'Zooniverse'
-        @on 'change:data_source.params[0].val', (=> @updateData(true))
-      else if @get('tool_type') is 'Quench'
+        @on 'change:data_source.params[0].val', (=> @updateData(true)) 
+      else if @get('tool_type') is 'Quench' or @get('tool_type') is 'Cluster'
         @on 'change:data_source.search_type', @updateData
     else
       @tool = new Ubret[@get('tool_type')]
@@ -189,7 +189,7 @@ class Tool extends Backbone.AssociatedModel
       if dataSource.get('params[0]').hasChanged() or force
         unless _.isEmpty(dataSource.get('params[0].val'))
           @fetchData(dataSource) 
-    else if dataSource.isQuench()
+    else if dataSource.isQuench() or dataSource.isGoogle()
       if dataSource.get('search_type')?
         @fetchData(dataSource)
     else if dataSource.isExternal()
