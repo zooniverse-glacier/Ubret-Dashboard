@@ -41,7 +41,7 @@ class GraphSettings extends BaseView
     range = e.target.className
     value = e.target.value
     set = {}
-    set[range] = parseInt(value)
+    set[range] = parseFloat(value)
     @model.tool.settings(set)
 
 module.exports = GraphSettings
