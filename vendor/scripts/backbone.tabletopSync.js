@@ -66,6 +66,9 @@ Backbone.tabletopSync = function(method, model, options, error) {
         }, this);
       } else {
         resp = _.map(sheet.all(), function(item) {
+          _.chain(item).omit('rowNumber').keys().each(function(key) {
+              item[key] = parseFloat(item[key]);
+          });   
           item.id = item.rowNumber;
           item.uid = item.rowNumber;
           delete item.rowNumber;
